@@ -1,0 +1,78 @@
+<command>
+	<item name='Auto Build'>
+	
+		<item name='Build'>
+import sys
+from vpa.runtime import VpaAPI
+print "hello"
+VpaAPI.ExecCmd("ls")
+
+
+
+		
+		
+		</item>
+		<item name='Test'>
+command:test:%home%:blaze build %sourcedir%:all
+	
+		
+		
+		
+		
+		
+		</item>
+		<item name='Coverage'>
+command:coverage:%home%:blaze build %sourcedir%:all
+	
+		
+		
+		
+		
+		
+		</item>
+	</item>
+	<item name='Latency'>
+	
+		<item name='List All Instances'>
+	
+		
+		
+	command:build:%home%:blaze build %sourcedir%:all
+		
+		
+		
+		</item>
+		<item name='Instrument'>
+	
+		
+		
+		
+		
+		
+		</item>
+		<item name='Build'>
+	
+		
+		
+		
+		
+		
+		</item>
+		<item name='Run'>
+	
+		
+		
+		
+		
+		
+		</item>
+		<item name='Show Result'>
+	
+		
+		
+		
+		
+		
+		</item>
+	</item>
+</command>

@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.6" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.JCheckBox" name="kernelCheck">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Kernel"/>
+      </Properties>
+    </Component>
+  </NonVisualComponents>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Component id="jPanel5" alignment="0" max="32767" attributes="1"/>
+          <Component id="jPanel4" alignment="0" max="32767" attributes="1"/>
+          <Component id="launchButton" alignment="0" pref="419" max="32767" attributes="1"/>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="jPanel4" min="-2" max="-2" attributes="1"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jPanel5" min="-2" max="-2" attributes="1"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="launchButton" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JPanel" name="jPanel4">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="Session"/>
+          </Border>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="nameField" pref="280" max="32767" attributes="0"/>
+                      <Component id="idCombo" alignment="0" pref="280" max="32767" attributes="1"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="saveButton" max="32767" attributes="1"/>
+                      <Component id="deleteButton" alignment="1" max="32767" attributes="1"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="idCombo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="saveButton" alignment="3" min="-2" max="-2" attributes="1"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="nameField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="deleteButton" alignment="3" min="-2" max="-2" attributes="1"/>
+                  </Group>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="jLabel2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="ID:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="idCombo">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="1">
+                <StringItem index="0" value="&lt;New Session&gt;"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="idComboActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Name:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="nameField">
+        </Component>
+        <Component class="javax.swing.JButton" name="saveButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Save"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="deleteButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Delete"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteButtonActionPerformed"/>
+          </Events>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="jPanel5">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="Target Node(s)"/>
+          </Border>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="typeCombo" pref="262" max="32767" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="plusButton" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="minusButton" min="-2" pref="36" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+              <Component id="jScrollPane1" alignment="0" pref="407" max="32767" attributes="1"/>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="typeCombo" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                      <Component id="minusButton" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                      <Component id="plusButton" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" pref="64" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="jLabel7">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Type:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="typeCombo">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="10">
+                <StringItem index="0" value="Perf - Java"/>
+                <StringItem index="1" value="Perf - OS Memory (Linux)"/>
+                <StringItem index="2" value="-----"/>
+                <StringItem index="3" value="Fault(HW) - OS(SUSE) - Monitor"/>
+                <StringItem index="4" value="Fault(HW) - OS(SUSE) - Injector"/>
+                <StringItem index="5" value="Fault(HW) - VMM"/>
+                <StringItem index="6" value="Fault(HW) - Data Analyzer"/>
+                <StringItem index="7" value="Fault(SW) - GPU(Cuda/Linux)"/>
+                <StringItem index="8" value="-----"/>
+                <StringItem index="9" value="Rigel"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="typeComboActionPerformed"/>
+          </Events>
+        </Component>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTable" name="clientTable">
+              <Properties>
+                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                  <Table columnCount="6" rowCount="1">
+                    <Column editable="true" title="DNS" type="java.lang.Object"/>
+                    <Column editable="true" title="Port" type="java.lang.Object">
+                      <Data value="22"/>
+                    </Column>
+                    <Column editable="true" title="ID" type="java.lang.Object"/>
+                    <Column editable="true" title="PW" type="java.lang.Object"/>
+                    <Column editable="true" title="OPT" type="java.lang.Object">
+                      <Data value=""/>
+                    </Column>
+                    <Column editable="false" title="Status" type="java.lang.Object">
+                      <Data value="NA"/>
+                    </Column>
+                  </Table>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(){&#xa;    public TableCellRenderer getCellRenderer(int row, int col){&#xa;        if (col == 3)&#xa;            return (TableCellRenderer)new PasswordRenderer();&#xa;        else&#xa;            return super.getCellRenderer(row, col);&#xa;    }&#xa;};&#xa;"/>
+              </AuxValues>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Component class="javax.swing.JButton" name="plusButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="+"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 5, 2, 5]"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="plusButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="minusButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="-"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 5, 2, 5]"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="minusButtonActionPerformed"/>
+          </Events>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JButton" name="launchButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Connect"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="launchButtonActionPerformed"/>
+      </Events>
+    </Component>
+  </SubComponents>
+</Form>
