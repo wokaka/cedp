@@ -5,6 +5,7 @@
 
 package vpa.interpreter;
 
+import cedp.util.AntlrWrapper;
 import cedp.util.UtilFile;
 import cedp.util.UtilTree;
 import cedp.util.gui.ToolTipTreeNode;
@@ -79,29 +80,18 @@ public class VpaProgram {
 
     protected void ParseUsingAntlr(String fname)
     {
-        Class[] params = new Class[1];
-        Object[][] args = new Object[1][];
-        boolean generate = false;
-        org.antlr.Tool antlr;
+        int generate = 0;
+
         
         try{
             /* LEXER */
-            if(generate){
-                Class class_Tool = getClass().getClassLoader().loadClass("org.antlr.Tool");
-                params[0] = String[].class;
-                args[0] = new String[1];
-                args[0][0] = "src/vpa/interpreter/VpaLexer.g";
-                antlr = (org.antlr.Tool)class_Tool.getConstructor(params).newInstance(args);
-                antlr.process(); /* generates VpaLexer.java */
-                /* TODO: now the package of VpaLexer.java shall be manually added after executing this generation step */
-
-                args[0][0] = "src/vpa/interpreter/VpaParser.g";
-                antlr = (org.antlr.Tool)class_Tool.getConstructor(params).newInstance(args);
-                antlr.process(); /* generates VpaLexer.java */
-
-                args[0][0] = "src/vpa/interpreter/VpaTreeParser.g";
-                antlr = (org.antlr.Tool)class_Tool.getConstructor(params).newInstance(args);
-                antlr.process(); /* generates VpaLexer.java */
+            if(generate == 1){
+                new AntlrWrapper().GenerateVpaParser();
+                System.exit(0);
+            }
+            else if(generate == 2){
+                new AntlrWrapper().GenerateJavaParser();
+                System.exit(0);
             }
             else{
                 CharStream input = new ANTLRFileStream(fname);

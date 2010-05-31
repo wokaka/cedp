@@ -20,7 +20,7 @@ public class UtilTable {
         Object  result[][];
 
         r = tbl.getModel().getRowCount();
-        c = tbl.getModel().getColumnCount() - 1;
+        c = tbl.getModel().getColumnCount();
         result = new Object[r][c];
 
         for(i=0; i<r; i++){

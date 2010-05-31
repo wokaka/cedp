@@ -218,11 +218,11 @@
                     </Column>
                     <Column editable="true" title="ID" type="java.lang.Object"/>
                     <Column editable="true" title="PW" type="java.lang.Object"/>
-                    <Column editable="true" title="OPT" type="java.lang.Object">
+                    <Column editable="true" title="VPA" type="java.lang.Object">
                       <Data value=""/>
                     </Column>
-                    <Column editable="false" title="Status" type="java.lang.Object">
-                      <Data value="NA"/>
+                    <Column editable="true" title="Config" type="java.lang.Object">
+                      <Data value=""/>
                     </Column>
                   </Table>
                 </Property>

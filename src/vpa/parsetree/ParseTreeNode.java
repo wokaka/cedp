@@ -38,7 +38,7 @@ public class ParseTreeNode {
     {
         while(d.startsWith("\n"))
             d = d.substring(1);
-        while(d.endsWith("'"))
+        while(d.endsWith("\n") || d.endsWith("\t"))
             d = d.substring(0, d.length()-1);
 
         data = d;

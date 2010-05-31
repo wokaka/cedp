@@ -1,47 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
-        <file>file:/home/yim/ceval/ceval/hifi/src/controlserver/mainframe/MainFrame.java</file>
-        <file>file:/home/yim/ceval/ceval/hifi/src/controlserver/mainframe/LogPanel.java</file>
-        <file>file:/home/yim/ceval/ceval/hifi/src/controlserver/mainframe/campaign/CampaignPanel.java</file>
-        <file>file:/home/yim/ceval/ceval/hifi/src/controlserver/mainframe/campaign/CampaignPanel_HWFault.java</file>
-        <file>file:/home/yim/ceval/ceval/hifi/src/controlserver/node/SWFaultManagerDialog.java</file>
-        <file>file:/home/yim/ceval/ceval/src/vpa/interpreter/VpaProgram.java</file>
-        <file>file:/home/yim/ceval/ceval/dartsearch.vpa</file>
-        <file>file:/home/yim/ceval/ceval/src/cedp/node/PerfJavaNode.java</file>
-        <file>file:/home/yim/ceval/ceval/src/cedp/util/UtilFile.java</file>
-        <file>file:/home/yim/ceval/ceval/src/cedp/login/SessionPanel.java</file>
-        <file>file:/home/yim/ceval/ceval/src/cedp/main/Main.java</file>
-        <file>file:/home/yim/ceval/ceval/src/cedp/util/UtilTree.java</file>
-        <file>file:/home/yim/ceval/ceval/src/com/jcraft/jsch/jcraft/Compression.java</file>
-        <file>file:/home/yim/ceval/ceval/src/cedp/util/UtilThread.java</file>
-        <file>file:/home/yim/ceval/ceval/src/cedp/main/MainFrame.java</file>
-        <file>file:/home/yim/ceval/ceval/src/cedp/login/LoginDialog.java</file>
-        <file>file:/home/yim/ceval/ceval/src/com/jcraft/jsch/Channel.java</file>
-        <file>file:/home/yim/ceval/ceval/src/com/jcraft/jsch/IO.java</file>
-        <file>file:/home/yim/ceval/ceval/src/cedp/util/UtilClipboard.java</file>
-        <file>file:/home/yim/ceval/ceval/src/cedp/util/AStyleWrapper.java</file>
-        <file>file:/home/yim/ceval/ceval/src/cedp/util/JcraftWrapper.java</file>
-        <file>file:/home/yim/ceval/ceval/src/cedp/node/ShellTemplateDialog.java</file>
-        <file>file:/home/yim/ceval/ceval/src/cedp/util/gui/ProgBar.java</file>
-        <file>file:/home/yim/ceval/ceval/src/cedp/util/UtilTable.java</file>
-        <file>file:/home/yim/ceval/ceval/src/cetus/exec/Parser.java</file>
-        <file>file:/home/yim/ceval/ceval/src/cetus/base/grammars/PreCParser.java</file>
-        <file>file:/home/yim/ceval/ceval/src/cetus/base/grammars/PreCLexer.java</file>
-        <file>file:/home/yim/ceval/ceval/src/cetus/base/grammars/Pre.g</file>
-        <file>file:/home/yim/ceval/ceval/src/cetus/base/grammars/NewCParser.g</file>
-        <file>file:/home/yim/ceval/ceval/src/vpa/interpreter/VpaLexer.g</file>
-        <file>file:/home/yim/ceval/ceval/src/vpa/interpreter/VpaLexer.java</file>
-        <file>file:/home/yim/ceval/ceval/src/vpa/interpreter/VpaParser.g</file>
-        <file>file:/home/yim/ceval/ceval/src/vpa/interpreter/VpaParser.java</file>
-        <file>file:/home/yim/ceval/ceval/src/vpa/interpreter/VpaTreeParser.g</file>
-        <file>file:/home/yim/ceval/ceval/src/vpa/interpreter/VpaTreeParser.java</file>
-        <file>file:/home/yim/ceval/ceval/src/vpa/parsetree/VpaParseTree.java</file>
-        <file>file:/home/yim/ceval/ceval/src/vpa/parsetree/ParseTreeNode.java</file>
-        <file>file:/home/yim/ceval/ceval/src/cedp/util/gui/ToolTipTreeNode.java</file>
-        <file>file:/home/yim/ceval/ceval/src/cedp/util/JythonWrapper.java</file>
-        <file>file:/home/yim/ceval/ceval/src/cedp/node/SshTemplateDialog.java</file>
-        <file>file:/home/yim/ceval/ceval/src/vpa/runtime/VpaAPI.java</file>
-    </open-files>
 </project-private>

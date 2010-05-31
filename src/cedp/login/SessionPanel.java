@@ -384,20 +384,12 @@ public class SessionPanel extends javax.swing.JPanel
 
         clientTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, "22", null, null, "", "NA"}
+                {null, "22", null, null, "", ""}
             },
             new String [] {
-                "DNS", "Port", "ID", "PW", "OPT", "Status"
+                "DNS", "Port", "ID", "PW", "VPA", "Config"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                true, true, true, true, true, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         jScrollPane1.setViewportView(clientTable);
 
         plusButton.setText("+");

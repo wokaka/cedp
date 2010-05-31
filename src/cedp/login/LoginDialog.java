@@ -51,7 +51,7 @@ public class LoginDialog extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("ceval: Computer Evaluator v1.0");
+        setTitle("CEDP v1.0");
 
         jMenu1.setText("Session");
         jMenuBar1.add(jMenu1);
