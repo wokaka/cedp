@@ -37,6 +37,7 @@ import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import vpa.interpreter.VpaProgram;
+import vpa.runtime.VpaAPI;
 
 /**
  *
@@ -56,17 +57,37 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
     public PerfJavaNode(String name, VpaProgram vpa, String cfg)
     {
         super(name);
-        setTitle("[ceval] Performance Java - " + name);
+        setTitle("[CEDP] Performance Java - " + name);
         initComponents();
         InitConfig(cfg);
         vpaProgram = vpa;
         vpa.BuildCommandTree(cmdTree);
+        VpaAPI.SetNode(this);
         show();
     }
 
+    public String GetCurrentDir()
+    {
+        return homeField.getText() + currDir.getText();
+    }
+
+    public String GetSelectedFile()
+    {
+        if(fileTable.getSelectedRowCount() != 1)
+            return "";
+
+        return fileTable.getModel().getValueAt(fileTable.getSelectedRow(), 1).toString();
+    }
+
+    public void SetSource(String data)
+    {
+        srcArea.setText(data);
+    }
+    
     public void Launch(String pAddr, int pPort, String pId, String pPwd)
     {
         net = new JcraftWrapper(pAddr, pPort, pId, pPwd, consoleArea);
+        connButtonActionPerformed(null);
     }
     
     protected void InitConfig(String fname)
@@ -95,6 +116,9 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
             else if(first.equals("filefilter")){
                 fileFilterField.setText(last);
             }
+            else if(first.equals("currdir")){
+                currDir.setText(last);
+            }
         }
     }
     
@@ -107,33 +131,57 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane3 = new javax.swing.JScrollPane();
-        consoleArea = new javax.swing.JTextArea();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        cmdTree = new javax.swing.JTree();
-        nameField = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        progBar = new cedp.util.gui.ProgBar();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        fileTable = new javax.swing.JTable();
-        cmdField = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        cmdArea = new javax.swing.JTextArea();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        jSplitPane4 = new javax.swing.JSplitPane();
+        jToolBar1 = new javax.swing.JToolBar();
+        connButton = new javax.swing.JButton();
+        jSplitPane1 = new javax.swing.JSplitPane();
+        jPanel1 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         currDir = new javax.swing.JTextArea();
-        jToolBar1 = new javax.swing.JToolBar();
-        jButton1 = new javax.swing.JButton();
+        jSplitPane2 = new javax.swing.JSplitPane();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        cmdTree = new javax.swing.JTree();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        cmdArea = new javax.swing.JTextArea();
+        nameField = new javax.swing.JTextField();
+        jPanel6 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         benchmarkField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         homeField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         fileFilterField = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        fileTable = new javax.swing.JTable();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jSplitPane3 = new javax.swing.JSplitPane();
+        jTabbedPane3 = new javax.swing.JTabbedPane();
+        jPanel8 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        consoleArea = new javax.swing.JTextArea();
+        jLabel4 = new javax.swing.JLabel();
+        cmdField = new javax.swing.JTextField();
+        progBar = new cedp.util.gui.ProgBar();
+        jButton5 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jPanel9 = new javax.swing.JPanel();
+        jSplitPane5 = new javax.swing.JSplitPane();
+        jTabbedPane4 = new javax.swing.JTabbedPane();
+        jPanel12 = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        srcArea = new javax.swing.JTextArea();
+        jPanel13 = new javax.swing.JPanel();
+        jTabbedPane5 = new javax.swing.JTabbedPane();
+        jPanel10 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        progTree = new javax.swing.JTree();
+        jPanel11 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -146,27 +194,44 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("[ceval] Performance - Java");
+        setTitle("[CEDP] Performance - Java");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
         });
 
-        consoleArea.setBackground(new java.awt.Color(0, 102, 153));
-        consoleArea.setColumns(20);
-        consoleArea.setEditable(false);
-        consoleArea.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
-        consoleArea.setForeground(new java.awt.Color(255, 255, 255));
-        consoleArea.setLineWrap(true);
-        consoleArea.setRows(5);
-        consoleArea.setTabSize(4);
-        consoleArea.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                consoleAreaKeyTyped(evt);
+        jToolBar1.setRollover(true);
+
+        connButton.setText("Connect");
+        connButton.setFocusable(false);
+        connButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        connButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        connButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                connButtonActionPerformed(evt);
             }
         });
-        jScrollPane3.setViewportView(consoleArea);
+        jToolBar1.add(connButton);
+
+        jSplitPane1.setDividerLocation(260);
+        jSplitPane1.setDividerSize(20);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        currDir.setColumns(15);
+        currDir.setEditable(false);
+        currDir.setLineWrap(true);
+        currDir.setRows(5);
+        jScrollPane5.setViewportView(currDir);
+
+        jSplitPane2.setDividerLocation(400);
+        jSplitPane2.setDividerSize(20);
+        jSplitPane2.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+
+        jTabbedPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jPanel5.setBackground(java.awt.Color.white);
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Commands");
         cmdTree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
@@ -177,19 +242,102 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         });
         jScrollPane2.setViewportView(cmdTree);
 
-        jButton2.setText("Clear");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+        cmdArea.setColumns(10);
+        cmdArea.setRows(5);
+        cmdArea.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                cmdAreaFocusLost(evt);
             }
         });
+        jScrollPane4.setViewportView(cmdArea);
 
-        jButton5.setLabel("^Break");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+                    .addComponent(nameField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Cmd", jPanel5);
+
+        jLabel1.setText("Benchmark:");
+
+        jLabel2.setText("Home:");
+
+        jLabel3.setText("File Filter:");
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(homeField, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                    .addComponent(benchmarkField, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                    .addComponent(fileFilterField, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(benchmarkField, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(homeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(fileFilterField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(254, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Info", jPanel6);
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 242, Short.MAX_VALUE)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 365, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("tab3", jPanel7);
+
+        jSplitPane2.setTopComponent(jTabbedPane1);
+
+        jTabbedPane2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jPanel3.setBackground(java.awt.Color.white);
 
         fileTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -214,44 +362,248 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         });
         jScrollPane1.setViewportView(fileTable);
 
-        cmdField.setEditable(false);
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane2.addTab("Files", jPanel3);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 242, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 336, Short.MAX_VALUE)
+        );
+
+        jTabbedPane2.addTab("tab2", jPanel4);
+
+        jSplitPane2.setRightComponent(jTabbedPane2);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jSplitPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(300, 300, 300)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(661, 661, 661)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addComponent(jSplitPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 791, Short.MAX_VALUE)
+        );
+
+        jSplitPane1.setTopComponent(jPanel1);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jSplitPane3.setDividerLocation(520);
+        jSplitPane3.setDividerSize(20);
+        jSplitPane3.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+
+        jTabbedPane3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        consoleArea.setBackground(new java.awt.Color(0, 102, 153));
+        consoleArea.setColumns(20);
+        consoleArea.setEditable(false);
+        consoleArea.setFont(new java.awt.Font("Arial", 1, 10));
+        consoleArea.setForeground(new java.awt.Color(255, 255, 255));
+        consoleArea.setLineWrap(true);
+        consoleArea.setRows(5);
+        consoleArea.setTabSize(4);
+        consoleArea.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                consoleAreaKeyTyped(evt);
+            }
+        });
+        jScrollPane3.setViewportView(consoleArea);
 
         jLabel4.setText("CMD:");
 
-        cmdArea.setColumns(10);
-        cmdArea.setRows(5);
-        cmdArea.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                cmdAreaFocusLost(evt);
+        cmdField.setEditable(false);
+
+        jButton5.setLabel("^Break");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
             }
         });
-        jScrollPane4.setViewportView(cmdArea);
 
-        jLabel5.setText("Browse Files");
+        jButton2.setText("Clear");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
-        jLabel6.setText("Execute Commands");
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmdField, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
+                .addComponent(progBar, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 922, Short.MAX_VALUE)
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(progBar, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jButton5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 21, Short.MAX_VALUE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cmdField, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4))))
+        );
 
-        currDir.setColumns(15);
-        currDir.setEditable(false);
-        currDir.setLineWrap(true);
-        currDir.setRows(5);
-        jScrollPane5.setViewportView(currDir);
+        jTabbedPane3.addTab("tab1", jPanel8);
 
-        jToolBar1.setRollover(true);
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 922, Short.MAX_VALUE)
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 216, Short.MAX_VALUE)
+        );
 
-        jButton1.setText("jButton1");
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton1);
+        jTabbedPane3.addTab("tab2", jPanel9);
 
-        jLabel1.setText("Benchmark:");
+        jSplitPane3.setBottomComponent(jTabbedPane3);
+        jTabbedPane3.getAccessibleContext().setAccessibleName("Console");
 
-        jLabel2.setText("Home:");
+        jSplitPane5.setDividerLocation(650);
+        jSplitPane5.setDividerSize(20);
 
-        jLabel3.setText("File Filter:");
+        jTabbedPane4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel7.setText("Console");
+        srcArea.setColumns(20);
+        srcArea.setEditable(false);
+        srcArea.setFont(new java.awt.Font("Courier 10 Pitch", 0, 12));
+        srcArea.setRows(5);
+        jScrollPane7.setViewportView(srcArea);
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 644, Short.MAX_VALUE)
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
+        );
+
+        jTabbedPane4.addTab("Source", jPanel12);
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 644, Short.MAX_VALUE)
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 485, Short.MAX_VALUE)
+        );
+
+        jTabbedPane4.addTab("tab2", jPanel13);
+
+        jSplitPane5.setLeftComponent(jTabbedPane4);
+
+        jTabbedPane5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Program");
+        javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Attributes");
+        treeNode1.add(treeNode2);
+        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Methods");
+        treeNode1.add(treeNode2);
+        progTree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        progTree.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                progTreeMousePressed(evt);
+            }
+        });
+        jScrollPane6.setViewportView(progTree);
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        jTabbedPane5.addTab("Layout", jPanel10);
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 252, Short.MAX_VALUE)
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 485, Short.MAX_VALUE)
+        );
+
+        jTabbedPane5.addTab("tab2", jPanel11);
+
+        jSplitPane5.setRightComponent(jTabbedPane5);
+
+        jSplitPane3.setLeftComponent(jSplitPane5);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSplitPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 928, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSplitPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 791, Short.MAX_VALUE)
+        );
+
+        jSplitPane1.setRightComponent(jPanel2);
 
         jMenu1.setText("Configuration");
 
@@ -298,95 +650,19 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(benchmarkField, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(homeField, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addGap(7, 7, 7)
-                .addComponent(fileFilterField, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
-                .addContainerGap(311, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jScrollPane5, 0, 0, Short.MAX_VALUE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jLabel5)
-                                    .addGap(87, 87, 87)))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(nameField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmdField, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(progBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 749, Short.MAX_VALUE)
-                    .addComponent(jLabel7))
-                .addContainerGap())
+                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(1558, 1558, 1558))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(benchmarkField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(homeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(fileFilterField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
-                            .addComponent(cmdField, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
-                            .addComponent(progBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 795, Short.MAX_VALUE))
         );
 
         pack();
@@ -399,9 +675,9 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         TableModel model = fileTable.getModel();
         UtilTable.DeleteAll(fileTable);
 
-        net.RunCommandBlocked("ls -al " + folder +  " > /tmp/ceval");
-        net.FtpBlocked("/tmp/ceval", "ceval", net.FtpGet);
-        String buffer = UtilFile.Read("ceval");
+        net.RunCommandBlocked("ls -al " + folder +  " > /tmp/cedp");
+        net.FtpBlocked("/tmp/cedp", "cedp", net.FtpGet);
+        String buffer = UtilFile.Read("cedp");
 
         // Build srcTree
         StringTokenizer token = new StringTokenizer(buffer + "\n", "\n");
@@ -1076,7 +1352,7 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
             else if(evt.getClickCount() == 2) {
                 if(node instanceof ToolTipTreeNode && node.getChildCount() == 0){
                     ToolTipTreeNode tnode = (ToolTipTreeNode) node;
-                    System.out.println("Jython : " + cmdArea.getText());
+                    //System.out.println("Jython : " + cmdArea.getText());
                     JythonWrapper.Exec(cmdArea.getText());
                 }
             }
@@ -1127,27 +1403,6 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         }
     }//GEN-LAST:event_fileTableMousePressed
 
-    private void attachMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attachMenuItemActionPerformed
-        // TODO add your handling code here:
-        new UtilThread(null){public void run(){
-            progBar.Process();
-
-            net.RunCommandBlocked("cd " + homeField.getText());
-            UpdateFileList();
-
-            progBar.Done();
-        }};
-        //        cmdInputStream.AddCommand("source path");
-    }//GEN-LAST:event_attachMenuItemActionPerformed
-
-    private void installMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_installMenuItemActionPerformed
-        // TODO add your handling code here:
-                /* install host side compiler */
-        // we use CPP installed by cygwin (change the PATH to /cygwin/bin and
-        // copy /cygwin/bin/cpp-3.exe /cygwin/bin/cpp.exe
-        // replace the header files (usr/include) by one from Linux (mahler)
-    }//GEN-LAST:event_installMenuItemActionPerformed
-
     private void cmdAreaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmdAreaFocusLost
         // TODO add your handling code here:
         if(cmdTree == null || cmdTree.getSelectionPath() == null)
@@ -1161,10 +1416,40 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         }
     }//GEN-LAST:event_cmdAreaFocusLost
 
+    private void connButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connButtonActionPerformed
+        // TODO add your handling code here:
+        attachMenuItemActionPerformed(null);
+    }//GEN-LAST:event_connButtonActionPerformed
+
+    private void progTreeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_progTreeMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_progTreeMousePressed
+
+    private void installMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_installMenuItemActionPerformed
+        // TODO add your handling code here:
+        /* install host side compiler */
+        // we use CPP installed by cygwin (change the PATH to /cygwin/bin and
+        // copy /cygwin/bin/cpp-3.exe /cygwin/bin/cpp.exe
+        // replace the header files (usr/include) by one from Linux (mahler)
+}//GEN-LAST:event_installMenuItemActionPerformed
+
+    private void attachMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attachMenuItemActionPerformed
+        // TODO add your handling code here:
+        new UtilThread(null){public void run(){
+            progBar.Process();
+
+            net.RunCommandBlocked("cd " + homeField.getText());
+            UpdateFileList();
+
+            progBar.Done();
+        }};
+        //        cmdInputStream.AddCommand("source path");
+}//GEN-LAST:event_attachMenuItemActionPerformed
+
     private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
         // TODO add your handling code here:
         vpaProgram.Save(cmdTree, null);
-    }//GEN-LAST:event_saveMenuItemActionPerformed
+}//GEN-LAST:event_saveMenuItemActionPerformed
 
     private void installButtonActionPerformed(java.awt.event.ActionEvent evt) {                                              
         
@@ -1344,38 +1629,62 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
     private javax.swing.JTextArea cmdArea;
     private javax.swing.JTextField cmdField;
     private javax.swing.JTree cmdTree;
+    private javax.swing.JButton connButton;
     private javax.swing.JTextArea consoleArea;
     private javax.swing.JTextArea currDir;
     private javax.swing.JTextField fileFilterField;
     private javax.swing.JTable fileTable;
     private javax.swing.JTextField homeField;
     private javax.swing.JMenuItem installMenuItem;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JSplitPane jSplitPane2;
+    private javax.swing.JSplitPane jSplitPane3;
+    private javax.swing.JSplitPane jSplitPane4;
+    private javax.swing.JSplitPane jSplitPane5;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTabbedPane jTabbedPane3;
+    private javax.swing.JTabbedPane jTabbedPane4;
+    private javax.swing.JTabbedPane jTabbedPane5;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTextField nameField;
     private cedp.util.gui.ProgBar progBar;
+    private javax.swing.JTree progTree;
     private javax.swing.JMenuItem saveMenuItem;
+    private javax.swing.JTextArea srcArea;
     // End of variables declaration//GEN-END:variables
 
 }

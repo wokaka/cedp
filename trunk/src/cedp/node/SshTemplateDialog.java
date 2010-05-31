@@ -48,9 +48,4 @@ public class SshTemplateDialog extends JFrame
     protected String    pwd;
 
     
-
-
-
-
-
 }
