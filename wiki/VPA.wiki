@@ -1,0 +1,26 @@
+#summary Design document for VPLA that is designed for non-CS person to describe computation processes that he or she wants to automate
+
+=VPA: Visual Programming for Automation=
+
+= Introduction =
+
+VPLA consists of three components:<br><br>
+
+ (i) Editor: GUI program where user can describe automation processes by dragging and dropping icons<br><br>
+
+ (ii) Interpreter: An engine that processes a VPLA program. Types of actions it can make are:<br>
+    - Console (SSH, local shell)<br>
+    - Network (TCP/IP)<br>
+    - WEB<br>
+    - Desktop Apps<br><br>
+      
+ (iii) Controller: Interface between interpreter and human operator (for monitoring and control)<br><br>
+
+ (iv) VPLA Program: With its own syntax and is internally translated to a Jython program in order to make interpretation easy
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
