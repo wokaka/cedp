@@ -8,6 +8,10 @@ package vpa.interpreter;
 
 lexer grammar VpaLexer;
 
+@header {
+package vpa.interpreter;
+}
+
 @members {
     boolean tagMode = false;
 }
