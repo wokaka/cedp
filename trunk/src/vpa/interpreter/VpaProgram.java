@@ -80,40 +80,26 @@ public class VpaProgram {
 
     protected void ParseUsingAntlr(String fname)
     {
-        int generate = 0;
-
-        
         try{
-            /* LEXER */
-            if(generate == 1){
-                new AntlrWrapper().GenerateVpaParser();
-                System.exit(0);
+            CharStream input = new ANTLRFileStream(fname);
+            VpaLexer lexer = new VpaLexer(input);
+            /*
+            // This is to print Lexer output
+            Token token;
+            while((token = lexer.nextToken()) != Token.EOF_TOKEN) {
+                System.out.println("Token: " + token.getText());
             }
-            else if(generate == 2){
-                new AntlrWrapper().GenerateJavaParser();
-                System.exit(0);
-            }
-            else{
-                CharStream input = new ANTLRFileStream(fname);
-                VpaLexer lexer = new VpaLexer(input);
-                /*
-                // This is to print Lexer output
-                Token token;
-                while((token = lexer.nextToken()) != Token.EOF_TOKEN) {
-                    System.out.println("Token: " + token.getText());
-                }
-                */
+            */
 
-                /* PARSER */
-                CommonTokenStream tokens = new  CommonTokenStream(lexer);
-                VpaParser parser = new VpaParser(tokens);
-                VpaParser.document_return root = parser.document();
-                //System.out.println("tree="+((Tree)root.tree).toStringTree());
+            /* PARSER */
+            CommonTokenStream tokens = new  CommonTokenStream(lexer);
+            VpaParser parser = new VpaParser(tokens);
+            VpaParser.document_return root = parser.document();
+            //System.out.println("tree="+((Tree)root.tree).toStringTree());
 
-                CommonTreeNodeStream nodes = new CommonTreeNodeStream((Tree)root.tree);
-                VpaTreeParser walker = new VpaTreeParser(nodes);
-                walker.document();
-            }
+            CommonTreeNodeStream nodes = new CommonTreeNodeStream((Tree)root.tree);
+            VpaTreeParser walker = new VpaTreeParser(nodes);
+            walker.document();
         } catch(Exception e){
             e.printStackTrace();
         }

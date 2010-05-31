@@ -1,12 +1,11 @@
-/*header
-{
+
+
+parser grammar VpaParser;
+
+@header {
 package vpa.interpreter;
 }
 
-{
-}*/
-
-parser grammar VpaParser;
 options {
     tokenVocab=VpaLexer;
     output=AST;

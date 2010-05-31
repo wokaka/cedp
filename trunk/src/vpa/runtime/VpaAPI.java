@@ -84,10 +84,11 @@ public class VpaAPI {
                 JavaParser parser = new JavaParser(tokens);
 
                 String[] tokennames = parser.tokenNames;
-                for(int i=0; i<tokennames.length; i++)
-                    System.out.println(""+tokennames[i]);
+//                for(int i=0; i<tokennames.length; i++)
+//                    System.out.println(""+tokennames[i]);
                 //                JavaParser.document_return root = parser..document();
-                System.out.println("tree="+parser.toString());
+//                System.out.println("tree="+parser.toString());
+                parser.compilationUnit();
             } catch(Exception e){
                 e.printStackTrace();
             }
