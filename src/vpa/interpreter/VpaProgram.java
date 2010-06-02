@@ -5,7 +5,6 @@
 
 package vpa.interpreter;
 
-import cedp.util.AntlrWrapper;
 import cedp.util.UtilFile;
 import cedp.util.UtilTree;
 import cedp.util.gui.ToolTipTreeNode;
@@ -24,8 +23,8 @@ import vpa.parsetree.VpaParseTree;
  * @author Keun Soo Yim
  */
 public class VpaProgram {
-
     protected String fname;
+    protected String script;
 
     public VpaProgram(String f)
     {
@@ -46,8 +45,12 @@ public class VpaProgram {
         String result;
 
         
-        if(treeNode.toString().equals("Commands"))
+        if(treeNode.toString().equals("vpa"))
+            result = Tab(depth) + "<vpa>\n";
+        else if(treeNode.toString().equals("command"))
             result = Tab(depth) + "<command>\n";
+        else if(treeNode.toString().equals("script"))
+            result = Tab(depth) + "<script>\n";
         else
             result = Tab(depth) + "<item name='" + treeNode.toString() + "'>\n";
 
@@ -60,8 +63,12 @@ public class VpaProgram {
             result += SaveTreeNode(cnode, depth+1);
         }
 
-        if(treeNode.toString().equals("Commands"))
+        if(treeNode.toString().equals("vpa"))
+            result += Tab(depth) + "</vpa>\n";
+        else if(treeNode.toString().equals("command"))
             result += Tab(depth) + "</command>\n";
+        else if(treeNode.toString().equals("script"))
+            result += Tab(depth) + "</script>\n";
         else
             result += Tab(depth) + "</item>\n";
         
@@ -73,7 +80,6 @@ public class VpaProgram {
         if(f == null)
             f = fname;
 
-        ParseTreeNode root = VpaParseTree.GetRoot().GetChild(0);
         DefaultMutableTreeNode treeRoot = (DefaultMutableTreeNode)tree.getModel().getRoot();
         UtilFile.Write(f, SaveTreeNode(treeRoot, 0));
     }
@@ -116,14 +122,47 @@ public class VpaProgram {
         }
     }
 
+    public ParseTreeNode GetParseTreeNode(ParseTreeNode root, String name)
+    {
+        for(int i=0; i<root.children.size(); i++){
+            ParseTreeNode child = (ParseTreeNode) root.children.get(i);
+            if(child.type.equals(name))
+                return child;
+            else if(GetParseTreeNode(child, name) != null){
+                return GetParseTreeNode(child, name);
+            }
+        }
+
+        return null;
+    }
+
     public void BuildCommandTree(JTree tree)
     {
         UtilTree.RemoveAll(tree);
 
-        ParseTreeNode root = VpaParseTree.GetRoot().GetChild(0);
         DefaultMutableTreeNode treeRoot = (DefaultMutableTreeNode)tree.getModel().getRoot();
-        BuildCommandTreeNode(treeRoot, root, 0);
 
+        /* Script Section */
+        ParseTreeNode root = GetParseTreeNode(VpaParseTree.GetRoot(), "script");
+        if(root != null){
+            DefaultMutableTreeNode cnode = (DefaultMutableTreeNode)new ToolTipTreeNode("script", root.data);
+            script = root.data;
+            treeRoot.add(cnode);
+        }
+        
+        /* Command Section */
+        root = GetParseTreeNode(VpaParseTree.GetRoot(), "command");
+        if(root != null){
+            DefaultMutableTreeNode cnode = (DefaultMutableTreeNode)new ToolTipTreeNode("command", "");
+            treeRoot.add(cnode);
+            BuildCommandTreeNode(cnode, root, 0);
+        }
+        
         UtilTree.ExpandAll(tree);
+    }
+
+    public String GetScript()
+    {
+        return script;
     }
 }

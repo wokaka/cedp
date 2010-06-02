@@ -21,6 +21,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Vector;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
@@ -35,7 +36,8 @@ public class SessionPanel extends javax.swing.JPanel
     protected final int maxInjector = 1;
     
     /** Creates new form SessionPanel */
-    protected final String  configFileName = "session-";
+    protected final String configFileName = "session-";
+    protected final String basePath = "projects" +  File.separator;
     protected Frame parent;
 
     public SessionPanel()
@@ -52,15 +54,15 @@ public class SessionPanel extends javax.swing.JPanel
 
     protected void InitCampaign()
     {
-        String      campList[];
+        Vector      campList;
         Session     camp;
         int         i;
 
         System.out.println("InitCampaign");
         campList = Init();
         if(campList != null){
-            for(i=0; i<campList.length; i++)
-                idCombo.addItem(campList[i]);
+            for(i=0; i<campList.size(); i++)
+                idCombo.addItem(campList.get(i));
 
             if(idCombo.getItemCount() == 1){
                 idCombo.setSelectedIndex(0);
@@ -72,28 +74,19 @@ public class SessionPanel extends javax.swing.JPanel
         }
     }
 
-    protected String[] Init()
+    protected Vector Init()
     {
-        String      result[] = new String[0];
+        Vector      result = new Vector();
         String      files[];
         int         i, cnt;
 
-        File dir = new File("./");
+        File dir = new File(basePath);
 
         files = dir.list();
         if (files != null) {
             for (i=0, cnt=0; i<files.length; i++) {
-                if(files[i].startsWith("session-") && files[i].endsWith(".cfg"))
-                    cnt++;
-            }
-
-            if(cnt>0){
-                result = new String[cnt];
-                for (i=0, cnt=0; i<files.length; i++) {
-                    if(files[i].startsWith("session-") && files[i].endsWith(".cfg")){
-                        result[cnt] = files[i].substring(8, files[i].length() - 4);
-                        cnt++;
-                    }
+                if(files[i].startsWith("session-") && files[i].endsWith(".cfg")){
+                    result.add(files[i].substring(8, files[i].length() - 4));
                 }
             }
         }
@@ -108,7 +101,7 @@ public class SessionPanel extends javax.swing.JPanel
         Delete(name);
 
         try {
-            out = new ObjectOutputStream(new FileOutputStream("session-" + name + ".cfg"));
+            out = new ObjectOutputStream(new FileOutputStream(basePath+"session-" + name + ".cfg"));
 
             out.writeObject(camp);
 
@@ -130,12 +123,12 @@ public class SessionPanel extends javax.swing.JPanel
 
         try{
             // Check if file exists or not
-            file = new File("session-" + name + ".cfg");
+            file = new File(basePath+"session-" + name + ".cfg");
             if(!file.exists())
                 return null;
 
             // Read data form a file
-            in = new ObjectInputStream(new FileInputStream("session-" + name + ".cfg"));
+            in = new ObjectInputStream(new FileInputStream(basePath+"session-" + name + ".cfg"));
 
             obj = in.readObject();
             if(!(obj instanceof Session)){
@@ -159,7 +152,7 @@ public class SessionPanel extends javax.swing.JPanel
         File    file;
 
         try{
-            file = new File("session-" + name + ".cfg");
+            file = new File(basePath+"session-" + name + ".cfg");
             if(file.exists())
                 file.delete();
         } catch (Exception e) {
@@ -198,7 +191,7 @@ public class SessionPanel extends javax.swing.JPanel
     protected boolean CheckSession()
     {
         String  temp;
-        String  list[];
+        Vector  list;
         int     i;
 
         // Check whether it's an empty string
@@ -209,8 +202,8 @@ public class SessionPanel extends javax.swing.JPanel
         // Check whether the session name is same as one preexist
         if(idCombo.getSelectedIndex() == 0){
             list = Init();
-            for(i=0; i<list.length; i++)
-                if(list[i].equals(temp))
+            for(i=0; i<list.size(); i++)
+                if(list.get(i).equals(temp))
                     return false;
         }
 
@@ -515,8 +508,8 @@ public class SessionPanel extends javax.swing.JPanel
                 port = Integer.parseInt((String)clientTable.getModel().getValueAt(i, 1), 10);
                 id = (String)clientTable.getModel().getValueAt(i, 2);
                 pwd = (String)clientTable.getModel().getValueAt(i, 3);
-                vpa = (String)clientTable.getModel().getValueAt(i, 4);
-                cfg = (String)clientTable.getModel().getValueAt(i, 5);
+                vpa = basePath + nameField.getText() + File.separator + (String)clientTable.getModel().getValueAt(i, 4);
+                cfg = basePath + nameField.getText() + File.separator + (String)clientTable.getModel().getValueAt(i, 5);
 
                 PerfJavaNode perfJava = new PerfJavaNode(addr+":"+port, new VpaProgram(vpa), cfg);
                 perfJava.Launch(addr, port, id, pwd);
