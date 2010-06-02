@@ -26,9 +26,9 @@ public class ParseTreeNode {
 
     public void SetName(String n)
     {
-        if(n.startsWith("'"))
+        if(n.startsWith("'") || n.startsWith("\""))
             n = n.substring(1);
-        if(n.endsWith("'"))
+        if(n.endsWith("'") || n.endsWith("\""))
             n = n.substring(0, n.length()-1);
         
         name = n;

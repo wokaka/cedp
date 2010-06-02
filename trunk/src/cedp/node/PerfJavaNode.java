@@ -15,6 +15,7 @@ import cetus.exec.Driver;
 import cedp.util.AStyleWrapper;
 import cedp.util.JcraftWrapper;
 import cedp.util.JythonWrapper;
+import cedp.util.LoboWrapper;
 import cedp.util.UtilClipboard;
 import cedp.util.UtilFile;
 import cedp.util.UtilString;
@@ -214,10 +215,15 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         });
         jToolBar1.add(connButton);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Web Browser");
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton1);
 
         jSplitPane1.setDividerLocation(260);
@@ -296,7 +302,7 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
                         .addComponent(jLabel4))))
         );
 
-        jTabbedPane3.addTab("tab1", jPanel8);
+        jTabbedPane3.addTab("Console", jPanel8);
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -349,7 +355,7 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
             .addGap(0, 505, Short.MAX_VALUE)
         );
 
-        jTabbedPane4.addTab("tab2", jPanel13);
+        jTabbedPane4.addTab("Http", jPanel13);
 
         jSplitPane5.setLeftComponent(jTabbedPane4);
 
@@ -419,7 +425,7 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
 
         jPanel5.setBackground(java.awt.Color.white);
 
-        treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Commands");
+        treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("vpa");
         cmdTree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         cmdTree.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -461,7 +467,7 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Cmd", jPanel5);
+        jTabbedPane1.addTab("VPA", jPanel5);
 
         jLabel1.setText("Benchmark:");
 
@@ -520,6 +526,7 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         jTabbedPane1.addTab("tab3", jPanel7);
 
         jSplitPane2.setTopComponent(jTabbedPane1);
+        jTabbedPane1.getAccessibleContext().setAccessibleName("VPA Program");
 
         jTabbedPane2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -645,9 +652,7 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(1558, 1558, 1558))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(51, Short.MAX_VALUE))
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1216, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1345,7 +1350,7 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
                 if(node instanceof ToolTipTreeNode && node.getChildCount() == 0){
                     ToolTipTreeNode tnode = (ToolTipTreeNode) node;
                     //System.out.println("Jython : " + cmdArea.getText());
-                    JythonWrapper.Exec(cmdArea.getText());
+                    JythonWrapper.Exec(vpaProgram.GetScript() + "\n" + cmdArea.getText());
                 }
             }
         }
@@ -1446,6 +1451,15 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
     private void currDirFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_currDirFocusLost
         // TODO add your handling code here:
     }//GEN-LAST:event_currDirFocusLost
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try{
+            (new LoboWrapper()).Launch3();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void installButtonActionPerformed(java.awt.event.ActionEvent evt) {                                              
         

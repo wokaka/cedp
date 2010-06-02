@@ -1,0 +1,183 @@
+<command>
+	<item name='Original Program'>
+ 
+		<item name='Compile'>
+  
+		</item>
+		<item name='Execute'>
+  
+		</item>
+		<item name='Generate a Golden Run'>
+  
+		</item>
+		<item name='Execute /wo Loop'>
+  
+		</item>
+	</item>
+	<item name='Profiling'>
+ 
+		<item name='Instrument'>
+  
+			<item name='Get Files'>
+    
+			</item>
+			<item name='Run CETUS'>
+    
+			</item>
+			<item name='Put Files'>
+    
+			</item>
+		</item>
+		<item name='Compile'>
+  
+		</item>
+		<item name='Get Result'>
+  
+		</item>
+		<item name='Value'>
+  
+			<item name='Loop Iterations'>
+   
+			</item>
+			<item name='Kernel Instances'>
+   
+			</item>
+			<item name='Threads'>
+   
+			</item>
+			<item name='Blocks'>
+   
+			</item>
+		</item>
+		<item name='Control Flow'>
+  
+			<item name='Base'>
+   
+			</item>
+			<item name='Loop Iterations'>
+   
+			</item>
+			<item name='Kernel Instances'>
+   
+			</item>
+			<item name='Threads'>
+   
+			</item>
+			<item name='Blocks'>
+   
+			</item>
+		</item>
+	</item>
+	<item name='Fault Injection'>
+  
+		<item name='Instrument'>
+  
+			<item name='Get Files'>
+    
+			</item>
+			<item name='Run CETUS'>
+    
+			</item>
+			<item name='Put Files'>
+    
+			</item>
+		</item>
+		<item name='Compile Prerun'>
+  
+		</item>
+		<item name='Extract FI Targets'>
+  
+		</item>
+		<item name='Generate FI Cmds'>
+  
+		</item>
+		<item name='Read FI Cmds'>
+  
+		</item>
+		<item name='Compile FI'>
+  
+		</item>
+		<item name='FI'>
+  
+			<item name='FI Exp'>
+  
+			</item>
+			<item name='Get Files'>
+  
+			</item>
+			<item name='Analysis'>
+  
+			</item>
+		</item>
+		</item>
+		<item name='Error Detector'>
+  
+			<item name='Instrument'>
+  
+				<item name='Get Files'>
+  
+				</item>
+				<item name='Run CETUS'>
+  
+				</item>
+				<item name='Put Files'>
+  
+				</item>
+			</item>
+			<item name='Compile'>
+  
+			</item>
+			<item name='Profile'>
+  
+			</item>
+			<item name='Execute'>
+  
+			</item>
+		</item>
+		<item name='Fault Injection & Error Detector'>
+  
+			<item name='Instrument'>
+  
+				<item name='Get Files'>
+  
+				</item>
+				<item name='Run CETUS'>
+  
+				</item>
+				<item name='Put Files'>
+  
+				</item>
+			</item>
+			<item name='Compile Prerun'>
+  
+			</item>
+			<item name='Extract FI Targets'>
+  
+			</item>
+			<item name='Generate FI Cmds'>
+  
+			</item>
+			<item name='Read FI Cmds'>
+  
+			</item>
+			<item name='Compile FI'>
+  
+			</item>
+			<item name='FI'>
+   
+				<item name='FI Exp'>
+  
+				</item>
+				<item name='Get Files'>
+  
+				</item>
+				<item name='Analysis'>
+  
+				</item>
+				<item name='Test'>
+  
+				</item>
+			</item>
+		</item>
+	</item>
+</command>
