@@ -1,21 +1,18 @@
 #summary Other projects used in CEDP
 
-= Introduction =
+= Projects =
 
- Antlr
+ * Antlr (http://www.antlr.org/) - Parser Generator
  
- CETUS
+ * CETUS (http://cetus.ecn.purdue.edu/) - Source-to-Source Translator
 
- Lobo: Java Web-Browser
+ * Jcraft (http://www.jcraft.com/) - SSH and SFTP library for Java
 
- Jython
+ * Jython (http://www.jython.org/) - Python engine implemented in Java
 
- Jcraft
+ * Lobo (http://lobobrowser.org/) - Java Web-Browser
 
+= Extensions =
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+ What purpose these components are used?
+ What extensions made in these component for CEDP?
