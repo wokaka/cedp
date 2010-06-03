@@ -5,7 +5,6 @@
 
 package cedp.node;
 
-package
 
 import java.io.InputStreamReader;
 import java.io.PrintStream;

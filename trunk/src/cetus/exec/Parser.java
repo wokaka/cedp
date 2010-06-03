@@ -1,12 +1,12 @@
 package cetus.exec;
+import cedp.src2src.frontend.java.JavaLexer;
+import cedp.src2src.frontend.java.JavaParser;
 import java.io.*;
-import java.lang.reflect.*;
 import java.util.*;
 
 import cetus.base.grammars.*;
 import cetus.hir.TranslationUnit;
 import cetus.hir.Declaration;
-import cetus.hir.IDExpression;
 
 import cetus.treewalker.*; // not supported
 
@@ -45,7 +45,10 @@ public class Parser{
    */
   public TranslationUnit parse(String input_filename) throws IOException
   {
-		return parseAntlr(input_filename);
+        if(input_filename.endsWith("java"))
+            return parseAntlrJava(input_filename);
+        else
+            return parseAntlr(input_filename);
 /**
 	* If you want to add another parser other than antlr, then you need to modify
 	* parseExternal routine below for your purpose and update the cetus manual 
@@ -201,6 +204,51 @@ public class Parser{
 		return tu;
   }
 
+  protected TranslationUnit parseAntlrJava(String input_filename)
+  {
+    String currfile = input_filename;
+		TranslationUnit tu = new TranslationUnit(input_filename);
+    String filename = null;
+    File f = null,myf=null;
+    byte[] barray = null;
+      //InputStream source = null;
+      // pre step to handle header files
+      // Insert markers for start and end of a header file
+    String prename = null;
+
+    /* Create the Antlr-derived lexer and parser through the ClassLoader
+       so antlr.jar will be required only if the Antlr parser is used. */
+
+    Class[] params = new Class[1];
+    Object[] args = new Object[1];
+
+    // Actual antlr parser is called
+    try {
+      Class class_JavaLexer = getClass().getClassLoader().loadClass("cedp.src2src.frontend.java.JavaLexer");
+      params[0] = InputStream.class;
+      args[0] = new DataInputStream(new ByteArrayInputStream(barray));
+      JavaLexer lexer = (JavaLexer)class_JavaLexer.getConstructor(params).newInstance(args);
+
+      lexer.setOriginalSource(filename);
+//      lexer.setTokenObjectClass("cedp.src2src.frontend.java.JavaToken");
+      lexer.initialize();
+
+      Class class_JavaParser = getClass().getClassLoader().loadClass("cetus.base.grammars.JavaParser");
+      params[0] = getClass().getClassLoader().loadClass("antlr.TokenStream");
+      args[0] = lexer;
+      JavaParser parser = (JavaParser)class_JavaParser.getConstructor(params).newInstance(args);
+
+      parser.getPreprocessorInfoChannel(lexer.getPreprocessorInfoChannel());
+      parser.setLexer(lexer);
+      parser.translationUnit(tu);
+    } catch (Exception e) {
+      System.err.println("Parse error: " + e);
+      System.exit(1);
+    }
+
+    return tu;
+  }
+  
   /**
    * Parse the associated input file using an external
    * parser and create IR for this translation unit.

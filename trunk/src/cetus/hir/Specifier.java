@@ -21,7 +21,7 @@ public class Specifier implements Printable
       "private", "protected", "public", "restrict",
       "transient", "final", "abstract", "native",
       "threadsafe","synchronized","strictfp","boolean",
-      "byte","_Bool","_Complex","_Imaginary"};
+      "byte","_Bool","_Complex","_Imaginary", "enum"};
 
   public static final Specifier CHAR     = new Specifier(0);
   public static final Specifier WCHAR_T  = new Specifier(1);
@@ -80,7 +80,9 @@ public class Specifier implements Printable
   public static final Specifier CBOOL    = new Specifier(37);
   public static final Specifier CCOMPLEX  = new Specifier(38);
   public static final Specifier CIMAGINARY  = new Specifier(39);
- 
+
+  public static final Specifier ENUM  = new Specifier(40);
+
   /** Predefined integer value of each specifiers. */
   protected int value;
 

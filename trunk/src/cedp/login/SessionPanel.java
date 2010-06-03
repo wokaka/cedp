@@ -509,9 +509,9 @@ public class SessionPanel extends javax.swing.JPanel
                 id = (String)clientTable.getModel().getValueAt(i, 2);
                 pwd = (String)clientTable.getModel().getValueAt(i, 3);
                 vpa = basePath + nameField.getText() + File.separator + (String)clientTable.getModel().getValueAt(i, 4);
-                cfg = basePath + nameField.getText() + File.separator + (String)clientTable.getModel().getValueAt(i, 5);
+                cfg = (String)clientTable.getModel().getValueAt(i, 5);
 
-                PerfJavaNode perfJava = new PerfJavaNode(nameField.getText(), addr+":"+port, new VpaProgram(vpa), cfg);
+                PerfJavaNode perfJava = new PerfJavaNode(basePath + nameField.getText() + File.separator, addr+":"+port, new VpaProgram(vpa), cfg);
                 perfJava.Launch(addr, port, id, pwd);
             }
         }

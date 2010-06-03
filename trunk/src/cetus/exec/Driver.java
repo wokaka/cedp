@@ -266,9 +266,12 @@ public class Driver
 	
     try {
       program = new Program();
+
       Parser parser = new Parser();
-      for(String file : filenames)
-      program.addTranslationUnit(parser.parse(file));
+
+      for(String file : filenames){
+            program.addTranslationUnit(parser.parse(file));
+      }
     } //catch (TreeWalkException e) {
       //System.err.println("failed to build IR from syntax tree");
       //System.err.println(e);

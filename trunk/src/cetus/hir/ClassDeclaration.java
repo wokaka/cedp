@@ -134,6 +134,11 @@ public class ClassDeclaration extends Declaration implements SymbolTable
     implements_list = new LinkedList();
   }
 
+  public void SetClassSpec(List class_specs)
+  {
+    this.class_specs = class_specs;
+  }
+  
   /**
    * Constructs an empty class declaration with the given type and name ID.
    *

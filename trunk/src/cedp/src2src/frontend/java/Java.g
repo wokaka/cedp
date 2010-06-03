@@ -171,10 +171,23 @@ memoize=true;
 
 k = 2;
 //exportVocab = NEWC;
+
 }
+
+/*========================================================================*/
+/* HEADERS */
 
 @lexer::header{
 package cedp.src2src.frontend.java;
+
+import java.io.*;
+import antlr.CommonAST;
+import antlr.DumpASTVisitor;
+import java.util.*;
+import cetus.hir.*;
+import org.antlr.runtime.BitSet;
+import cetus.base.grammars.PreprocessorInfoChannel;
+import cetus.base.grammars.LineObject;
 }
 
 @header {
@@ -185,16 +198,111 @@ import antlr.CommonAST;
 import antlr.DumpASTVisitor;
 import java.util.*;
 import cetus.hir.*;
+import org.antlr.runtime.BitSet;
+import cetus.base.grammars.PreprocessorInfoChannel;
+}
+
+
+/*========================================================================*/
+/* METHODS */
+
+@lexer::members{
+protected boolean enumIsKeyword = true;
+protected boolean assertIsKeyword = true;
+
+public void initialize(String src)
+{
+  setOriginalSource(src);
+  initialize();
+}
+
+public void initialize()
+{
+//  literals.put(new ANTLRHashString("__alignof__", this), new Integer(LITERAL___alignof__));
+}
+
+LineObject lineObject = new LineObject();
+String originalSource = "";
+PreprocessorInfoChannel preprocessorInfoChannel = new PreprocessorInfoChannel();
+int tokenNumber = 0;
+boolean countingTokens = true;
+int deferredLineCount = 0;
+int extraLineCount = 1;
+JavaParser parser = null;
+
+public void setCountingTokens(boolean ct)
+{
+  countingTokens = ct;
+  if ( countingTokens ) {
+    tokenNumber = 0;
+  } else {
+    tokenNumber = 1;
+  }
+}
+
+public void setParser(JavaParser p)
+{
+  parser = p;
+}
+
+public void setOriginalSource(String src)
+{
+  originalSource = src;
+  lineObject.setSource(src);
+}
+
+public void setSource(String src)
+{
+  lineObject.setSource(src);
+}
+
+public PreprocessorInfoChannel getPreprocessorInfoChannel()
+{
+  return preprocessorInfoChannel;
+}
+
+public void setPreprocessingDirective(String pre,int t)
+{
+  preprocessorInfoChannel.addLineForTokenNumber(
+      new Pragma(pre,t), new Integer(tokenNumber));
+}
+
+protected Token makeToken(int t)
+{
+  if ( t != Token.SKIP && countingTokens) {
+    tokenNumber++;
+  }
+  JavaToken tok = (JavaToken) super.makeToken(t);
+  tok.setLine(lineObject.line);
+  tok.setSource(lineObject.source);
+  tok.setTokenNumber(tokenNumber);
+
+  lineObject.line += deferredLineCount;
+  deferredLineCount = 0;
+  return tok;
+}
+
+public void deferredNewline()
+{
+  deferredLineCount++;
+}
+
+public void newline()
+{
+  lineObject.newline();
+  setColumn(1);
+}
+
 }
 
 @members
 {
 // Copied following options from java grammar.
-codeGenMakeSwitchThreshold = 2;
-codeGenBitsetTestThreshold = 3;
+int codeGenMakeSwitchThreshold = 2;
+int codeGenBitsetTestThreshold = 3;
 
 Expression baseEnum = null,curEnum = null;
-NewCLexer curLexer=null;
+JavaLexer curLexer=null;
 boolean isFuncDef = false;
 boolean isExtern = false;
 PreprocessorInfoChannel preprocessorInfoChannel = null;
@@ -212,13 +320,13 @@ public void getPreprocessorInfoChannel(PreprocessorInfoChannel preprocChannel)
   preprocessorInfoChannel = preprocChannel;
 }
 
-public void setLexer(NewCLexer lexer)
+public void setLexer(JavaLexer lexer)
 {
   curLexer=lexer;
   curLexer.setParser(this);
 }
 
-public NewCLexer getLexer()
+public JavaLexer getLexer()
 {
   return curLexer;
 }
@@ -232,7 +340,7 @@ public LinkedList getPragma(int a)
 public void putPragma(Token sline, SymbolTable sym)
 {
   LinkedList v  = null;
-  v = getPragma(((CToken)sline).getTokenNumber());
+  v = getPragma(((JavaToken)sline).getTokenNumber());
   Iterator iter = v.iterator();
   Pragma p = null;
   PreAnnotation anote = null;
@@ -383,24 +491,36 @@ public void traceOut(String rname)
 
 }
 
-@lexer::members {
-  protected boolean enumIsKeyword = true;
-  protected boolean assertIsKeyword = true;
-}
-
-
-
-
+/*========================================================================*/
+/* BUILDING PARSE TREE */
+/* SYNTAX */
 
 // starting point for parsing a java file
 /* The annotations are separated out to make parsing faster, but must be associated with
    a packageDeclaration or a typeDeclaration (and not an empty one). */
-compilationUnit
+translationUnit [TranslationUnit init_tuint] returns [TranslationUnit tunit]
+@init {
+    /* build a new Translation Unit */
+    if (init_tunit == null)
+      tunit = new TranslationUnit(getLexer().originalSource);
+    else
+      tunit = init_tunit;
+    enterSymtab(tunit);
+}
     :   annotations
         (   packageDeclaration importDeclaration* typeDeclaration*
         |   classOrInterfaceDeclaration typeDeclaration*
+        {
+            tunit.addDeclaration(classOrInterfaceDeclaration)l
+        }
         )
+{
+    exitSymtab();
+}
     |   packageDeclaration? importDeclaration* typeDeclaration*
+{
+    exitSymtab();
+}
     ;
 
 packageDeclaration
@@ -416,46 +536,66 @@ typeDeclaration
     |   ';'
     ;
 
-classOrInterfaceDeclaration
+classOrInterfaceDeclaration returns [Declaration decl]
     :   classOrInterfaceModifiers (classDeclaration | interfaceDeclaration)
+    {
+        (classDeclaration | interfaceDeclaration).SetClassSpec(classOrInterfaceModifiers);
+    }
     ;
 
-classOrInterfaceModifiers
+classOrInterfaceModifiers returns [LinkedList list]
+@init { list = new LinkedList() }
     :   classOrInterfaceModifier*
+    {
+      list.add(classOrInterfaceModifier)
+    }
     ;
 
-classOrInterfaceModifier
+classOrInterfaceModifier returns [Specifier type]
     :   annotation   // class or interface
     |   'public'     // class or interface
+    { type = Specifier.PUBLIC; }
     |   'protected'  // class or interface
+    { type = Specifier.PROTECTED; }
     |   'private'    // class or interface
+    { type = Specifier.PRIVATE; }
     |   'abstract'   // class or interface
+    { type = Specifier.ABSTRACT; }
     |   'static'     // class or interface
+    { type = Specifier.STATIC; }
     |   'final'      // class only -- does not apply to interfaces
+    { type = Specifier.FINAL; }
     |   'strictfp'   // class or interface
+    { type = Specifier.STRICTFP; }
     ;
 
 modifiers
     :   modifier*
     ;
 
-classDeclaration
+classDeclaration returns [Declaration decl]
     :   normalClassDeclaration
+    { decl = normalClassDeclaration; }
     |   enumDeclaration
+    { decl = normalClassDeclaration; }
     ;
 
-normalClassDeclaration
+normalClassDeclaration returns [ClassDeclaration cdecl]
     :   'class' Identifier typeParameters?
         ('extends' type)?
         ('implements' typeList)?
         classBody
-            {
-                System.out.println("class - " + $Identifier.text);
-            }
+    {
+        cdecl = new ClassDeclaration(ClassDeclaration.CLASS, new NameID($Identifier.text));
+        cdecl.
+        System.out.println("class - " + $Identifier.text);
+    }
     ;
 
-typeParameters
+typeParameters returns [List class_specs]
     :   '<' typeParameter (',' typeParameter)* '>'
+    {
+    }
     ;
 
 typeParameter
@@ -466,9 +606,10 @@ typeBound
     :   type ('&' type)*
     ;
 
-enumDeclaration
+enumDeclaration returns [Declaration decl]
     :   ENUM Identifier ('implements' typeList)? enumBody
             {
+                decl = new ClassDeclaration(Specifier.ENUM, new NameID($Identifier.text));
                 System.out.println("ENUM - " + $Identifier.text);
             }
     ;
@@ -514,6 +655,9 @@ classBodyDeclaration
     :   ';'
     |   'static'? block
     |   modifiers memberDecl
+    {
+        
+    }
     ;
 
 memberDecl
@@ -541,9 +685,13 @@ genericMethodOrConstructorRest
     |   Identifier constructorDeclaratorRest
     ;
 
-methodDeclaration
+methodDeclaration returns [Procedure proc]
     :   Identifier methodDeclaratorRest
             {
+  //public Procedure(List leading_specs, Declarator declarator, CompoundStatement body)
+  //public ProcedureDeclarator(List leading_specs, IDExpression direct_decl, List params, List trailing_specs, ExceptionSpecification espec)
+                ProcedureDeclarator pdecl = new ProcedureDeclarator(, new IDExpression($Identifier.text), methodDeclaratorRest);
+                proc = new Procedure(, pdecl, )
                 System.out.println("metholdDecl - " + $Identifier.text);
             }
     ;
@@ -639,19 +787,30 @@ arrayInitializer
     :   '{' (variableInitializer (',' variableInitializer)* (',')? )? '}'
     ;
 
-modifier
+modifier returns [Specifier type]
     :   annotation
     |   'public'
+    {type = Specifier.PUBLIC;}
     |   'protected'
+    {type = Specifier.PROTECTED;}
     |   'private'
+    {type = Specifier.PRIVATE;}
     |   'static'
+    {type = Specifier.STATIC;}
     |   'abstract'
+    {type = Specifier.ABSTRACT;}
     |   'final'
+    {type = Specifier.FINAL;}
     |   'native'
+    {type = Specifier.NATIVE;}
     |   'synchronized'
+    {type = Specifier.SYNCHRONIZED;}
     |   'transient'
+    {type = Specifier.TRANSIENT;}
     |   'volatile'
+    {type = Specifier.VOLATILE;}
     |   'strictfp'
+    {type = Specifier.STRICTFP;}
     ;
 
 packageOrTypeName
@@ -666,24 +825,47 @@ typeName
     :   qualifiedName
     ;
 
-type
-	:	classOrInterfaceType ('[' ']')*
-	|	primitiveType ('[' ']')*
-	;
+type returns [List types]
+    @init {
+        types = new LinkedList();
+    }
+    : classOrInterfaceType ('[' ']')*
+    {
+        types.addAll(classOrInterfaceType); /* TODO ('[' ']')* */
+    }
+    | primitiveType ('[' ']')*
+    {
+        types.add(primitiveType); /* TODO ('[' ']')* */
+    }
+    ;
 
-classOrInterfaceType
-	:	Identifier typeArguments? ('.' Identifier typeArguments? )*
-	;
+classOrInterfaceType returns [List types]
+    @init {
+        types = new LinkedList();
+    }
+    : Identifier typeArguments? ('.' Identifier typeArguments? )*
+    {
+        /* TODO */
+    }
+    ;
 
-primitiveType
+primitiveType returns [Specifier type]
     :   'boolean'
+    { type = Specifier.BOOLEAN; }
     |   'char'
+    { type = Specifier.CHAR; }
     |   'byte'
+    { type = Specifier.BYTE; }
     |   'short'
+    { type = Specifier.SHORT; }
     |   'int'
+    { type = Specifier.INT; }
     |   'long'
+    { type = Specifier.LONG; }
     |   'float'
+    { type = Specifier.FLOAT; }
     |   'double'
+    { type = Specifier.DOUBLE; }
     ;
 
 variableModifier
@@ -826,14 +1008,24 @@ defaultValue
 
 // STATEMENTS / BLOCKS
 
-block
+block returns [CompoundStatement cstat]
+    @init{
+        cstat = new COmpoundStatement();
+    }
     :   '{' blockStatement* '}'
+    {
+        //cstat.addDeclaration(blockStatement);
+        cstat.addStatment(blockStatement);
+    }
     ;
 
-blockStatement
+blockStatement returns [Statement stat]
     :   localVariableDeclarationStatement
+    {   stat = localVariableDeclarationStatement;    }
     |   classOrInterfaceDeclaration
+    {   stat = classOrInterfaceDeclaration;    }
     |   statement
+    {   stat = statement;    }
     ;
 
 localVariableDeclarationStatement
@@ -848,10 +1040,15 @@ variableModifiers
     :   variableModifier*
     ;
 
-statement
+statement returns [Statement stat]
     : block
+    { stat = (Statement) block; }
     |   ASSERT expression (':' expression)? ';'
     |   'if' parExpression statement (options {k=1;}:'else' statement)?
+    {
+        stat = (Statement) new IfStatement(parExpression, Statement true_clause, Statement false_clause)
+        
+    }
     |   'for' '(' forControl ')' statement
     |   'while' parExpression statement
     |   'do' statement 'while' parExpression ';'
@@ -922,8 +1119,9 @@ forUpdate
 
 // EXPRESSIONS
 
-parExpression
+parExpression returns [Expression expr]
     :   '(' expression ')'
+    {   expr = expression;   }
     ;
 
 expressionList
@@ -938,8 +1136,10 @@ constantExpression
     :   expression
     ;
 
-expression
+expression returns [Expression expr]
     :   conditionalExpression (assignmentOperator expression)?
+    {   
+    }
     ;
 
 assignmentOperator
@@ -1137,7 +1337,8 @@ arguments
     :   '(' expressionList? ')'
     ;
 
-// LEXER
+/*========================================================================*/
+/* LEXER */
 
 HexLiteral : '0' ('x'|'X') HexDigit+ IntegerTypeSuffix? ;
 

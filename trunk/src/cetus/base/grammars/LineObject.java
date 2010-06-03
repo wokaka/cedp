@@ -1,6 +1,6 @@
 package cetus.base.grammars;
 
-class LineObject {
+public class LineObject {
   LineObject parent = null;
   String source = "";
   int line = 1;
