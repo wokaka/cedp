@@ -61,8 +61,8 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="nameField" pref="280" max="32767" attributes="0"/>
-                      <Component id="idCombo" alignment="0" pref="280" max="32767" attributes="1"/>
+                      <Component id="nameField" pref="293" max="32767" attributes="0"/>
+                      <Component id="idCombo" alignment="0" pref="293" max="32767" attributes="1"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -149,7 +149,7 @@
               <Group type="102" alignment="1" attributes="0">
                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="typeCombo" pref="262" max="32767" attributes="0"/>
+                  <Component id="typeCombo" pref="290" max="32767" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="plusButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
