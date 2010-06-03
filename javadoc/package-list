@@ -4,5 +4,12 @@ cedp.node
 cedp.util
 cedp.util.gui
 cetus
+cetus.analysis
+cetus.base.grammars
+cetus.codegen
+cetus.exec
+cetus.hir
+cetus.transforms
+cetus.treewalker
 com
 vpa
