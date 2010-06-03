@@ -19,7 +19,7 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        int generate = 0;
+        int generate = 2;
 
         /* LEXER */
         try{
