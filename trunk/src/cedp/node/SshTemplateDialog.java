@@ -28,24 +28,9 @@ import javax.swing.SwingUtilities;
  */
 public class SshTemplateDialog extends JFrame
 {
-    protected String nodeName;
-
     public SshTemplateDialog()
     {
         super();
     }
 
-    public SshTemplateDialog(String name)
-    {
-        super();
-        nodeName = name;
-    }
-    
-    protected Thread    thread;
-    protected String    address;
-    protected int       port;
-    protected String    id;
-    protected String    pwd;
-
-    
 }

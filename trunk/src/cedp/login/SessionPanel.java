@@ -498,7 +498,7 @@ public class SessionPanel extends javax.swing.JPanel
         int  port;
         String id, pwd;
         String vpa, cfg;
-        
+
         launchButton.disable();
 
         parent.hide();
@@ -511,7 +511,7 @@ public class SessionPanel extends javax.swing.JPanel
                 vpa = basePath + nameField.getText() + File.separator + (String)clientTable.getModel().getValueAt(i, 4);
                 cfg = basePath + nameField.getText() + File.separator + (String)clientTable.getModel().getValueAt(i, 5);
 
-                PerfJavaNode perfJava = new PerfJavaNode(addr+":"+port, new VpaProgram(vpa), cfg);
+                PerfJavaNode perfJava = new PerfJavaNode(nameField.getText(), addr+":"+port, new VpaProgram(vpa), cfg);
                 perfJava.Launch(addr, port, id, pwd);
             }
         }

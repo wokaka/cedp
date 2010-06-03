@@ -34,6 +34,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import javax.swing.JFrame;
 import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
@@ -44,23 +45,29 @@ import vpa.runtime.VpaAPI;
  *
  * @author yim6
  */
-public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
+public class PerfJavaNode extends JFrame implements ClipboardOwner
 {
     protected String nodeName;
     protected JcraftWrapper net;
     protected VpaProgram vpaProgram;
+
+    protected Thread    thread;
+    protected String    address;
+    protected int       port;
+    protected String    id;
+    protected String    pwd;
     
     /** Creates new form PerfJavaNode */
     public PerfJavaNode() {
         initComponents();
     }
 
-    public PerfJavaNode(String name, VpaProgram vpa, String cfg)
+    public PerfJavaNode(String name, String addrport, VpaProgram vpa, String cfg)
     {
-        super(name);
-        setTitle("[CEDP] Performance Java - " + name);
+        nodeName = name;
+        setTitle("[CEDP] Performance Java - " + addrport);
         initComponents();
-        InitConfig(cfg);
+        LoadConfig(cfg);
         vpaProgram = vpa;
         vpa.BuildCommandTree(cmdTree);
         VpaAPI.SetNode(this);
@@ -91,10 +98,23 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         connButtonActionPerformed(null);
     }
     
-    protected void InitConfig(String fname)
+    protected void SaveConfig()
+    {
+        String buffer;
+
+        buffer = "benchmark:" + benchmarkField.getText() + "\n";
+        buffer += "home:" + homeField.getText() + "\n";
+        buffer += "filefilter:" + fileFilterField.getText() + "\n";
+        buffer += "currdir:" + currDir.getText() + "\n";
+        System.out.println("projects" + File.separator + nodeName + File.separator + configFileField.getText());
+        UtilFile.Write("projects" + File.separator + nodeName + File.separator + configFileField.getText(), buffer);
+    }
+
+    protected void LoadConfig(String fname)
     {
         String buffer = UtilFile.Read(fname);
 
+        configFileField.setText(fname);
         StringTokenizer token = new StringTokenizer(buffer + "\n", "\n");
         while (token.hasMoreTokens()) {
             String ln = token.nextToken();
@@ -105,8 +125,12 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
             StringTokenizer ln_token = new StringTokenizer(ln, ":");
 
             String first = ln_token.nextToken();
-            String last = ln_token.nextToken();
-
+            String last;
+            if(ln_token.hasMoreTokens())
+                last = ln_token.nextToken();
+            else
+                last = "";
+            
             if(first.equals("benchmark"))
                 benchmarkField.setText(last);
             else if(first.equals("home")){
@@ -135,6 +159,7 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         jSplitPane4 = new javax.swing.JSplitPane();
         jToolBar1 = new javax.swing.JToolBar();
         connButton = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel2 = new javax.swing.JPanel();
@@ -148,7 +173,6 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         progBar = new cedp.util.gui.ProgBar();
         jButton5 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jPanel9 = new javax.swing.JPanel();
         jSplitPane5 = new javax.swing.JSplitPane();
         jTabbedPane4 = new javax.swing.JTabbedPane();
         jPanel12 = new javax.swing.JPanel();
@@ -159,7 +183,6 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         jPanel10 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         progTree = new javax.swing.JTree();
-        jPanel11 = new javax.swing.JPanel();
         jSplitPane2 = new javax.swing.JSplitPane();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel5 = new javax.swing.JPanel();
@@ -167,7 +190,6 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         cmdTree = new javax.swing.JTree();
         jScrollPane4 = new javax.swing.JScrollPane();
         cmdArea = new javax.swing.JTextArea();
-        nameField = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         benchmarkField = new javax.swing.JTextField();
@@ -175,14 +197,16 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         homeField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         fileFilterField = new javax.swing.JTextField();
-        jPanel7 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        configFileField = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         fileTable = new javax.swing.JTable();
         jScrollPane5 = new javax.swing.JScrollPane();
         currDir = new javax.swing.JTextArea();
-        jPanel4 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -215,6 +239,17 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         });
         jToolBar1.add(connButton);
 
+        jButton3.setText("Configuration");
+        jButton3.setFocusable(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton3);
+
         jButton1.setText("Web Browser");
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -227,12 +262,12 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         jToolBar1.add(jButton1);
 
         jSplitPane1.setDividerLocation(260);
-        jSplitPane1.setDividerSize(20);
+        jSplitPane1.setDividerSize(10);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jSplitPane3.setDividerLocation(540);
-        jSplitPane3.setDividerSize(20);
+        jSplitPane3.setDividerLocation(300);
+        jSplitPane3.setDividerSize(10);
         jSplitPane3.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
         jTabbedPane3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -240,7 +275,7 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         consoleArea.setBackground(new java.awt.Color(0, 102, 153));
         consoleArea.setColumns(20);
         consoleArea.setEditable(false);
-        consoleArea.setFont(new java.awt.Font("Arial", 1, 10));
+        consoleArea.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
         consoleArea.setForeground(new java.awt.Color(255, 255, 255));
         consoleArea.setLineWrap(true);
         consoleArea.setRows(5);
@@ -274,18 +309,18 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+            .addGroup(jPanel8Layout.createSequentialGroup()
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmdField, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
                 .addComponent(progBar, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 926, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 932, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -293,7 +328,7 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(progBar, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                    .addComponent(progBar, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
                     .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jButton5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 21, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -304,30 +339,17 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
 
         jTabbedPane3.addTab("Console", jPanel8);
 
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 926, Short.MAX_VALUE)
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 196, Short.MAX_VALUE)
-        );
-
-        jTabbedPane3.addTab("tab2", jPanel9);
-
         jSplitPane3.setBottomComponent(jTabbedPane3);
         jTabbedPane3.getAccessibleContext().setAccessibleName("Console");
 
         jSplitPane5.setDividerLocation(650);
-        jSplitPane5.setDividerSize(20);
+        jSplitPane5.setDividerSize(10);
 
         jTabbedPane4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         srcArea.setColumns(20);
         srcArea.setEditable(false);
-        srcArea.setFont(new java.awt.Font("Courier 10 Pitch", 0, 12));
+        srcArea.setFont(new java.awt.Font("Courier 10 Pitch", 0, 12)); // NOI18N
         srcArea.setRows(5);
         jScrollPane7.setViewportView(srcArea);
 
@@ -335,11 +357,11 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 644, Short.MAX_VALUE)
+            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
+            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
         );
 
         jTabbedPane4.addTab("Source", jPanel12);
@@ -348,11 +370,11 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 644, Short.MAX_VALUE)
+            .addGap(0, 642, Short.MAX_VALUE)
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 505, Short.MAX_VALUE)
+            .addGap(0, 267, Short.MAX_VALUE)
         );
 
         jTabbedPane4.addTab("Http", jPanel13);
@@ -378,27 +400,14 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
         );
 
         jTabbedPane5.addTab("Layout", jPanel10);
-
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 256, Short.MAX_VALUE)
-        );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 505, Short.MAX_VALUE)
-        );
-
-        jTabbedPane5.addTab("tab2", jPanel11);
 
         jSplitPane5.setRightComponent(jTabbedPane5);
 
@@ -408,17 +417,17 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 932, Short.MAX_VALUE)
+            .addComponent(jSplitPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 941, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 791, Short.MAX_VALUE)
+            .addComponent(jSplitPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
         );
 
         jSplitPane1.setRightComponent(jPanel2);
 
-        jSplitPane2.setDividerLocation(400);
-        jSplitPane2.setDividerSize(20);
+        jSplitPane2.setDividerLocation(270);
+        jSplitPane2.setDividerSize(10);
         jSplitPane2.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -447,24 +456,15 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-                    .addComponent(nameField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("VPA", jPanel5);
@@ -475,6 +475,22 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
 
         jLabel3.setText("File Filter:");
 
+        jLabel5.setText("File Name:");
+
+        jButton4.setText("Save");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton6.setText("Load");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -482,14 +498,24 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(homeField, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                    .addComponent(benchmarkField, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                    .addComponent(fileFilterField, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(10, 10, 10)
+                        .addComponent(configFileField, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(benchmarkField, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                            .addComponent(fileFilterField, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                            .addComponent(homeField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jButton4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton6)))))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -497,33 +523,28 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(benchmarkField, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jLabel5)
+                    .addComponent(configFileField, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(benchmarkField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
                     .addComponent(homeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(fileFilterField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(254, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4)
+                    .addComponent(jButton6))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Info", jPanel6);
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 254, Short.MAX_VALUE)
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 365, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("tab3", jPanel7);
+        jTabbedPane1.addTab("Config", jPanel6);
 
         jSplitPane2.setTopComponent(jTabbedPane1);
         jTabbedPane1.getAccessibleContext().setAccessibleName("VPA Program");
@@ -568,37 +589,18 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Files", jPanel3);
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 254, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 340, Short.MAX_VALUE)
-        );
-
-        jTabbedPane2.addTab("tab2", jPanel4);
 
         jSplitPane2.setRightComponent(jTabbedPane2);
 
@@ -649,17 +651,15 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(1558, 1558, 1558))
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1216, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 1216, Short.MAX_VALUE)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1216, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 795, Short.MAX_VALUE))
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE))
         );
 
         pack();
@@ -1281,52 +1281,9 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
         */
     }
     
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        consoleArea.setText("");
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     public void lostOwnership(Clipboard clipboard, Transferable contents) {
         //throw new UnsupportedOperationException("Not supported yet.");
     }
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-        byte a[] = new byte[1];
-
-        a[0] = 0x3; //;0x18; //0x1b
-        cmdInputStream.AddCommand("" + new String(a, 0, 1));
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void consoleAreaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_consoleAreaKeyTyped
-        // TODO add your handling code here:
-        if(evt.getKeyChar() == 3){ // Ctrl+C
-            UtilClipboard.Set(consoleArea.getSelectedText());
-        }
-        else if(evt.getKeyChar() == 24){ // Ctrl+X
-            System.out.println("Ctrl+X is not supported. Please use Ctrl+C");
-        }
-        else if(evt.getKeyChar() == 22){ // Ctrl+V
-            consoleArea.append(UtilClipboard.Get());
-        }
-        else if(evt.getKeyChar() == 16){ // Ctrl+P
-            System.out.println("Ctrl+P is not recognized.");
-        }
-        else{
-            System.out.println("" + (int)(evt.getKeyChar()));
-            if(evt.getKeyChar() == 10){ // Enter (CR)
-                if(cmdField.getText().length()>0)
-                    net.RunCommandBlocked(cmdField.getText());
-                cmdField.setText("");
-            }
-            else if(evt.getKeyChar() == 8){ // Backspace
-                cmdField.setText(cmdField.getText().substring(0, cmdField.getText().length()-1));
-            }
-            else{
-                cmdField.setText(cmdField.getText() + evt.getKeyChar());
-            }
-        }
-    }//GEN-LAST:event_consoleAreaKeyTyped
 
     private void cmdTreeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmdTreeMousePressed
         // TODO add your handling code here:
@@ -1460,6 +1417,60 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
             e.printStackTrace();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        consoleArea.setText("");
+}//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        byte a[] = new byte[1];
+
+        a[0] = 0x3; //;0x18; //0x1b
+        cmdInputStream.AddCommand("" + new String(a, 0, 1));
+}//GEN-LAST:event_jButton5ActionPerformed
+
+    private void consoleAreaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_consoleAreaKeyTyped
+        // TODO add your handling code here:
+        if(evt.getKeyChar() == 3){ // Ctrl+C
+            UtilClipboard.Set(consoleArea.getSelectedText());
+        } else if(evt.getKeyChar() == 24){ // Ctrl+X
+            System.out.println("Ctrl+X is not supported. Please use Ctrl+C");
+        } else if(evt.getKeyChar() == 22){ // Ctrl+V
+            consoleArea.append(UtilClipboard.Get());
+        } else if(evt.getKeyChar() == 16){ // Ctrl+P
+            System.out.println("Ctrl+P is not recognized.");
+        } else{
+            System.out.println("" + (int)(evt.getKeyChar()));
+            if(evt.getKeyChar() == 10){ // Enter (CR)
+                if(cmdField.getText().length()>0)
+                    net.RunCommandBlocked(cmdField.getText());
+                cmdField.setText("");
+            } else if(evt.getKeyChar() == 8){ // Backspace
+                cmdField.setText(cmdField.getText().substring(0, cmdField.getText().length()-1));
+            } else{
+                cmdField.setText(cmdField.getText() + evt.getKeyChar());
+            }
+        }
+}//GEN-LAST:event_consoleAreaKeyTyped
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        SaveConfig();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        LoadConfig(configFileField.getText());
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     private void installButtonActionPerformed(java.awt.event.ActionEvent evt) {                                              
         
@@ -1639,6 +1650,7 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
     private javax.swing.JTextArea cmdArea;
     private javax.swing.JTextField cmdField;
     private javax.swing.JTree cmdTree;
+    private javax.swing.JTextField configFileField;
     private javax.swing.JButton connButton;
     private javax.swing.JTextArea consoleArea;
     private javax.swing.JTextArea currDir;
@@ -1648,28 +1660,28 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
     private javax.swing.JMenuItem installMenuItem;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -1690,7 +1702,6 @@ public class PerfJavaNode extends SshTemplateDialog implements ClipboardOwner
     private javax.swing.JTabbedPane jTabbedPane4;
     private javax.swing.JTabbedPane jTabbedPane5;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JTextField nameField;
     private cedp.util.gui.ProgBar progBar;
     private javax.swing.JTree progTree;
     private javax.swing.JMenuItem saveMenuItem;
