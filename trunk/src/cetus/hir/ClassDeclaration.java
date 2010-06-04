@@ -138,6 +138,13 @@ public class ClassDeclaration extends Declaration implements SymbolTable
   {
     this.class_specs = class_specs;
   }
+
+  protected Statement body_stat;
+  
+  public void SetBodyStatement(Statement stat)
+  {
+      this.body_stat = stat;
+  }
   
   /**
    * Constructs an empty class declaration with the given type and name ID.

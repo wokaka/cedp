@@ -583,15 +583,6 @@ importDeclaration returns [Declaration ret_decl]
             {
                 CodeAnnotation anno = new CodeAnnotation("import " + ((check1==1)?"static ":"") + ((check2==1)?".*":"") + ";");
                 ret_decl = new AnnotationDeclaration(anno);
-/*
-                ret_decl = new AnnotationDeclaration(2 + check1 + check2);
-                int i = 0;
-                ret_decl.setChild(i++, new NameID("import"));
-                if(check1)
-                    ret_decl.setChild(i++, new NameID("static"));
-                ret_decl.setChild(i++, qualifiedName);
-                if(check2)
-                    ret_decl.setChild(i++, new NameID(".*"));*/
             }
     ;
 
@@ -653,32 +644,46 @@ classOrInterfaceModifier returns [Specifier type]
             { type = Specifier.STRICTFP; }
     ;
 
-modifiers
-    :   modifier*
-    ;
-
-classDeclaration returns [ClassDeclaration decl]
-    :   normalClassDeclaration
-        { decl = normalClassDeclaration; }
-    |   enumDeclaration
-        { decl = enumDeclaration; }
-    ;
-
-normalClassDeclaration returns [ClassDeclaration ret_decl]
-    :   'class' Identifier typeParameters?
-        ('extends' type)?
-        ('implements' typeList)?
-        classBody
+/* OK */
+modifiers returns [List list]
+    @init { list = new LinkedList(); }
+    :   (t1=modifier
             {
-                ret_decl = new ClassDeclaration(ClassDeclaration.CLASS, new NameID($Identifier.text));
-                /* TODO */
+                list.add(t1);
+            }
+        )*
+    ;
+
+/* OK */
+classDeclaration returns [ClassDeclaration decl]
+    :   t1=normalClassDeclaration
+            {
+                decl = t1;
+            }
+    |   t2=enumDeclaration
+            {
+                decl = t2;
             }
     ;
 
-typeParameters returns [List class_specs]
+/* OK */
+normalClassDeclaration returns [ClassDeclaration ret_decl]
+    @init { int check1 = 0; }
+    :   'class' Identifier typeParameters?
+        ('extends' t2=type { check1 = 1; })?
+        ('implements' typeList)?
+        t1=classBody
+            {
+                ret_decl = new ClassDeclaration(ClassDeclaration.CLASS, new NameID($Identifier.text));
+                ret_decl.SetBodyStatement(t1);
+                //if(check1 == 1)
+                //    ret_decl.addBaseInterface(t2); // t2 is List of Specifier
+                /* TODO extends and implments supports */
+            }
+    ;
+
+typeParameters returns
     :   '<' typeParameter (',' typeParameter)* '>'
-    {
-    }
     ;
 
 typeParameter
@@ -689,24 +694,48 @@ typeBound
     :   type ('&' type)*
     ;
 
-enumDeclaration returns [ClassDeclaration decl]
-    :   ENUM Identifier ('implements' typeList)? enumBody
+enumDeclaration returns [ClassDeclaration ret_decl]
+    :   ENUM Identifier ('implements' typeList)? t1=enumBody
             {
-                decl = new ClassDeclaration(Specifier.ENUM, new NameID($Identifier.text));
+                ret_decl = new ClassDeclaration(Specifier.ENUM, new NameID($Identifier.text));
+                ret_decl.SetBodyStatement(t1);
                 /* TODO */
             }
     ;
 
-enumBody
-    :   '{' enumConstants? ','? enumBodyDeclarations? '}'
+enumBody returns [List list]
+    @init { list = new LinkedList(); }
+    :   '{' (t1=enumConstants
+            {
+                for(int i=0; i<t1.size(); i++)
+                    list.add(t1.get(i));
+            }
+        )? ','? (enumBodyDeclarations
+            {
+                /* TODO */
+            }
+        )? '}'
     ;
 
-enumConstants
-    :   enumConstant (',' enumConstant)*
+enumConstants return [List list]
+    @init { list = new LinkedList(); }
+    :   t1=enumConstant
+            {
+                list.add(t1);
+            }
+        (',' t2=enumConstant
+            {
+                list.add(t2);
+            }
+        )*
     ;
 
-enumConstant
+enumConstant returns [VariableDeclarator ret_decl]
     :   annotations? Identifier arguments? classBody?
+            {
+                ret_decl = new VariableDeclarator($Identifier.text);
+                /* TODO */
+            }
     ;
 
 enumBodyDeclarations
