@@ -171,7 +171,6 @@ memoize=true;
 
 k = 2;
 //exportVocab = NEWC;
-
 }
 
 /*========================================================================*/
@@ -295,8 +294,7 @@ public void newline()
 
 }
 
-@members
-{
+@members{
 // Copied following options from java grammar.
 int codeGenMakeSwitchThreshold = 2;
 int codeGenBitsetTestThreshold = 3;
@@ -498,98 +496,170 @@ public void traceOut(String rname)
 // starting point for parsing a java file
 /* The annotations are separated out to make parsing faster, but must be associated with
    a packageDeclaration or a typeDeclaration (and not an empty one). */
+/* OK */
 translationUnit [TranslationUnit init_tuint] returns [TranslationUnit tunit]
-@init {
-    /* build a new Translation Unit */
-    if (init_tunit == null)
-      tunit = new TranslationUnit(getLexer().originalSource);
-    else
-      tunit = init_tunit;
-    enterSymtab(tunit);
-}
+    @init {
+        /* build a new Translation Unit */
+        if (init_tunit == null)
+          tunit = new TranslationUnit(getLexer().originalSource);
+        else
+          tunit = init_tunit;
+        enterSymtab(tunit);
+    }
     :   annotations
-        (   packageDeclaration importDeclaration* typeDeclaration*
-        |   classOrInterfaceDeclaration typeDeclaration*
-        {
-            tunit.addDeclaration(classOrInterfaceDeclaration)l
-        }
+        (   packageDeclaration 
+                {
+                    tunit.addDeclaration(packageDeclaration);
+                }
+            (importDeclaration
+                {
+                    tunit.addDeclaration(importDeclaration);
+                }
+            )*
+            (typeDeclaration
+                {
+                    if(typeDeclaration != null)
+                        tunit.addDeclaration(typeDeclaration);
+                }
+            )*
+        |   classOrInterfaceDeclaration 
+                {
+                    tunit.addDeclaration(classOrInterfaceDeclaration);
+                }
+            (typeDeclaration
+                {
+                    if(typeDeclaration != null)
+                        tunit.addDeclaration(typeDeclaration);
+                }
+            )*
         )
-{
-    exitSymtab();
-}
-    |   packageDeclaration? importDeclaration* typeDeclaration*
-{
-    exitSymtab();
-}
+            {
+                exitSymtab();
+            }
+    |   packageDeclaration
+                {
+                    tunit.addDeclaration(packageDeclaration);
+                }?
+        ( importDeclaration
+                {
+                    tunit.addDeclaration(importDeclaration);
+                }
+        )*
+        ( typeDeclaration
+                {
+                    if(typeDeclaration != null)
+                        tunit.addDeclaration(typeDeclaration);
+                }
+        )*
+            {
+                exitSymtab();
+            }
     ;
 
-packageDeclaration
+/* OK */
+packageDeclaration returns [Declaration ret_decl]
     :   'package' qualifiedName ';'
+            {
+                ret_decl = new Declaration(2);
+                ret_decl.setChild(0, new NameID("package"));
+                ret_decl.setChild(1, qualifiedName);
+            }
     ;
 
-importDeclaration
-    :   'import' 'static'? qualifiedName ('.' '*')? ';'
+/* OK */
+importDeclaration returns [Declaration ret_decl]
+    @init { int check1 = 0, check2 = 0; }
+    :   'import' 'static'{check1 = 1;}? qualifiedName ('.' '*' {check2 = 1;})? ';'
+            {
+                ret_decl = new Declaration(2 + check1 + check2);
+                int i = 0;
+                ret_decl.setChild(i++, new NameID("import"));
+                if(check1)
+                    ret_decl.setChild(i++, new NameID("static"));
+                ret_decl.setChild(i++, qualifiedName);
+                if(check2)
+                    ret_decl.setChild(i++, new NameID(".*"));
+            }
     ;
 
-typeDeclaration
+/* OK */
+typeDeclaration returns [Declaration ret_decl]
     :   classOrInterfaceDeclaration
+            {
+                ret_decl = classOrInterfaceDeclaration;
+            }
     |   ';'
+            {
+                ret_decl = null;
+            }
     ;
 
-classOrInterfaceDeclaration returns [Declaration decl]
-    :   classOrInterfaceModifiers (classDeclaration | interfaceDeclaration)
-    {
-        (classDeclaration | interfaceDeclaration).SetClassSpec(classOrInterfaceModifiers);
-    }
+/* OK */
+classOrInterfaceDeclaration returns [Declaration ret_decl]
+    :   classOrInterfaceModifiers
+        (classDeclaration
+            {
+                classDeclaration.SetClassSpec(classOrInterfaceModifiers);
+                ret_decl = (Declaration) classDeclaration;
+            }
+        | interfaceDeclaration
+            {
+                interfaceDeclaration.SetClassSpec(classOrInterfaceModifiers);
+                ret_decl = (Declaration) interfaceDeclaration;
+            }
+        )
     ;
 
+/* OK */
 classOrInterfaceModifiers returns [LinkedList list]
-@init { list = new LinkedList() }
-    :   classOrInterfaceModifier*
-    {
-      list.add(classOrInterfaceModifier)
-    }
+    @init { list = new LinkedList(); }
+    :   (classOrInterfaceModifier
+            {
+              list.add(classOrInterfaceModifier)
+            }
+        )*
     ;
 
+/* OK */
 classOrInterfaceModifier returns [Specifier type]
     :   annotation   // class or interface
+            { type = Specifier.ANNOTATION; }
     |   'public'     // class or interface
-    { type = Specifier.PUBLIC; }
+            { type = Specifier.PUBLIC; }
     |   'protected'  // class or interface
-    { type = Specifier.PROTECTED; }
+            { type = Specifier.PROTECTED; }
     |   'private'    // class or interface
-    { type = Specifier.PRIVATE; }
+            { type = Specifier.PRIVATE; }
     |   'abstract'   // class or interface
-    { type = Specifier.ABSTRACT; }
+            { type = Specifier.ABSTRACT; }
     |   'static'     // class or interface
-    { type = Specifier.STATIC; }
+            { type = Specifier.STATIC; }
     |   'final'      // class only -- does not apply to interfaces
-    { type = Specifier.FINAL; }
+            { type = Specifier.FINAL; }
     |   'strictfp'   // class or interface
-    { type = Specifier.STRICTFP; }
+            { type = Specifier.STRICTFP; }
     ;
 
 modifiers
     :   modifier*
     ;
 
-classDeclaration returns [Declaration decl]
+classDeclaration returns [ClassDeclaration decl]
     :   normalClassDeclaration
-    { decl = normalClassDeclaration; }
+        { decl = normalClassDeclaration; }
     |   enumDeclaration
-    { decl = normalClassDeclaration; }
+        { decl = enumDeclaration; }
     ;
 
-normalClassDeclaration returns [ClassDeclaration cdecl]
+normalClassDeclaration returns [ClassDeclaration ret_decl]
     :   'class' Identifier typeParameters?
         ('extends' type)?
         ('implements' typeList)?
         classBody
-    {
-        cdecl = new ClassDeclaration(ClassDeclaration.CLASS, new NameID($Identifier.text));
-        cdecl.
-        System.out.println("class - " + $Identifier.text);
-    }
+            {
+                ret_decl = new ClassDeclaration(ClassDeclaration.CLASS, new NameID($Identifier.text));
+                /* TODO */
+            }
     ;
 
 typeParameters returns [List class_specs]
@@ -606,11 +676,11 @@ typeBound
     :   type ('&' type)*
     ;
 
-enumDeclaration returns [Declaration decl]
+enumDeclaration returns [ClassDeclaration decl]
     :   ENUM Identifier ('implements' typeList)? enumBody
             {
                 decl = new ClassDeclaration(Specifier.ENUM, new NameID($Identifier.text));
-                System.out.println("ENUM - " + $Identifier.text);
+                /* TODO */
             }
     ;
 
@@ -750,7 +820,7 @@ voidInterfaceMethodDeclaratorRest
     :   formalParameters ('throws' qualifiedNameList)? ';'
     ;
 
-constructorDeclaratorRest
+constructorDeclaratorRest returns [Procedure ret_proc]
     :   formalParameters ('throws' qualifiedNameList)? constructorBody
     ;
 
@@ -762,8 +832,12 @@ variableDeclarators
     :   variableDeclarator (',' variableDeclarator)*
     ;
 
-variableDeclarator
-    :   variableDeclaratorId ('=' variableInitializer)?
+variableDeclarator returns [VariableDeclarator ret_decl]
+    :   variableDeclaratorId
+            { ret_decl = new VariableDeclarator(variableDeclaratorId); }
+        ('=' variableInitializer
+            { ret_decl.setInitializer(variableInitializer); }
+        )?
     ;
 
 constantDeclaratorsRest
@@ -774,51 +848,75 @@ constantDeclaratorRest
     :   ('[' ']')* '=' variableInitializer
     ;
 
-variableDeclaratorId
-    :   Identifier ('[' ']')*
+/* OK */
+variableDeclaratorId returns [IDExpression ret_id]
+    :   Identifier { ret_decl = new NameID($Identifier.text); } ('[' ']' { /* TODO */ } )*
     ;
 
-variableInitializer
+/* OK */
+variableInitializer returns [Initializer init]
     :   arrayInitializer
+            { init = arrayInitializer; }
     |   expression
+            { init = new Initializer(expression); }
     ;
 
-arrayInitializer
-    :   '{' (variableInitializer (',' variableInitializer)* (',')? )? '}'
+/* OK */
+arrayInitializer returns [Initializer init]
+    @init { List list = new List(); }
+    :   '{' (variableInitializer
+                { List tlist = variableInitializer.getChildren();
+                  for(int i=0; i<tlist.size(); i++)
+                    list.add(tlist.get(i));
+                }
+         (',' variableInitializer
+                { List tlist = variableInitializer.getChildren();
+                  for(int i=0; i<tlist.size(); i++)
+                    list.add(tlist.get(i));
+                }
+        )* (',')? )? '}'
+                {
+                    init = new Initializer(list);
+                }
     ;
 
 modifier returns [Specifier type]
     :   annotation
+            { type = Specifier.ANNOTATION; }
     |   'public'
-    {type = Specifier.PUBLIC;}
+            {type = Specifier.PUBLIC;}
     |   'protected'
-    {type = Specifier.PROTECTED;}
+            {type = Specifier.PROTECTED;}
     |   'private'
-    {type = Specifier.PRIVATE;}
+            {type = Specifier.PRIVATE;}
     |   'static'
-    {type = Specifier.STATIC;}
+            {type = Specifier.STATIC;}
     |   'abstract'
-    {type = Specifier.ABSTRACT;}
+            {type = Specifier.ABSTRACT;}
     |   'final'
-    {type = Specifier.FINAL;}
+            {type = Specifier.FINAL;}
     |   'native'
-    {type = Specifier.NATIVE;}
+            {type = Specifier.NATIVE;}
     |   'synchronized'
-    {type = Specifier.SYNCHRONIZED;}
+            {type = Specifier.SYNCHRONIZED;}
     |   'transient'
-    {type = Specifier.TRANSIENT;}
+            {type = Specifier.TRANSIENT;}
     |   'volatile'
-    {type = Specifier.VOLATILE;}
+            {type = Specifier.VOLATILE;}
     |   'strictfp'
-    {type = Specifier.STRICTFP;}
+            {type = Specifier.STRICTFP;}
     ;
 
 packageOrTypeName
     :   qualifiedName
     ;
 
-enumConstantName
-    :   Identifier
+
+/* OK */
+enumConstantName returns [Identifier id]
+    @init { Identifier id_temp = null; }
+    :   id_temp=Identifier
+            { id = new Identifier(id_temp); }
     ;
 
 typeName
@@ -849,23 +947,24 @@ classOrInterfaceType returns [List types]
     }
     ;
 
+/* OK */
 primitiveType returns [Specifier type]
     :   'boolean'
-    { type = Specifier.BOOLEAN; }
+            { type = Specifier.BOOLEAN; }
     |   'char'
-    { type = Specifier.CHAR; }
+            { type = Specifier.CHAR; }
     |   'byte'
-    { type = Specifier.BYTE; }
+            { type = Specifier.BYTE; }
     |   'short'
-    { type = Specifier.SHORT; }
+            { type = Specifier.SHORT; }
     |   'int'
-    { type = Specifier.INT; }
+            { type = Specifier.INT; }
     |   'long'
-    { type = Specifier.LONG; }
+            { type = Specifier.LONG; }
     |   'float'
-    { type = Specifier.FLOAT; }
+            { type = Specifier.FLOAT; }
     |   'double'
-    { type = Specifier.DOUBLE; }
+            { type = Specifier.DOUBLE; }
     ;
 
 variableModifier
@@ -913,8 +1012,20 @@ explicitConstructorInvocation
     ;
 
 
-qualifiedName
-    :   Identifier ('.' Identifier)*
+qualifiedName returns [NameID ret_id]
+    @init { String str = "", id1, id2;}
+    :   id1=Identifier
+            {
+                str += "" + id1;
+            }
+        ('.' id2=Identifier
+            {
+                str += "." + id2;
+            }
+        )*
+            {
+                ret_id = new NameID(str);
+            }
     ;
 
 literal
@@ -943,8 +1054,12 @@ annotations
     :   annotation+
     ;
 
-annotation
-    :   '@' annotationName ( '(' ( elementValuePairs | elementValue )? ')' )?
+/* OK */
+annotation returns [Specifier type]
+    :   '@' annotationName 
+            { type = Specifier.ANNOTATION; }
+        ( '(' ( elementValuePairs | elementValue )? ')' )?
+            /* TODO : Need to define a class for Java Annotation */
     ;
 
 annotationName
@@ -1040,32 +1155,64 @@ variableModifiers
     :   variableModifier*
     ;
 
-statement returns [Statement stat]
+statement returns [Statement ret_stat]
+    @init { Statement stat1=null, stat2=null; }
     : block
-    { stat = (Statement) block; }
+            { stat = (Statement) block; }
     |   ASSERT expression (':' expression)? ';'
-    |   'if' parExpression statement (options {k=1;}:'else' statement)?
-    {
-        stat = (Statement) new IfStatement(parExpression, Statement true_clause, Statement false_clause)
-        
-    }
-    |   'for' '(' forControl ')' statement
+            {  /* TODO */ }
+    |   'if' parExpression stat1=statement
+            {
+                ret_stat = (Statement) new IfStatement(parExpression, stat1);
+            }
+        (options {k=1;}:'else' stat2=statement
+            {
+                ret_stat = (Statement) new IfStatement(parExpression, stat1, stat2);
+            }
+        )?
+    |   'for' '(' forControl ')' stat2=statement
+            {
+                forControl.setBody(stat2);
+                ret_stat = (Statement)forControl;
+            }
     |   'while' parExpression statement
+            {
+                ret_stat = (Statement) new WhileLoop(parExpression, statement);
+            }
     |   'do' statement 'while' parExpression ';'
+            {
+                ret_stat = (Statement) new DoLoop(statement, parExpression);
+            }
     |   'try' block
         ( catches 'finally' block
         | catches
-        |   'finally' block
+        | 'finally' block
         )
+            {
+                /* TODO */
+            }
     |   'switch' parExpression '{' switchBlockStatementGroups '}'
+            {   ret_stat = (Statement) new SwitchStatement(parExpression, switchBlockStatementGroups); }
     |   'synchronized' parExpression block
-    |   'return' expression? ';'
+            {  /* TODO */ }
+    |   'return'
+            {   ret_stat = (Statement) new ReturnStatement(); }
+        expression 
+            {   ret_stat = (Statement) new ReturnStatement(expression); }? ';'
     |   'throw' expression ';'
+            {   ret_stat = (Statement) new Statement();
+                ret_stat.addChild(0, new ThrowExpression(expression)); }
     |   'break' Identifier? ';'
+            {   ret_stat = (Statement) new BreakStatement(); }
     |   'continue' Identifier? ';'
+            {   ret_stat = (Statement) new ContinueStatement(); /* TODO Identifier support */ }
     |   ';'
+            {   ret_stat = new NullStatement(); }
     |   statementExpression ';'
+            {   ret_stat = (Statement) new Statement();
+                ret_stat.addChild(0, statementExpression); }
     |   Identifier ':' statement
+            {  /* TODO */ }
     ;
 
 catches
@@ -1080,184 +1227,325 @@ formalParameter
     :   variableModifiers type variableDeclaratorId
     ;
 
-switchBlockStatementGroups
-    :   (switchBlockStatementGroup)*
+/* OK */
+switchBlockStatementGroups returns [CompoundStatement cstat]
+    @init { cstat = new CompoundStatement(); }
+    :   (switchBlockStatementGroup
+            { cstat.addStatement(switchBlockStatementGroup); }
+        )*
     ;
 
 /* The change here (switchLabel -> switchLabel+) technically makes this grammar
    ambiguous; but with appropriately greedy parsing it yields the most
    appropriate AST, one in which each group, except possibly the last one, has
    labels and statements. */
-switchBlockStatementGroup
+switchBlockStatementGroup returns [Statement stat]
     :   switchLabel+ blockStatement*
     ;
 
-switchLabel
+/* OK */
+switchLabel returns [Statement case]
     :   'case' constantExpression ':'
+            { case = new Case(constantExpression); }
     |   'case' enumConstantName ':'
+            { case = new Case(constantExpression); }
     |   'default' ':'
+            { case = new Default();  }
     ;
 
-forControl
-options {k=3;} // be efficient for common case: for (ID ID : ID) ...
+/* OK */
+forControl returns [ForLoop forloop]
+    options {k=3;} // be efficient for common case: for (ID ID : ID) ...
+    @init { Statement stat=null; Expression expr1=null, expr2=null; }
     :   enhancedForControl
-    |   forInit? ';' expression? ';' forUpdate?
+            { forloop = enhancedForControl; }
+    |   stat=forInit? ';' expr1=expression? ';' expr2=forUpdate?
+            { forloop = new ForLoop(stat, expr1, expr2, null);  }
     ;
 
-forInit
+forInit returns [Statement stat]
     :   localVariableDeclaration
+            { stat = TODO; }
     |   expressionList
+            { stat = TODO; }
     ;
 
-enhancedForControl
+/* OK - TODO */
+enhancedForControl returns [ForLoop forloop]
     :   variableModifiers type Identifier ':' expression
+            { System.out.println("Unsupported for-loop style\n"); System.exit(-1); }
     ;
 
-forUpdate
+/* OK */
+forUpdate returns [Expression expr]
     :   expressionList
+        {expr = expressionList; }
     ;
 
 // EXPRESSIONS
-
+/* OK */
 parExpression returns [Expression expr]
-    :   '(' expression ')'
-    {   expr = expression;   }
+    :   '(' expression 
+            { expr = expression; }
+        ')'
     ;
 
-expressionList
-    :   expression (',' expression)*
+/* OK */
+expressionList returns [Expression ret_expr]
+    @init { Expression expr1=null, expr2=null; List list;}
+    :   expr1=expression
+            { ret_expr = expr1; }
+        (',' expr2=expression
+            { list = new List();
+              list.add(expr1);
+              list.add(expr2);
+              ret_expr = new CommaExpression(list);
+            }
+        )*
     ;
 
-statementExpression
+/* OK */
+statementExpression returns [Expression expr]
     :   expression
+            { expr = expression; }
     ;
 
-constantExpression
+/* OK */
+constantExpression returns [Expression expr]
     :   expression
+            { expr = expression; }
     ;
 
-expression returns [Expression expr]
-    :   conditionalExpression (assignmentOperator expression)?
-    {   
-    }
+/* OK */
+expression returns [Expression ret_expr]
+    @init { Expression expr1=null, expr2=null; }
+    :   expr1=conditionalExpression
+            {   ret_expr = expr1;    }
+        (assignmentOperator expr2=expression
+            {   ret_expr = new BinaryExpression(expr1, assignmentOperator, expr2); }
+        )?
     ;
 
-assignmentOperator
+/* OK */
+assignmentOperator returns [AssignmentOperator op]
     :   '='
+            { op = AssignmentOperator.NORMAL; }
     |   '+='
+            { op = AssignmentOperator.ADD; }
     |   '-='
+            { op = AssignmentOperator.SUBTRACT; }
     |   '*='
+            { op = AssignmentOperator.MULTIPLY; }
     |   '/='
+            { op = AssignmentOperator.DIVIDE; }
     |   '&='
+            { op = AssignmentOperator.BITWISE_AND; }
     |   '|='
+            { op = AssignmentOperator.BITWISE_INCLUSIVE_OR; }
     |   '^='
+            { op = AssignmentOperator.BITWISE_EXCLUSIVE_OR; }
     |   '%='
+            { op = AssignmentOperator.MODULUS; }
     |   ('<' '<' '=')=> t1='<' t2='<' t3='='
         { $t1.getLine() == $t2.getLine() &&
           $t1.getCharPositionInLine() + 1 == $t2.getCharPositionInLine() &&
           $t2.getLine() == $t3.getLine() &&
           $t2.getCharPositionInLine() + 1 == $t3.getCharPositionInLine() }?
-    |   ('>' '>' '>' '=')=> t1='>' t2='>' t3='>' t4='='
+            { op = AssignmentOperator.SHIFT_LEFT; }
+/*    |   ('>' '>' '>' '=')=> t1='>' t2='>' t3='>' t4='='   [Original Code*/
+    |   ('<' '<' '<' '=')=> t1='>' t2='>' t3='>' t4='='
         { $t1.getLine() == $t2.getLine() &&
           $t1.getCharPositionInLine() + 1 == $t2.getCharPositionInLine() &&
           $t2.getLine() == $t3.getLine() &&
           $t2.getCharPositionInLine() + 1 == $t3.getCharPositionInLine() &&
           $t3.getLine() == $t4.getLine() &&
           $t3.getCharPositionInLine() + 1 == $t4.getCharPositionInLine() }?
+            { op = AssignmentOperator.SHIFT_LEFT_TRIPLE; }
     |   ('>' '>' '=')=> t1='>' t2='>' t3='='
         { $t1.getLine() == $t2.getLine() &&
           $t1.getCharPositionInLine() + 1 == $t2.getCharPositionInLine() &&
           $t2.getLine() == $t3.getLine() &&
           $t2.getCharPositionInLine() + 1 == $t3.getCharPositionInLine() }?
+            { op = AssignmentOperator.SHIFT_RIGHT; }
     ;
 
-conditionalExpression
-    :   conditionalOrExpression ( '?' expression ':' expression )?
+/* OK */
+conditionalExpression returns [Expression ret_expr]
+    @init { ret_expr = null; Expression expr1=null,expr2=null,expr3=null;}
+    :   expr1 = conditionalOrExpression
+            { ret_expr = expr1; }
+        ( '?' expr2=expression ':' expr3=expression
+            { ret_expr = new ConditionalExpression(expr1, expr2, expr3); }
+        )?
     ;
 
-conditionalOrExpression
-    :   conditionalAndExpression ( '||' conditionalAndExpression )*
+/* OK */
+conditionalOrExpression returns [Expression ret_expr]
+    @init { ret_expr = null; Expression expr1=null,expr2=null;}
+    :   expr1 = conditionalAndExpression
+            { ret_expr = expr1; }
+        ( '||' expr2=conditionalAndExpression
+            { ret_expr = new BinaryExpression(expr1, BinaryOperator.LOGICAL_OR, expr2); }
+        )*
     ;
 
-conditionalAndExpression
-    :   inclusiveOrExpression ( '&&' inclusiveOrExpression )*
+/* OK */
+conditionalAndExpression returns [Expression ret_expr]
+    @init { ret_expr = null; Expression expr1=null,expr2=null;}
+    :   expr1 = inclusiveOrExpression
+            { ret_expr = expr1; }
+        ( '&&' inclusiveOrExpression 
+            { ret_expr = new BinaryExpression(expr1, BinaryOperator.LOGICAL_AND, expr2); }
+        )*
     ;
 
-inclusiveOrExpression
-    :   exclusiveOrExpression ( '|' exclusiveOrExpression )*
+/* OK */
+inclusiveOrExpression returns [Expression ret_expr]
+    @init { ret_expr = null; Expression expr1=null, expr2=null;}
+    :   expr1 = exclusiveOrExpression
+            { ret_expr = expr1; }
+        ( '|' expr2 = exclusiveOrExpression
+            { ret_expr = new BinaryExpression(expr1, BinaryOperator.BITWISE_INCLUSIVE_OR, expr2); }
+        )*
     ;
 
-exclusiveOrExpression
-    :   andExpression ( '^' andExpression )*
+/* OK */
+exclusiveOrExpression returns [Expression ret_expr]
+    @init { ret_expr = null; Expression expr1=null, expr2=null;}
+    :   expr1 = andExpression 
+            { ret_expr = expr1; }
+        ( '^' expr2 = andExpression
+            { ret_expr = new BinaryExpression(expr1, BinaryOperator.BITWISE_EXCLUSIVE_OR, expr2); }
+        )*
     ;
 
-andExpression
-    :   equalityExpression ( '&' equalityExpression )*
+/* OK */
+andExpression returns [Expression ret_expr]
+    @init { ret_expr = null; Expression expr1=null, expr2=null;}
+    :   expr1 = equalityExpression 
+            { ret_expr = expr1; }
+        ( '&' equalityExpression 
+            { ret_expr = new BinaryExpression(expr1, BinaryOperator.BITWISE_AND, expr2); }
+        )*
     ;
 
-equalityExpression
-    :   instanceOfExpression ( ('==' | '!=') instanceOfExpression )*
+/* OK */
+equalityExpression returns [Expression ret_expr]
+    @init { ret_expr = null; Expression expr1=null, expr2=null; BinaryOperator op;}
+    :   expr1=instanceOfExpression 
+            { ret_expr = expr1; }
+        ( ('==' { op = BinaryOperator.COMPARE_EQ; }| '!=' { op = BinaryOperator.COMPARE_NE; } ) expr2 = instanceOfExpression
+            { ret_expr = new BinaryExpression(expr1, op, expr2); }
+        )*
     ;
 
-instanceOfExpression
-    :   relationalExpression ('instanceof' type)?
+/* OK */
+instanceOfExpression returns [Expression ret_expr]
+    @init { ret_expr = null; Expression expr1=null, expr2=null;}
+    :   expr1=relationalExpression
+            { ret_expr = expr1; }
+        ('instanceof' expr2=type
+            { ret_expr = new BinaryExpresion(expr1, BinaryOperator.INSTANCEOF, expr2); }
+        )?
     ;
 
-relationalExpression
-    :   shiftExpression ( relationalOp shiftExpression )*
+/* OK */
+relationalExpression returns [Expression ret_expr]
+    @init { ret_expr = null; Expression expr1=null, expr2=null;}
+    :   expr1=shiftExpression
+            { ret_expr = expr1; }
+        ( relationalOp expr2=shiftExpression
+            { ret_expr = new BinaryExpression(expr1, relationalOp, expr2); }
+        )*
     ;
 
-relationalOp
+/* OK = TODO - need to understand the meaning of => operator in this language syntax */
+relationalOp returns [BinaryOperator op]
     :   ('<' '=')=> t1='<' t2='='
         { $t1.getLine() == $t2.getLine() &&
           $t1.getCharPositionInLine() + 1 == $t2.getCharPositionInLine() }?
+            { op = BinaryOperator.LE; }
     |   ('>' '=')=> t1='>' t2='='
         { $t1.getLine() == $t2.getLine() &&
           $t1.getCharPositionInLine() + 1 == $t2.getCharPositionInLine() }?
+            { op = BinaryOperator.GE; }
     |   '<'
+            { op = BinaryOperator.LT; }
     |   '>'
+            { op = BinaryOperator.GT; }
     ;
 
-shiftExpression
-    :   additiveExpression ( shiftOp additiveExpression )*
+/* OK */
+shiftExpression returns [Expression ret_expr]
+    @init { ret_expr = null; Expression expr1=null, expr2=null;}
+    :   expr1=additiveExpression
+            { ret_expr = expr1; }
+        ( shiftOp expr2=additiveExpression
+            { ret_expr = new BinaryExpression(expr1, shiftOp, expr2); }
+        )*
     ;
 
-shiftOp
+/* OK */
+shiftOp returns [BinaryOperator op]
     :   ('<' '<')=> t1='<' t2='<'
         { $t1.getLine() == $t2.getLine() &&
           $t1.getCharPositionInLine() + 1 == $t2.getCharPositionInLine() }?
+            { op = BinaryOperator.SHIFT_LEFT; }
     |   ('>' '>' '>')=> t1='>' t2='>' t3='>'
         { $t1.getLine() == $t2.getLine() &&
           $t1.getCharPositionInLine() + 1 == $t2.getCharPositionInLine() &&
           $t2.getLine() == $t3.getLine() &&
           $t2.getCharPositionInLine() + 1 == $t3.getCharPositionInLine() }?
+            { op = BinaryOperator.SHIFT_LEFT_TRIPLE; }
     |   ('>' '>')=> t1='>' t2='>'
         { $t1.getLine() == $t2.getLine() &&
           $t1.getCharPositionInLine() + 1 == $t2.getCharPositionInLine() }?
+            { op = BinaryOperator.SHIFT_RIGHT; }
     ;
 
-
-additiveExpression
-    :   multiplicativeExpression ( ('+' | '-') multiplicativeExpression )*
+/* OK */
+additiveExpression returns [Expression ret_expr]
+    @init { ret_expr = null; Expression expr1=null, expr2=null; BinaryOperator op;}
+    :   expr1=multiplicativeExpression 
+            { ret_expr = expr1; }
+        ( ('+' { op = BinaryOperator.ADD; }| '-' { op = BinaryOperator.SUBTRACT; }) expr2=multiplicativeExpression
+            { ret_expr = new BinaryExpression(expr1, op, expr2); }
+        )*
     ;
 
-multiplicativeExpression
-    :   unaryExpression ( ( '*' | '/' | '%' ) unaryExpression )*
+/* OK */
+multiplicativeExpression returns [Expression ret_expr]
+    @init { ret_expr = null; Expression expr1=null, expr2=null; BinaryOperator op;}
+    :   expr1=unaryExpression
+            { ret_expr = expr1; }
+        ( ( '*' { op = BinaryOperator.MULTIPLY; } | '/' { op = BinaryOperator.DIVIDE; } | '%' { op = BinaryOperator.MODULUS; } ) expr2=unaryExpression
+            { ret_expr = new BinaryExpression(expr1, op, expr2); }
+        )*
     ;
 
-unaryExpression
+/* OK */
+unaryExpression returns [Expression ret_expr]
     :   '+' unaryExpression
+            { ret_expr = new UnaryExpression(UnaryOperator.PLUS, unaryExpression); }
     |   '-' unaryExpression
+            { ret_expr = new UnaryExpression(UnaryOperator.MINUS, unaryExpression); }
     |   '++' unaryExpression
+            { ret_expr = new UnaryExpression(UnaryOperator.PRE_INCREMENT, unaryExpression); }
     |   '--' unaryExpression
+            { ret_expr = new UnaryExpression(UnaryOperator.PRE_DECREMENT, unaryExpression); }
     |   unaryExpressionNotPlusMinus
+            { ret_expr = unaryExpressionNotPlusMinus; }
     ;
 
-unaryExpressionNotPlusMinus
+unaryExpressionNotPlusMinus returns [Expression ret_expr]
     :   '~' unaryExpression
+            { ret_expr = new UnaryExpression(UnaryOperator.BITWISE_COMPLEMENT, unaryExpression); }
     |   '!' unaryExpression
+            { ret_expr = new UnaryExpression(UnaryOperator.LOGICAL_NEGATION, unaryExpression); }
     |   castExpression
+            { ret_expr = castExpression; }
     |   primary selector* ('++'|'--')?
+            { /* TODO */ }
     ;
 
 castExpression
@@ -1333,8 +1621,10 @@ superSuffix
     |   '.' Identifier arguments?
     ;
 
-arguments
-    :   '(' expressionList? ')'
+/* OK */
+arguments returns [List param_list]
+    @init { param_list = new LinkedList(); }
+    :   '(' expressionList { param_list.add(expressionList); }? ')'
     ;
 
 /*========================================================================*/
@@ -1399,8 +1689,9 @@ ASSERT
     :   'assert' {if (!assertIsKeyword) $type=Identifier;}
     ;
 
-Identifier
-    :   Letter (Letter|JavaIDDigit)*
+Identifier returns [String str]
+    :   Letter (Letter |JavaIDDigit)*
+            { str = $text; }
     ;
 
 /**I found this char range in JavaCC's grammar, but Letter and Digit overlap.
