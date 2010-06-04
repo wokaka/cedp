@@ -1,6 +1,7 @@
 package cetus.exec;
 import cedp.src2src.frontend.java.JavaLexer;
 import cedp.src2src.frontend.java.JavaParser;
+import cedp.util.extlib.CetusWrapper;
 import java.io.*;
 import java.util.*;
 
@@ -9,6 +10,9 @@ import cetus.hir.TranslationUnit;
 import cetus.hir.Declaration;
 
 import cetus.treewalker.*; // not supported
+import org.antlr.runtime.ANTLRFileStream;
+import org.antlr.runtime.CharStream;
+import org.antlr.runtime.CommonTokenStream;
 
 public class Parser{
 	
@@ -185,6 +189,7 @@ public class Parser{
       parser.getPreprocessorInfoChannel(lexer.getPreprocessorInfoChannel());
       parser.setLexer(lexer);
       parser.translationUnit(tu);
+      CetusWrapper.Plot(tu);
     } catch (Exception e) {
       System.err.println("Parse error: " + e);
       System.exit(1);
@@ -204,11 +209,9 @@ public class Parser{
 		return tu;
   }
 
-  protected TranslationUnit parseAntlrJava(String input_filename)
+  protected TranslationUnit parseAntlrJava(String fname)
   {
-    String currfile = input_filename;
-		TranslationUnit tu = new TranslationUnit(input_filename);
-    String filename = null;
+    TranslationUnit tu = new TranslationUnit(fname);
     File f = null,myf=null;
     byte[] barray = null;
       //InputStream source = null;
@@ -224,25 +227,20 @@ public class Parser{
 
     // Actual antlr parser is called
     try {
-      Class class_JavaLexer = getClass().getClassLoader().loadClass("cedp.src2src.frontend.java.JavaLexer");
-      params[0] = InputStream.class;
-      args[0] = new DataInputStream(new ByteArrayInputStream(barray));
-      JavaLexer lexer = (JavaLexer)class_JavaLexer.getConstructor(params).newInstance(args);
+      CharStream input = new ANTLRFileStream(fname);
+      JavaLexer lexer = new JavaLexer(input);
+      lexer.setOriginalSource(fname); // unnecess
+      lexer.initialize(); // unnecess
 
-      lexer.setOriginalSource(filename);
-//      lexer.setTokenObjectClass("cedp.src2src.frontend.java.JavaToken");
-      lexer.initialize();
+      CommonTokenStream tokens = new  CommonTokenStream(lexer);
+      JavaParser parser = new JavaParser(tokens);
 
-      Class class_JavaParser = getClass().getClassLoader().loadClass("cetus.base.grammars.JavaParser");
-      params[0] = getClass().getClassLoader().loadClass("antlr.TokenStream");
-      args[0] = lexer;
-      JavaParser parser = (JavaParser)class_JavaParser.getConstructor(params).newInstance(args);
-
-      parser.getPreprocessorInfoChannel(lexer.getPreprocessorInfoChannel());
-      parser.setLexer(lexer);
+      parser.getPreprocessorInfoChannel(lexer.getPreprocessorInfoChannel()); // unncessary
+      parser.setLexer(lexer); // unncessary
       parser.translationUnit(tu);
     } catch (Exception e) {
       System.err.println("Parse error: " + e);
+      e.printStackTrace();
       System.exit(1);
     }
 

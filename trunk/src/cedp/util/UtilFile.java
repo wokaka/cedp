@@ -22,6 +22,10 @@ public class UtilFile {
         String str = "";
 
         try{
+            File f = new File(fileName);
+            if(!f.exists())
+                return "";
+            
             BufferedReader file = new BufferedReader(new FileReader(fileName));
             while(file.ready())
                 str += file.readLine() + "\n";

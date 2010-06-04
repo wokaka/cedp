@@ -313,6 +313,19 @@ Declaration prev_decl = null;
 boolean old_style_func = false;
 HashMap func_decl_list = new HashMap();
 
+public List MergeList(List a, List b)
+{
+    List ret = new LinkedList();
+
+    for(int i=0; i<a.size(); i++)
+        ret.add(a.get(i));
+
+    for(int i=0; i<b.size(); i++)
+        ret.add(b.get(i));
+
+    return ret;
+}
+
 public void getPreprocessorInfoChannel(PreprocessorInfoChannel preprocChannel)
 {
   preprocessorInfoChannel = preprocChannel;
@@ -497,7 +510,7 @@ public void traceOut(String rname)
 /* The annotations are separated out to make parsing faster, but must be associated with
    a packageDeclaration or a typeDeclaration (and not an empty one). */
 /* OK */
-translationUnit [TranslationUnit init_tuint] returns [TranslationUnit tunit]
+translationUnit [TranslationUnit init_tunit] returns [TranslationUnit tunit]
     @init {
         /* build a new Translation Unit */
         if (init_tunit == null)
@@ -506,80 +519,79 @@ translationUnit [TranslationUnit init_tuint] returns [TranslationUnit tunit]
           tunit = init_tunit;
         enterSymtab(tunit);
     }
+    @after{
+        exitSymtab();
+    }
     :   annotations
-        (   packageDeclaration 
+        (   decl1=packageDeclaration
                 {
-                    tunit.addDeclaration(packageDeclaration);
+                    tunit.addDeclaration(decl1);
                 }
-            (importDeclaration
+            (decl2=importDeclaration
                 {
-                    tunit.addDeclaration(importDeclaration);
-                }
-            )*
-            (typeDeclaration
-                {
-                    if(typeDeclaration != null)
-                        tunit.addDeclaration(typeDeclaration);
+                    tunit.addDeclaration(decl2);
                 }
             )*
-        |   classOrInterfaceDeclaration 
+            (decl3=typeDeclaration
                 {
-                    tunit.addDeclaration(classOrInterfaceDeclaration);
+                    if(decl3 != null)
+                        tunit.addDeclaration(decl3);
                 }
-            (typeDeclaration
+            )*
+        |   decl4=classOrInterfaceDeclaration
                 {
-                    if(typeDeclaration != null)
-                        tunit.addDeclaration(typeDeclaration);
+                    tunit.addDeclaration(decl4);
+                }
+            (decl5=typeDeclaration
+                {
+                    if(decl5 != null)
+                        tunit.addDeclaration(decl5);
                 }
             )*
         )
-            {
-                exitSymtab();
-            }
-    |   (packageDeclaration
+    |   (decl6=packageDeclaration
                 {
-                    tunit.addDeclaration(packageDeclaration);
+                    tunit.addDeclaration(decl6);
                 }
         )?
-        ( importDeclaration
+        ( decl7=importDeclaration
                 {
-                    tunit.addDeclaration(importDeclaration);
+                    tunit.addDeclaration(decl7);
                 }
         )*
-        ( typeDeclaration
+        ( decl8=typeDeclaration
                 {
-                    if(typeDeclaration != null)
-                        tunit.addDeclaration(typeDeclaration);
+                    if(decl8 != null)
+                        tunit.addDeclaration(decl8);
                 }
         )*
-            {
-                exitSymtab();
-            }
     ;
 
 /* OK */
 packageDeclaration returns [Declaration ret_decl]
     :   'package' qualifiedName ';'
             {
-                ret_decl = new Declaration(2);
-                ret_decl.setChild(0, new NameID("package"));
-                ret_decl.setChild(1, qualifiedName);
+                CodeAnnotation anno = new CodeAnnotation("package " + $qualifiedName.text);
+                ret_decl = new AnnotationDeclaration(anno);
             }
     ;
 
 /* OK */
 importDeclaration returns [Declaration ret_decl]
-    @init { int check1 = 0, check2 = 0; }
+    @init {int check1=0, check2=0; }
     :   'import' ('static'{check1 = 1;})? qualifiedName ('.' '*' {check2 = 1;})? ';'
             {
-                ret_decl = new Declaration(2 + check1 + check2);
+                CodeAnnotation anno = new CodeAnnotation("import " + ((check1==1)?"static ":"") + ((check2==1)?".*":"") + ";");
+                ret_decl = new AnnotationDeclaration(anno);
+/*
+                ret_decl = new AnnotationDeclaration(2 + check1 + check2);
                 int i = 0;
                 ret_decl.setChild(i++, new NameID("import"));
                 if(check1)
                     ret_decl.setChild(i++, new NameID("static"));
                 ret_decl.setChild(i++, qualifiedName);
                 if(check2)
-                    ret_decl.setChild(i++, new NameID(".*"));
+                    ret_decl.setChild(i++, new NameID(".*"));*/
             }
     ;
 
@@ -597,16 +609,16 @@ typeDeclaration returns [Declaration ret_decl]
 
 /* OK */
 classOrInterfaceDeclaration returns [Declaration ret_decl]
-    :   classOrInterfaceModifiers
-        (classDeclaration
+    :   tok1=classOrInterfaceModifiers
+        (tok2=classDeclaration
             {
-                classDeclaration.SetClassSpec(classOrInterfaceModifiers);
-                ret_decl = (Declaration) classDeclaration;
+                classDeclaration.SetClassSpec(tok1);
+                ret_decl = (Declaration) tok2;
             }
-        | interfaceDeclaration
+        | tok3=interfaceDeclaration
             {
-                interfaceDeclaration.SetClassSpec(classOrInterfaceModifiers);
-                ret_decl = (Declaration) interfaceDeclaration;
+                interfaceDeclaration.SetClassSpec(tok1);
+                ret_decl = (Declaration) tok3;
             }
         )
     ;
@@ -614,9 +626,9 @@ classOrInterfaceDeclaration returns [Declaration ret_decl]
 /* OK */
 classOrInterfaceModifiers returns [LinkedList list]
     @init { list = new LinkedList(); }
-    :   (classOrInterfaceModifier
+    :   (tok1=classOrInterfaceModifier
             {
-              list.add(classOrInterfaceModifier);
+              list.add(tok1);
             }
         )*
     ;
@@ -714,21 +726,37 @@ typeList
     :   type (',' type)*
     ;
 
-classBody
-    :   '{' classBodyDeclaration* '}'
+classBody returns [CompoundStatement ret_stat]
+    @init { ret_stat = new CompoundStatement(); }
+    :   '{' ( t1=classBodyDeclaration
+                {
+                    ret_stat.addStatement(t1);
+                }
+            )*
+        '}'
     ;
 
 interfaceBody
     :   '{' interfaceBodyDeclaration* '}'
     ;
 
-classBodyDeclaration
+classBodyDeclaration returns [Statement ret_decl]
+    @init { int check = 0; }
     :   ';'
-    |   'static'? block
+            {
+                ret_decl = new NullStatement();
+            }
+    |   ('static' { check = 1; })? t2=block
+            {
+                if(check == 1)
+                    ret_decl = t2;  /* Need to handle 'static'
+                else
+                    ret_decl = t2;
+            }
     |   modifiers memberDecl
-    {
-        
-    }
+            {
+                
+            }
     ;
 
 memberDecl
@@ -743,8 +771,17 @@ memberDecl
     |   classDeclaration
     ;
 
-memberDeclaration
-    :   type (methodDeclaration | fieldDeclaration)
+memberDeclaration returns [Declaration ret_decl]
+    :   t1=type (t2=methodDeclaration
+                {
+                    ProcedureDeclarator decl = new ProcedureDeclarator(t1, t2.get(0), t2.get(1));
+                    ret_decl = null;//new Procedure(, decl, );
+                }
+        | t3=fieldDeclaration
+                {
+                    ret_decl = t3;
+                }
+        )
     ;
 
 genericMethodOrConstructorDecl
@@ -756,19 +793,21 @@ genericMethodOrConstructorRest
     |   Identifier constructorDeclaratorRest
     ;
 
-methodDeclaration returns [Procedure proc]
-    :   Identifier methodDeclaratorRest
+methodDeclaration returns [List list]
+    @init { list = new LinkedList(); }
+    :   Identifier t1=methodDeclaratorRest
             {
-  //public Procedure(List leading_specs, Declarator declarator, CompoundStatement body)
-  //public ProcedureDeclarator(List leading_specs, IDExpression direct_decl, List params, List trailing_specs, ExceptionSpecification espec)
-                ProcedureDeclarator pdecl = new ProcedureDeclarator(null, new IDExpression($Identifier.text), methodDeclaratorRest);
-                //proc = new Procedure(, pdecl, )
-                //System.out.println("metholdDecl - " + $Identifier.text);
+                list.add(new NameID($Identifier.text));
+                list.add(t1.get(0));
+                list.add(t1.get(1));
             }
     ;
 
-fieldDeclaration
-    :   variableDeclarators ';'
+fieldDeclaration returns [Declaration ret_decl]
+    :   t1=variableDeclarators ';'
+            {
+                new VariableDeclaration
+            }
     ;
 
 interfaceBodyDeclaration
@@ -784,8 +823,11 @@ interfaceMemberDecl
     |   classDeclaration
     ;
 
-interfaceMethodOrFieldDecl
+interfaceMethodOrFieldDecl returns [Declarator ret_decl]
     :   type Identifier interfaceMethodOrFieldRest
+            {
+                //new Declarator()
+            }
     ;
 
 interfaceMethodOrFieldRest
@@ -793,8 +835,13 @@ interfaceMethodOrFieldRest
     |   interfaceMethodDeclaratorRest
     ;
 
-methodDeclaratorRest
-    :   formalParameters ('[' ']')*
+methodDeclaratorRest returns [List list]
+    @init { list = new LinkedList(); }
+    :   t1=formalParameters ('[' ']')*
+            {
+                list.add(t1.get(0));
+                list.add(t1.get(1));
+            }
         ('throws' qualifiedNameList)?
         (   methodBody
         |   ';'
@@ -825,46 +872,78 @@ constructorDeclaratorRest returns [Procedure ret_proc]
     :   formalParameters ('throws' qualifiedNameList)? constructorBody
     ;
 
-constantDeclarator
-    :   Identifier constantDeclaratorRest
+constantDeclarator returns [VariableDeclarator ret_decl]
+    :   Identifier t1=constantDeclaratorRest
+            {
+                ret_decl = new VariableDeclarator(new NameID($Identifier.text);
+                ret_decl.setInitializer(t1);
+            }
     ;
 
-variableDeclarators
-    :   variableDeclarator (',' variableDeclarator)*
+variableDeclarators [List list]
+    @init { list = new LinkedList(); }
+    :   t1=variableDeclarator
+            {
+                list.add(t1); 
+            }
+        (',' t2=variableDeclarator
+            {
+                list.add(t2);
+            }
+        )*
     ;
 
+/* OK */
 variableDeclarator returns [VariableDeclarator ret_decl]
-    :   variableDeclaratorId
-            { ret_decl = new VariableDeclarator(variableDeclaratorId); }
-        ('=' variableInitializer
-            { ret_decl.setInitializer(variableInitializer); }
+    :   t1=variableDeclaratorId
+            { ret_decl = new VariableDeclarator(t1); }
+        ('=' t2=variableInitializer
+            { ret_decl.setInitializer(t2); }
         )?
     ;
 
-constantDeclaratorsRest
-    :   constantDeclaratorRest (',' constantDeclarator)*
+/* OK */
+constantDeclaratorsRest returns [List list]
+    @init { list = new LinkedList(); }
+    :   t1=constantDeclaratorRest
+            {
+                list.add(new Initializer(t1));
+            }
+        (',' t2=constantDeclarator
+            {
+                list.add(t2);
+            }
+        )*
     ;
 
-constantDeclaratorRest
-    :   ('[' ']')* '=' variableInitializer
+/* OK */
+constantDeclaratorRest returns [Initializer ret_init]
+    :   ('[' ']')* '=' t1=variableInitializer
+            {
+                ret_init = new Initializer(t1);
+            }
     ;
 
 /* OK */
 variableDeclaratorId returns [IDExpression ret_id]
-    :   Identifier { ret_decl = new NameID($Identifier.text); } ('[' ']' { /* TODO */ } )*
+    :   Identifier
+            {
+                ret_decl = new NameID($Identifier.text);
+            }
+        ('[' ']' { /* TODO */ } )*
     ;
 
 /* OK */
 variableInitializer returns [Initializer init]
-    :   arrayInitializer
-            { init = arrayInitializer; }
-    |   expression
-            { init = new Initializer(expression); }
+    :   t1=arrayInitializer
+            { init = t1; }
+    |   t2=expression
+            { init = new Initializer(t2); }
     ;
 
 /* OK */
 arrayInitializer returns [Initializer init]
-    @init { List list = new List(); }
+    @init { List list = new LinkedList(); }
     :   '{' (variableInitializer
                 { List tlist = variableInitializer.getChildren();
                   for(int i=0; i<tlist.size(); i++)
@@ -928,14 +1007,14 @@ type returns [List types]
     @init {
         types = new LinkedList();
     }
-    : classOrInterfaceType ('[' ']')*
-    {
-        types.addAll(classOrInterfaceType); /* TODO ('[' ']')* */
-    }
-    | primitiveType ('[' ']')*
-    {
-        types.add(primitiveType); /* TODO ('[' ']')* */
-    }
+    : t1=classOrInterfaceType ('[' ']')*
+        {
+            types.addAll(t1); /* TODO ('[' ']')* */
+        }
+    | t2=primitiveType ('[' ']')*
+        {
+            types.add(t2); /* TODO ('[' ']')* */
+        }
     ;
 
 classOrInterfaceType returns [List types]
@@ -968,9 +1047,11 @@ primitiveType returns [Specifier type]
             { type = Specifier.DOUBLE; }
     ;
 
-variableModifier
+variableModifier returns [Specifier anno]
     :   'final'
-    |   annotation
+            { anno = Specifier.final; }
+    |   t1=annotation
+            { anno = t1; }
     ;
 
 typeArguments
@@ -986,21 +1067,53 @@ qualifiedNameList
     :   qualifiedName (',' qualifiedName)*
     ;
 
-formalParameters
-    :   '(' formalParameterDecls? ')'
+formalParameters returns [List list]
+    @init { list = new LinkedList(); }
+    :   '(' (t1=formalParameterDecls
+                {
+                    list = t1;
+                }
+            )?
+        ')'
     ;
 
-formalParameterDecls
-    :   variableModifiers type formalParameterDeclsRest
+formalParameterDecls returns [List list]
+    :   t1=variableModifiers t2=type t3=formalParameterDeclsRest
+            {
+                List tlist = new LinkedList();
+                VariableDeclarator var_decl = new VariableDeclarator(MergeList(t1, t2), t3.get(0));
+                tlist.add(var_decl);
+                t3.remove(0);
+                list = MergeList(tlist, t3);
+            }
     ;
 
-formalParameterDeclsRest
-    :   variableDeclaratorId (',' formalParameterDecls)?
+formalParameterDeclsRest returns [List list]
+    @init { list = new LinkedList(); }
+    :   t1=variableDeclaratorId
+            {
+                list.add(t1);
+                
+            }
+        (',' t2=formalParameterDecls
+            {
+                for(int i=0; i<t2.size(); i++)
+                    list.add(t2.get(i));
+            }
+        )?
     |   '...' variableDeclaratorId
+            {
+                System.err.println("Supported ... argument\n");
+                System.exit(-1);
+                /* TODO SUPPORT! */
+            }
     ;
 
-methodBody
-    :   block
+methodBody returns [Statement stat]
+    :   t1=block
+            {
+                stat = t1;
+            }
     ;
 
 constructorBody
@@ -1014,7 +1127,10 @@ explicitConstructorInvocation
 
 
 qualifiedName returns [NameID ret_id]
-    @init { String str = "", id1, id2;}
+    @init { String str = "";}
+    @after{
+        retval.ret_id = new NameID(str);
+    }
     :   id1=Identifier
             {
                 str += "" + id1;
@@ -1024,9 +1140,6 @@ qualifiedName returns [NameID ret_id]
                 str += "." + id2;
             }
         )*
-            {
-                ret_id = new NameID(str);
-            }
     ;
 
 literal
@@ -1051,16 +1164,21 @@ booleanLiteral
 
 // ANNOTATIONS
 
-annotations
-    :   annotation+
+annotations returns [List list]
+    @init { list = new LinkedList(); }
+    :   (t1=annotation
+            {
+                list.add(t1);
+            }
+        )+
     ;
 
 /* OK */
 annotation returns [Specifier type]
     :   '@' annotationName 
-            { type = Specifier.ANNOTATION; }
+            { type = new AnnotationSpecifier($annotationName.text); }
         ( '(' ( elementValuePairs | elementValue )? ')' )?
-            /* TODO : Need to define a class for Java Annotation */
+            { type = new AnnotationSpecifier("--");                 } /* TODO : Need to define a class for Java Annotation */
     ;
 
 annotationName
@@ -1126,95 +1244,107 @@ defaultValue
 
 block returns [CompoundStatement cstat]
     @init{
-        cstat = new COmpoundStatement();
+        cstat = new CompoundStatement();
     }
-    :   '{' blockStatement* '}'
+    :   '{' t1=blockStatement* '}'
     {
-        //cstat.addDeclaration(blockStatement);
-        cstat.addStatment(blockStatement);
+        cstat.addStatement(t1);
     }
     ;
 
 blockStatement returns [Statement stat]
-    :   localVariableDeclarationStatement
-    {   stat = localVariableDeclarationStatement;    }
-    |   classOrInterfaceDeclaration
-    {   stat = classOrInterfaceDeclaration;    }
-    |   statement
-    {   stat = statement;    }
+    :   t1=localVariableDeclarationStatement
+            {   stat = t1;    }
+    |   t2=classOrInterfaceDeclaration
+            {   stat = t2;    }
+    |   t3=statement
+            {   stat = t3;    }
     ;
 
-localVariableDeclarationStatement
-    :    localVariableDeclaration ';'
+localVariableDeclarationStatement returns [DeclarationStatement stat]
+    :    t1=localVariableDeclaration ';'
+            { stat = new DeclarationStatement(t1); }
     ;
 
-localVariableDeclaration
-    :   variableModifiers type variableDeclarators
+/* OK */
+localVariableDeclaration returns [VariableDeclaration ret_vardecl]
+    :   t1=variableModifiers t2=type t3=variableDeclarators
+            {
+                ret_vardecl = new VariableDeclaration(MergeList(t1, t2), t3);
+            }
     ;
 
-variableModifiers
-    :   variableModifier*
+variableModifiers returns [List list]
+    @init { list = new LinkedList(); }
+    :   (t1=variableModifier
+            {
+                list.add(t1);
+            }
+        )*
     ;
 
 statement returns [Statement ret_stat]
-    @init { Statement stat1=null, stat2=null; }
-    : block
-            { stat = (Statement) block; }
+    @init {int check1 = 0;}
+    : t1=block
+            { stat = (Statement) t1; }
     |   ASSERT expression (':' expression)? ';'
             {  /* TODO */ }
-    |   'if' parExpression stat1=statement
+    |   'if' tok2=parExpression stat1=statement
             {
-                ret_stat = (Statement) new IfStatement(parExpression, stat1);
+                ret_stat = (Statement) new IfStatement(tok2, stat1);
             }
         (options {k=1;}:'else' stat2=statement
             {
-                ret_stat = (Statement) new IfStatement(parExpression, stat1, stat2);
+                ret_stat = (Statement) new IfStatement(tok2, stat1, stat2);
             }
         )?
-    |   'for' '(' forControl ')' stat2=statement
+    |   'for' '(' tok3=forControl ')' stat2=statement
             {
                 forControl.setBody(stat2);
-                ret_stat = (Statement)forControl;
+                ret_stat = (Statement)tok3;
             }
-    |   'while' parExpression statement
+    |   'while' tok4=parExpression stat3=statement
             {
-                ret_stat = (Statement) new WhileLoop(parExpression, statement);
+                ret_stat = (Statement) new WhileLoop(tok4, stat3);
             }
-    |   'do' statement 'while' parExpression ';'
+    |   'do' stat4=statement 'while' tok5=parExpression ';'
             {
-                ret_stat = (Statement) new DoLoop(statement, parExpression);
+                ret_stat = (Statement) new DoLoop(stat4, tok5);
             }
-    |   'try' block
-        ( catches 'finally' block
+    |   'try' t1=block
+        ( catches 'finally' t2=block
         | catches
-        | 'finally' block
+        | 'finally' t3 = block
         )
             {
-                /* TODO */
+                CompoundStatement cstat = new CompoundStatement();
+                cstat.addStatement(t1);
+                ret_stat = cstat;
+                /* TODO  t2, t3, catches */
             }
-    |   'switch' parExpression '{' switchBlockStatementGroups '}'
-            {   ret_stat = (Statement) new SwitchStatement(parExpression, switchBlockStatementGroups); }
+    |   'switch' tok6=parExpression '{' tok7=switchBlockStatementGroups '}'
+            {   ret_stat = (Statement) new SwitchStatement(tok6, tok7); }
     |   'synchronized' parExpression block
             {  /* TODO */ }
-    |   {int check1 = 0;} 'return' (expression { check1 = 1; })? ';'
+    |   { check1 = 0; }'return' (tok8=expression { check1 = 1; })? ';'
             {
-                if(check1 == 0)
+                if(check1 == 0 || tok8 == null)
                     ret_stat = (Statement) new ReturnStatement();
                 else
-                    ret_stat = (Statement) new ReturnStatement(expression);
+                    ret_stat = (Statement) new ReturnStatement(tok8);
             }
-    |   'throw' expression ';'
+    |   'throw' tok9=expression ';'
             {   ret_stat = (Statement) new Statement();
-                ret_stat.addChild(0, new ThrowExpression(expression)); }
+                ret_stat.addChild(0, new ThrowExpression(tok9)); }
     |   'break' Identifier? ';'
-            {   ret_stat = (Statement) new BreakStatement(); }
+            {   ret_stat = (Statement) new BreakStatement(); /* TODO Identifier support */ }
     |   'continue' Identifier? ';'
             {   ret_stat = (Statement) new ContinueStatement(); /* TODO Identifier support */ }
     |   ';'
             {   ret_stat = new NullStatement(); }
-    |   statementExpression ';'
+    |   tok10=statementExpression ';'
             {   ret_stat = (Statement) new Statement();
-                ret_stat.addChild(0, statementExpression); }
+                ret_stat.addChild(0, tok10); }
     |   Identifier ':' statement
             {  /* TODO */ }
     ;
@@ -1227,15 +1357,18 @@ catchClause
     :   'catch' '(' formalParameter ')' block
     ;
 
-formalParameter
-    :   variableModifiers type variableDeclaratorId
+formalParameter returns [Declarator ret_decl]
+    :   t1=variableModifiers t2=type t3=variableDeclaratorId
+            {
+                ret_decl = new VariableDeclarator(MergeList(t1,t2), t3);
+            }
     ;
 
 /* OK */
 switchBlockStatementGroups returns [CompoundStatement cstat]
     @init { cstat = new CompoundStatement(); }
-    :   (switchBlockStatementGroup
-            { cstat.addStatement(switchBlockStatementGroup); }
+    :   (t1=switchBlockStatementGroup
+            { cstat.addStatement(t1); }
         )*
     ;
 
@@ -1296,11 +1429,11 @@ parExpression returns [Expression expr]
 
 /* OK */
 expressionList returns [Expression ret_expr]
-    @init { Expression expr1=null, expr2=null; List list;}
+    @init { List list;}
     :   expr1=expression
             { ret_expr = expr1; }
         (',' expr2=expression
-            { list = new List();
+            { list = new LinkedList();
               list.add(expr1);
               list.add(expr2);
               ret_expr = new CommaExpression(list);
@@ -1322,11 +1455,10 @@ constantExpression returns [Expression expr]
 
 /* OK */
 expression returns [Expression ret_expr]
-    @init { Expression expr1=null, expr2=null; }
     :   expr1=conditionalExpression
             {   ret_expr = expr1;    }
-        (assignmentOperator expr2=expression
-            {   ret_expr = new BinaryExpression(expr1, assignmentOperator, expr2); }
+        (t1=assignmentOperator expr2=expression
+            {   ret_expr = new BinaryExpression(expr1, t1, expr2); }
         )?
     ;
 
@@ -1375,7 +1507,6 @@ assignmentOperator returns [AssignmentOperator op]
 
 /* OK */
 conditionalExpression returns [Expression ret_expr]
-    @init { ret_expr = null; Expression expr1=null,expr2=null,expr3=null;}
     :   expr1 = conditionalOrExpression
             { ret_expr = expr1; }
         ( '?' expr2=expression ':' expr3=expression
@@ -1385,7 +1516,6 @@ conditionalExpression returns [Expression ret_expr]
 
 /* OK */
 conditionalOrExpression returns [Expression ret_expr]
-    @init { ret_expr = null; Expression expr1=null,expr2=null;}
     :   expr1 = conditionalAndExpression
             { ret_expr = expr1; }
         ( '||' expr2=conditionalAndExpression
@@ -1395,7 +1525,6 @@ conditionalOrExpression returns [Expression ret_expr]
 
 /* OK */
 conditionalAndExpression returns [Expression ret_expr]
-    @init { ret_expr = null; Expression expr1=null,expr2=null;}
     :   expr1 = inclusiveOrExpression
             { ret_expr = expr1; }
         ( '&&' inclusiveOrExpression 
@@ -1405,7 +1534,6 @@ conditionalAndExpression returns [Expression ret_expr]
 
 /* OK */
 inclusiveOrExpression returns [Expression ret_expr]
-    @init { ret_expr = null; Expression expr1=null, expr2=null;}
     :   expr1 = exclusiveOrExpression
             { ret_expr = expr1; }
         ( '|' expr2 = exclusiveOrExpression
@@ -1415,7 +1543,6 @@ inclusiveOrExpression returns [Expression ret_expr]
 
 /* OK */
 exclusiveOrExpression returns [Expression ret_expr]
-    @init { ret_expr = null; Expression expr1=null, expr2=null;}
     :   expr1 = andExpression 
             { ret_expr = expr1; }
         ( '^' expr2 = andExpression
@@ -1425,7 +1552,6 @@ exclusiveOrExpression returns [Expression ret_expr]
 
 /* OK */
 andExpression returns [Expression ret_expr]
-    @init { ret_expr = null; Expression expr1=null, expr2=null;}
     :   expr1 = equalityExpression 
             { ret_expr = expr1; }
         ( '&' equalityExpression 
@@ -1435,7 +1561,6 @@ andExpression returns [Expression ret_expr]
 
 /* OK */
 equalityExpression returns [Expression ret_expr]
-    @init { ret_expr = null; Expression expr1=null, expr2=null; BinaryOperator op;}
     :   expr1=instanceOfExpression 
             { ret_expr = expr1; }
         ( ('==' { op = BinaryOperator.COMPARE_EQ; }| '!=' { op = BinaryOperator.COMPARE_NE; } ) expr2 = instanceOfExpression
@@ -1445,7 +1570,6 @@ equalityExpression returns [Expression ret_expr]
 
 /* OK */
 instanceOfExpression returns [Expression ret_expr]
-    @init { ret_expr = null; Expression expr1=null, expr2=null;}
     :   expr1=relationalExpression
             { ret_expr = expr1; }
         ('instanceof' expr2=type
@@ -1455,7 +1579,6 @@ instanceOfExpression returns [Expression ret_expr]
 
 /* OK */
 relationalExpression returns [Expression ret_expr]
-    @init { ret_expr = null; Expression expr1=null, expr2=null;}
     :   expr1=shiftExpression
             { ret_expr = expr1; }
         ( relationalOp expr2=shiftExpression
@@ -1481,7 +1604,6 @@ relationalOp returns [BinaryOperator op]
 
 /* OK */
 shiftExpression returns [Expression ret_expr]
-    @init { ret_expr = null; Expression expr1=null, expr2=null;}
     :   expr1=additiveExpression
             { ret_expr = expr1; }
         ( shiftOp expr2=additiveExpression
@@ -1509,7 +1631,6 @@ shiftOp returns [BinaryOperator op]
 
 /* OK */
 additiveExpression returns [Expression ret_expr]
-    @init { ret_expr = null; Expression expr1=null, expr2=null; BinaryOperator op;}
     :   expr1=multiplicativeExpression 
             { ret_expr = expr1; }
         ( ('+' { op = BinaryOperator.ADD; }| '-' { op = BinaryOperator.SUBTRACT; }) expr2=multiplicativeExpression
@@ -1519,7 +1640,6 @@ additiveExpression returns [Expression ret_expr]
 
 /* OK */
 multiplicativeExpression returns [Expression ret_expr]
-    @init { ret_expr = null; Expression expr1=null, expr2=null; BinaryOperator op;}
     :   expr1=unaryExpression
             { ret_expr = expr1; }
         ( ( '*' { op = BinaryOperator.MULTIPLY; } | '/' { op = BinaryOperator.DIVIDE; } | '%' { op = BinaryOperator.MODULUS; } ) expr2=unaryExpression
@@ -1529,26 +1649,26 @@ multiplicativeExpression returns [Expression ret_expr]
 
 /* OK */
 unaryExpression returns [Expression ret_expr]
-    :   '+' unaryExpression
-            { ret_expr = new UnaryExpression(UnaryOperator.PLUS, unaryExpression); }
-    |   '-' unaryExpression
-            { ret_expr = new UnaryExpression(UnaryOperator.MINUS, unaryExpression); }
-    |   '++' unaryExpression
-            { ret_expr = new UnaryExpression(UnaryOperator.PRE_INCREMENT, unaryExpression); }
-    |   '--' unaryExpression
-            { ret_expr = new UnaryExpression(UnaryOperator.PRE_DECREMENT, unaryExpression); }
-    |   unaryExpressionNotPlusMinus
-            { ret_expr = unaryExpressionNotPlusMinus; }
+    :   '+' tok1=unaryExpression
+            { ret_expr = new UnaryExpression(UnaryOperator.PLUS, tok1); }
+    |   '-' tok2=unaryExpression
+            { ret_expr = new UnaryExpression(UnaryOperator.MINUS, tok2); }
+    |   '++' tok3=unaryExpression
+            { ret_expr = new UnaryExpression(UnaryOperator.PRE_INCREMENT, tok3); }
+    |   '--' tok4=unaryExpression
+            { ret_expr = new UnaryExpression(UnaryOperator.PRE_DECREMENT, tok4); }
+    |   tok5=unaryExpressionNotPlusMinus
+            { ret_expr = tok5; }
     ;
 
 unaryExpressionNotPlusMinus returns [Expression ret_expr]
-    :   '~' unaryExpression
-            { ret_expr = new UnaryExpression(UnaryOperator.BITWISE_COMPLEMENT, unaryExpression); }
-    |   '!' unaryExpression
-            { ret_expr = new UnaryExpression(UnaryOperator.LOGICAL_NEGATION, unaryExpression); }
-    |   castExpression
-            { ret_expr = castExpression; }
-    |   primary selector* ('++'|'--')?
+    :   '~' t1=unaryExpression
+            { ret_expr = new UnaryExpression(UnaryOperator.BITWISE_COMPLEMENT, t1); }
+    |   '!' t2=unaryExpression
+            { ret_expr = new UnaryExpression(UnaryOperator.LOGICAL_NEGATION, t2); }
+    |   t3=castExpression
+            { ret_expr = t3; }
+    |   t4=primary t5=selector* ('++'|'--')?
             { /* TODO */ }
     ;
 
@@ -1628,7 +1748,7 @@ superSuffix
 /* OK */
 arguments returns [List param_list]
     @init { param_list = new LinkedList(); }
-    :   '(' (expressionList { param_list.add(expressionList); })? ')'
+    :   '(' (t1=expressionList { param_list.add(t1); })? ')'
     ;
 
 /*========================================================================*/
