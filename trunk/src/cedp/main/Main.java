@@ -6,7 +6,7 @@
 package cedp.main;
 
 import cedp.login.LoginDialog;
-import cedp.util.AntlrWrapper;
+import cedp.util.extlib.AntlrWrapper;
 
 /**
  *

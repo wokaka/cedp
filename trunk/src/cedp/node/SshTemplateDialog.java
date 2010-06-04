@@ -5,7 +5,7 @@
 
 package cedp.node;
 
-import cedp.util.JcraftWrapper;
+import cedp.util.extlib.JcraftWrapper;
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;

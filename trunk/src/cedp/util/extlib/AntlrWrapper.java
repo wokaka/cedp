@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package cedp.util;
+package cedp.util.extlib;
 
 import java.lang.reflect.InvocationTargetException;
 
