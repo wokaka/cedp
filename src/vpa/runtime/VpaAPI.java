@@ -10,6 +10,8 @@ import cedp.src2src.frontend.java.JavaLexer;
 import cedp.src2src.frontend.java.JavaParser;
 import cedp.util.extlib.JcraftWrapper;
 import cedp.util.UtilFile;
+import cedp.util.extlib.CetusWrapper;
+import java.util.Vector;
 import org.antlr.runtime.ANTLRFileStream;
 import org.antlr.runtime.CharStream;
 import org.antlr.runtime.CommonTokenStream;
@@ -60,6 +62,10 @@ public class VpaAPI {
     public static void Src2Src(String fname, String cmd)
     {
         if(cmd.equals("extract-java")){
+            Vector opts = new Vector();
+            //opts.add("");
+            CetusWrapper.Run(fname, opts, false);
+            
             /*
             String args[] = null;
 
@@ -75,11 +81,11 @@ public class VpaAPI {
             //AStyleWrapper.Buautifier("cetus_output" + File.separator + fname, "cetus_output" + File.separator + fname + ".beauty");
 
             /* direct invokcation */
+            /*
             try{
                 CharStream input = new ANTLRFileStream(fname);
                 JavaLexer lexer = new JavaLexer(input);
 
-                /* PARSER */
                 CommonTokenStream tokens = new  CommonTokenStream(lexer);
                 JavaParser parser = new JavaParser(tokens);
 
@@ -92,6 +98,7 @@ public class VpaAPI {
             } catch(Exception e){
                 e.printStackTrace();
             }
+            */
         }
     }
 
