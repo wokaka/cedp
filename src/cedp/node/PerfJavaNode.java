@@ -12,10 +12,10 @@
 package cedp.node;
 
 import cetus.exec.Driver;
-import cedp.util.AStyleWrapper;
-import cedp.util.JcraftWrapper;
-import cedp.util.JythonWrapper;
-import cedp.util.LoboWrapper;
+import cedp.util.extlib.AStyleWrapper;
+import cedp.util.extlib.JcraftWrapper;
+import cedp.util.extlib.JythonWrapper;
+import cedp.util.extlib.LoboWrapper;
 import cedp.util.UtilClipboard;
 import cedp.util.UtilFile;
 import cedp.util.UtilString;

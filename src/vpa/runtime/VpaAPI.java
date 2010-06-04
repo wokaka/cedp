@@ -8,7 +8,7 @@ package vpa.runtime;
 import cedp.node.PerfJavaNode;
 import cedp.src2src.frontend.java.JavaLexer;
 import cedp.src2src.frontend.java.JavaParser;
-import cedp.util.JcraftWrapper;
+import cedp.util.extlib.JcraftWrapper;
 import cedp.util.UtilFile;
 import org.antlr.runtime.ANTLRFileStream;
 import org.antlr.runtime.CharStream;

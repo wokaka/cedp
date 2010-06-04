@@ -536,10 +536,11 @@ translationUnit [TranslationUnit init_tuint] returns [TranslationUnit tunit]
             {
                 exitSymtab();
             }
-    |   packageDeclaration
+    |   (packageDeclaration
                 {
                     tunit.addDeclaration(packageDeclaration);
-                }?
+                }
+        )?
         ( importDeclaration
                 {
                     tunit.addDeclaration(importDeclaration);
@@ -569,7 +570,7 @@ packageDeclaration returns [Declaration ret_decl]
 /* OK */
 importDeclaration returns [Declaration ret_decl]
     @init { int check1 = 0, check2 = 0; }
-    :   'import' 'static'{check1 = 1;}? qualifiedName ('.' '*' {check2 = 1;})? ';'
+    :   'import' ('static'{check1 = 1;})? qualifiedName ('.' '*' {check2 = 1;})? ';'
             {
                 ret_decl = new Declaration(2 + check1 + check2);
                 int i = 0;
@@ -615,7 +616,7 @@ classOrInterfaceModifiers returns [LinkedList list]
     @init { list = new LinkedList(); }
     :   (classOrInterfaceModifier
             {
-              list.add(classOrInterfaceModifier)
+              list.add(classOrInterfaceModifier);
             }
         )*
     ;
@@ -760,9 +761,9 @@ methodDeclaration returns [Procedure proc]
             {
   //public Procedure(List leading_specs, Declarator declarator, CompoundStatement body)
   //public ProcedureDeclarator(List leading_specs, IDExpression direct_decl, List params, List trailing_specs, ExceptionSpecification espec)
-                ProcedureDeclarator pdecl = new ProcedureDeclarator(, new IDExpression($Identifier.text), methodDeclaratorRest);
-                proc = new Procedure(, pdecl, )
-                System.out.println("metholdDecl - " + $Identifier.text);
+                ProcedureDeclarator pdecl = new ProcedureDeclarator(null, new IDExpression($Identifier.text), methodDeclaratorRest);
+                //proc = new Procedure(, pdecl, )
+                //System.out.println("metholdDecl - " + $Identifier.text);
             }
     ;
 
@@ -1195,10 +1196,13 @@ statement returns [Statement ret_stat]
             {   ret_stat = (Statement) new SwitchStatement(parExpression, switchBlockStatementGroups); }
     |   'synchronized' parExpression block
             {  /* TODO */ }
-    |   'return'
-            {   ret_stat = (Statement) new ReturnStatement(); }
-        expression 
-            {   ret_stat = (Statement) new ReturnStatement(expression); }? ';'
+    |   {int check1 = 0;} 'return' (expression { check1 = 1; })? ';'
+            {
+                if(check1 == 0)
+                    ret_stat = (Statement) new ReturnStatement();
+                else
+                    ret_stat = (Statement) new ReturnStatement(expression);
+            }
     |   'throw' expression ';'
             {   ret_stat = (Statement) new Statement();
                 ret_stat.addChild(0, new ThrowExpression(expression)); }
@@ -1244,13 +1248,13 @@ switchBlockStatementGroup returns [Statement stat]
     ;
 
 /* OK */
-switchLabel returns [Statement case]
+switchLabel returns [Statement ret_case]
     :   'case' constantExpression ':'
-            { case = new Case(constantExpression); }
+            { ret_case = new Case(constantExpression); }
     |   'case' enumConstantName ':'
-            { case = new Case(constantExpression); }
+            { ret_case = new Case(constantExpression); }
     |   'default' ':'
-            { case = new Default();  }
+            { ret_case = new Default();  }
     ;
 
 /* OK */
@@ -1347,7 +1351,7 @@ assignmentOperator returns [AssignmentOperator op]
     |   '%='
             { op = AssignmentOperator.MODULUS; }
     |   ('<' '<' '=')=> t1='<' t2='<' t3='='
-        { $t1.getLine() == $t2.getLine() &&
+         { $t1.getLine() == $t2.getLine() &&
           $t1.getCharPositionInLine() + 1 == $t2.getCharPositionInLine() &&
           $t2.getLine() == $t3.getLine() &&
           $t2.getCharPositionInLine() + 1 == $t3.getCharPositionInLine() }?
@@ -1624,7 +1628,7 @@ superSuffix
 /* OK */
 arguments returns [List param_list]
     @init { param_list = new LinkedList(); }
-    :   '(' expressionList { param_list.add(expressionList); }? ')'
+    :   '(' (expressionList { param_list.add(expressionList); })? ')'
     ;
 
 /*========================================================================*/
