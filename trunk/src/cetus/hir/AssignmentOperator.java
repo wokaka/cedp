@@ -13,7 +13,7 @@ public class AssignmentOperator extends BinaryOperator
 
   private static String[] names =
     { "+=", "&=", "^=", "|=", "/=", "=", "%=", "*=",
-      "<<=", ">>=", "-=" };
+      "<<=", ">>=", "-=" , "<<<="};
 
   /**
    * +=
@@ -69,6 +69,8 @@ public class AssignmentOperator extends BinaryOperator
    * -=
    */
   public static final AssignmentOperator SUBTRACT = new AssignmentOperator(10);
+
+  public static final AssignmentOperator SHIFT_LEFT_TRIPLE = new AssignmentOperator(11);
 
   /**
    * Used internally -- you may not create arbitrary assignment operators
