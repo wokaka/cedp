@@ -238,6 +238,7 @@ public class Parser{
       parser.getPreprocessorInfoChannel(lexer.getPreprocessorInfoChannel()); // unncessary
       parser.setLexer(lexer); // unncessary
       parser.translationUnit(tu);
+      CetusWrapper.Plot(tu);
     } catch (Exception e) {
       System.err.println("Parse error: " + e);
       e.printStackTrace();

@@ -500,6 +500,7 @@ public void traceOut(String rname)
   traceDepth -= 1;
 }
 
+boolean dFlag = true;
 }
 
 /*========================================================================*/
@@ -512,6 +513,7 @@ public void traceOut(String rname)
 /* OK */
 translationUnit [TranslationUnit init_tunit] returns [TranslationUnit tunit]
     @init {
+        if(dFlag) System.out.println("translationUnit");
         /* build a new Translation Unit */
         if (init_tunit == null)
           tunit = new TranslationUnit(getLexer().originalSource);
@@ -569,6 +571,7 @@ translationUnit [TranslationUnit init_tunit] returns [TranslationUnit tunit]
 
 /* OK */
 packageDeclaration returns [Declaration ret_decl]
+    @init { if(dFlag) System.out.println("packageDeclaration"); }
     :   'package' qualifiedName ';'
             {
                 CodeAnnotation anno = new CodeAnnotation("package " + $qualifiedName.text);
@@ -578,19 +581,20 @@ packageDeclaration returns [Declaration ret_decl]
 
 /* OK */
 importDeclaration returns [Declaration ret_decl]
-    @init {int check1=0, check2=0; }
-    :   'import' ('static'{check1 = 1;})? qualifiedName ('.' '*' {check2 = 1;})? ';'
+    @init { if(dFlag) System.out.println("importDeclaration"); int check1=0, check2=0; }
+    :   'import' ('static'{check1 = 1;})? t1=qualifiedName ('.' '*' {check2 = 1;})? ';'
             {
-                CodeAnnotation anno = new CodeAnnotation("import " + ((check1==1)?"static ":"") + ((check2==1)?".*":"") + ";");
+                CodeAnnotation anno = new CodeAnnotation("import " + ((check1==1)?"static ":"") + $t1.text + ((check2==1)?".*":"") + ";");
                 ret_decl = new AnnotationDeclaration(anno);
             }
     ;
 
 /* OK */
 typeDeclaration returns [Declaration ret_decl]
-    :   classOrInterfaceDeclaration
+    @init { if(dFlag) System.out.println("typeDeclaration"); }
+    :   t1=classOrInterfaceDeclaration
             {
-                ret_decl = classOrInterfaceDeclaration;
+                ret_decl = t1;
             }
     |   ';'
             {
@@ -600,34 +604,36 @@ typeDeclaration returns [Declaration ret_decl]
 
 /* OK */
 classOrInterfaceDeclaration returns [Declaration ret_decl]
-    :   tok1=classOrInterfaceModifiers
-        (tok2=classDeclaration
+    @init { if(dFlag) System.out.println("classOrInterfaceDeclaration"); }
+    :   t1=classOrInterfaceModifiers
+        (t2=classDeclaration
             {
-                classDeclaration.SetClassSpec(tok1);
-                ret_decl = (Declaration) tok2;
+                t2.SetClassSpec(t1);
+                ret_decl = (Declaration) t2;
             }
         | tok3=interfaceDeclaration
             {
-                interfaceDeclaration.SetClassSpec(tok1);
-                ret_decl = (Declaration) tok3;
+                t3.SetClassSpec(t1);
+                ret_decl = (Declaration) t3;
             }
         )
     ;
 
 /* OK */
 classOrInterfaceModifiers returns [LinkedList list]
-    @init { list = new LinkedList(); }
-    :   (tok1=classOrInterfaceModifier
+    @init { if(dFlag) System.out.println("classOrInterfaceModifiers");  list = new LinkedList(); }
+    :   (t1=classOrInterfaceModifier
             {
-              list.add(tok1);
+              list.add(t1);
             }
         )*
     ;
 
 /* OK */
 classOrInterfaceModifier returns [Specifier type]
-    :   annotation   // class or interface
-            { type = Specifier.ANNOTATION; }
+    @init { if(dFlag) System.out.println("classOrInterfaceModifier"); }
+    :   t1=annotation   // class or interface
+            { type = t1; }
     |   'public'     // class or interface
             { type = Specifier.PUBLIC; }
     |   'protected'  // class or interface
@@ -646,7 +652,7 @@ classOrInterfaceModifier returns [Specifier type]
 
 /* OK */
 modifiers returns [List list]
-    @init { list = new LinkedList(); }
+    @init { if(dFlag) System.out.println("modifiers"); list = new LinkedList(); }
     :   (t1=modifier
             {
                 list.add(t1);
@@ -656,6 +662,7 @@ modifiers returns [List list]
 
 /* OK */
 classDeclaration returns [ClassDeclaration decl]
+    @init { if(dFlag) System.out.println("classDeclaration"); }
     :   t1=normalClassDeclaration
             {
                 decl = t1;
@@ -668,7 +675,7 @@ classDeclaration returns [ClassDeclaration decl]
 
 /* OK */
 normalClassDeclaration returns [ClassDeclaration ret_decl]
-    @init { int check1 = 0; }
+    @init { if(dFlag) System.out.println("normalClassDeclaration"); int check1 = 0; }
     :   'class' Identifier typeParameters?
         ('extends' t2=type { check1 = 1; })?
         ('implements' typeList)?
@@ -682,29 +689,35 @@ normalClassDeclaration returns [ClassDeclaration ret_decl]
             }
     ;
 
-typeParameters returns
+typeParameters
+    @init { if(dFlag) System.out.println("typeParameters"); }
     :   '<' typeParameter (',' typeParameter)* '>'
     ;
 
 typeParameter
+    @init { if(dFlag) System.out.println("typeParameter"); }
     :   Identifier ('extends' typeBound)?
     ;
 
 typeBound
+    @init { if(dFlag) System.out.println("typeBound"); }
     :   type ('&' type)*
     ;
 
 enumDeclaration returns [ClassDeclaration ret_decl]
+    @init { if(dFlag) System.out.println("enumDeclaration"); }
     :   ENUM Identifier ('implements' typeList)? t1=enumBody
             {
                 ret_decl = new ClassDeclaration(Specifier.ENUM, new NameID($Identifier.text));
-                ret_decl.SetBodyStatement(t1);
-                /* TODO */
+                for(int i=0; i<t1.size(); i++)
+                    ret_decl.addDeclaration(t1.get(i));
+                /* TODO implements support */
             }
     ;
 
 enumBody returns [List list]
-    @init { list = new LinkedList(); }
+    @init { if(dFlag) System.out.println("enumBody");
+            list = new LinkedList(); }
     :   '{' (t1=enumConstants
             {
                 for(int i=0; i<t1.size(); i++)
@@ -713,12 +726,14 @@ enumBody returns [List list]
         )? ','? (enumBodyDeclarations
             {
                 /* TODO */
+                list = new LinkedList();
             }
         )? '}'
     ;
 
-enumConstants return [List list]
-    @init { list = new LinkedList(); }
+enumConstants returns [List list]
+    @init { if(dFlag) System.out.println("enumConstants");
+            list = new LinkedList(); }
     :   t1=enumConstant
             {
                 list.add(t1);
@@ -731,6 +746,7 @@ enumConstants return [List list]
     ;
 
 enumConstant returns [VariableDeclarator ret_decl]
+    @init { if(dFlag) System.out.println("enumConstant"); }
     :   annotations? Identifier arguments? classBody?
             {
                 ret_decl = new VariableDeclarator($Identifier.text);
@@ -739,112 +755,166 @@ enumConstant returns [VariableDeclarator ret_decl]
     ;
 
 enumBodyDeclarations
+    @init { if(dFlag) System.out.println("enumBodyDeclarations"); }
     :   ';' (classBodyDeclaration)*
     ;
 
 interfaceDeclaration
+    @init { if(dFlag) System.out.println("interfaceDeclaration"); }
     :   normalInterfaceDeclaration
     |   annotationTypeDeclaration
     ;
 
 normalInterfaceDeclaration
+    @init { if(dFlag) System.out.println("normalInterfaceDeclaration"); }
     :   'interface' Identifier typeParameters? ('extends' typeList)? interfaceBody
     ;
 
-typeList
-    :   type (',' type)*
+typeList returns [List list]
+    @init { if(dFlag) System.out.println("typeList"); }
+    :   t1=type
+            {
+                list = t1;
+            }
+        (',' t2=type
+            {
+                for(int i=0; i<t2.size(); i++)
+                    list.add(t2.get(i));
+            }
+        )*
     ;
 
 classBody returns [CompoundStatement ret_stat]
-    @init { ret_stat = new CompoundStatement(); }
+    @init { if(dFlag) System.out.println("classBody"); ret_stat = new CompoundStatement(); }
     :   '{' ( t1=classBodyDeclaration
                 {
-                    ret_stat.addStatement(t1);
+                    if(t1 != null){
+                        ret_stat.addDeclaration((Declaration)t1);
+                    }
                 }
             )*
         '}'
     ;
 
 interfaceBody
+    @init { if(dFlag) System.out.println("interfaceBody"); }
     :   '{' interfaceBodyDeclaration* '}'
     ;
 
-classBodyDeclaration returns [Statement ret_decl]
-    @init { int check = 0; }
+classBodyDeclaration returns [Declaration ret_decl]
+    @init { if(dFlag) System.out.println("classBodyDeclaration"); int check; }
     :   ';'
             {
-                ret_decl = new NullStatement();
+                ret_decl = null;
+                //ret_decl = new NullStatement();
             }
-    |   ('static' { check = 1; })? t2=block
+    |   {check=0;} ('static' {check=1;})? t2=block
             {
                 if(check == 1)
-                    ret_decl = t2;  /* Need to handle 'static'
+                    ret_decl = t2;  /* Need to handle 'static' */
                 else
                     ret_decl = t2;
             }
-    |   modifiers memberDecl
+    |   t3=modifiers t4=memberDecl
             {
-                
+                ret_decl = t4;
+                /* TODO t3? */
             }
     ;
 
-memberDecl
-    :   genericMethodOrConstructorDecl
-    |   memberDeclaration
-    |   'void' Identifier voidMethodDeclaratorRest
+memberDecl returns [Declaration ret_decl]
+    @init { if(dFlag) System.out.println("memberDecl"); }
+    :   t1=genericMethodOrConstructorDecl
             {
-                System.out.println("memnerDecl - void - " + $Identifier.text);
+                ret_decl = t1;
             }
-    |   Identifier constructorDeclaratorRest
-    |   interfaceDeclaration
-    |   classDeclaration
+    |   t2=memberDeclaration
+            {
+                ret_decl = t2;
+            }
+    |   'void' Identifier t3=voidMethodDeclaratorRest
+            {
+                List l1 = new LinkedList();
+                li.add(Specifier.VOID);
+                ProcedureDeclarator pdecl = new ProcedureDeclarator(l1, new NameID($Identifier.text), (List)t3.get(0));
+                ret_decl = new Procedure(Specifier.VOID, pdecl, (t3.size()>1)?t3.get(1):null);
+            }
+    |   Identifier t4=constructorDeclaratorRest
+            {
+                ProcedureDeclarator pdecl = new ProcedureDeclarator(new NameID($Identifier.text), (List)t4.get("param"));
+                ret_decl = new Procedure(null, pdecl, (List)t4.get("body"));
+            }
+    |   t5=interfaceDeclaration
+            {
+                ret_decl = t5;
+            }
+    |   t6=classDeclaration
+            {
+                ret_decl = t6;
+            }
     ;
 
 memberDeclaration returns [Declaration ret_decl]
+    @init { if(dFlag) System.out.println("memberDeclaration"); }
     :   t1=type (t2=methodDeclaration
                 {
-                    ProcedureDeclarator decl = new ProcedureDeclarator(t1, t2.get(0), t2.get(1));
-                    ret_decl = null;//new Procedure(, decl, );
+                    if(!t2.contains("body"))
+                        ret_decl = new VariableDeclaration(t1, t2.get("id"));
+                    else
+                        ret_decl = null;//new Procedure(, decl, );
                 }
         | t3=fieldDeclaration
                 {
-                    ret_decl = t3;
+                    if(t3.getNumDeclarators() > 0){
+                        VariableDeclaration temp = new VariableDeclaration(t1, (Declarator)t3.getDeclarator(0));
+                        for(int i=1; i<t3.getNumDeclarators(); i++)
+                            temp.addDeclarator((Declarator)t3.getDeclarator(i));
+                        ret_decl = temp;
+                    }
+                    else
+                        ret_decl = t3;
                 }
         )
     ;
 
 genericMethodOrConstructorDecl
+    @init { if(dFlag) System.out.println("genericMethodOrConstructorDecl"); }
     :   typeParameters genericMethodOrConstructorRest
     ;
 
 genericMethodOrConstructorRest
+    @init { if(dFlag) System.out.println("genericMethodOrConstructorRest"); }
     :   (type | 'void') Identifier methodDeclaratorRest
     |   Identifier constructorDeclaratorRest
     ;
 
-methodDeclaration returns [List list]
-    @init { list = new LinkedList(); }
+methodDeclaration returns [Hashtable hash]
+    @init { if(dFlag) System.out.println("methodDeclaration"); }
     :   Identifier t1=methodDeclaratorRest
             {
-                list.add(new NameID($Identifier.text));
-                list.add(t1.get(0));
-                list.add(t1.get(1));
+                hash = t1;
+                hash.put("id", new NameID($Identifier.text));
             }
     ;
 
-fieldDeclaration returns [Declaration ret_decl]
+fieldDeclaration returns [VariableDeclaration ret_decl]
+    @init { if(dFlag) System.out.println("fieldDeclaration"); }
     :   t1=variableDeclarators ';'
             {
-                new VariableDeclaration
+                ret_decl = new VariableDeclaration((Declarator)t1.get(0));
+                for(int i=1; i<t1.size(); i++)
+                    ret_decl.addDeclarator((Declarator)t1.get(i));
             }
     ;
 
 interfaceBodyDeclaration
+    @init { if(dFlag) System.out.println("interfaceBodyDeclaration"); }
     :   modifiers interfaceMemberDecl
     |   ';'
     ;
 
 interfaceMemberDecl
+    @init { if(dFlag) System.out.println("interfaceMemberDecl"); }
     :   interfaceMethodOrFieldDecl
     |   interfaceGenericMethodDecl
     |   'void' Identifier voidInterfaceMethodDeclaratorRest
@@ -853,6 +923,7 @@ interfaceMemberDecl
     ;
 
 interfaceMethodOrFieldDecl returns [Declarator ret_decl]
+    @init { if(dFlag) System.out.println("interfaceMethodOrFieldDecl"); }
     :   type Identifier interfaceMethodOrFieldRest
             {
                 //new Declarator()
@@ -860,48 +931,69 @@ interfaceMethodOrFieldDecl returns [Declarator ret_decl]
     ;
 
 interfaceMethodOrFieldRest
+    @init { if(dFlag) System.out.println("interfaceMethodOrFieldRest"); }
     :   constantDeclaratorsRest ';'
     |   interfaceMethodDeclaratorRest
     ;
 
-methodDeclaratorRest returns [List list]
-    @init { list = new LinkedList(); }
+methodDeclaratorRest returns [Hashtable hash]
+    @init { if(dFlag) System.out.println("methodDeclaratorRest"); hash = new Hashtable(); }
     :   t1=formalParameters ('[' ']')*
             {
-                list.add(t1.get(0));
-                list.add(t1.get(1));
+                hash.put("param", t1);
             }
-        ('throws' qualifiedNameList)?
-        (   methodBody
+        ('throws' t2=qualifiedNameList)?
+        (   t3=methodBody
+            {
+                hash.put("body", t3);
+            }
         |   ';'
         )
     ;
 
-voidMethodDeclaratorRest
-    :   formalParameters ('throws' qualifiedNameList)?
-        (   methodBody
+voidMethodDeclaratorRest returns [List list]
+    @init { if(dFlag) System.out.println("voidMethodDeclaratorRest"); list = new LinkedList(); }
+    :   t1=formalParameters 
+            {
+                list.add(t1);
+            }
+        ('throws' qualifiedNameList)?
+        (   t2=methodBody
+            {
+                list.add(t2);
+            }
         |   ';'
         )
     ;
 
 interfaceMethodDeclaratorRest
+    @init { if(dFlag) System.out.println("interfaceMethodDeclaratorRest"); }
     :   formalParameters ('[' ']')* ('throws' qualifiedNameList)? ';'
     ;
 
 interfaceGenericMethodDecl
+    @init { if(dFlag) System.out.println("interfaceGenericMethodDecl"); }
     :   typeParameters (type | 'void') Identifier
         interfaceMethodDeclaratorRest
     ;
 
 voidInterfaceMethodDeclaratorRest
+    @init { if(dFlag) System.out.println("voidInterfaceMethodDeclaratorRest"); }
     :   formalParameters ('throws' qualifiedNameList)? ';'
     ;
 
-constructorDeclaratorRest returns [Procedure ret_proc]
-    :   formalParameters ('throws' qualifiedNameList)? constructorBody
+constructorDeclaratorRest returns [Hashtable hash]
+    @init { if(dFlag) System.out.println("constructorDeclaratorRest"); hash = new Hashtable(); }
+    :   t1=formalParameters ('throws' qualifiedNameList)? t2=constructorBody
+            {
+                hash.put("param", t1);
+                if(t2 != null)
+                    hash.put("body", t2);
+            }
     ;
 
 constantDeclarator returns [VariableDeclarator ret_decl]
+    @init { if(dFlag) System.out.println("constantDeclarator"); }
     :   Identifier t1=constantDeclaratorRest
             {
                 ret_decl = new VariableDeclarator(new NameID($Identifier.text);
@@ -909,8 +1001,8 @@ constantDeclarator returns [VariableDeclarator ret_decl]
             }
     ;
 
-variableDeclarators [List list]
-    @init { list = new LinkedList(); }
+variableDeclarators returns [List list]
+    @init { if(dFlag) System.out.println("variableDeclarators"); list = new LinkedList(); }
     :   t1=variableDeclarator
             {
                 list.add(t1); 
@@ -924,16 +1016,17 @@ variableDeclarators [List list]
 
 /* OK */
 variableDeclarator returns [VariableDeclarator ret_decl]
+    @init { if(dFlag) System.out.println("variableDeclarator"); }
     :   t1=variableDeclaratorId
             { ret_decl = new VariableDeclarator(t1); }
         ('=' t2=variableInitializer
-            { ret_decl.setInitializer(t2); }
+            { if(t2 != null) ret_decl.setInitializer(t2); }
         )?
     ;
 
 /* OK */
 constantDeclaratorsRest returns [List list]
-    @init { list = new LinkedList(); }
+    @init { if(dFlag) System.out.println("constantDeclaratorsRest"); list = new LinkedList(); }
     :   t1=constantDeclaratorRest
             {
                 list.add(new Initializer(t1));
@@ -947,6 +1040,7 @@ constantDeclaratorsRest returns [List list]
 
 /* OK */
 constantDeclaratorRest returns [Initializer ret_init]
+    @init { if(dFlag) System.out.println("constantDeclaratorRest"); }
     :   ('[' ']')* '=' t1=variableInitializer
             {
                 ret_init = new Initializer(t1);
@@ -955,24 +1049,31 @@ constantDeclaratorRest returns [Initializer ret_init]
 
 /* OK */
 variableDeclaratorId returns [IDExpression ret_id]
+    @init { if(dFlag) System.out.println("variableDeclaratorId"); }
     :   Identifier
             {
-                ret_decl = new NameID($Identifier.text);
+                ret_id = new NameID($Identifier.text);
             }
-        ('[' ']' { /* TODO */ } )*
+        ('[' ']' 
+            {
+                ret_id = ret_id;
+                /* TODO */
+            }
+        )*
     ;
 
 /* OK */
 variableInitializer returns [Initializer init]
+    @init { if(dFlag) System.out.println("variableInitializer"); }
     :   t1=arrayInitializer
             { init = t1; }
     |   t2=expression
-            { init = new Initializer(t2); }
+            { if(t2 != null) init = new Initializer(t2); }
     ;
 
 /* OK */
 arrayInitializer returns [Initializer init]
-    @init { List list = new LinkedList(); }
+    @init { if(dFlag) System.out.println("arrayInitializer"); List list = new LinkedList(); }
     :   '{' (variableInitializer
                 { List tlist = variableInitializer.getChildren();
                   for(int i=0; i<tlist.size(); i++)
@@ -990,8 +1091,9 @@ arrayInitializer returns [Initializer init]
     ;
 
 modifier returns [Specifier type]
-    :   annotation
-            { type = Specifier.ANNOTATION; }
+    @init { if(dFlag) System.out.println("modifier"); }
+    :   t1=annotation
+            {type = t1; }
     |   'public'
             {type = Specifier.PUBLIC;}
     |   'protected'
@@ -1017,25 +1119,25 @@ modifier returns [Specifier type]
     ;
 
 packageOrTypeName
+    @init { if(dFlag) System.out.println("packageOrTypeName"); }
     :   qualifiedName
     ;
 
 
 /* OK */
 enumConstantName returns [Identifier id]
-    @init { Identifier id_temp = null; }
+    @init { if(dFlag) System.out.println("enumConstantName"); Identifier id_temp = null; }
     :   id_temp=Identifier
             { id = new Identifier(id_temp); }
     ;
 
 typeName
+    @init { if(dFlag) System.out.println("typeName"); }
     :   qualifiedName
     ;
 
 type returns [List types]
-    @init {
-        types = new LinkedList();
-    }
+    @init { if(dFlag) System.out.println("type"); types = new LinkedList(); }
     : t1=classOrInterfaceType ('[' ']')*
         {
             types.addAll(t1); /* TODO ('[' ']')* */
@@ -1047,17 +1149,16 @@ type returns [List types]
     ;
 
 classOrInterfaceType returns [List types]
-    @init {
-        types = new LinkedList();
-    }
+    @init { if(dFlag) System.out.println("classOrInterfaceType"); types = new LinkedList(); }
     : Identifier typeArguments? ('.' Identifier typeArguments? )*
-    {
-        /* TODO */
-    }
+        {
+            /* TODO */
+        }
     ;
 
 /* OK */
 primitiveType returns [Specifier type]
+    @init { if(dFlag) System.out.println("primitiveType"); }
     :   'boolean'
             { type = Specifier.BOOLEAN; }
     |   'char'
@@ -1077,6 +1178,7 @@ primitiveType returns [Specifier type]
     ;
 
 variableModifier returns [Specifier anno]
+    @init { if(dFlag) System.out.println("variableModifier"); }
     :   'final'
             { anno = Specifier.final; }
     |   t1=annotation
@@ -1084,20 +1186,23 @@ variableModifier returns [Specifier anno]
     ;
 
 typeArguments
+    @init { if(dFlag) System.out.println("typeArguments"); }
     :   '<' typeArgument (',' typeArgument)* '>'
     ;
 
 typeArgument
+    @init { if(dFlag) System.out.println("typeArgument"); }
     :   type
     |   '?' (('extends' | 'super') type)?
     ;
 
 qualifiedNameList
+    @init { if(dFlag) System.out.println("qualifiedNameList"); }
     :   qualifiedName (',' qualifiedName)*
     ;
 
 formalParameters returns [List list]
-    @init { list = new LinkedList(); }
+    @init { if(dFlag) System.out.println("formalParameters"); list = new LinkedList(); }
     :   '(' (t1=formalParameterDecls
                 {
                     list = t1;
@@ -1107,6 +1212,7 @@ formalParameters returns [List list]
     ;
 
 formalParameterDecls returns [List list]
+    @init { if(dFlag) System.out.println("formalParameterDecls"); }
     :   t1=variableModifiers t2=type t3=formalParameterDeclsRest
             {
                 List tlist = new LinkedList();
@@ -1118,7 +1224,7 @@ formalParameterDecls returns [List list]
     ;
 
 formalParameterDeclsRest returns [List list]
-    @init { list = new LinkedList(); }
+    @init { if(dFlag) System.out.println("formalParameterDeclsRest"); list = new LinkedList(); }
     :   t1=variableDeclaratorId
             {
                 list.add(t1);
@@ -1139,24 +1245,50 @@ formalParameterDeclsRest returns [List list]
     ;
 
 methodBody returns [Statement stat]
+    @init { if(dFlag) System.out.println("methodBody"); }
     :   t1=block
             {
                 stat = t1;
             }
     ;
 
-constructorBody
-    :   '{' explicitConstructorInvocation? blockStatement* '}'
+constructorBody returns [List list]
+    @init { if(dFlag) System.out.println("constructorBody"); list = new LinkedList(); }
+    :   '{' (t1=explicitConstructorInvocation
+            {
+               list.add(t1);
+            }
+        )? (t2=blockStatement
+            {
+               list.add(t2);
+            }
+        )* '}'
     ;
 
-explicitConstructorInvocation
-    :   nonWildcardTypeArguments? ('this' | 'super') arguments ';'
-    |   primary '.' nonWildcardTypeArguments? 'super' arguments ';'
+explicitConstructorInvocation returns [List list]
+    @init { if(dFlag) System.out.println("explicitConstructorInvocation"); list = new LinkedList(); int c1, c2; }
+    :   (t1=nonWildcardTypeArguments)? ('this' {c1=1;} | 'super' {c1=2;}) t2=arguments ';'
+            {
+                if(t1!=null){
+                }
+                if(c1==1)
+                    list.add(new OperatorID("this"));
+                if(c1==2)
+                    list.add(new OperatorID("super"));
+                for(int i=0; i<t2.size(); i++)
+                    list.add(t2.get(i));
+            }
+    |   t3=primary '.' (t4=nonWildcardTypeArguments)? 'super' t5=arguments ';'
+            {
+                list.add(t3);
+                list.add(new OperatorID("super"));
+                for(int i=0; i<t5.size(); i++)
+                    list.add(t5.get(i));
+            }
     ;
-
 
 qualifiedName returns [NameID ret_id]
-    @init { String str = "";}
+    @init { if(dFlag) System.out.println("qualifiedName"); String str = "";}
     @after{
         retval.ret_id = new NameID(str);
     }
@@ -1171,30 +1303,44 @@ qualifiedName returns [NameID ret_id]
         )*
     ;
 
-literal
-    :   integerLiteral
-    |   FloatingPointLiteral
-    |   CharacterLiteral
-    |   StringLiteral
-    |   booleanLiteral
+literal returns [Literal ret_lit]
+    @init { if(dFlag) System.out.println("literal"); }
+    :   t1=integerLiteral
+            { ret_lit = t1; }
+    |   t2=FloatingPointLiteral
+            { ret_lit = t2; }
+    |   t3=CharacterLiteral
+            { ret_lit = t3; }
+    |   t4=StringLiteral
+            { ret_lit = t4; }
+    |   t5=booleanLiteral
+            { ret_lit = t5; }
     |   'null'
+            { ret_lit = null; }
     ;
 
-integerLiteral
+integerLiteral returns [IntegerLiteral ret_lit]
+    @init { if(dFlag) System.out.println("integerLiteral"); }
     :   HexLiteral
+            { System.out.println("Hex " + $HexLiteral.text); ret_lit = new IntegerLiteral($HexLiteral.text); }
     |   OctalLiteral
+            { System.out.println("Oct " + $OctalLiteral.text); ret_lit = new IntegerLiteral($OctalLiteral.text); }
     |   DecimalLiteral
+            { System.out.println("Deci " + $DecimalLiteral.text); ret_lit = new IntegerLiteral($DecimalLiteral.text); if(ret_lit == null) System.out.println("*"); }
     ;
 
-booleanLiteral
+booleanLiteral returns [BooleanLiteral ret_lit]
+    @init { if(dFlag) System.out.println("booleanLiteral"); }
     :   'true'
+            { ret_lit = new BooleanLiteral(true); }
     |   'false'
+            { ret_lit = new BooleanLiteral(false); }
     ;
 
 // ANNOTATIONS
 
 annotations returns [List list]
-    @init { list = new LinkedList(); }
+    @init { if(dFlag) System.out.println("annotations"); list = new LinkedList(); }
     :   (t1=annotation
             {
                 list.add(t1);
@@ -1204,47 +1350,61 @@ annotations returns [List list]
 
 /* OK */
 annotation returns [Specifier type]
+    @init { if(dFlag) System.out.println("annotation"); }
     :   '@' annotationName 
-            { type = new AnnotationSpecifier($annotationName.text); }
+            { 
+                type = new AnnotationSpecifier($annotationName.text);
+            }
         ( '(' ( elementValuePairs | elementValue )? ')' )?
-            { type = new AnnotationSpecifier("--");                 } /* TODO : Need to define a class for Java Annotation */
+            { 
+                type = new AnnotationSpecifier("--");
+            } /* TODO : Need to define a class for Java Annotation */
     ;
 
 annotationName
+    @init { if(dFlag) System.out.println("annotationName"); }
     : Identifier ('.' Identifier)*
     ;
 
 elementValuePairs
+    @init { if(dFlag) System.out.println("elementValuePairs"); }
     :   elementValuePair (',' elementValuePair)*
     ;
 
 elementValuePair
+    @init { if(dFlag) System.out.println("elementValuePair"); }
     :   Identifier '=' elementValue
     ;
 
 elementValue
+    @init { if(dFlag) System.out.println("elementValue"); }
     :   conditionalExpression
     |   annotation
     |   elementValueArrayInitializer
     ;
 
 elementValueArrayInitializer
+    @init { if(dFlag) System.out.println("elementValueArrayInitializer"); }
     :   '{' (elementValue (',' elementValue)*)? (',')? '}'
     ;
 
 annotationTypeDeclaration
+    @init { if(dFlag) System.out.println("annotationTypeDeclaration"); }
     :   '@' 'interface' Identifier annotationTypeBody
     ;
 
 annotationTypeBody
+    @init { if(dFlag) System.out.println("annotationTypeBody"); }
     :   '{' (annotationTypeElementDeclaration)* '}'
     ;
 
 annotationTypeElementDeclaration
+    @init { if(dFlag) System.out.println("annotationTypeElementDeclaration"); }
     :   modifiers annotationTypeElementRest
     ;
 
 annotationTypeElementRest
+    @init { if(dFlag) System.out.println("annotationTypeElementRest"); }
     :   type annotationMethodOrConstantRest ';'
     |   normalClassDeclaration ';'?
     |   normalInterfaceDeclaration ';'?
@@ -1253,28 +1413,31 @@ annotationTypeElementRest
     ;
 
 annotationMethodOrConstantRest
+    @init { if(dFlag) System.out.println("annotationMethodOrConstantRest"); }
     :   annotationMethodRest
     |   annotationConstantRest
     ;
 
 annotationMethodRest
+    @init { if(dFlag) System.out.println("annotationMethodRest"); }
     :   Identifier '(' ')' defaultValue?
     ;
 
-annotationConstantRest
-    :   variableDeclarators
+annotationConstantRest returns [List list]
+    @init { if(dFlag) System.out.println("annotationConstantRest"); }
+    :   t1=variableDeclarators
+            { list = t1; }
     ;
 
 defaultValue
+    @init { if(dFlag) System.out.println("defaultValue"); }
     :   'default' elementValue
     ;
 
 // STATEMENTS / BLOCKS
 
 block returns [CompoundStatement cstat]
-    @init{
-        cstat = new CompoundStatement();
-    }
+    @init { if(dFlag) System.out.println("block"); cstat = new CompoundStatement(); }
     :   '{' t1=blockStatement* '}'
     {
         cstat.addStatement(t1);
@@ -1282,6 +1445,7 @@ block returns [CompoundStatement cstat]
     ;
 
 blockStatement returns [Statement stat]
+    @init { if(dFlag) System.out.println("blockStatement"); }
     :   t1=localVariableDeclarationStatement
             {   stat = t1;    }
     |   t2=classOrInterfaceDeclaration
@@ -1291,20 +1455,24 @@ blockStatement returns [Statement stat]
     ;
 
 localVariableDeclarationStatement returns [DeclarationStatement stat]
+    @init { if(dFlag) System.out.println("localVariableDeclarationStatement"); }
     :    t1=localVariableDeclaration ';'
             { stat = new DeclarationStatement(t1); }
     ;
 
 /* OK */
 localVariableDeclaration returns [VariableDeclaration ret_vardecl]
+    @init { if(dFlag) System.out.println("localVariableDeclaration"); }
     :   t1=variableModifiers t2=type t3=variableDeclarators
             {
-                ret_vardecl = new VariableDeclaration(MergeList(t1, t2), t3);
+                ret_vardecl = new VariableDeclaration(MergeList(t1, t2), t3.get(0));
+                for(int i=1; i<t3.size(); i++)
+                    ret_vardecl.addDeclarator(t3.get(i));
             }
     ;
 
 variableModifiers returns [List list]
-    @init { list = new LinkedList(); }
+    @init { if(dFlag) System.out.println("variableModifiers"); list = new LinkedList(); }
     :   (t1=variableModifier
             {
                 list.add(t1);
@@ -1313,7 +1481,7 @@ variableModifiers returns [List list]
     ;
 
 statement returns [Statement ret_stat]
-    @init {int check1 = 0;}
+    @init { if(dFlag) System.out.println("statement"); int check1 = 0;}
     : t1=block
             { stat = (Statement) t1; }
     |   ASSERT expression (':' expression)? ';'
@@ -1379,14 +1547,17 @@ statement returns [Statement ret_stat]
     ;
 
 catches
+    @init { if(dFlag) System.out.println("catches"); }
     :   catchClause (catchClause)*
     ;
 
 catchClause
+    @init { if(dFlag) System.out.println("catchClause"); }
     :   'catch' '(' formalParameter ')' block
     ;
 
 formalParameter returns [Declarator ret_decl]
+    @init { if(dFlag) System.out.println("formalParameter"); }
     :   t1=variableModifiers t2=type t3=variableDeclaratorId
             {
                 ret_decl = new VariableDeclarator(MergeList(t1,t2), t3);
@@ -1395,7 +1566,7 @@ formalParameter returns [Declarator ret_decl]
 
 /* OK */
 switchBlockStatementGroups returns [CompoundStatement cstat]
-    @init { cstat = new CompoundStatement(); }
+    @init { if(dFlag) System.out.println("switchBlockStatementGroups"); cstat = new CompoundStatement(); }
     :   (t1=switchBlockStatementGroup
             { cstat.addStatement(t1); }
         )*
@@ -1406,11 +1577,13 @@ switchBlockStatementGroups returns [CompoundStatement cstat]
    appropriate AST, one in which each group, except possibly the last one, has
    labels and statements. */
 switchBlockStatementGroup returns [Statement stat]
+    @init { if(dFlag) System.out.println("switchBlockStatementGroup"); }
     :   switchLabel+ blockStatement*
     ;
 
 /* OK */
 switchLabel returns [Statement ret_case]
+    @init { if(dFlag) System.out.println("switchLabel"); }
     :   'case' constantExpression ':'
             { ret_case = new Case(constantExpression); }
     |   'case' enumConstantName ':'
@@ -1422,7 +1595,7 @@ switchLabel returns [Statement ret_case]
 /* OK */
 forControl returns [ForLoop forloop]
     options {k=3;} // be efficient for common case: for (ID ID : ID) ...
-    @init { Statement stat=null; Expression expr1=null, expr2=null; }
+    @init { if(dFlag) System.out.println("forControl"); Statement stat=null; Expression expr1=null, expr2=null; }
     :   enhancedForControl
             { forloop = enhancedForControl; }
     |   stat=forInit? ';' expr1=expression? ';' expr2=forUpdate?
@@ -1430,6 +1603,7 @@ forControl returns [ForLoop forloop]
     ;
 
 forInit returns [Statement stat]
+    @init { if(dFlag) System.out.println("forInit"); }
     :   localVariableDeclaration
             { stat = TODO; }
     |   expressionList
@@ -1438,12 +1612,14 @@ forInit returns [Statement stat]
 
 /* OK - TODO */
 enhancedForControl returns [ForLoop forloop]
+    @init { if(dFlag) System.out.println("enhancedForControl"); }
     :   variableModifiers type Identifier ':' expression
             { System.out.println("Unsupported for-loop style\n"); System.exit(-1); }
     ;
 
 /* OK */
 forUpdate returns [Expression expr]
+    @init { if(dFlag) System.out.println("forUpdate"); }
     :   expressionList
         {expr = expressionList; }
     ;
@@ -1451,6 +1627,7 @@ forUpdate returns [Expression expr]
 // EXPRESSIONS
 /* OK */
 parExpression returns [Expression expr]
+    @init { if(dFlag) System.out.println("parExpression"); }
     :   '(' expression 
             { expr = expression; }
         ')'
@@ -1458,7 +1635,7 @@ parExpression returns [Expression expr]
 
 /* OK */
 expressionList returns [Expression ret_expr]
-    @init { List list;}
+    @init { if(dFlag) System.out.println("expressionList"); List list;}
     :   expr1=expression
             { ret_expr = expr1; }
         (',' expr2=expression
@@ -1472,18 +1649,21 @@ expressionList returns [Expression ret_expr]
 
 /* OK */
 statementExpression returns [Expression expr]
+    @init { if(dFlag) System.out.println("statementExpression"); }
     :   expression
             { expr = expression; }
     ;
 
 /* OK */
 constantExpression returns [Expression expr]
+    @init { if(dFlag) System.out.println("constantExpression"); }
     :   expression
             { expr = expression; }
     ;
 
 /* OK */
 expression returns [Expression ret_expr]
+    @init { if(dFlag) System.out.println("expression"); }
     :   expr1=conditionalExpression
             {   ret_expr = expr1;    }
         (t1=assignmentOperator expr2=expression
@@ -1493,6 +1673,7 @@ expression returns [Expression ret_expr]
 
 /* OK */
 assignmentOperator returns [AssignmentOperator op]
+    @init { if(dFlag) System.out.println("assignmentOperator"); }
     :   '='
             { op = AssignmentOperator.NORMAL; }
     |   '+='
@@ -1536,15 +1717,17 @@ assignmentOperator returns [AssignmentOperator op]
 
 /* OK */
 conditionalExpression returns [Expression ret_expr]
-    :   expr1 = conditionalOrExpression
-            { ret_expr = expr1; }
-        ( '?' expr2=expression ':' expr3=expression
-            { ret_expr = new ConditionalExpression(expr1, expr2, expr3); }
+    @init { if(dFlag) System.out.println("conditionalExpression"); }
+    :   t1=conditionalOrExpression
+            { ret_expr = t1; }
+        ( '?' t2=expression ':' t33=expression
+            { ret_expr = new ConditionalExpression(t1, t2, t3); }
         )?
     ;
 
 /* OK */
 conditionalOrExpression returns [Expression ret_expr]
+    @init { if(dFlag) System.out.println("conditionalOrExpression"); }
     :   expr1 = conditionalAndExpression
             { ret_expr = expr1; }
         ( '||' expr2=conditionalAndExpression
@@ -1554,6 +1737,7 @@ conditionalOrExpression returns [Expression ret_expr]
 
 /* OK */
 conditionalAndExpression returns [Expression ret_expr]
+    @init { if(dFlag) System.out.println("conditionalAndExpression"); }
     :   expr1 = inclusiveOrExpression
             { ret_expr = expr1; }
         ( '&&' inclusiveOrExpression 
@@ -1563,6 +1747,7 @@ conditionalAndExpression returns [Expression ret_expr]
 
 /* OK */
 inclusiveOrExpression returns [Expression ret_expr]
+    @init { if(dFlag) System.out.println("inclusiveOrExpression"); }
     :   expr1 = exclusiveOrExpression
             { ret_expr = expr1; }
         ( '|' expr2 = exclusiveOrExpression
@@ -1572,6 +1757,7 @@ inclusiveOrExpression returns [Expression ret_expr]
 
 /* OK */
 exclusiveOrExpression returns [Expression ret_expr]
+    @init { if(dFlag) System.out.println("exclusiveOrExpression"); }
     :   expr1 = andExpression 
             { ret_expr = expr1; }
         ( '^' expr2 = andExpression
@@ -1581,6 +1767,7 @@ exclusiveOrExpression returns [Expression ret_expr]
 
 /* OK */
 andExpression returns [Expression ret_expr]
+    @init { if(dFlag) System.out.println("andExpression"); }
     :   expr1 = equalityExpression 
             { ret_expr = expr1; }
         ( '&' equalityExpression 
@@ -1590,6 +1777,7 @@ andExpression returns [Expression ret_expr]
 
 /* OK */
 equalityExpression returns [Expression ret_expr]
+    @init { if(dFlag) System.out.println("equalityExpression"); }
     :   expr1=instanceOfExpression 
             { ret_expr = expr1; }
         ( ('==' { op = BinaryOperator.COMPARE_EQ; }| '!=' { op = BinaryOperator.COMPARE_NE; } ) expr2 = instanceOfExpression
@@ -1599,6 +1787,7 @@ equalityExpression returns [Expression ret_expr]
 
 /* OK */
 instanceOfExpression returns [Expression ret_expr]
+    @init { if(dFlag) System.out.println("instanceOfExpression"); }
     :   expr1=relationalExpression
             { ret_expr = expr1; }
         ('instanceof' expr2=type
@@ -1608,6 +1797,7 @@ instanceOfExpression returns [Expression ret_expr]
 
 /* OK */
 relationalExpression returns [Expression ret_expr]
+    @init { if(dFlag) System.out.println("relationalExpression"); }
     :   expr1=shiftExpression
             { ret_expr = expr1; }
         ( relationalOp expr2=shiftExpression
@@ -1617,6 +1807,7 @@ relationalExpression returns [Expression ret_expr]
 
 /* OK = TODO - need to understand the meaning of => operator in this language syntax */
 relationalOp returns [BinaryOperator op]
+    @init { if(dFlag) System.out.println("relationalOp"); }
     :   ('<' '=')=> t1='<' t2='='
         { $t1.getLine() == $t2.getLine() &&
           $t1.getCharPositionInLine() + 1 == $t2.getCharPositionInLine() }?
@@ -1633,6 +1824,7 @@ relationalOp returns [BinaryOperator op]
 
 /* OK */
 shiftExpression returns [Expression ret_expr]
+    @init { if(dFlag) System.out.println("shiftExpression"); }
     :   expr1=additiveExpression
             { ret_expr = expr1; }
         ( shiftOp expr2=additiveExpression
@@ -1642,6 +1834,7 @@ shiftExpression returns [Expression ret_expr]
 
 /* OK */
 shiftOp returns [BinaryOperator op]
+    @init { if(dFlag) System.out.println("shiftOp"); }
     :   ('<' '<')=> t1='<' t2='<'
         { $t1.getLine() == $t2.getLine() &&
           $t1.getCharPositionInLine() + 1 == $t2.getCharPositionInLine() }?
@@ -1660,6 +1853,7 @@ shiftOp returns [BinaryOperator op]
 
 /* OK */
 additiveExpression returns [Expression ret_expr]
+    @init { if(dFlag) System.out.println("additiveExpression"); }
     :   expr1=multiplicativeExpression 
             { ret_expr = expr1; }
         ( ('+' { op = BinaryOperator.ADD; }| '-' { op = BinaryOperator.SUBTRACT; }) expr2=multiplicativeExpression
@@ -1669,6 +1863,7 @@ additiveExpression returns [Expression ret_expr]
 
 /* OK */
 multiplicativeExpression returns [Expression ret_expr]
+    @init { if(dFlag) System.out.println("multiplicativeExpression"); }
     :   expr1=unaryExpression
             { ret_expr = expr1; }
         ( ( '*' { op = BinaryOperator.MULTIPLY; } | '/' { op = BinaryOperator.DIVIDE; } | '%' { op = BinaryOperator.MODULUS; } ) expr2=unaryExpression
@@ -1678,6 +1873,7 @@ multiplicativeExpression returns [Expression ret_expr]
 
 /* OK */
 unaryExpression returns [Expression ret_expr]
+    @init { if(dFlag) System.out.println("unaryExpression"); }
     :   '+' tok1=unaryExpression
             { ret_expr = new UnaryExpression(UnaryOperator.PLUS, tok1); }
     |   '-' tok2=unaryExpression
@@ -1686,31 +1882,56 @@ unaryExpression returns [Expression ret_expr]
             { ret_expr = new UnaryExpression(UnaryOperator.PRE_INCREMENT, tok3); }
     |   '--' tok4=unaryExpression
             { ret_expr = new UnaryExpression(UnaryOperator.PRE_DECREMENT, tok4); }
-    |   tok5=unaryExpressionNotPlusMinus
-            { ret_expr = tok5; }
+    |   t5=unaryExpressionNotPlusMinus
+            { ret_expr = t5; }
     ;
 
 unaryExpressionNotPlusMinus returns [Expression ret_expr]
+    @init { if(dFlag) System.out.println("unaryExpressionNotPlusMinus"); int c1, c2;}
     :   '~' t1=unaryExpression
             { ret_expr = new UnaryExpression(UnaryOperator.BITWISE_COMPLEMENT, t1); }
     |   '!' t2=unaryExpression
             { ret_expr = new UnaryExpression(UnaryOperator.LOGICAL_NEGATION, t2); }
     |   t3=castExpression
             { ret_expr = t3; }
-    |   t4=primary t5=selector* ('++'|'--')?
-            { /* TODO */ }
+    |   {c1=0; c2=0;} t4=primary
+            {
+                ret_expr = t4;
+                /* TODO */
+            }
+        (t5=selector)* ('++' {c1=1;}|'--'{c2=1;})?
     ;
 
-castExpression
-    :  '(' primitiveType ')' unaryExpression
-    |  '(' (type | expression) ')' unaryExpressionNotPlusMinus
+castExpression returns [Expression ret_expr]
+    @init { if(dFlag) System.out.println("castExpression"); int check1, check2; }
+    :  '(' t1=primitiveType ')' t2=unaryExpression
+            {
+                List list = new LinkedList();
+                list.add(t1);
+                ret_expr = new NewExpression(list, t2);
+            }
+        |  {check1=0; check2=0;} '(' (t3=type {check1=1;}| t4=expression {check2=1;}) ')' t5=unaryExpressionNotPlusMinus
+            {
+                if(check1 == 1){
+                    List list = new LinkedList();
+                    list.add(t3);
+                    ret_expr = new NewExpression(list, t5);
+                }
+                else if (check2 == 1){
+                    ret_expr = new RangeExpression(t4, t5); /* TODO Make sure it is the right class */
+                }
+            }
     ;
 
-primary
+primary returns [Expression ret_expr]
+    @init { if(dFlag) System.out.println("primary"); }
     :   parExpression
     |   'this' ('.' Identifier)* identifierSuffix?
     |   'super' superSuffix
-    |   literal
+    |   t1=literal
+            {
+                ret_expr = t1;
+            }
     |   'new' creator
     |   Identifier ('.' Identifier)* identifierSuffix?
     |   primitiveType ('[' ']')* '.' 'class'
@@ -1718,6 +1939,7 @@ primary
     ;
 
 identifierSuffix
+    @init { if(dFlag) System.out.println("identifierSuffix"); }
     :   ('[' ']')+ '.' 'class'
     |   ('[' expression ']')+ // can also be matched by selector, but do here
     |   arguments
@@ -1729,20 +1951,24 @@ identifierSuffix
     ;
 
 creator
+    @init { if(dFlag) System.out.println("creator"); }
     :   nonWildcardTypeArguments createdName classCreatorRest
     |   createdName (arrayCreatorRest | classCreatorRest)
     ;
 
 createdName
+    @init { if(dFlag) System.out.println("createdName"); }
     :   classOrInterfaceType
     |   primitiveType
     ;
 
 innerCreator
+    @init { if(dFlag) System.out.println("innerCreator"); }
     :   nonWildcardTypeArguments? Identifier classCreatorRest
     ;
 
 arrayCreatorRest
+    @init { if(dFlag) System.out.println("arrayCreatorRest"); }
     :   '['
         (   ']' ('[' ']')* arrayInitializer
         |   expression ']' ('[' expression ']')* ('[' ']')*
@@ -1750,18 +1976,25 @@ arrayCreatorRest
     ;
 
 classCreatorRest
+    @init { if(dFlag) System.out.println("classCreatorRest"); }
     :   arguments classBody?
     ;
 
 explicitGenericInvocation
+    @init { if(dFlag) System.out.println("explicitGenericInvocation"); }
     :   nonWildcardTypeArguments Identifier arguments
     ;
 
-nonWildcardTypeArguments
-    :   '<' typeList '>'
+nonWildcardTypeArguments returns [List list]
+    @init { if(dFlag) System.out.println("nonWildcardTypeArguments"); list = new LinkedList(); }
+    :   '<' t1=typeList '>'
+        {
+            list = t1;
+        }
     ;
 
 selector
+    @init { if(dFlag) System.out.println("selector"); }
     :   '.' Identifier arguments?
     |   '.' 'this'
     |   '.' 'super' superSuffix
@@ -1770,14 +2003,18 @@ selector
     ;
 
 superSuffix
+    @init { if(dFlag) System.out.println("superSuffix"); }
     :   arguments
     |   '.' Identifier arguments?
     ;
 
 /* OK */
 arguments returns [List param_list]
-    @init { param_list = new LinkedList(); }
-    :   '(' (t1=expressionList { param_list.add(t1); })? ')'
+    @init { if(dFlag) System.out.println("arguments"); param_list = new LinkedList(); }
+    :   '(' (t1=expressionList
+                {
+                    param_list.add(t1);
+        })? ')'
     ;
 
 /*========================================================================*/

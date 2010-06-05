@@ -139,11 +139,10 @@ public class ClassDeclaration extends Declaration implements SymbolTable
     this.class_specs = class_specs;
   }
 
-  protected Statement body_stat;
-  
+  /* TODO: Make sure statement can be directly added as a child of ClassDecl */
   public void SetBodyStatement(Statement stat)
   {
-      this.body_stat = stat;
+      children.add(stat);
   }
   
   /**

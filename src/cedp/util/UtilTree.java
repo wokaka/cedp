@@ -34,7 +34,7 @@ public class UtilTree
         while(node.getChildCount() > 0){
             RemoveChildren((DefaultMutableTreeNode)node.getFirstChild());
         }
-        System.out.println(""+node);
+        //System.out.println(""+node);
         node.removeFromParent();
     }
     

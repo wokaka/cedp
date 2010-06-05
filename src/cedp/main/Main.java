@@ -22,7 +22,7 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        int generate = 3;
+        int generate = 2;
 
         /* LEXER */
         try{
@@ -38,7 +38,8 @@ public class Main {
                 }
                 else{
                     UtilFile.Write("stat", "generate");
-                    CetusWrapper.Run("AskEnormousTests.java", null, false);
+                    CetusWrapper.Run("5.java", null, false);
+//                    CetusWrapper.Run("AskEnormousTests.java", null, false);
                     return;
                 }
             }
