@@ -842,7 +842,7 @@ memberDecl returns [Declaration ret_decl]
     |   Identifier t4=constructorDeclaratorRest
             {
                 ProcedureDeclarator pdecl = new ProcedureDeclarator(new NameID($Identifier.text), (List)t4.get("param"));
-                ret_decl = new Procedure(null, pdecl, (List)t4.get("body"));
+                ret_decl = new Procedure(pdecl, (CompoundStatement)t4.get("body"));
             }
     |   t5=interfaceDeclaration
             {
@@ -1252,15 +1252,15 @@ methodBody returns [Statement stat]
             }
     ;
 
-constructorBody returns [List list]
-    @init { if(dFlag) System.out.println("constructorBody"); list = new LinkedList(); }
+constructorBody returns [CompoundStatement ret_stat]
+    @init { if(dFlag) System.out.println("constructorBody"); ret_stat = new CompoundStatement(); }
     :   '{' (t1=explicitConstructorInvocation
             {
-               list.add(t1);
+               /* TODO */
             }
         )? (t2=blockStatement
             {
-               list.add(t2);
+               ret_stat.addStatement(t2);
             }
         )* '}'
     ;

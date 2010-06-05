@@ -1,4 +1,4 @@
-// $ANTLR 3.2 Sep 23, 2009 12:02:23 src/cedp/src2src/frontend/java/Java.g 2010-06-04 23:10:29
+// $ANTLR 3.2 Sep 23, 2009 12:02:23 src/cedp/src2src/frontend/java/Java.g 2010-06-04 23:17:51
 
 package cedp.src2src.frontend.java;
 
@@ -2650,7 +2650,7 @@ public class JavaParser extends Parser {
                     if ( state.backtracking==0 ) {
 
                                       ProcedureDeclarator pdecl = new ProcedureDeclarator(new NameID((Identifier6!=null?Identifier6.getText():null)), (List)t4.get("param"));
-                                      ret_decl = new Procedure(null, pdecl, (List)t4.get("body"));
+                                      ret_decl = new Procedure(pdecl, (CompoundStatement)t4.get("body"));
                                   
                     }
 
@@ -3700,7 +3700,7 @@ public class JavaParser extends Parser {
         int constructorDeclaratorRest_StartIndex = input.index();
         List t1 = null;
 
-        List t2 = null;
+        CompoundStatement t2 = null;
 
 
          if(dFlag) System.out.println("constructorDeclaratorRest"); hash = new Hashtable(); 
@@ -5458,22 +5458,22 @@ public class JavaParser extends Parser {
 
 
     // $ANTLR start "constructorBody"
-    // src/cedp/src2src/frontend/java/Java.g:1255:1: constructorBody returns [List list] : '{' (t1= explicitConstructorInvocation )? (t2= blockStatement )* '}' ;
-    public final List constructorBody() throws RecognitionException {
-        List list = null;
+    // src/cedp/src2src/frontend/java/Java.g:1255:1: constructorBody returns [CompoundStatement ret_stat] : '{' (t1= explicitConstructorInvocation )? (t2= blockStatement )* '}' ;
+    public final CompoundStatement constructorBody() throws RecognitionException {
+        CompoundStatement ret_stat = null;
         int constructorBody_StartIndex = input.index();
         List t1 = null;
 
         Statement t2 = null;
 
 
-         if(dFlag) System.out.println("constructorBody"); list = new LinkedList(); 
+         if(dFlag) System.out.println("constructorBody"); ret_stat = new CompoundStatement(); 
         try {
-            if ( state.backtracking>0 && alreadyParsedRule(input, 64) ) { return list; }
+            if ( state.backtracking>0 && alreadyParsedRule(input, 64) ) { return ret_stat; }
             // src/cedp/src2src/frontend/java/Java.g:1257:5: ( '{' (t1= explicitConstructorInvocation )? (t2= blockStatement )* '}' )
             // src/cedp/src2src/frontend/java/Java.g:1257:9: '{' (t1= explicitConstructorInvocation )? (t2= blockStatement )* '}'
             {
-            match(input,44,FOLLOW_44_in_constructorBody5204); if (state.failed) return list;
+            match(input,44,FOLLOW_44_in_constructorBody5204); if (state.failed) return ret_stat;
             // src/cedp/src2src/frontend/java/Java.g:1257:13: (t1= explicitConstructorInvocation )?
             int alt82=2;
             alt82 = dfa82.predict(input);
@@ -5485,10 +5485,10 @@ public class JavaParser extends Parser {
                     t1=explicitConstructorInvocation();
 
                     state._fsp--;
-                    if (state.failed) return list;
+                    if (state.failed) return ret_stat;
                     if ( state.backtracking==0 ) {
 
-                                     list.add(t1);
+                                     /* TODO */
                                   
                     }
 
@@ -5510,10 +5510,10 @@ public class JavaParser extends Parser {
             	    t2=blockStatement();
 
             	    state._fsp--;
-            	    if (state.failed) return list;
+            	    if (state.failed) return ret_stat;
             	    if ( state.backtracking==0 ) {
 
-            	                     list.add(t2);
+            	                     ret_stat.addStatement(t2);
             	                  
             	    }
 
@@ -5525,7 +5525,7 @@ public class JavaParser extends Parser {
                 }
             } while (true);
 
-            match(input,45,FOLLOW_45_in_constructorBody5266); if (state.failed) return list;
+            match(input,45,FOLLOW_45_in_constructorBody5266); if (state.failed) return ret_stat;
 
             }
 
@@ -5537,7 +5537,7 @@ public class JavaParser extends Parser {
         finally {
             if ( state.backtracking>0 ) { memoize(input, 64, constructorBody_StartIndex); }
         }
-        return list;
+        return ret_stat;
     }
     // $ANTLR end "constructorBody"
 
@@ -7365,7 +7365,7 @@ public class JavaParser extends Parser {
                     int LA113_0 = input.LA(1);
 
                     if ( (LA113_0==77) ) {
-                        int LA113_1 = input.LA(2);
+                        int LA113_2 = input.LA(2);
 
                         if ( (synpred157_Java()) ) {
                             alt113=1;
