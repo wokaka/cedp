@@ -11,7 +11,7 @@ public class UnaryOperator implements Printable
   private static HashMap<String,UnaryOperator> op_map = new HashMap(16);
 
   private static String[] names =
-    { "&", "~", "*", "!", "-", "+", "--", "++", "--", "++" };
+    { "&", "~", "*", "!", "-", "+", "--", "++", "--", "++", "new" };
 
   /**
    * &amp;
@@ -62,6 +62,8 @@ public class UnaryOperator implements Printable
    * ++
    */
   public static final UnaryOperator PRE_INCREMENT = new UnaryOperator(9);
+
+  public static final UnaryOperator NEW = new UnaryOperator(10);
 
   protected int value;
 

@@ -232,7 +232,7 @@ public class Parser{
       lexer.setOriginalSource(fname); // unnecess
       lexer.initialize(); // unnecess
 
-      CommonTokenStream tokens = new  CommonTokenStream(lexer);
+      CommonTokenStream tokens = new  DebugCommonTokenStream(lexer);
       JavaParser parser = new JavaParser(tokens);
 
       parser.getPreprocessorInfoChannel(lexer.getPreprocessorInfoChannel()); // unncessary
