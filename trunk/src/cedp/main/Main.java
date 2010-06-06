@@ -38,7 +38,7 @@ public class Main {
                 }
                 else{
                     UtilFile.Write("stat", "generate");
-                    CetusWrapper.Run("5.java", null, false);
+                    CetusWrapper.Run("7.java", null, false);
 //                    CetusWrapper.Run("AskEnormousTests.java", null, false);
                     return;
                 }

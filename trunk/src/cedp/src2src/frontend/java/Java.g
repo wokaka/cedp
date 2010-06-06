@@ -501,6 +501,7 @@ public void traceOut(String rname)
 }
 
 boolean dFlag = true;
+Expression prev_expr;
 }
 
 /*========================================================================*/
@@ -858,10 +859,14 @@ memberDeclaration returns [Declaration ret_decl]
     @init { if(dFlag) System.out.println("memberDeclaration"); }
     :   t1=type (t2=methodDeclaration
                 {
-                    if(!t2.contains("body"))
-                        ret_decl = new VariableDeclaration(t1, t2.get("id"));
-                    else
-                        ret_decl = null;//new Procedure(, decl, );
+                    if(t2.containsKey("body")){
+                        ProcedureDeclarator pdec = new ProcedureDeclarator((IDExpression)t2.get("id"), (List)t2.get("param"));
+                        ret_decl = new Procedure(t1, pdec, (CompoundStatement)t2.get("body"));
+                    }
+                    else{
+                        VariableDeclarator vdec = new VariableDeclarator((IDExpression)t2.get("id"));
+                        ret_decl = new VariableDeclaration(t1, vdec);
+                    }
                 }
         | t3=fieldDeclaration
                 {
@@ -942,7 +947,11 @@ methodDeclaratorRest returns [Hashtable hash]
             {
                 hash.put("param", t1);
             }
-        ('throws' t2=qualifiedNameList)?
+        ('throws' t2=qualifiedNameList
+            {
+                hash.put("throw", t2);
+            }
+        )?
         (   t3=methodBody
             {
                 hash.put("body", t3);
@@ -996,7 +1005,7 @@ constantDeclarator returns [VariableDeclarator ret_decl]
     @init { if(dFlag) System.out.println("constantDeclarator"); }
     :   Identifier t1=constantDeclaratorRest
             {
-                ret_decl = new VariableDeclarator(new NameID($Identifier.text);
+                ret_decl = new VariableDeclarator(new NameID($Identifier.text));
                 ret_decl.setInitializer(t1);
             }
     ;
@@ -1138,22 +1147,54 @@ typeName
 
 type returns [List types]
     @init { if(dFlag) System.out.println("type"); types = new LinkedList(); }
-    : t1=classOrInterfaceType ('[' ']')*
+    : t1=classOrInterfaceType
         {
-            types.addAll(t1); /* TODO ('[' ']')* */
+            if(t1 != null)
+                types.add(t1);
         }
-    | t2=primitiveType ('[' ']')*
-        {
-            types.add(t2); /* TODO ('[' ']')* */
-        }
+      ('[' ']'
+            {
+                types.add(new ArraySpecifier());
+            }
+      )*
+    | t2=primitiveType
+            {
+                types.add(t2); /* TODO ('[' ']')* */
+            }
+       ('[' ']'
+            {
+                types.add(new ArraySpecifier());
+            }
+       )*
     ;
 
-classOrInterfaceType returns [List types]
-    @init { if(dFlag) System.out.println("classOrInterfaceType"); types = new LinkedList(); }
-    : Identifier typeArguments? ('.' Identifier typeArguments? )*
+classOrInterfaceType returns [Expression ret_expr]
+    @init { if(dFlag) System.out.println("classOrInterfaceType"); }
+    : t1=Identifier (t2=typeArguments)?
         {
-            /* TODO */
+ /*
+            if(t2 != null && t2.containsKey("argument")){
+                if(!t2.containsKey("body")){
+                    Expression arg = t2.get("argument");
+                    if(arg instanceof OperatorID)
+                        ret_expr = new FunctionCall(new NameID($t1.text));
+                    else
+                        ret_expr = new FunctionCall(new NameID($t1.text), arg);
+                }
+                else{
+                    // TODO
+                }
+            }
+            else{
+                */
+            ret_expr = new NameID($t1.text);
+            
         }
+      ('.' t3=Identifier typeArguments?
+        {
+            ret_expr = new AccessExpression(ret_expr, AccessOperator.MEMBER_ACCESS, new NameID($t3.text));
+        }
+      )*
     ;
 
 /* OK */
@@ -1185,15 +1226,23 @@ variableModifier returns [Specifier anno]
             { anno = t1; }
     ;
 
-typeArguments
+typeArguments returns [Expression ret_expr]
     @init { if(dFlag) System.out.println("typeArguments"); }
     :   '<' typeArgument (',' typeArgument)* '>'
     ;
 
-typeArgument
-    @init { if(dFlag) System.out.println("typeArgument"); }
-    :   type
-    |   '?' (('extends' | 'super') type)?
+typeArgument returns [List list]
+    @init { if(dFlag) System.out.println("typeArgument"); list = }
+    :   t1=type
+            {
+                list = t1;
+            }
+    |   '?' (('extends' | 'super') t2=type
+                {
+                    /* TODO */
+                    list = t2;
+                }
+        )?
     ;
 
 qualifiedNameList
@@ -1216,8 +1265,9 @@ formalParameterDecls returns [List list]
     :   t1=variableModifiers t2=type t3=formalParameterDeclsRest
             {
                 List tlist = new LinkedList();
-                VariableDeclarator var_decl = new VariableDeclarator(MergeList(t1, t2), t3.get(0));
-                tlist.add(var_decl);
+                VariableDeclarator var_decl = new VariableDeclarator((IDExpression)t3.get(0));
+                VariableDeclaration vdec = new VariableDeclaration(MergeList(t1, t2), var_decl);
+                tlist.add(vdec);
                 t3.remove(0);
                 list = MergeList(tlist, t3);
             }
@@ -1438,10 +1488,11 @@ defaultValue
 
 block returns [CompoundStatement cstat]
     @init { if(dFlag) System.out.println("block"); cstat = new CompoundStatement(); }
-    :   '{' t1=blockStatement* '}'
-    {
-        cstat.addStatement(t1);
-    }
+    :   '{' (t1=blockStatement
+            {
+                cstat.addStatement(t1);
+            }
+        )* '}'
     ;
 
 blockStatement returns [Statement stat]
@@ -1483,7 +1534,7 @@ variableModifiers returns [List list]
 statement returns [Statement ret_stat]
     @init { if(dFlag) System.out.println("statement"); int check1 = 0;}
     : t1=block
-            { stat = (Statement) t1; }
+            { ret_stat = (Statement) t1; }
     |   ASSERT expression (':' expression)? ';'
             {  /* TODO */ }
     |   'if' tok2=parExpression stat1=statement
@@ -1542,8 +1593,11 @@ statement returns [Statement ret_stat]
     |   tok10=statementExpression ';'
             {   ret_stat = (Statement) new Statement();
                 ret_stat.addChild(0, tok10); }
-    |   Identifier ':' statement
-            {  /* TODO */ }
+    |   t11=Identifier ':' t12=statement
+            {   Label label = new Label(new NameID($t11.text));
+                ret_stat = label;
+                ret_stat.addChild(0, t12);
+            }
     ;
 
 catches
@@ -1628,21 +1682,23 @@ forUpdate returns [Expression expr]
 /* OK */
 parExpression returns [Expression expr]
     @init { if(dFlag) System.out.println("parExpression"); }
-    :   '(' expression 
-            { expr = expression; }
+    :   '(' t1=expression
+            { expr = t1; }
         ')'
     ;
 
 /* OK */
 expressionList returns [Expression ret_expr]
-    @init { if(dFlag) System.out.println("expressionList"); List list;}
+    @init { if(dFlag) System.out.println("expressionList"); List list = new LinkedList();}
     :   expr1=expression
-            { ret_expr = expr1; }
+            {
+                list.add(expr1);
+                ret_expr = expr1;
+            }
         (',' expr2=expression
-            { list = new LinkedList();
-              list.add(expr1);
-              list.add(expr2);
-              ret_expr = new CommaExpression(list);
+            {
+                list.add(expr2);
+                ret_expr = new CommaExpression(list);
             }
         )*
     ;
@@ -1673,7 +1729,7 @@ expression returns [Expression ret_expr]
 
 /* OK */
 assignmentOperator returns [AssignmentOperator op]
-    @init { if(dFlag) System.out.println("assignmentOperator"); }
+    @init { if(dFlag) System.out.println("assignmentOperator"); AssignmentOperator op=null;}
     :   '='
             { op = AssignmentOperator.NORMAL; }
     |   '+='
@@ -1777,10 +1833,10 @@ andExpression returns [Expression ret_expr]
 
 /* OK */
 equalityExpression returns [Expression ret_expr]
-    @init { if(dFlag) System.out.println("equalityExpression"); }
+    @init { if(dFlag) System.out.println("equalityExpression"); BinaryOperator op=null; }
     :   expr1=instanceOfExpression 
             { ret_expr = expr1; }
-        ( ('==' { op = BinaryOperator.COMPARE_EQ; }| '!=' { op = BinaryOperator.COMPARE_NE; } ) expr2 = instanceOfExpression
+        ( ('==' { op=BinaryOperator.COMPARE_EQ; }| '!=' { op = BinaryOperator.COMPARE_NE; } ) expr2=instanceOfExpression
             { ret_expr = new BinaryExpression(expr1, op, expr2); }
         )*
     ;
@@ -1807,7 +1863,7 @@ relationalExpression returns [Expression ret_expr]
 
 /* OK = TODO - need to understand the meaning of => operator in this language syntax */
 relationalOp returns [BinaryOperator op]
-    @init { if(dFlag) System.out.println("relationalOp"); }
+    @init { if(dFlag) System.out.println("relationalOp"); BinaryOperator op=null;}
     :   ('<' '=')=> t1='<' t2='='
         { $t1.getLine() == $t2.getLine() &&
           $t1.getCharPositionInLine() + 1 == $t2.getCharPositionInLine() }?
@@ -1834,7 +1890,7 @@ shiftExpression returns [Expression ret_expr]
 
 /* OK */
 shiftOp returns [BinaryOperator op]
-    @init { if(dFlag) System.out.println("shiftOp"); }
+    @init { if(dFlag) System.out.println("shiftOp"); BinaryOperator op=null;}
     :   ('<' '<')=> t1='<' t2='<'
         { $t1.getLine() == $t2.getLine() &&
           $t1.getCharPositionInLine() + 1 == $t2.getCharPositionInLine() }?
@@ -1853,7 +1909,7 @@ shiftOp returns [BinaryOperator op]
 
 /* OK */
 additiveExpression returns [Expression ret_expr]
-    @init { if(dFlag) System.out.println("additiveExpression"); }
+    @init { if(dFlag) System.out.println("additiveExpression"); BinaryOperator op=null; }
     :   expr1=multiplicativeExpression 
             { ret_expr = expr1; }
         ( ('+' { op = BinaryOperator.ADD; }| '-' { op = BinaryOperator.SUBTRACT; }) expr2=multiplicativeExpression
@@ -1863,7 +1919,7 @@ additiveExpression returns [Expression ret_expr]
 
 /* OK */
 multiplicativeExpression returns [Expression ret_expr]
-    @init { if(dFlag) System.out.println("multiplicativeExpression"); }
+    @init { if(dFlag) System.out.println("multiplicativeExpression"); BinaryOperator op=null;}
     :   expr1=unaryExpression
             { ret_expr = expr1; }
         ( ( '*' { op = BinaryOperator.MULTIPLY; } | '/' { op = BinaryOperator.DIVIDE; } | '%' { op = BinaryOperator.MODULUS; } ) expr2=unaryExpression
@@ -1897,9 +1953,14 @@ unaryExpressionNotPlusMinus returns [Expression ret_expr]
     |   {c1=0; c2=0;} t4=primary
             {
                 ret_expr = t4;
+                prev_expr = t4;
                 /* TODO */
             }
-        (t5=selector)* ('++' {c1=1;}|'--'{c2=1;})?
+        (t5=selector
+            {
+                
+            }
+        )* ('++' {c1=1;}|'--'{c2=1;})?
     ;
 
 castExpression returns [Expression ret_expr]
@@ -1924,47 +1985,168 @@ castExpression returns [Expression ret_expr]
     ;
 
 primary returns [Expression ret_expr]
-    @init { if(dFlag) System.out.println("primary"); }
-    :   parExpression
-    |   'this' ('.' Identifier)* identifierSuffix?
-    |   'super' superSuffix
-    |   t1=literal
+    @init { if(dFlag) System.out.println("primary"); String str="";}
+    :   t1=parExpression
             {
                 ret_expr = t1;
             }
-    |   'new' creator
-    |   Identifier ('.' Identifier)* identifierSuffix?
+    |   'this'
+            {
+                prev_expr = new OperatorID("this");
+            }
+        ('.' t2=Identifier
+            {
+                prev_expr = new AccessExpression(prev_expr, AccessOperator.MEMBER_ACCESS , new NameID($t2.text));
+            }
+        )*
+        (t3=identifierSuffix
+            {
+                prev_expr = t3;
+            }
+        )?
+            {
+                ret_expr = prev_expr;
+            }
+    |   'super' superSuffix
+    |   t4=literal
+            {
+                ret_expr = t4;
+            }
+    |   'new' t11=creator
+            {
+                ret_expr = new UnaryExpression(UnaryOperator.NEW, t11);
+            }
+    |   t5=Identifier
+            {
+                prev_expr = new NameID($t5.text);
+            }
+        ('.' t6=Identifier
+            {
+                prev_expr = new AccessExpression(prev_expr, AccessOperator.MEMBER_ACCESS , new NameID($t6.text));
+            }
+        )* 
+        (t7=identifierSuffix
+            {
+                prev_expr = t3;
+            }
+        )?
+            {
+                ret_expr = prev_expr;
+            }
     |   primitiveType ('[' ']')* '.' 'class'
     |   'void' '.' 'class'
+            {
+                ret_expr = new AccessExpression(new OperatorID("void"), AccessOperator.MEMBER_ACCESS , new OperatorID("class"));
+            }
     ;
 
-identifierSuffix
-    @init { if(dFlag) System.out.println("identifierSuffix"); }
-    :   ('[' ']')+ '.' 'class'
-    |   ('[' expression ']')+ // can also be matched by selector, but do here
-    |   arguments
+identifierSuffix returns [Expression ret_expr]
+    @init { if(dFlag) System.out.println("identifierSuffix"); List list;}
+    :   {list = new LinkedList(); } ('[' ']'
+            {
+                list.add(new ArraySpecifier());
+            }
+        )+ '.' 'class'
+            {
+                ArrayAccess lhs = new ArrayAccess(prev_expr), list);
+                ret_expr = new AccessExpression(lhs, AccessOperator.MEMBER_ACCESS, new OperatorID("class"));
+            }
+    |   {list = new LinkedList(); } ('[' t1=expression
+            {
+                list.add(t1);
+            }
+        ']')+ // can also be matched by selector, but do here
+            {
+                ret_expr = new ArrayAccess(prev_expr, t1);
+            }
+    |   t2=arguments
+            {
+                ret_expr = t2;
+            }
     |   '.' 'class'
-    |   '.' explicitGenericInvocation
+            {
+                ret_expr = new AccessExpression(prev_expr, AccessOperator.MEMBER_ACCESS, new OperatorID("class"));
+            }
+    |   '.' t1=explicitGenericInvocation
+            {
+                ret_expr = new AccessExpression(prev_expr, AccessOperator.MEMBER_ACCESS, t1);
+            }
     |   '.' 'this'
+            {
+                ret_expr = new AccessExpression(prev_expr, AccessOperator.MEMBER_ACCESS, new OperatorID("this"));
+            }
     |   '.' 'super' arguments
-    |   '.' 'new' innerCreator
+            {
+                ret_expr = new AccessExpression(prev_expr, AccessOperator.MEMBER_ACCESS, new OperatorID("super") /* TODO */);
+            }
+    |   '.' 'new' t20=innerCreator
+            {
+                Expression expr = new BinaryExpression(UnaryOperator.NEW, t20);
+                ret_expr = new AccessExpression(prev_expr, AccessOperator.MEMBER_ACCESS, expr));
+            }
     ;
 
-creator
+creator returns [Expression ret_expr]
     @init { if(dFlag) System.out.println("creator"); }
-    :   nonWildcardTypeArguments createdName classCreatorRest
-    |   createdName (arrayCreatorRest | classCreatorRest)
+    :   nonWildcardTypeArguments t1=createdName t2=classCreatorRest
+            {
+                if(t2.containsKey("argument")){
+                    if(!t2.containsKey("body")){
+                        Expression arg = (Expression) t2.get("argument");
+                        if(arg instanceof OperatorID)
+                            ret_expr = new FunctionCall(t1);
+                        else
+                            ret_expr = new FunctionCall(t1, arg);
+                    }
+                    else{
+                        /* TODO */
+                    }
+                }
+                else{
+                    ret_expr = t1;
+                }
+            }
+    |   t3=createdName (t4=arrayCreatorRest 
+            {
+                /* TODO */
+                ret_expr = t3;
+            }
+        | t5=classCreatorRest
+            {
+                if(t5.containsKey("argument")){
+                    if(!t5.containsKey("body")){
+                        Expression arg = (Expression) t5.get("argument");
+                        if(arg instanceof OperatorID)
+                            ret_expr = new FunctionCall(t3);
+                        else
+                            ret_expr = new FunctionCall(t3, arg);
+                    }
+                    else{
+                        /* TODO */
+                    }
+                }
+                else{
+                    ret_expr = t3;
+                }
+            }
+        )
     ;
 
-createdName
+createdName returns [Expression expr]
     @init { if(dFlag) System.out.println("createdName"); }
-    :   classOrInterfaceType
-    |   primitiveType
+    :   t1=classOrInterfaceType
+            {
+                expr = t1;
+            }
+    |   t2=primitiveType
     ;
 
-innerCreator
+innerCreator returns [Expression ret_expr]
     @init { if(dFlag) System.out.println("innerCreator"); }
-    :   nonWildcardTypeArguments? Identifier classCreatorRest
+    :   nonWildcardTypeArguments? t1=Identifier classCreatorRest
+            {
+                ret_expr = new NameID($t1.text);
+            }
     ;
 
 arrayCreatorRest
@@ -1975,9 +2157,21 @@ arrayCreatorRest
         )
     ;
 
-classCreatorRest
-    @init { if(dFlag) System.out.println("classCreatorRest"); }
-    :   arguments classBody?
+classCreatorRest returns [Hashtable hash]
+    @init { if(dFlag) System.out.println("classCreatorRest"); hash = new Hashtable(); }
+    :   t1=arguments
+            {
+                if(t1 != null){
+                    System.out.println("PUSH ");
+                    hash.put("argument", t1);
+                }
+            }
+        (t2=classBody
+            {
+                if(t2 != null)
+                    hash.put("body", t2);
+            }
+        )?
     ;
 
 explicitGenericInvocation
@@ -1993,9 +2187,28 @@ nonWildcardTypeArguments returns [List list]
         }
     ;
 
-selector
+selector returns [Expression ret_expr]
     @init { if(dFlag) System.out.println("selector"); }
-    :   '.' Identifier arguments?
+    :   '.' t1=Identifier 
+            {
+                if(prev_expr == null)
+                    ret_expr = new AccessExpression(new NameID("??"), AccessOperator.MEMBER_ACCESS, new NameID($t1.text));
+                else
+                    ret_expr = new AccessExpression(prev_expr, AccessOperator.MEMBER_ACCESS, new NameID($t1.text));
+            }
+        (t2=arguments
+            {
+                if(t2 == null)
+                    ret_expr = new NameID($Identifier.text);
+                else if(t2 instanceof OperatorID)
+                    ret_expr = new FunctionCall(new NameID($Identifier.text));
+                else{
+                    List list = new LinkedList();
+                    list.add(t2);
+                    ret_expr = new FunctionCall(new NameID($Identifier.text), list);
+                }
+            }
+        )?
     |   '.' 'this'
     |   '.' 'super' superSuffix
     |   '.' 'new' innerCreator
@@ -2009,12 +2222,17 @@ superSuffix
     ;
 
 /* OK */
-arguments returns [List param_list]
-    @init { if(dFlag) System.out.println("arguments"); param_list = new LinkedList(); }
-    :   '(' (t1=expressionList
+arguments returns [Expression ret_expr]
+    @init { if(dFlag) System.out.println("arguments"); }
+    :   '(' 
                 {
-                    param_list.add(t1);
-        })? ')'
+                    ret_expr = new OperatorID("()");
+                }
+        (t1=expressionList
+                {
+                    ret_expr = t1;
+                }
+        )? ')'
     ;
 
 /*========================================================================*/
