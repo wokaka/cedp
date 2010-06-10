@@ -208,4 +208,11 @@ public class Initializer implements Cloneable, Traversable
   {
     object_print_method = m;
   }
+
+  protected boolean lastComma = false;
+  
+  public void SetLastComma()
+  {
+      lastComma = true;
+  }
 }

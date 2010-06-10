@@ -8,14 +8,21 @@ package cedp.main;
 import cedp.login.LoginDialog;
 import cedp.util.UtilFile;
 import cedp.util.extlib.AntlrWrapper;
-import cedp.util.extlib.AntlrWrapper;
 import cedp.util.extlib.CetusWrapper;
+import java.applet.Applet;
 
 /**
  *
  * @author yim
  */
-public class Main {
+public class Main extends Applet {
+
+    @Override
+    public void init()
+    {
+        LoginDialog loginDialog = new LoginDialog();
+        loginDialog.Show();
+    }
 
     /**
      * @param args the command line arguments
