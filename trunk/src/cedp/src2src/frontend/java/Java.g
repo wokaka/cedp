@@ -1920,27 +1920,27 @@ literal returns [Declaration ret] //[Literal ret]
     @init { if(dFlag) System.out.println("literal"); LinkedList list = new LinkedList(); }
     :   t1=integerLiteral
             { 
-                ret = t1;
+                retval.ret = t1;
             }
     |   t2=FloatingPointLiteral
             { 
-                ret = t2;
+                retval.ret = new StringDeclaration($t2.text);
             }
     |   t3=CharacterLiteral
             { 
-                ret = t3;
+                retval.ret = new StringDeclaration($t3.text);
             }
     |   t4=StringLiteral
             { 
-                ret = t4;
+                retval.ret = new StringDeclaration($t4.text);
             }
     |   t5=booleanLiteral
             { 
-                ret = t5;
+                retval.ret = t5;
             }
     |   'null'
             { 
-                ret = null;
+                retval.ret = new StringDeclaration("null");
             }
     ;
 
@@ -2001,28 +2001,28 @@ annotation returns [Declaration ret] //[Annotation ret_anno]
     :   '@' t1=annotationName
             {
                 list.add(new StringDeclaration("@"));
-                list.add($t1.text);
+                list.add(new StringDeclaration($t1.text));
                 //ret_anno = new JavaAnnotation(new NameID($annotationName.text));
             }
         ( '('
                  {
-                    list.add(new StringDeclaration("{"));
+                    list.add(new StringDeclaration("("));
                  }
-                ( t2=elementValuePairs
+           ( t2=elementValuePairs
                     {
                         list.add(t2);
                         //ret.anno.SetParenthesis();
                         //ret_anno.SetExpression(t2);
                     }
-              | t3=elementValue
+           | t3=elementValue
                     {
                         list.add(t3);
                         //ret.anno.SetParenthesis();
                         //ret_anno.SetExpression(t3);
                     }
-          )? ')' 
+           )? ')'
                 {
-                    list.add(new StringDeclaration("}"));
+                    list.add(new StringDeclaration(")"));
                 }
         )?
     ;
@@ -2288,9 +2288,12 @@ localVariableDeclaration returns [Declaration ret] //[VariableDeclaration ret_va
     @after { ret = new StringDeclaration(list); }
     :   t1=variableModifiers t2=type t3=variableDeclarators
             {
-                list.add(t1);
-                list.add(t2);
-                list.add(t3);
+                if(t1 != null)
+                    list.add(t1);
+                if(t2 != null)
+                    list.add(t2);
+                if(t3 != null)
+                    list.add(t3);
                 //ret_vardecl = new VariableDeclaration(MergeList(t1, t2), t3.get(0));
                 //for(int i=1; i<t3.size(); i++)
                 //    ret_vardecl.addDeclarator(t3.get(i));
@@ -2299,10 +2302,11 @@ localVariableDeclaration returns [Declaration ret] //[VariableDeclaration ret_va
 
 variableModifiers returns [Declaration ret] //[List list]
     @init { if(dFlag) System.out.println("variableModifiers"); LinkedList list = new LinkedList(); }
-    @after { ret = new StringDeclaration(list); }
+    @after { if(list.size() > 1) ret = new StringDeclaration(list); }
     :   (t1=variableModifier
             {
                 list.add(t1);
+                ret = t1;
             }
         )*
     ;
@@ -2328,7 +2332,7 @@ statement returns [Declaration ret] //[Statement ret_stat]
     |   'if' t5=parExpression t6=statement
             {
                 list.add(new StringDeclaration("if"));
-                list.add(t5);
+                list.add(t5.ret);
                 list.add(t6);
                 //ret_stat = (Statement) new IfStatement(tok2, stat1);
             }
@@ -2353,7 +2357,7 @@ statement returns [Declaration ret] //[Statement ret_stat]
     |   'while' t11=parExpression t12=statement
             {
                 list.add(new StringDeclaration("while"));
-                list.add(t11);
+                list.add(t11.ret);
                 list.add(t12);
                 //ret_stat = (Statement) new WhileLoop(tok4, stat3);
             }
@@ -2362,7 +2366,7 @@ statement returns [Declaration ret] //[Statement ret_stat]
                 list.add(new StringDeclaration("do"));
                 list.add(t13);
                 list.add(new StringDeclaration("while"));
-                list.add(t14);
+                list.add(t14.ret);
                 //ret_stat = (Statement) new DoLoop(stat4, tok5);
             }
     |   'try' t15=block
@@ -2392,16 +2396,17 @@ statement returns [Declaration ret] //[Statement ret_stat]
     |   'switch' t20=parExpression '{' t21=switchBlockStatementGroups '}'
             {   
                 list.add(new StringDeclaration("switch"));
-                list.add(t20);
+                list.add(t20.ret);
                 list.add(new StringDeclaration("{"));
                 list.add(t21);
                 list.add(new StringDeclaration("}"));
                 //ret_stat = (Statement) new SwitchStatement(tok6, tok7);
             }
-    |   'synchronized' t22=parExpression block
+    |   'synchronized' t22=parExpression t22_1=block
             {
                 list.add(new StringDeclaration("synchronized"));
-                list.add(t22);
+                list.add(t22.ret);
+                list.add(t22_1);
             }
     |   { check1 = 0; }'return' (t23=expression { check1 = 1; })? ';'
             {
@@ -2487,7 +2492,7 @@ catchClause returns [Declaration ret] //
             }
     ;
 
-formalParameter returns [Declaration ret_decl] //[Declarator ret_decl]
+formalParameter returns [Declaration ret] //[Declarator ret_decl]
     @init { if(dFlag) System.out.println("formalParameter"); LinkedList list = new LinkedList(); }
     @after { ret = new StringDeclaration(list); }
     :   t1=variableModifiers t2=type t3=variableDeclaratorId
@@ -2500,7 +2505,7 @@ formalParameter returns [Declaration ret_decl] //[Declarator ret_decl]
     ;
 
 /* OK */
-switchBlockStatementGroups returns [Declaration ret_decl] //[CompoundStatement cstat]
+switchBlockStatementGroups returns [Declaration ret] //[CompoundStatement cstat]
     @init { if(dFlag) System.out.println("switchBlockStatementGroups"); cstat = new CompoundStatement(); LinkedList list = new LinkedList(); }
     @after { ret = new StringDeclaration(list); }
     :   (t1=switchBlockStatementGroup
@@ -2515,7 +2520,7 @@ switchBlockStatementGroups returns [Declaration ret_decl] //[CompoundStatement c
    ambiguous; but with appropriately greedy parsing it yields the most
    appropriate AST, one in which each group, except possibly the last one, has
    labels and statements. */
-switchBlockStatementGroup returns [Statement stat]
+switchBlockStatementGroup returns [Declaration ret]
     @init { if(dFlag) System.out.println("switchBlockStatementGroup"); }
     @after { ret = new StringDeclaration(list); }
     :   (t1=switchLabel
@@ -2580,7 +2585,7 @@ forControl returns [Declaration ret] //[ForLoop forloop]
             }
     ;
 
-forInit returns [Declaration ret_decl] //[Statement stat]
+forInit returns [Declaration ret] //[Statement stat]
     @init { if(dFlag) System.out.println("forInit"); LinkedList list = new LinkedList(); }
     :   t1=localVariableDeclaration
             {
@@ -2595,14 +2600,14 @@ forInit returns [Declaration ret_decl] //[Statement stat]
     ;
 
 /* OK - TODO */
-enhancedForControl returns [Declaration ret_decl] //[ForLoop forloop]
+enhancedForControl returns [Declaration ret] //[ForLoop forloop]
     @init { if(dFlag) System.out.println("enhancedForControl"); LinkedList list = new LinkedList(); }
     @after { ret = new StringDeclaration(list); }
     :   t1=variableModifiers t2=type t3=Identifier ':' t4=expression
             {
                 list.add(t1);
                 list.add(t2);
-                list.add($t3.text);
+                list.add(new StringDeclaration($t3.text));
                 list.add(new StringDeclaration(":"));
                 list.add(t4);
                 //System.out.println("Unsupported for-loop style\n"); System.exit(-1);
@@ -2623,9 +2628,12 @@ forUpdate returns [Declaration ret] //[Expression expr]
 /* OK */
 parExpression returns [Declaration ret] //[Expression ret]
     @init { if(dFlag) System.out.println("parExpression"); LinkedList list = new LinkedList(); }
+    @after { retval.ret = new StringDeclaration(list); }
     :   '(' t1=expression
-            { 
-                ret = t1;
+            {
+                list.add(new StringDeclaration("("));
+                list.add(t1);
+                list.add(new StringDeclaration(")"));
                 //expr = t1;
             }
         ')'
@@ -2673,7 +2681,7 @@ expression returns [Declaration ret] //[Expression ret_expr]
     @init { if(dFlag) System.out.println("expression"); LinkedList list = new LinkedList(); }
     @after { ret = new StringDeclaration(list); }
     :   t1=conditionalExpression
-            {   
+            {  
                 list.add(t1);
                 //ret_expr = expr1;
             }
@@ -2887,7 +2895,10 @@ equalityExpression returns [Declaration ret] //[Expression ret_expr]
             }
         ( ('==' { op=BinaryOperator.COMPARE_EQ; }| '!=' { op = BinaryOperator.COMPARE_NE; } ) t2=instanceOfExpression
             {
-                list.add(op);
+                if(op == BinaryOperator.COMPARE_EQ)
+                    list.add(new StringDeclaration("=="));
+                else
+                    list.add(new StringDeclaration("!="));
                 list.add(t2);
                 //ret_expr = new BinaryExpression(expr1, op, expr2);
             }
@@ -3016,7 +3027,10 @@ additiveExpression returns [Declaration ret] //[Expression ret_expr]
             }
         ( ('+' { op = BinaryOperator.ADD; }| '-' { op = BinaryOperator.SUBTRACT; }) t2=multiplicativeExpression
             { 
-                list.add(op);
+                if(op == BinaryOperator.ADD)
+                    list.add(new StringDeclaration("+"));
+                else
+                    list.add(new StringDeclaration("-"));
                 list.add(t2);
                 //ret_expr = new BinaryExpression(expr1, op, expr2);
             }
@@ -3143,7 +3157,7 @@ primary returns [Declaration ret] //[Expression ret_expr]
     @after { ret = new StringDeclaration(list); }
     :   t1=parExpression
             {
-                list.add(t1);
+                list.add(t1.ret);
                 //ret_expr = t1;
             }
     |   'this'
@@ -3154,7 +3168,7 @@ primary returns [Declaration ret] //[Expression ret_expr]
         ('.' t2=Identifier
             {
                 list.add(new StringDeclaration("."));
-                list.add(t2);
+                list.add(new StringDeclaration($t2.text));
                 //prev_expr = new AccessExpression(prev_expr, AccessOperator.MEMBER_ACCESS , new NameID($t2.text));
             }
         )*
@@ -3172,7 +3186,7 @@ primary returns [Declaration ret] //[Expression ret_expr]
             }
     |   t5=literal
             {
-                list.add(t5);
+                list.add(t5.ret);
                 //ret_expr = t4;
             }
     |   'new' t6=creator
