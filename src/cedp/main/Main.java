@@ -45,8 +45,8 @@ public class Main extends Applet {
                 }
                 else{
                     UtilFile.Write("stat", "generate");
-                    CetusWrapper.Run("7.java", null, false);
-//                    CetusWrapper.Run("AskEnormousTests.java", null, false);
+//                    CetusWrapper.Run("7.java", null, false);
+                    CetusWrapper.Run("AdCenterApiKeywordUpdaterImpl.java", null, false);
                     return;
                 }
             }

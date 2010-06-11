@@ -55,7 +55,8 @@ public class StringDeclaration extends Declaration
       throw new IllegalArgumentException();
 
     for(Traversable expr : (List<Traversable>)expr_list)
-      addChild(expr);
+      if(expr != null)
+           addChild(expr);
   }
 
   /**
