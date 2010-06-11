@@ -105,7 +105,12 @@ public class NameID extends IDExpression
   @Override
   public String toString()
   {
-    return name;
+      String result = name;
+
+      for(int i=0; i<nullPointer; i++)
+          result += "[]";
+    
+      return result;
   }
 
   /**
@@ -136,4 +141,10 @@ public class NameID extends IDExpression
     return name.hashCode();
   }
 
+  private int nullPointer = 0;
+
+  public void AddNullPointer()
+  {
+    nullPointer++;
+  }
 }

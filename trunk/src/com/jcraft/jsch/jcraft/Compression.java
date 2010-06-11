@@ -28,14 +28,14 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 package com.jcraft.jsch.jcraft;
-import com.jcraft.jzlib.*;
+//import com.jcraft.jzlib.*;
 import com.jcraft.jsch.*;
 
 public class Compression implements com.jcraft.jsch.Compression {
   static private final int BUF_SIZE=4096;
 
   private int type;
-  private ZStream stream;
+//  private ZStream stream;
   private byte[] tmpbuf=new byte[BUF_SIZE];
 
   public Compression(){
