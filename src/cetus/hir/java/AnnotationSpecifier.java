@@ -17,12 +17,12 @@ public class AnnotationSpecifier extends Specifier {
 
     public AnnotationSpecifier()
     {
-        super(41);
+        //super(41);
     }
     
     public AnnotationSpecifier(String n)
     {
-        super(41);
+        //super(41);
         name = n;
     }
 

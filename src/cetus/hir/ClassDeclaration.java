@@ -56,7 +56,7 @@ public class ClassDeclaration extends Declaration implements SymbolTable
   {
     /** Four predefined type keywords */
     private static final String[] name =
-        { "class", "struct", "union", "interface" };
+        { "class", "struct", "union", "interface", "enum" };
 
     /** The keyword for the Key object */
     private int value;
@@ -92,6 +92,8 @@ public class ClassDeclaration extends Declaration implements SymbolTable
 
   /** Keyword for <b>interface</b> type declaration. */
   public static final Key INTERFACE = new Key(3);
+
+  public static final Key ENUM = new Key(4);
 
   /** For Java only: leading specifiers on the class
    * declaration itself, such as public or abstract. */

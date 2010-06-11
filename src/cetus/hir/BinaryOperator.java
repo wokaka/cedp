@@ -13,7 +13,7 @@ public class BinaryOperator implements Printable
   private static String[] names =
     { "+", "&", "^", "|", "==", ">=", ">", "<=", "<",
       "!=", "/", "&&", "||", "%", "*", "<<", ">>", "-",
-      " instanceof ", "<<<"};
+      " instanceof ", ">>>"};
 
   /**
    * +
@@ -110,7 +110,7 @@ public class BinaryOperator implements Printable
   public static final BinaryOperator INSTANCEOF = new BinaryOperator(18);
 
 
-  public static final BinaryOperator SHIFT_LEFT_TRIPLE = new BinaryOperator(19);
+  public static final BinaryOperator SHIFT_RIGHT_TRIPLE = new BinaryOperator(19);
 
   protected int value;
 

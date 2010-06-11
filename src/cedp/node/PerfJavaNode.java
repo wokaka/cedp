@@ -802,11 +802,11 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
 //        cmdOutputStream.StartMonitor();
         //Thread thread = RunCommand();
         //thread.wait(FtpGet)
-
+/*
         cmdInputStream.AddCommand("ls " + path + " > /tmp/hifi");
         Wait(1000);
         FtpIO("/tmp/hifi", "tmp/filelist", FtpGet);
-        buffer = UtilFile.Read("tmp/filelist");
+        buffer = UtilFile.Read("tmp/filelist");*/
 //        buffer = cmdOutputStream.StopMonitor();
 
         /*
