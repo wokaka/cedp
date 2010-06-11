@@ -194,7 +194,6 @@ public class Parser{
       System.err.println("Parse error: " + e);
       System.exit(1);
     }
-
 /*
     try {
       Class[] pparams = new Class[2];
@@ -206,7 +205,7 @@ public class Parser{
       throw new InternalError();
     }
 */
-		return tu;
+    return tu;
   }
 
   protected TranslationUnit parseAntlrJava(String fname)
@@ -214,9 +213,9 @@ public class Parser{
     TranslationUnit tu = new TranslationUnit(fname);
     File f = null,myf=null;
     byte[] barray = null;
-      //InputStream source = null;
-      // pre step to handle header files
-      // Insert markers for start and end of a header file
+    // InputStream source = null;
+    // pre step to handle header files
+    // Insert markers for start and end of a header file
     String prename = null;
 
     /* Create the Antlr-derived lexer and parser through the ClassLoader

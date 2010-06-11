@@ -9,6 +9,7 @@ import cedp.util.UtilTree;
 import cedp.util.gui.ToolTipTreeNode;
 import cetus.exec.Driver;
 import cetus.hir.*;
+import cetus.hir.java.StringDeclaration;
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.util.Enumeration;
@@ -177,6 +178,7 @@ public class CetusWrapper {
         if(ct instanceof DuplicateSymbolException) return "DuplicateSymbolException";
         if(ct instanceof NotAChildException) return "NotAChildException";
         if(ct instanceof NotAnOrphanException) return "NotAnOrphanException";
+        if(ct instanceof StringDeclaration) return "StringDeclaration";
 
         return "";
     }

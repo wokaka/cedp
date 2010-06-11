@@ -1,7 +1,7 @@
 package cetus.hir.java;
 
 import cetus.hir.Declaration;
-import cetus.hir.Expression;
+import cetus.hir.NameID;
 import cetus.hir.NotAnOrphanException;
 import cetus.hir.PrintTools;
 import cetus.hir.Traversable;
@@ -34,9 +34,10 @@ public class StringDeclaration extends Declaration
   
   public StringDeclaration(String s)
   {
+      super();
       str = s;
   }
-  
+
   /**
   * Constructs a comma expression from the specified list of expressions.
   *
@@ -47,6 +48,7 @@ public class StringDeclaration extends Declaration
   */
   public StringDeclaration(List expr_list)
   {
+    super();
     object_print_method = class_print_method;
 
     if (expr_list == null || expr_list.size() < 1 /* allow one element list, different from CommaExpression */)
@@ -103,9 +105,32 @@ public class StringDeclaration extends Declaration
     class_print_method = m;
   }
 
-    @Override
-    public List getDeclaredIDs() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+  @Override
+  public List getDeclaredIDs()
+  {
+      List list = new LinkedList();
 
+      if(str != null){
+          list.add(new NameID(str));
+      }
+      else{
+          for(int i=0; i<children.size(); i++){
+              list.add(new NameID(children.get(i).toString()));
+          }
+      }
+      
+      return list;
+  }
+
+  public String toString()
+  {
+      if(str != null)
+        return str;
+
+      String buffer = "";
+      for(int i=0; i<children.size(); i++){
+          buffer += children.get(i).toString() + " ";
+      }
+      return buffer;
+  }
 }
