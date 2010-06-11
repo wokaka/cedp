@@ -2176,7 +2176,7 @@ localVariableDeclaration returns [Declaration ret] //[VariableDeclaration ret_va
     @after { ret = new StringDeclaration(list); }
     :   t1=variableModifiers t2=type t3=variableDeclarators
             {
-                VariableDeclaration vdecl = new VariableDeclaration(
+                //VariableDeclaration vdecl = new VariableDeclaration(
                 if(t1 != null)
                     list.add(t1);
                 if(t2 != null)
@@ -2572,7 +2572,7 @@ constantExpression returns [Declaration ret] //[Expression expr]
 expression returns [Expression ret]
     @init { if(dFlag) System.out.println("expression"); }
     :   t1=conditionalExpression {ret = t1; }
-        (t2=assignmentOperator t3=expression { ret = new BinaryExpression(t1, t2, t3); } )?
+        (t2=assignmentOperator t3=expression { ret = new BinaryExpression(ret, t2, t3); } )?
     ;
 
 conditionalExpression returns [Expression ret]
@@ -2611,7 +2611,6 @@ inclusiveOrExpression returns [Expression ret]
 
 exclusiveOrExpression returns [Expression ret]
     @init { if(dFlag) System.out.println("exclusiveOrExpression"); LinkedList list = new LinkedList(); }
-    @after { ret = new StringDeclaration(list); }
     :   t1 = andExpression { ret = t1; }
         ( '^' t2 = andExpression
             { ret = new BinaryExpression(ret, BinaryOperator.BITWISE_EXCLUSIVE_OR, t2); }
