@@ -89,7 +89,6 @@ public class Specifier implements Printable
   public static final Specifier PACKAGE  = new Specifier(42);
   public static final Specifier IMPORT  = new Specifier(43);
 
-
   /** Predefined integer value of each specifiers. */
   protected int value;
 

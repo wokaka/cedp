@@ -29,7 +29,7 @@ public class Main extends Applet {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        int generate = 2;
+        int generate = 4;
 
         /* LEXER */
         try{
@@ -46,13 +46,17 @@ public class Main extends Applet {
                 else{
                     UtilFile.Write("stat", "generate");
 //                    CetusWrapper.Run("7.java", null, false);
-                    CetusWrapper.Run("AdCenterApiKeywordUpdaterImpl.java", null, false);
+                    CetusWrapper.Run("ad.java", null, true);
                     return;
                 }
             }
             else if(generate == 3){
-                    CetusWrapper.Run("bubble.c", null, false);
+                    CetusWrapper.Run("bubble.c", null, true);
                     return;
+            }
+            else if(generate == 4){
+              CetusWrapper.Run("ad.java", null, true);
+              return;
             }
         } catch(Exception e){
             e.printStackTrace();
