@@ -35,6 +35,7 @@ public class StringDeclaration extends Declaration
   public StringDeclaration(String s)
   {
       super();
+      object_print_method = class_print_method;
       str = s;
   }
 
@@ -51,6 +52,7 @@ public class StringDeclaration extends Declaration
     super();
     object_print_method = class_print_method;
 
+    str = null;
     if (expr_list == null || expr_list.size() < 1 /* allow one element list, different from CommaExpression */)
       throw new IllegalArgumentException();
 
@@ -90,11 +92,35 @@ public class StringDeclaration extends Declaration
   public static void defaultPrint(StringDeclaration e, PrintWriter o)
   {
     if(e.str != null)
-        o.print(e.str);
+        o.print(e.str + " ");
     else
       PrintTools.printList(e.children, o);
   }
 
+
+  public void print(PrintWriter o)
+  {
+    if (object_print_method == null)
+      return;
+    try {
+      object_print_method.invoke(null, new Object[] {this, o});
+    } catch (IllegalAccessException e) {
+      throw new InternalError();
+    } catch (InvocationTargetException e) {
+      throw new InternalError();
+    }
+  }
+
+  /**
+   * Overrides the print method for this object only.
+   *
+   * @param m The new print method.
+   */
+  public void setPrintMethod(Method m)
+  {
+    object_print_method = m;
+  }
+  
   /**
    * Overrides the class print method, so that all subsequently
    * created objects will use the supplied method.

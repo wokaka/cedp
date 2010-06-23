@@ -573,22 +573,51 @@ translationUnit [TranslationUnit init_tunit] returns [TranslationUnit tunit]
     ;
 
 /* OK */
-packageDeclaration returns [Declaration ret]
-    @init { if(dFlag) System.out.println("packageDeclaration"); }
-    :   'package' t1=qualifiedName ';'
+packageDeclaration returns [Declaration ret_decl]
+    @init { if(dFlag) System.out.println("packageDeclaration"); LinkedList list = new LinkedList(); }
+    :   'package' qualifiedName ';'
             {
-                ret = new PackageOrImportDeclaration(Specifier.PACKAGE, new NameID($t1.text));
+                list.add(new StringDeclaration("package"));
+                list.add(new StringDeclaration($qualifiedName.text));
+                list.add(new StringDeclaration(";"));
+                ret_decl = new StringDeclaration(list);
+
+                //CodeAnnotation anno = new CodeAnnotation("package " + $qualifiedName.text);
+                //ret_decl = new AnnotationDeclaration(anno);
             }
     ;
 
 /* OK */
-importDeclaration returns [Declaration ret]
-    @init { if(dFlag) System.out.println("importDeclaration"); int check1=0, check2=0;}
-    :   'import' ('static' {check1 = 1; } )? t1=qualifiedName ('.' '*' {check2 = 1;} )? ';'
+importDeclaration returns [Declaration ret_decl]
+    @init { if(dFlag) System.out.println("importDeclaration"); LinkedList list = new LinkedList();
+            // int check1=0, check2=0;
+          }
+    :   'import'
             {
-                ret = new PackageOrImportDeclaration(Specifier.IMPORT, new NameID($t1.text + ((check2==1)?".*":"")));
-                if(check1==1)
-                    ret.AddSpecifier(Specifier.STATIC);
+                list.add(new StringDeclaration("import"));
+            }
+        ('static'
+            {
+                //check1 = 1;
+                list.add(new StringDeclaration("static"));
+            }
+        )?
+        t1=qualifiedName
+            {
+                list.add(new StringDeclaration($t1.text));
+            }
+        ('.' '*'
+            {
+                //check2 = 1;
+                list.add(new StringDeclaration(".*"));
+            }
+        )? ';'
+            {
+                list.add(new StringDeclaration(";"));
+                ret_decl = new StringDeclaration(list);
+
+                //CodeAnnotation anno = new CodeAnnotation("import " + ((check1==1)?"static ":"") + $t1.text + ((check2==1)?".*":"") + ";");
+                //ret_decl = new AnnotationDeclaration(anno);
             }
     ;
 
@@ -651,12 +680,12 @@ classOrInterfaceModifier returns [Declaration ret_decl] //[Specifier type]
                 ret_decl = 51;
             }
     |   'public'     // class or interface
-            { 
+            {
                 //type = Specifier.PUBLIC;
                 ret_decl = new StringDeclaration("public");
             }
     |   'protected'  // class or interface
-            { 
+            {
                 //type = Specifier.PROTECTED;
                 ret_decl = new StringDeclaration("protected");
             }
@@ -666,22 +695,22 @@ classOrInterfaceModifier returns [Declaration ret_decl] //[Specifier type]
                 ret_decl = new StringDeclaration("private");
             }
     |   'abstract'   // class or interface
-            { 
+            {
                 //type = Specifier.ABSTRACT;
                 ret_decl = new StringDeclaration("abstract");
             }
     |   'static'     // class or interface
-            { 
+            {
                 //type = Specifier.STATIC;
                 ret_decl = new StringDeclaration("static");
             }
     |   'final'      // class only -- does not apply to interfaces
-            { 
+            {
                 //type = Specifier.FINAL;
                 ret_decl = new StringDeclaration("final");
             }
     |   'strictfp'   // class or interface
-            { 
+            {
                 //type = Specifier.STRICTFP;
                 ret_decl = new StringDeclaration("strictfp");
             }
@@ -712,9 +741,9 @@ classDeclaration returns [Declaration ret_decl] //[ClassDeclaration decl]
     ;
 
 /* OK */
-normalClassDeclaration returns [Declaration ret] //[ClassDeclaration ret_decl]
+normalClassDeclaration returns [Declaration ret_decl] //[ClassDeclaration ret_decl]
     @init { if(dFlag) System.out.println("normalClassDeclaration"); int check1 = 0; LinkedList list = new LinkedList(); }
-    :   'class' Identifier 
+    :   'class' Identifier
             {
                 list.add(new StringDeclaration("class"));
                 list.add(new StringDeclaration($Identifier.text));
@@ -731,20 +760,22 @@ normalClassDeclaration returns [Declaration ret] //[ClassDeclaration ret_decl]
                 list.add(t2);
             }
         )?
-        ('implements' t3=typeList )?
+        ('implements' t3=typeList
+            {
+                //check1 = 1;
+                list.add(new StringDeclaration("implements"));
+                list.add(t3);
+            }
+        )?
         t4=classBody
             {
-                //list.add(t4);
-                //ret_decl = new StringDeclaration(list);
-                ClassDeclaration cdecl = new ClassDeclaration(ClassDeclaration.CLASS, new NameID($Identifier.text));
-                cdecl.SetBodyStatement(new DeclarationStatement(t4));
-                if(t2 != null)
-                    cdecl.addBaseClass(new NameID(t2.toString())); // t2 is ?
-                if(t3 != null){
-                    for(int i=0; i<t3.size(); i++)
-                        cdecl.addBaseInterface(new NameID(t3.get(i).toString())); // t3 is a list of ...
-                }
-                ret = cdecl;
+                list.add(t4);
+                ret_decl = new StringDeclaration(list);
+                //ret_decl = new ClassDeclaration(ClassDeclaration.CLASS, new NameID($Identifier.text));
+                //ret_decl.SetBodyStatement(t1);
+                /* TODO extends and implments supports */
+                //if(check1 == 1)
+                //    ret_decl.addBaseInterface(t2); // t2 is List of Specifier
             }
     ;
 
@@ -769,7 +800,7 @@ typeParameters returns [Declaration ret_decl] //
 
 typeParameter returns [Declaration ret_decl] //
     @init { if(dFlag) System.out.println("typeParameter"); LinkedList list = new LinkedList(); }
-    :   Identifier 
+    :   Identifier
             {
                 ret_decl = new StringDeclaration($Identifier.text);
                 list.add(ret_decl);
@@ -799,17 +830,26 @@ typeBound returns [Declaration ret_decl] //
         )*
     ;
 
-enumDeclaration returns [Declaration ret] //[ClassDeclaration ret_decl]
-    @init { if(dFlag) System.out.println("enumDeclaration"); }
-    :   t1=ENUM Identifier ('implements' t2=typeList )? t3=enumBody
+enumDeclaration returns [Declaration ret_decl] //[ClassDeclaration ret_decl]
+    @init { if(dFlag) System.out.println("enumDeclaration"); LinkedList list = new LinkedList(); }
+    :   t1=ENUM Identifier
             {
-                ClassDeclaration cdecl = new ClassDeclaration(ClassDeclaration.ENUM, new NameID($Identifier.text));
-                cdecl.SetBodyStatement(new DeclarationStatement(t3));
-                if(t2 != null){
-                    for(int i=0; i<t2.size(); i++)
-                        cdecl.addBaseClass(new NameID(t2.get(i).toString())); // t2 is a list of ...
-                }
-                ret = cdecl;
+                list.add(t1);
+                list.add(new StringDeclaration($Identifier.text));
+            }
+        ('implements' t2=typeList
+            {
+                list.add(new StringDeclaration("implements"));
+                list.add(t2);
+            }
+        )? t3=enumBody
+            {
+                list.add(t3);
+                ret_decl = new StringDeclaration(list);
+                //ret_decl = new ClassDeclaration(Specifier.ENUM, new NameID($Identifier.text));
+                //for(int i=0; i<t1.size(); i++)
+                //    ret_decl.addDeclaration(t1.get(i));
+                /* TODO implements support */
             }
     ;
 
@@ -825,7 +865,7 @@ enumBody returns [Declaration ret_decl] //[List list]
                 //for(int i=0; i<t1.size(); i++)
                 //    list.add(t1.get(i));
             }
-        )? 
+        )?
         (','
             {
                 list.add(new StringDeclaration(","));
@@ -882,7 +922,7 @@ enumConstant returns [Declaration ret_decl] //[VariableDeclarator ret_decl]
 
 enumBodyDeclarations returns [Declaration ret_decl] //
     @init { if(dFlag) System.out.println("enumBodyDeclarations"); LinkedList list = new LinkedList(); }
-    :   ';' 
+    :   ';'
             {
                 ret_decl = new StringDeclaration(";");
                 list.add(ret_decl);
@@ -924,16 +964,21 @@ normalInterfaceDeclaration returns [Declaration ret_decl] //
             }
     ;
 
-typeList returns [List ret]
+typeList returns [Declaration ret_decl] //[List list]
     @init { if(dFlag) System.out.println("typeList"); LinkedList list = new LinkedList(); }
     :   t1=type
             {
+                ret_decl = t1;
                 list.add(t1);
+                //list = t1;
             }
         (',' t2=type
             {
-                //list.add(new StringDeclaration(","));
+                list.add(new StringDeclaration(","));
                 list.add(t2);
+                ret_decl = new StringDeclaration(list);
+                //for(int i=0; i<t2.size(); i++)
+                //    list.add(t2.get(i));
             }
         )*
     ;
@@ -1038,35 +1083,34 @@ memberDecl returns [Declaration ret_decl] //[Declaration ret_decl]
             }
     ;
 
-memberDeclaration returns [Declaration ret] //[Declaration ret_decl]
+memberDeclaration returns [Declaration ret_decl] //[Declaration ret_decl]
     @init { if(dFlag) System.out.println("memberDeclaration"); LinkedList list = new LinkedList(); }
     :   t1=type (t2=methodDeclaration | t3=fieldDeclaration )
-            {
-                if(t2 != null){
+                {
                     list.add(t1);
                     if(t2 != null)
                         list.add(t2);
-                    ret = new StringDeclaration(list);
-                }
-                else if (t3 != null){
-                    list.add(new NameID(t1.toString()));
-                    List l = t3.getSpecifiers();
-                    if(l != null){
-                        for(int i=0; i<l.size(); i++)
-                            list.add(l.get(i));
-                    }
+                    if(t3 != null)
+                        list.add(t3);
+                    ret_decl = new StringDeclaration(list);
 
-                    VariableDeclaration vdecl = new VariableDeclaration(list, (Declarator)t3.getDeclarator(0));
-                    for(int i=1; i<t3.getNumDeclarators(); i++)
-                        vdecl.addDeclarator((Declarator)t3.getDeclarator(i));
-                    ret = vdecl;
+                    //if(t2.containsKey("body")){
+                    //    ProcedureDeclarator pdec = new ProcedureDeclarator((IDExpression)t2.get("id"), (List)t2.get("param"));
+                    //    ret_decl = new Procedure(t1, pdec, (CompoundStatement)t2.get("body"));
+                    //}
+                    //else{
+                    //    VariableDeclarator vdec = new VariableDeclarator((IDExpression)t2.get("id"));
+                    //    ret_decl = new VariableDeclaration(t1, vdec);
+                    //}
+                    //if(t3.getNumDeclarators() > 0){
+                    //    VariableDeclaration temp = new VariableDeclaration(t1, (Declarator)t3.getDeclarator(0));
+                    //    for(int i=1; i<t3.getNumDeclarators(); i++)
+                    //        temp.addDeclarator((Declarator)t3.getDeclarator(i));
+                    //   ret_decl = temp;
+                    //}
+                    //else
+                    //    ret_decl = t3;
                 }
-
-                //if(t2.containsKey("body")){
-                //    ProcedureDeclarator pdec = new ProcedureDeclarator((IDExpression)t2.get("id"), (List)t2.get("param"));
-                //    ret_decl = new Procedure(t1, pdec, (CompoundStatement)t2.get("body"));
-                //}
-            }
     ;
 
 genericMethodOrConstructorDecl returns [Declaration ret_decl] //
@@ -1111,15 +1155,16 @@ methodDeclaration returns [Declaration ret_decl] //[Hashtable hash]
             }
     ;
 
-fieldDeclaration returns [VariableDeclaration ret] //[VariableDeclaration ret_decl]
+fieldDeclaration returns [Declaration ret_decl] //[VariableDeclaration ret_decl]
     @init { if(dFlag) System.out.println("fieldDeclaration"); LinkedList list = new LinkedList(); }
     :   t1=variableDeclarators ';'
             {
-                if(t1 != null && t1.size() > 0){
-                    ret = new VariableDeclaration((Declarator)t1.get(0));
-                    for(int i=1; i<t1.size(); i++)
-                        ret.addDeclarator((Declarator)t1.get(i));
-                }
+                //ret_decl = new VariableDeclaration((Declarator)t1.get(0));
+                //for(int i=1; i<t1.size(); i++)
+                //    ret_decl.addDeclarator((Declarator)t1.get(i));
+                list.add(t1);
+                list.add(new StringDeclaration(";"));
+                ret_decl = new StringDeclaration(list);
             }
     ;
 
@@ -1334,21 +1379,36 @@ constantDeclarator returns [Declaration ret_decl] //[VariableDeclarator ret_decl
             }
     ;
 
-variableDeclarators returns [List ret]
+variableDeclarators returns [Declaration ret_decl] //[List list]
     @init { if(dFlag) System.out.println("variableDeclarators"); LinkedList list = new LinkedList(); }
-    :   t1=variableDeclarator { list.add(t1); }
-        (',' t2=variableDeclarator { list.add(t2); } )*
+    :   t1=variableDeclarator
+        (',' t2=variableDeclarator
+            {
+                list.add(t2);
+            }
+        )*
+            {
+                list.addFirst(t1);
+                ret_decl = new StringDeclaration(list);
+            }
     ;
 
 /* OK */
-variableDeclarator returns [VariableDeclarator ret]
-    @init { if(dFlag) System.out.println("variableDeclarator"); }
-    :   t1=variableDeclaratorId ('=' t2=variableInitializer )?
+variableDeclarator returns [Declaration ret] //[VariableDeclarator ret_decl]
+    @init { if(dFlag) System.out.println("variableDeclarator"); LinkedList list = new LinkedList(); }
+    @after { ret = new StringDeclaration(list); }
+    :   t1=variableDeclaratorId
             {
-                ret = new VariableDeclarator(t1);
-                if(t2 != null)
-                    ret.setInitializer(t2);
+                list.add(t1);
             }
+        ('=' t2=variableInitializer
+            {
+                list.add(new StringDeclaration("="));
+                list.add(t2);
+                //ret_decl = new VariableDeclarator(t1);
+                //if(t2 != null) ret_decl.setInitializer(t2);
+            }
+        )?
     ;
 
 /* OK */
@@ -1384,30 +1444,35 @@ constantDeclaratorRest returns [Declaration ret_decl] //[Initializer ret_init]
     ;
 
 /* OK */
-variableDeclaratorId returns [NameID ret]
-    @init { if(dFlag) System.out.println("variableDeclaratorId"); }
+variableDeclaratorId returns [Declaration ret_decl] //[IDExpression ret_id]
+    @init { if(dFlag) System.out.println("variableDeclaratorId"); LinkedList list = new LinkedList(); }
     :   Identifier
+        ('[' ']'
             {
-                ret = new NameID($Identifier.text);
-            }
-        ('[' ']' 
-            {
-                ret.AddNullPointer();
+                list.add(new StringDeclaration("[]"));
+                //ret_id = ret_id;
+                /* TODO */
             }
         )*
+            {
+                list.addFirst(new StringDeclaration($Identifier.text));
+                ret_decl = new StringDeclaration(list);
+                //ret_id = new NameID($Identifier.text);
+            }
     ;
 
 /* OK */
-variableInitializer returns [Initializer ret]
+variableInitializer returns [Declaration ret_decl] //[Initializer init]
     @init { if(dFlag) System.out.println("variableInitializer"); LinkedList list = new LinkedList(); }
     :   t1=arrayInitializer
             {
-                ret = t1;
+                ret_decl = t1;
+                //init = t1;
             }
     |   t2=expression
             {
-                if(t2 != null)
-                    ret = new Initializer(t2);
+                ret_decl = t2;
+                //if(t2 != null) init = new Initializer(t2);
             }
     ;
 
@@ -1456,52 +1521,52 @@ modifier returns [Declaration ret_decl] //[Specifier type]
             }
     |   'protected'
             {
-                ret_decl = new StringDeclaration("public");
+                ret_decl = new StringDeclaration("protected");
                 //type = Specifier.PROTECTED;
             }
     |   'private'
             {
-                ret_decl = new StringDeclaration("public");
+                ret_decl = new StringDeclaration("private");
                 //type = Specifier.PRIVATE;
             }
     |   'static'
             {
-                ret_decl = new StringDeclaration("public");
+                ret_decl = new StringDeclaration("static");
                 //type = Specifier.STATIC;
             }
     |   'abstract'
             {
-                ret_decl = new StringDeclaration("public");
+                ret_decl = new StringDeclaration("abstract");
                 //type = Specifier.ABSTRACT;
             }
     |   'final'
             {
-                ret_decl = new StringDeclaration("public");
+                ret_decl = new StringDeclaration("final");
                 //type = Specifier.FINAL;
             }
     |   'native'
             {
-                ret_decl = new StringDeclaration("public");
+                ret_decl = new StringDeclaration("native");
                 //type = Specifier.NATIVE;
             }
     |   'synchronized'
             {
-                ret_decl = new StringDeclaration("public");
+                ret_decl = new StringDeclaration("synchronized");
                 //type = Specifier.SYNCHRONIZED;
             }
     |   'transient'
             {
-                ret_decl = new StringDeclaration("public");
+                ret_decl = new StringDeclaration("transient");
                 //type = Specifier.TRANSIENT;
             }
     |   'volatile'
             {
-                ret_decl = new StringDeclaration("public");
+                ret_decl = new StringDeclaration("volatile");
                 //type = Specifier.VOLATILE;
             }
     |   'strictfp'
             {
-                ret_decl = new StringDeclaration("public");
+                ret_decl = new StringDeclaration("strictfp");
                 //type = Specifier.STRICTFP;
             }
     ;
@@ -1516,7 +1581,7 @@ packageOrTypeName /* Intended */
 enumConstantName returns [Declaration ret_decl] //[Identifier id]
     @init { if(dFlag) System.out.println("enumConstantName"); Identifier id_temp = null; LinkedList list = new LinkedList(); }
     :   t1=Identifier
-            { 
+            {
                 ret_decl = new StringDeclaration($t1.text);
                 //id = new Identifier(id_temp);
             }
@@ -1591,6 +1656,49 @@ classOrInterfaceType returns [Declaration ret] //[Expression ret_expr]
                 */
 
 /* OK */
+primitiveType returns [Declaration ret_decl] //[Specifier type]
+    @init { if(dFlag) System.out.println("primitiveType"); LinkedList list = new LinkedList(); }
+    :   'boolean'
+            {
+                ret_decl = new StringDeclaration("boolean");
+                //type = Specifier.BOOLEAN;
+            }
+    |   'char'
+            {
+                ret_decl = new StringDeclaration("char");
+                //type = Specifier.CHAR;
+            }
+    |   'byte'
+            {
+                ret_decl = new StringDeclaration("byte");
+                //type = Specifier.BYTE;
+            }
+    |   'short'
+            {
+                ret_decl = new StringDeclaration("short");
+                //type = Specifier.SHORT;
+            }
+    |   'int'
+            {
+                ret_decl = new StringDeclaration("int");
+                //type = Specifier.INT;
+            }
+    |   'long'
+            {
+                ret_decl = new StringDeclaration("long");
+                //type = Specifier.LONG;
+            }
+    |   'float'
+            {
+                ret_decl = new StringDeclaration("float");
+                //type = Specifier.FLOAT;
+            }
+    |   'double'
+            {
+                ret_decl = new StringDeclaration("double");
+                //type = Specifier.DOUBLE;
+            }
+    ;
 
 variableModifier returns [Declaration ret] //[Specifier anno]
     @init { if(dFlag) System.out.println("variableModifier"); }
@@ -1811,27 +1919,27 @@ qualifiedName /* Explicitly returns string that is intended */
 literal returns [Declaration ret] //[Literal ret]
     @init { if(dFlag) System.out.println("literal"); LinkedList list = new LinkedList(); }
     :   t1=integerLiteral
-            { 
+            {
                 retval.ret = t1;
             }
     |   t2=FloatingPointLiteral
-            { 
+            {
                 retval.ret = new StringDeclaration($t2.text);
             }
     |   t3=CharacterLiteral
-            { 
+            {
                 retval.ret = new StringDeclaration($t3.text);
             }
     |   t4=StringLiteral
-            { 
+            {
                 retval.ret = new StringDeclaration($t4.text);
             }
     |   t5=booleanLiteral
-            { 
+            {
                 retval.ret = t5;
             }
     |   'null'
-            { 
+            {
                 retval.ret = new StringDeclaration("null");
             }
     ;
@@ -1867,7 +1975,7 @@ booleanLiteral returns [Declaration ret] //[BooleanLiteral ret_lit]
                 //ret_lit = new BooleanLiteral(true);
             }
     |   'false'
-            { 
+            {
                 ret = new StringDeclaration("false");
                 //ret_lit = new BooleanLiteral(false);
             }
@@ -2022,7 +2130,7 @@ annotationTypeDeclaration returns [Declaration ret]
 annotationTypeBody returns [Declaration ret_decl] //[Expression ret_expr]
     @init { if(dFlag) System.out.println("annotationTypeBody"); LinkedList list = new LinkedList(); }
     @after { ret = new StringDeclaration(list); }
-    :   '{' 
+    :   '{'
             {
                 list.add(new StringDeclaration("{"));
             }
@@ -2111,9 +2219,13 @@ annotationMethodRest returns [Declaration ret] //
             }
     ;
 
-annotationConstantRest returns [ret list]
+annotationConstantRest returns [Declaration ret] //[List list]
     @init { if(dFlag) System.out.println("annotationConstantRest"); LinkedList list = new LinkedList();  }
-    :   t1=variableDeclarators { ret = t1; }
+    :   t1=variableDeclarators
+            {
+                ret = t1;
+                //list = t1;
+            }
     ;
 
 defaultValue returns [Declaration ret] //
@@ -2146,15 +2258,15 @@ block returns [Declaration ret] //[CompoundStatement cstat]
 blockStatement returns [Declaration ret] //[Statement ret]
     @init { if(dFlag) System.out.println("blockStatement"); LinkedList list = new LinkedList(); }
     :   t1=localVariableDeclarationStatement
-            {   
+            {
                 ret = t1;
             }
     |   t2=classOrInterfaceDeclaration
-            {   
+            {
                 ret = t2;
             }
     |   t3=statement
-            {   
+            {
                 ret = t3;
             }
     ;
@@ -2176,17 +2288,15 @@ localVariableDeclaration returns [Declaration ret] //[VariableDeclaration ret_va
     @after { ret = new StringDeclaration(list); }
     :   t1=variableModifiers t2=type t3=variableDeclarators
             {
-                //VariableDeclaration vdecl = new VariableDeclaration(
                 if(t1 != null)
                     list.add(t1);
                 if(t2 != null)
                     list.add(t2);
                 if(t3 != null)
                     list.add(t3);
-                //vdecl = new VariableDeclaration(MergeList(t1, t2), t3.get(0));
+                //ret_vardecl = new VariableDeclaration(MergeList(t1, t2), t3.get(0));
                 //for(int i=1; i<t3.size(); i++)
-                //    vdecl.addDeclarator(t3.get(i));
-                ret = vdecl;
+                //    ret_vardecl.addDeclarator(t3.get(i));
             }
     ;
 
@@ -2210,7 +2320,7 @@ statement returns [Declaration ret] //[Statement ret_stat]
                 //ret_stat = (Statement) t1;
             }
     |   t2=ASSERT t3=expression (':' t4=expression)? ';'
-            {  
+            {
                 list.add(t2);
                 list.add(t3);
                 if(t4 != null){
@@ -2284,7 +2394,7 @@ statement returns [Declaration ret] //[Statement ret_stat]
             }
         )
     |   'switch' t20=parExpression '{' t21=switchBlockStatementGroups '}'
-            {   
+            {
                 list.add(new StringDeclaration("switch"));
                 list.add(t20.ret);
                 list.add(new StringDeclaration("{"));
@@ -2317,7 +2427,7 @@ statement returns [Declaration ret] //[Statement ret_stat]
                 //ret_stat.addChild(0, new ThrowExpression(tok9));
             }
     |   'break' t25=Identifier? ';'
-            {   
+            {
                 list.add(new StringDeclaration("break"));
                 if(t25 != null)
                     list.add($t25.text);
@@ -2325,7 +2435,7 @@ statement returns [Declaration ret] //[Statement ret_stat]
                 //ret_stat = (Statement) new BreakStatement(); /* TODO Identifier support */
             }
     |   'continue' t26=Identifier? ';'
-            {   
+            {
                 list.add(new StringDeclaration("continue"));
                 if(t26 != null)
                     list.add($t26.text);
@@ -2333,7 +2443,7 @@ statement returns [Declaration ret] //[Statement ret_stat]
                 //ret_stat = (Statement) new ContinueStatement(); /* TODO Identifier support */
             }
     |   ';'
-            {   
+            {
                 list.add(new StringDeclaration(";"));
                 //ret_stat = new NullStatement();
             }
@@ -2358,7 +2468,7 @@ statement returns [Declaration ret] //[Statement ret_stat]
 catches returns [Declaration ret] //
     @init { if(dFlag) System.out.println("catches"); LinkedList list = new LinkedList();  }
     @after { ret = new StringDeclaration(list); }
-    :   t1=catchClause 
+    :   t1=catchClause
             {
                 list.add(t1);
             }
@@ -2399,7 +2509,7 @@ switchBlockStatementGroups returns [Declaration ret] //[CompoundStatement cstat]
     @init { if(dFlag) System.out.println("switchBlockStatementGroups"); cstat = new CompoundStatement(); LinkedList list = new LinkedList(); }
     @after { ret = new StringDeclaration(list); }
     :   (t1=switchBlockStatementGroup
-            { 
+            {
                 list.add(t1);
                 //cstat.addStatement(t1);
             }
@@ -2417,7 +2527,7 @@ switchBlockStatementGroup returns [Declaration ret]
             {
                 list.add(t1);
             }
-        )+ 
+        )+
         (t2=blockStatement
             {
                 list.add(t2);
@@ -2437,14 +2547,14 @@ switchLabel returns [Declaration ret] //[Statement ret_case]
                 //ret_case = new Case(constantExpression);
             }
     |   'case' t2=enumConstantName ':'
-            { 
+            {
                 list.add(new StringDeclaration("case"));
                 list.add(t2);
                 list.add(new StringDeclaration(":"));
                 //ret_case = new Case(constantExpression);
             }
     |   'default' ':'
-            { 
+            {
                 list.add(new StringDeclaration("default"));
                 list.add(new StringDeclaration(":"));
                 //ret_case = new Default();
@@ -2461,7 +2571,7 @@ forControl returns [Declaration ret] //[ForLoop forloop]
                 //forloop = enhancedForControl;
             }
     |   t2=forInit? ';' t3=expression? ';' t4=forUpdate?
-            { 
+            {
                 if(t2 != null)
                     list.add(t2);
                 list.add(new StringDeclaration(";"));
@@ -2560,277 +2670,488 @@ statementExpression returns [Declaration ret] //[Expression expr]
 constantExpression returns [Declaration ret] //[Expression expr]
     @init { if(dFlag) System.out.println("constantExpression"); LinkedList list = new LinkedList(); }
     :   t1=expression
-            {   
+            {
                 ret = t1;
                 //expr = expression;
             }
     ;
 
-/*============================================================================*/
-/*                                EXPRESSION                                  */
-/*============================================================================*/
-expression returns [Expression ret]
-    @init { if(dFlag) System.out.println("expression"); }
-    :   t1=conditionalExpression {ret = t1; }
-        (t2=assignmentOperator t3=expression { ret = new BinaryExpression(ret, t2, t3); } )?
-    ;
-
-conditionalExpression returns [Expression ret]
-    @init { if(dFlag) System.out.println("conditionalExpression"); }
-    :   t1=conditionalOrExpression
-            { ret = t1; }
-        ( '?' t2=expression ':' t3=expression
-            { ret = new ConditionalExpression(t1, t2, t3); }
-        )?
-    ;
-
-conditionalOrExpression returns [Expression ret]
-    @init { if(dFlag) System.out.println("conditionalOrExpression"); }
-    :   t1 = conditionalAndExpression { ret = t1; }
-        ( '||' t2=conditionalAndExpression
-            { ret = new BinaryExpression(ret, BinaryOperator.LOGICAL_OR, t2); }
-        )*
-    ;
-
-conditionalAndExpression returns [Expression ret]
-    @init { if(dFlag) System.out.println("conditionalAndExpression"); }
-    :   t1 = inclusiveOrExpression { ret = t1; }
-        ( '&&' t2=inclusiveOrExpression
-            { ret = new BinaryExpression(ret, BinaryOperator.LOGICAL_AND, t2); }
-        )*
-    ;
-
-inclusiveOrExpression returns [Expression ret]
-    @init { if(dFlag) System.out.println("inclusiveOrExpression"); }
-    :   t1 = exclusiveOrExpression
-            { ret = t1; }
-        ( '|' t2 = exclusiveOrExpression
-            { ret = new BinaryExpression(ret, BinaryOperator.BITWISE_INCLUSIVE_OR, t2); }
-        )*
-    ;
-
-exclusiveOrExpression returns [Expression ret]
-    @init { if(dFlag) System.out.println("exclusiveOrExpression"); LinkedList list = new LinkedList(); }
-    :   t1 = andExpression { ret = t1; }
-        ( '^' t2 = andExpression
-            { ret = new BinaryExpression(ret, BinaryOperator.BITWISE_EXCLUSIVE_OR, t2); }
-        )*
-    ;
-
-andExpression returns [Expression ret]
-    @init { if(dFlag) System.out.println("andExpression"); }
-    :   t1 = equalityExpression { ret = t1; }
-        ( '&' t2=equalityExpression
-            { ret = new BinaryExpression(ret, BinaryOperator.BITWISE_AND, t2); }
-        )*
-    ;
-
-equalityExpression returns [Expression ret]
-    @init { if(dFlag) System.out.println("equalityExpression"); BinaryOperator op=null; }
-    :   t1=instanceOfExpression { ret = t1; }
-        ( ('==' { op=BinaryOperator.COMPARE_EQ; }| '!=' { op = BinaryOperator.COMPARE_NE; } ) t2=instanceOfExpression
-            { ret = new BinaryExpression(ret, op, t2); }
-        )*
-    ;
-
-instanceOfExpression returns [Expression ret]
-    @init { if(dFlag) System.out.println("instanceOfExpression"); LinkedList list = new LinkedList(); }
-    :   t1=relationalExpression { ret = t1; }
-        ('instanceof' t2=type
-            { ret = new BinaryExpresion(t1, BinaryOperator.INSTANCEOF, t2); }
-        )?
-    ;
-
-relationalExpression returns [Expression ret]
-    @init { if(dFlag) System.out.println("relationalExpression"); LinkedList list = new LinkedList(); }
-    :   t1=shiftExpression { ret = t1; }
-        ( t2=relationalOp t3=shiftExpression
-            { ret = new BinaryExpression(ret, relationalOp, t2); }
-        )*
-    ;
-
-shiftExpression returns [Expression ret]
-    @init { if(dFlag) System.out.println("shiftExpression"); LinkedList list = new LinkedList(); }
-    :   t1=additiveExpression
-            { ret = t1; }
-        ( t2=shiftOp t3=additiveExpression
-            { ret = new BinaryExpression(ret, t2, t3); }
-        )*
-    ;
-
-additiveExpression returns [Expression ret]
-    @init { if(dFlag) System.out.println("additiveExpression"); BinaryOperator op=null; }
-    :   t1=multiplicativeExpression { ret = t1; }
-        ( ('+' { op = BinaryOperator.ADD; }| '-' { op = BinaryOperator.SUBTRACT; }) t2=multiplicativeExpression
-            { ret = new BinaryExpression(t1, op, t2); }
-        )*
-    ;
-
-multiplicativeExpression returns [Expression ret]
-    @init { if(dFlag) System.out.println("multiplicativeExpression"); BinaryOperator op=null; }
-    :   t1=unaryExpression { ret = t1; }
-        ( ( '*' { op = BinaryOperator.MULTIPLY; } | '/' { op = BinaryOperator.DIVIDE; } | '%' { op = BinaryOperator.MODULUS; } ) t2=unaryExpression
-            { ret = new BinaryExpression(ret, op, t2); }
-        )*
-    ;
-
-unaryExpression returns [Expression ret]
-    @init { if(dFlag) System.out.println("unaryExpression"); }
-    :   '+' t1=unaryExpression
-            { ret = new UnaryExpression(UnaryOperator.PLUS, t1); }
-    |   '-' t2=unaryExpression
-            { ret = new UnaryExpression(UnaryOperator.MINUS, t2); }
-    |   '++' t3=unaryExpression
-            { ret = new UnaryExpression(UnaryOperator.PRE_INCREMENT, t3); }
-    |   '--' t4=unaryExpression
-            { ret = new UnaryExpression(UnaryOperator.PRE_DECREMENT, t4); }
-    |   t5=unaryExpressionNotPlusMinus
-            { ret = t5; }
-    ;
-
-unaryExpressionNotPlusMinus returns [Expression ret_expr]
-    @init { if(dFlag) System.out.println("unaryExpressionNotPlusMinus"); int c1, c2; }
-    :   '~' t1=unaryExpression
-            { ret = new UnaryExpression(UnaryOperator.BITWISE_COMPLEMENT, t1); }
-    |   '!' t2=unaryExpression
-            { ret = new UnaryExpression(UnaryOperator.LOGICAL_NEGATION, t2); }
-    |   t3=castExpression
-            { ret = t3; }
-    |   {c1=0; c2=0;} t4=primary (t5=selector
+/* OK */
+expression returns [Declaration ret] //[Expression ret_expr]
+    @init { if(dFlag) System.out.println("expression"); LinkedList list = new LinkedList(); }
+    @after { ret = new StringDeclaration(list); }
+    :   t1=conditionalExpression
             {
-              /* ??? */
+                list.add(t1);
+                //ret_expr = expr1;
             }
-        )* ('++' {c1=1; } |'--'{c2=1;})?
+        (t2=assignmentOperator t3=expression
             {
-              /* ??? */
-            }
-    ;
-
-castExpression returns [Expression ret]
-    @init { if(dFlag) System.out.println("castExpression"); }
-    :  '(' t1=primitiveType ')' t2=unaryExpression
-            { List list = new LinkedList(); list.add(t1);
-              ret = new Typecast(list, t2); }
-        |  '(' (t3=type | t4=expression ) ')' t5=unaryExpressionNotPlusMinus
-            { List list = new LinkedList(); 
-              if(t3 != null)
+                list.add(t2);
                 list.add(t3);
-              else
-                list.add(t4); /* TODO: Check it's correct and working */
-              ret = new Typecast(list, t5); }
+                //ret_expr = new BinaryExpression(expr1, t1, expr2);
+            }
+        )?
     ;
 
-/*============================================================================*/
-/*                                TYPES                                       */
-/*============================================================================*/
-primitiveType returns [Specifier ret]
-    @init { if(dFlag) System.out.println("primitiveType"); }
-    :   'boolean' { ret = Specifier.BOOLEAN; }
-    |   'char' { ret = Specifier.CHAR; }
-    |   'byte' { ret = Specifier.BYTE; }
-    |   'short' { ret = Specifier.SHORT; }
-    |   'int' { ret = Specifier.INT; }
-    |   'long' { ret = Specifier.LONG; }
-    |   'float' { ret = Specifier.FLOAT; }
-    |   'double' { ret = Specifier.DOUBLE; }
-    ;
-
-/*============================================================================*/
-/*                                OPERATORS                                   */
-/*============================================================================*/
-assignmentOperator returns [AssignmentOperator ret]
+/* OK */
+assignmentOperator returns [Declaration ret] //[AssignmentOperator op]
     @init { if(dFlag) System.out.println("assignmentOperator"); AssignmentOperator op=null; LinkedList list = new LinkedList(); }
-    :   '='  { ret = AssignmentOperator.NORMAL; }
-    |   '+=' { ret = AssignmentOperator.ADD; }
-    |   '-=' { ret = AssignmentOperator.SUBTRACT; }
-    |   '*=' { ret = AssignmentOperator.MULTIPLY; }
-    |   '/=' { ret = AssignmentOperator.DIVIDE; }
-    |   '&=' { ret = AssignmentOperator.BITWISE_AND; }
-    |   '|=' { ret = AssignmentOperator.BITWISE_INCLUSIVE_OR; }
-    |   '^=' { ret = AssignmentOperator.BITWISE_EXCLUSIVE_OR; }
-    |   '%=' { ret = AssignmentOperator.MODULUS; }
+    :   '='
+            {
+                ret = new StringDeclaration("=");
+                //op = AssignmentOperator.NORMAL;
+            }
+    |   '+='
+            {
+                ret = new StringDeclaration("+=");
+                //op = AssignmentOperator.ADD;
+            }
+    |   '-='
+            {
+                ret = new StringDeclaration("-=");
+                //op = AssignmentOperator.SUBTRACT;
+            }
+    |   '*='
+            {
+                ret = new StringDeclaration("*=");
+                //op = AssignmentOperator.MULTIPLY;
+            }
+    |   '/='
+            {
+                ret = new StringDeclaration("/=");
+                //op = AssignmentOperator.DIVIDE;
+            }
+    |   '&='
+            {
+                ret = new StringDeclaration("&=");
+                //op = AssignmentOperator.BITWISE_AND;
+            }
+    |   '|='
+            {
+                ret = new StringDeclaration("|=");
+                //op = AssignmentOperator.BITWISE_INCLUSIVE_OR;
+            }
+    |   '^='
+            {
+                ret = new StringDeclaration("^=");
+                //op = AssignmentOperator.BITWISE_EXCLUSIVE_OR;
+            }
+    |   '%='
+            {
+                ret = new StringDeclaration("?=");
+                //op = AssignmentOperator.MODULUS;
+            }
     |   ('<' '<' '=')=> t1='<' t2='<' t3='='
          { $t1.getLine() == $t2.getLine() &&
           $t1.getCharPositionInLine() + 1 == $t2.getCharPositionInLine() &&
           $t2.getLine() == $t3.getLine() &&
           $t2.getCharPositionInLine() + 1 == $t3.getCharPositionInLine() }?
-            { 
-                ret = AssignmentOperator.SHIFT_LEFT;
+            {
+                ret = new StringDeclaration("<<");
+                //op = AssignmentOperator.SHIFT_LEFT;
             }
-    |   ('>' '>' '>' '=')=> t1='>' t2='>' t3='>' t4='='
+/*    |   ('>' '>' '>' '=')=> t1='>' t2='>' t3='>' t4='='   [Original Code*/
+    |   ('<' '<' '<' '=')=> t1='>' t2='>' t3='>' t4='='
         { $t1.getLine() == $t2.getLine() &&
           $t1.getCharPositionInLine() + 1 == $t2.getCharPositionInLine() &&
           $t2.getLine() == $t3.getLine() &&
           $t2.getCharPositionInLine() + 1 == $t3.getCharPositionInLine() &&
           $t3.getLine() == $t4.getLine() &&
           $t3.getCharPositionInLine() + 1 == $t4.getCharPositionInLine() }?
-            { 
-                ret = AssignmentOperator.SHIFT_RIGHT_TRIPLE;
+            {
+                ret = new StringDeclaration("<<<");
+                //op = AssignmentOperator.SHIFT_LEFT_TRIPLE;
             }
     |   ('>' '>' '=')=> t1='>' t2='>' t3='='
         { $t1.getLine() == $t2.getLine() &&
           $t1.getCharPositionInLine() + 1 == $t2.getCharPositionInLine() &&
           $t2.getLine() == $t3.getLine() &&
           $t2.getCharPositionInLine() + 1 == $t3.getCharPositionInLine() }?
-            { 
-                ret = AssignmentOperator.SHIFT_RIGHT;
-            }
-    ;
-
-/* OK = TODO - need to understand the meaning of => operator in this language syntax */
-relationalOp returns [BinaryOperator ret]
-    @init { if(dFlag) System.out.println("relationalOp"); }
-    :   ('<' '=')=> t1='<' t2='='
-        { $t1.getLine() == $t2.getLine() &&
-          $t1.getCharPositionInLine() + 1 == $t2.getCharPositionInLine() }?
             {
-                ret = BinaryOperator.LE;
-            }
-    |   ('>' '=')=> t1='>' t2='='
-        { $t1.getLine() == $t2.getLine() &&
-          $t1.getCharPositionInLine() + 1 == $t2.getCharPositionInLine() }?
-            { 
-                ret = BinaryOperator.GE;
-            }
-    |   '<'
-            { 
-                ret = BinaryOperator.LT;
-            }
-    |   '>'
-            { 
-                ret = BinaryOperator.GT;
+                ret = new StringDeclaration(">>");
+                //op = AssignmentOperator.SHIFT_RIGHT;
             }
     ;
 
 /* OK */
-shiftOp returns [BinaryOperator ret]
+conditionalExpression returns [Declaration ret] //[Expression ret_expr]
+    @init { if(dFlag) System.out.println("conditionalExpression"); LinkedList list = new LinkedList(); }
+    @after { ret = new StringDeclaration(list); }
+    :   t1=conditionalOrExpression
+            {
+                list.add(t1);
+                //ret = t1;
+            }
+        ( '?' t2=expression ':' t33=expression
+            {
+                list.add(new StringDeclaration("?"));
+                list.add(t2);
+                list.add(new StringDeclaration(":"));
+                list.add(t3);
+                //ret_expr = new ConditionalExpression(t1, t2, t3);
+            }
+        )?
+    ;
+
+/* OK */
+conditionalOrExpression returns [Declaration ret] //[Expression ret_expr]
+    @init { if(dFlag) System.out.println("conditionalOrExpression"); LinkedList list = new LinkedList(); }
+    @after { ret = new StringDeclaration(list); }
+    :   t1 = conditionalAndExpression
+            {
+                list.add(t1);
+                //ret_expr = expr1;
+            }
+        ( '||' t2=conditionalAndExpression
+            {
+                list.add(new StringDeclaration("||"));
+                list.add(t2);
+                //ret_expr = new BinaryExpression(expr1, BinaryOperator.LOGICAL_OR, expr2);
+            }
+        )*
+    ;
+
+/* OK */
+conditionalAndExpression returns [Declaration ret] //[Expression ret_expr]
+    @init { if(dFlag) System.out.println("conditionalAndExpression"); LinkedList list = new LinkedList(); }
+    @after { ret = new StringDeclaration(list); }
+    :   t1 = inclusiveOrExpression
+            {
+                list.add(t1);
+                //ret_expr = expr1;
+            }
+        ( '&&' t2=inclusiveOrExpression
+            {
+                list.add(new StringDeclaration("&&"));
+                list.add(t2);
+                //ret_expr = new BinaryExpression(expr1, BinaryOperator.LOGICAL_AND, expr2);
+            }
+        )*
+    ;
+
+/* OK */
+inclusiveOrExpression returns [Declaration ret] //[Expression ret_expr]
+    @init { if(dFlag) System.out.println("inclusiveOrExpression"); LinkedList list = new LinkedList(); }
+    @after { ret = new StringDeclaration(list); }
+    :   t1 = exclusiveOrExpression
+            {
+                list.add(t1);
+                //ret_expr = expr1;
+            }
+        ( '|' t2 = exclusiveOrExpression
+            {
+                list.add(new StringDeclaration("|"));
+                list.add(t2);
+                //ret_expr = new BinaryExpression(expr1, BinaryOperator.BITWISE_INCLUSIVE_OR, expr2);
+            }
+        )*
+    ;
+
+/* OK */
+exclusiveOrExpression returns [Declaration ret] //[Expression ret_expr]
+    @init { if(dFlag) System.out.println("exclusiveOrExpression"); LinkedList list = new LinkedList(); }
+    @after { ret = new StringDeclaration(list); }
+    :   t1 = andExpression
+            {
+                list.add(t1);
+                //ret_expr = expr1;
+            }
+        ( '^' t2 = andExpression
+            {
+                list.add(new StringDeclaration("^"));
+                list.add(t2);
+                //ret_expr = new BinaryExpression(expr1, BinaryOperator.BITWISE_EXCLUSIVE_OR, expr2);
+            }
+        )*
+    ;
+
+/* OK */
+andExpression returns [Declaration ret] //[Expression ret_expr]
+    @init { if(dFlag) System.out.println("andExpression"); LinkedList list = new LinkedList(); }
+    @after { ret = new StringDeclaration(list); }
+    :   t1 = equalityExpression
+            {
+                list.add(t1);
+                //ret_expr = expr1;
+            }
+        ( '&' t2=equalityExpression
+            {
+                list.add(new StringDeclaration("&"));
+                list.add(t2);
+                //ret_expr = new BinaryExpression(expr1, BinaryOperator.BITWISE_AND, expr2);
+            }
+        )*
+    ;
+
+/* OK */
+equalityExpression returns [Declaration ret] //[Expression ret_expr]
+    @init { if(dFlag) System.out.println("equalityExpression"); BinaryOperator op=null; LinkedList list = new LinkedList(); }
+    @after { ret = new StringDeclaration(list); }
+    :   t1=instanceOfExpression
+            {
+                list.add(t1);
+                //ret_expr = expr1;
+            }
+        ( ('==' { op=BinaryOperator.COMPARE_EQ; }| '!=' { op = BinaryOperator.COMPARE_NE; } ) t2=instanceOfExpression
+            {
+                if(op == BinaryOperator.COMPARE_EQ)
+                    list.add(new StringDeclaration("=="));
+                else
+                    list.add(new StringDeclaration("!="));
+                list.add(t2);
+                //ret_expr = new BinaryExpression(expr1, op, expr2);
+            }
+        )*
+    ;
+
+/* OK */
+instanceOfExpression returns [Declaration ret] //[Expression ret_expr]
+    @init { if(dFlag) System.out.println("instanceOfExpression"); LinkedList list = new LinkedList(); }
+    @after { ret = new StringDeclaration(list); }
+    :   t1=relationalExpression
+            {
+                list.add(t1);
+                //ret_expr = expr1;
+            }
+        ('instanceof' t2=type
+            {
+                list.add(new StringDeclaration("instanceof"));
+                list.add(t2);
+                //ret_expr = new BinaryExpresion(expr1, BinaryOperator.INSTANCEOF, expr2);
+            }
+        )?
+    ;
+
+/* OK */
+relationalExpression returns [Declaration ret] //[Expression ret_expr]
+    @init { if(dFlag) System.out.println("relationalExpression"); LinkedList list = new LinkedList(); }
+    @after { ret = new StringDeclaration(list); }
+    :   t1=shiftExpression
+            {
+                list.add(t1);
+                //ret_expr = expr1;
+            }
+        ( t2=relationalOp t3=shiftExpression
+            {
+                list.add(t2);
+                list.add(t3);
+                //ret_expr = new BinaryExpression(expr1, relationalOp, expr2);
+            }
+        )*
+    ;
+
+/* OK = TODO - need to understand the meaning of => operator in this language syntax */
+relationalOp returns [Declaration ret] //[BinaryOperator op]
+    @init { if(dFlag) System.out.println("relationalOp"); BinaryOperator op=null; LinkedList list = new LinkedList(); }
+    :   ('<' '=')=> t1='<' t2='='
+        { $t1.getLine() == $t2.getLine() &&
+          $t1.getCharPositionInLine() + 1 == $t2.getCharPositionInLine() }?
+            {
+                ret = new StringDeclaration("<=");
+                //op = BinaryOperator.LE;
+            }
+    |   ('>' '=')=> t1='>' t2='='
+        { $t1.getLine() == $t2.getLine() &&
+          $t1.getCharPositionInLine() + 1 == $t2.getCharPositionInLine() }?
+            {
+                ret = new StringDeclaration(">=");
+                //op = BinaryOperator.GE;
+            }
+    |   '<'
+            {
+                ret = new StringDeclaration("<");
+                //op = BinaryOperator.LT;
+            }
+    |   '>'
+            {
+                ret = new StringDeclaration(">");
+                //op = BinaryOperator.GT;
+            }
+    ;
+
+/* OK */
+shiftExpression returns [Declaration ret] //[Expression ret_expr]
+    @init { if(dFlag) System.out.println("shiftExpression"); LinkedList list = new LinkedList(); }
+    @after { ret = new StringDeclaration(list); }
+    :   t1=additiveExpression
+            {
+                list.add(t1);
+                //ret_expr = expr1;
+            }
+        ( t2=shiftOp t3=additiveExpression
+            {
+                list.add(t2);
+                list.add(t3);
+                //ret_expr = new BinaryExpression(expr1, shiftOp, expr2);
+            }
+        )*
+    ;
+
+/* OK */
+shiftOp returns [Declaration ret] //[BinaryOperator op]
     @init { if(dFlag) System.out.println("shiftOp"); BinaryOperator op=null; LinkedList list = new LinkedList(); }
     :   ('<' '<')=> t1='<' t2='<'
         { $t1.getLine() == $t2.getLine() &&
           $t1.getCharPositionInLine() + 1 == $t2.getCharPositionInLine() }?
-            { 
-                ret = BinaryOperator.SHIFT_LEFT;
+            {
+                ret = new StringDeclaration("<<");
+                //op = BinaryOperator.SHIFT_LEFT;
             }
     |   ('>' '>' '>')=> t1='>' t2='>' t3='>'
         { $t1.getLine() == $t2.getLine() &&
           $t1.getCharPositionInLine() + 1 == $t2.getCharPositionInLine() &&
           $t2.getLine() == $t3.getLine() &&
           $t2.getCharPositionInLine() + 1 == $t3.getCharPositionInLine() }?
-            { 
-                ret = BinaryOperator.SHIFT_RIGHT_TRIPLE;
+            {
+                ret = new StringDeclaration("<<<");
+                //op = BinaryOperator.SHIFT_LEFT_TRIPLE;
             }
     |   ('>' '>')=> t1='>' t2='>'
         { $t1.getLine() == $t2.getLine() &&
           $t1.getCharPositionInLine() + 1 == $t2.getCharPositionInLine() }?
-            { 
-                ret = BinaryOperator.SHIFT_RIGHT;
+            {
+                ret = new StringDeclaration(">>");
+                //op = BinaryOperator.SHIFT_RIGHT;
             }
     ;
 
+/* OK */
+additiveExpression returns [Declaration ret] //[Expression ret_expr]
+    @init { if(dFlag) System.out.println("additiveExpression"); BinaryOperator op=null; LinkedList list = new LinkedList(); }
+    @after { ret = new StringDeclaration(list); }
+    :   t1=multiplicativeExpression
+            {
+                list.add(t1);
+                //ret_expr = expr1;
+            }
+        ( ('+' { op = BinaryOperator.ADD; }| '-' { op = BinaryOperator.SUBTRACT; }) t2=multiplicativeExpression
+            {
+                if(op == BinaryOperator.ADD)
+                    list.add(new StringDeclaration("+"));
+                else
+                    list.add(new StringDeclaration("-"));
+                list.add(t2);
+                //ret_expr = new BinaryExpression(expr1, op, expr2);
+            }
+        )*
+    ;
 
-/*============================================================================*/
-/*                                ???                                   */
-/*============================================================================*/
+/* OK */
+multiplicativeExpression returns [Declaration ret] //[Expression ret_expr]
+    @init { if(dFlag) System.out.println("multiplicativeExpression"); BinaryOperator op=null; LinkedList list = new LinkedList(); }
+    @after { ret = new StringDeclaration(list); }
+    :   t1=unaryExpression
+            {
+                list.add(t1);
+                //ret_expr = expr1;
+            }
+        ( ( '*' { op = BinaryOperator.MULTIPLY; } | '/' { op = BinaryOperator.DIVIDE; } | '%' { op = BinaryOperator.MODULUS; } ) t2=unaryExpression
+            {
+                list.add(op);
+                list.add(t2);
+                //ret_expr = new BinaryExpression(expr1, op, expr2);
+            }
+        )*
+    ;
+
+/* OK */
+unaryExpression returns [Declaration ret] //[Expression ret_expr]
+    @init { if(dFlag) System.out.println("unaryExpression"); LinkedList list = new LinkedList(); }
+    @after { ret = new StringDeclaration(list); }
+    :   '+' t1=unaryExpression
+            {
+                list.add(new StringDeclaration("+"));
+                list.add(t1);
+                //ret_expr = new UnaryExpression(UnaryOperator.PLUS, tok1);
+            }
+    |   '-' t2=unaryExpression
+            {
+                list.add(new StringDeclaration("-"));
+                list.add(t2);
+                //ret_expr = new UnaryExpression(UnaryOperator.MINUS, tok2);
+            }
+    |   '++' t3=unaryExpression
+            {
+                list.add(new StringDeclaration("++"));
+                list.add(t3);
+                //ret_expr = new UnaryExpression(UnaryOperator.PRE_INCREMENT, tok3);
+            }
+    |   '--' t4=unaryExpression
+            {
+                list.add(new StringDeclaration("--"));
+                list.add(t4);
+                //ret_expr = new UnaryExpression(UnaryOperator.PRE_DECREMENT, tok4);
+            }
+    |   t5=unaryExpressionNotPlusMinus
+            {
+                list.add(t5);
+                //ret_expr = t5;
+            }
+    ;
+
+unaryExpressionNotPlusMinus returns [Declaration ret] //[Expression ret_expr]
+    @init { if(dFlag) System.out.println("unaryExpressionNotPlusMinus"); int c1, c2; LinkedList list = new LinkedList(); }
+    @after { ret = new StringDeclaration(list); }
+    :   '~' t1=unaryExpression
+            {
+                list.add(new StringDeclaration("~"));
+                list.add(t1);
+                //ret_expr = new UnaryExpression(UnaryOperator.BITWISE_COMPLEMENT, t1);
+            }
+    |   '!' t2=unaryExpression
+            {
+                list.add(new StringDeclaration("!"));
+                list.add(t2);
+                //ret_expr = new UnaryExpression(UnaryOperator.LOGICAL_NEGATION, t2);
+            }
+    |   t3=castExpression
+            {
+                list.add(t3);
+                //ret_expr = t3;
+            }
+    |   {c1=0; c2=0;} t4=primary
+            {
+                list.add(t4);
+                //ret_expr = t4;
+                //prev_expr = t4;
+                /* TODO */
+            }
+        (t5=selector
+            {
+                list.add(t5);
+            }
+        )* ('++' {
+            c1=1;
+            list.add(new StringDeclaration("++"));
+        } |'--'{
+            c2=1;
+            list.add(new StringDeclaration("--"));
+        })?
+    ;
+
+castExpression returns [Declaration ret] //[Expression ret_expr]
+    @init { if(dFlag) System.out.println("castExpression"); int check1, check2; LinkedList list = new LinkedList(); }
+    @after { ret = new StringDeclaration(list); }
+    :  '(' t1=primitiveType ')' t2=unaryExpression
+            {
+                LinkedList list = new LinkedList();
+                list.add(t1);
+                ret_expr = new NewExpression(list, t2);
+            }
+        |  {check1=0; check2=0;} '(' (t3=type {check1=1;}| t4=expression {check2=1;}) ')' t5=unaryExpressionNotPlusMinus
+            {
+                if(check1 == 1){
+                    LinkedList list = new LinkedList();
+                    list.add(t3);
+                    ret_expr = new NewExpression(list, t5);
+                }
+                else if (check2 == 1){
+                    ret_expr = new RangeExpression(t4, t5); /* TODO Make sure it is the right class */
+                }
+            }
+    ;
+
 primary returns [Declaration ret] //[Expression ret_expr]
     @init { if(dFlag) System.out.println("primary"); String str=""; LinkedList list = new LinkedList(); }
     @after { ret = new StringDeclaration(list); }
@@ -2885,7 +3206,7 @@ primary returns [Declaration ret] //[Expression ret_expr]
                 list.add(new StringDeclaration($t8.text));
                 //prev_expr = new AccessExpression(prev_expr, AccessOperator.MEMBER_ACCESS , new NameID($t6.text));
             }
-        )* 
+        )*
         (t9=identifierSuffix
             {
                 list.add(t9);
@@ -2893,7 +3214,7 @@ primary returns [Declaration ret] //[Expression ret_expr]
             }
         )?
                 //ret_expr = prev_expr;
-    |   t10=primitiveType 
+    |   t10=primitiveType
             {
                 list.add(t10);
             }
@@ -2930,7 +3251,7 @@ identifierSuffix returns [Declaration ret] //[Expression ret_expr]
                 //ArrayAccess lhs = new ArrayAccess(prev_expr), list);
                 //ret_expr = new AccessExpression(lhs, AccessOperator.MEMBER_ACCESS, new OperatorID("class"));
             }
-    |   ('[' 
+    |   ('['
             {
                 list.add(new StringDeclaration("["));
             }
@@ -3009,7 +3330,7 @@ creator returns [Declaration ret] //[Expression ret_expr]
                 }
                 */
             }
-    |   t3=createdName (t4=arrayCreatorRest 
+    |   t3=createdName (t4=arrayCreatorRest
             {
                 list.add(t3);
                 list.add(t4);
@@ -3073,7 +3394,7 @@ arrayCreatorRest returns [Declaration ret] //
                 {
                     list.add(new StringDeclaration("["));
                 }
-        (   ']' 
+        (   ']'
                 {
                     list.add(new StringDeclaration("]"));
                 }
@@ -3141,17 +3462,17 @@ nonWildcardTypeArguments returns [Declaration ret] //[List list]
     @after { ret = new StringDeclaration(list); }
     :   '<' t1=typeList '>'
         {
-            /* FIX */
-            //list.add(new StringDeclaration("<"));
-            //list.add(t1);
-            //list.add(new stringDeclaration(">"));
+            list.add(new StringDeclaration("<"));
+            list.add(t1);
+            list.add(new stringDeclaration(">"));
+            //list = t1;
         }
     ;
 
 selector returns [Declaration ret] //[Expression ret_expr]
     @init { if(dFlag) System.out.println("selector"); LinkedList list = new LinkedList(); }
     @after { ret = new StringDeclaration(list); }
-    :   '.' t1=Identifier 
+    :   '.' t1=Identifier
             {
                 list.add(new StringDeclaration("."));
                 list.add(new StringDeclaration($t1.text));
@@ -3219,7 +3540,7 @@ superSuffix returns [Declaration ret] //
 arguments returns [Declaration ret] //[Expression ret_expr]
     @init { if(dFlag) System.out.println("arguments"); LinkedList list = new LinkedList(); }
     @after { ret = new StringDeclaration(list); }
-    :   '(' 
+    :   '('
                 {
                     list.add(new StringDeclaration("("));
                     //ret_expr = new OperatorID("()");
