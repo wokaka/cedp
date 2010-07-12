@@ -6,8 +6,11 @@
 package vpa.interpreter;
 
 import cedp.util.UtilFile;
+import cedp.util.UtilTable;
 import cedp.util.UtilTree;
 import cedp.util.gui.ToolTipTreeNode;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import org.antlr.runtime.ANTLRFileStream;
@@ -25,6 +28,7 @@ import vpa.parsetree.VpaParseTree;
 public class VpaProgram {
     protected String fname;
     protected String script;
+    protected ParseTreeNode root;
 
     public VpaProgram(String f)
     {
@@ -100,12 +104,12 @@ public class VpaProgram {
             /* PARSER */
             CommonTokenStream tokens = new  CommonTokenStream(lexer);
             VpaParser parser = new VpaParser(tokens);
-            VpaParser.document_return root = parser.document();
+            root = (ParseTreeNode) parser.document();
             //System.out.println("tree="+((Tree)root.tree).toStringTree());
 
-            CommonTreeNodeStream nodes = new CommonTreeNodeStream((Tree)root.tree);
-            VpaTreeParser walker = new VpaTreeParser(nodes);
-            walker.document();
+            //CommonTreeNodeStream nodes = new CommonTreeNodeStream((Tree)root.tree);
+            //VpaTreeParser walker = new VpaTreeParser(nodes);
+            //walker.document();
         } catch(Exception e){
             e.printStackTrace();
         }
@@ -124,6 +128,9 @@ public class VpaProgram {
 
     public ParseTreeNode GetParseTreeNode(ParseTreeNode root, String name)
     {
+      if(root == null)
+        return null;
+      
         for(int i=0; i<root.children.size(); i++){
             ParseTreeNode child = (ParseTreeNode) root.children.get(i);
             if(child.type.equals(name))
@@ -143,22 +150,49 @@ public class VpaProgram {
         DefaultMutableTreeNode treeRoot = (DefaultMutableTreeNode)tree.getModel().getRoot();
 
         /* Script Section */
-        ParseTreeNode root = GetParseTreeNode(VpaParseTree.GetRoot(), "script");
-        if(root != null){
-            DefaultMutableTreeNode cnode = (DefaultMutableTreeNode)new ToolTipTreeNode("script", root.data);
-            script = root.data;
+        ParseTreeNode subroot = GetParseTreeNode(root, "script");
+        if(subroot != null){
+            DefaultMutableTreeNode cnode = (DefaultMutableTreeNode)new ToolTipTreeNode("script", subroot.data);
+            script = subroot.data;
             treeRoot.add(cnode);
         }
         
         /* Command Section */
-        root = GetParseTreeNode(VpaParseTree.GetRoot(), "command");
-        if(root != null){
+        subroot = GetParseTreeNode(root, "command");
+        if(subroot != null){
             DefaultMutableTreeNode cnode = (DefaultMutableTreeNode)new ToolTipTreeNode("command", "");
             treeRoot.add(cnode);
-            BuildCommandTreeNode(cnode, root, 0);
+            BuildCommandTreeNode(cnode, subroot, 0);
         }
         
         UtilTree.ExpandAll(tree);
+    }
+
+
+    public void LoadPath(JTextField field)
+    {
+        ParseTreeNode subroot = GetParseTreeNode(root, "path");
+        if(subroot != null)
+          field.setText(subroot.GetParam("name"));
+    }
+
+    public void LoadBenchmarkInfo(JTable table)
+    {
+        ParseTreeNode subroot = GetParseTreeNode(root, "benchmark");
+        
+        if(subroot == null)
+          return;
+
+        for(int i=0; i<subroot.children.size(); i++){
+          ParseTreeNode child = (ParseTreeNode) subroot.children.get(i);
+          String row[];
+
+          row = new String[2];
+          row[0] = child.GetParam("name");
+          row[1] = child.GetParam("data");
+
+          UtilTable.AddToTable(table, row, false);
+        }
     }
 
     public String GetScript()

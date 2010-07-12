@@ -11,6 +11,8 @@ import cetus.exec.Driver;
 import cetus.hir.*;
 import cetus.hir.java.PackageOrImportDeclaration;
 import cetus.hir.java.StringDeclaration;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.util.Enumeration;
@@ -221,9 +223,36 @@ public class CetusWrapper {
 //        spanel.add(jtree);
         jframe.setSize(1000, 1000);
         jframe.show();
-
+        jframe.addWindowListener(new DefaultWindowListener());
         UtilTree.RemoveAll(jtree);
         PlotNode((DefaultMutableTreeNode)jtree.getModel().getRoot(), tu);
-        UtilTree.ExpandAll(jtree);
+        //UtilTree.ExpandAll(jtree);
     }
+
+  public static class DefaultWindowListener implements WindowListener
+  {
+
+    public void windowOpened(WindowEvent e) {
+    }
+
+    public void windowClosing(WindowEvent e) {
+      System.exit(-1);
+    }
+
+    public void windowClosed(WindowEvent e) {
+    }
+
+    public void windowIconified(WindowEvent e) {
+    }
+
+    public void windowDeiconified(WindowEvent e) {
+    }
+
+    public void windowActivated(WindowEvent e) {
+    }
+
+    public void windowDeactivated(WindowEvent e) {
+    }
+      
+  }
 }

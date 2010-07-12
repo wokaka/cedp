@@ -1,10 +1,9 @@
-// $ANTLR 3.2 Sep 23, 2009 12:02:23 src/vpa/interpreter/VpaTreeParser.g 2010-05-30 21:53:58
-package vpa.interpreter;
+// $ANTLR 3.2 Sep 23, 2009 12:02:23 src/vpa/interpreter/VpaTreeParser.g 2010-07-11 18:41:03
+
 import org.antlr.runtime.*;
 import org.antlr.runtime.tree.*;import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
-import vpa.parsetree.*;
 
 public class VpaTreeParser extends TreeParser {
     public static final String[] tokenNames = new String[] {
@@ -110,7 +109,7 @@ public class VpaTreeParser extends TreeParser {
             	    value=(Tree)match(input,ATTR_VALUE,FOLLOW_ATTR_VALUE_in_element94); 
 
             	    match(input, Token.UP, null); 
-            	     if((attrName!=null?attrName.getText():null).equals("name")) VpaParseTree.SetName(value.getText()); System.out.print(" "+(attrName!=null?attrName.getText():null)+"="+(value!=null?value.getText():null));
+            	     if((attrName!=null?attrName.getText():null).equals("name")) VpaParseTree.SetName(value.getText()); System.out.print(" "+(attrName!=null?attrName.getText():null)+"="+(value!=null?value.getText():null)); 
 
             	    }
             	    break;

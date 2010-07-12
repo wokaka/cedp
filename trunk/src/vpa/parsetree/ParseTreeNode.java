@@ -5,6 +5,7 @@
 
 package vpa.parsetree;
 
+import java.util.HashMap;
 import java.util.Vector;
 
 /**
@@ -17,31 +18,47 @@ public class ParseTreeNode {
     public String data;
     public Vector children;
     public ParseTreeNode parent;
+    public HashMap param;
 
     public ParseTreeNode(String t)
     {
         children = new Vector();
+        param = new HashMap();
         type = t;
+        data = "";
     }
 
-    public void SetName(String n)
+    public void SetParam(String id, String n)
     {
-        if(n.startsWith("'") || n.startsWith("\""))
-            n = n.substring(1);
-        if(n.endsWith("'") || n.endsWith("\""))
-            n = n.substring(0, n.length()-1);
-        
+      if(n.startsWith("'") || n.startsWith("\""))
+          n = n.substring(1);
+      if(n.endsWith("'") || n.endsWith("\""))
+          n = n.substring(0, n.length()-1);
+
+      if(id.equals("name")){
         name = n;
+      }
+      else{
+        param.put(id, n);
+      }
     }
 
-    public void SetData(String d)
+    public String GetParam(String id)
+    {
+      if(id.equals("name"))
+        return name;
+      
+      return (String)param.get(id);
+    }
+
+    public void AddBody(String d)
     {
         while(d.startsWith("\n"))
             d = d.substring(1);
         while(d.endsWith("\n") || d.endsWith("\t"))
             d = d.substring(0, d.length()-1);
 
-        data = d;
+        data += d;
     }
 
     public void AddChild(ParseTreeNode c)

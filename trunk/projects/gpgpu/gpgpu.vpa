@@ -1,3 +1,15 @@
+<vpa>
+<path name='/home/yim/cedp/cedp/projects/gpgpu/benchmark/'>
+</path>
+<benchmark>
+  <program name='cp' data='default'></program>
+  <program name='mri-fhd' data='large'></program>
+  <program name='mri-q' data='large'></program>
+  <program name='pns' data='default'></program>
+  <program name='rpes' data='default'></program>
+  <program name='sad' data='default'></program>
+  <program name='tpacf' data='default'></program>
+</benchmark>
 <command>
 	<item name='Original Program'>
  
@@ -181,3 +193,4 @@
 		</item>
 	</item>
 </command>
+</vpa>

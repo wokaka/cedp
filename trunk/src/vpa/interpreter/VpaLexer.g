@@ -1,11 +1,3 @@
-/*header
-{
-package vpa.interpreter;
-}
-
-{
-}*/
-
 lexer grammar VpaLexer;
 
 @header {
@@ -46,5 +38,4 @@ fragment LETTER
     ;
 
 WS  : {tagMode}?=> (' '|'\r'|'\t'|'\u000C'|'\n'|) {_channel=99;};
-
 
