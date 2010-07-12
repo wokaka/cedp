@@ -1,4 +1,4 @@
-// $ANTLR 3.2 Sep 23, 2009 12:02:23 src/vpa/interpreter/Vpa.g 2010-07-11 18:54:54
+// $ANTLR 3.2 Sep 23, 2009 12:02:23 src/vpa/interpreter/Vpa.g 2010-07-11 20:54:39
 
 package vpa.interpreter;
 
@@ -44,8 +44,8 @@ public class VpaLexer extends Lexer {
         try {
             int _type = TAG_START_OPEN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/vpa/interpreter/Vpa.g:102:16: ( '<' )
-            // src/vpa/interpreter/Vpa.g:102:18: '<'
+            // src/vpa/interpreter/Vpa.g:106:16: ( '<' )
+            // src/vpa/interpreter/Vpa.g:106:18: '<'
             {
             match('<'); 
              tagMode = true; 
@@ -65,8 +65,8 @@ public class VpaLexer extends Lexer {
         try {
             int _type = TAG_END_OPEN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/vpa/interpreter/Vpa.g:103:14: ( '</' )
-            // src/vpa/interpreter/Vpa.g:103:16: '</'
+            // src/vpa/interpreter/Vpa.g:107:14: ( '</' )
+            // src/vpa/interpreter/Vpa.g:107:16: '</'
             {
             match("</"); 
 
@@ -87,8 +87,8 @@ public class VpaLexer extends Lexer {
         try {
             int _type = TAG_CLOSE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/vpa/interpreter/Vpa.g:104:11: ( '>' )
-            // src/vpa/interpreter/Vpa.g:104:13: '>'
+            // src/vpa/interpreter/Vpa.g:108:11: ( '>' )
+            // src/vpa/interpreter/Vpa.g:108:13: '>'
             {
             match('>'); 
              tagMode = false; 
@@ -108,8 +108,8 @@ public class VpaLexer extends Lexer {
         try {
             int _type = TAG_EMPTY_CLOSE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/vpa/interpreter/Vpa.g:105:17: ({...}? => '/>' )
-            // src/vpa/interpreter/Vpa.g:105:19: {...}? => '/>'
+            // src/vpa/interpreter/Vpa.g:109:17: ({...}? => '/>' )
+            // src/vpa/interpreter/Vpa.g:109:19: {...}? => '/>'
             {
             if ( !(( tagMode )) ) {
                 throw new FailedPredicateException(input, "TAG_EMPTY_CLOSE", " tagMode ");
@@ -133,8 +133,8 @@ public class VpaLexer extends Lexer {
         try {
             int _type = ATTR_EQ;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/vpa/interpreter/Vpa.g:107:9: ({...}? => '=' )
-            // src/vpa/interpreter/Vpa.g:107:11: {...}? => '='
+            // src/vpa/interpreter/Vpa.g:111:9: ({...}? => '=' )
+            // src/vpa/interpreter/Vpa.g:111:11: {...}? => '='
             {
             if ( !(( tagMode )) ) {
                 throw new FailedPredicateException(input, "ATTR_EQ", " tagMode ");
@@ -156,13 +156,13 @@ public class VpaLexer extends Lexer {
         try {
             int _type = ATTR_VALUE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/vpa/interpreter/Vpa.g:108:12: ({...}? => ( '\"' (~ '\"' )* '\"' | '\\'' (~ '\\'' )* '\\'' ) )
-            // src/vpa/interpreter/Vpa.g:108:14: {...}? => ( '\"' (~ '\"' )* '\"' | '\\'' (~ '\\'' )* '\\'' )
+            // src/vpa/interpreter/Vpa.g:112:12: ({...}? => ( '\"' (~ '\"' )* '\"' | '\\'' (~ '\\'' )* '\\'' ) )
+            // src/vpa/interpreter/Vpa.g:112:14: {...}? => ( '\"' (~ '\"' )* '\"' | '\\'' (~ '\\'' )* '\\'' )
             {
             if ( !(( tagMode )) ) {
                 throw new FailedPredicateException(input, "ATTR_VALUE", " tagMode ");
             }
-            // src/vpa/interpreter/Vpa.g:109:9: ( '\"' (~ '\"' )* '\"' | '\\'' (~ '\\'' )* '\\'' )
+            // src/vpa/interpreter/Vpa.g:113:9: ( '\"' (~ '\"' )* '\"' | '\\'' (~ '\\'' )* '\\'' )
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -180,10 +180,10 @@ public class VpaLexer extends Lexer {
             }
             switch (alt3) {
                 case 1 :
-                    // src/vpa/interpreter/Vpa.g:109:11: '\"' (~ '\"' )* '\"'
+                    // src/vpa/interpreter/Vpa.g:113:11: '\"' (~ '\"' )* '\"'
                     {
                     match('\"'); 
-                    // src/vpa/interpreter/Vpa.g:109:15: (~ '\"' )*
+                    // src/vpa/interpreter/Vpa.g:113:15: (~ '\"' )*
                     loop1:
                     do {
                         int alt1=2;
@@ -196,7 +196,7 @@ public class VpaLexer extends Lexer {
 
                         switch (alt1) {
                     	case 1 :
-                    	    // src/vpa/interpreter/Vpa.g:109:16: ~ '\"'
+                    	    // src/vpa/interpreter/Vpa.g:113:16: ~ '\"'
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -221,10 +221,10 @@ public class VpaLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // src/vpa/interpreter/Vpa.g:110:11: '\\'' (~ '\\'' )* '\\''
+                    // src/vpa/interpreter/Vpa.g:114:11: '\\'' (~ '\\'' )* '\\''
                     {
                     match('\''); 
-                    // src/vpa/interpreter/Vpa.g:110:16: (~ '\\'' )*
+                    // src/vpa/interpreter/Vpa.g:114:16: (~ '\\'' )*
                     loop2:
                     do {
                         int alt2=2;
@@ -237,7 +237,7 @@ public class VpaLexer extends Lexer {
 
                         switch (alt2) {
                     	case 1 :
-                    	    // src/vpa/interpreter/Vpa.g:110:17: ~ '\\''
+                    	    // src/vpa/interpreter/Vpa.g:114:17: ~ '\\''
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -280,13 +280,13 @@ public class VpaLexer extends Lexer {
         try {
             int _type = PCDATA;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/vpa/interpreter/Vpa.g:114:8: ({...}? => (~ '<' )+ )
-            // src/vpa/interpreter/Vpa.g:114:10: {...}? => (~ '<' )+
+            // src/vpa/interpreter/Vpa.g:118:8: ({...}? => (~ '<' )+ )
+            // src/vpa/interpreter/Vpa.g:118:10: {...}? => (~ '<' )+
             {
             if ( !((!tagMode)) ) {
                 throw new FailedPredicateException(input, "PCDATA", "!tagMode");
             }
-            // src/vpa/interpreter/Vpa.g:114:24: (~ '<' )+
+            // src/vpa/interpreter/Vpa.g:118:24: (~ '<' )+
             int cnt4=0;
             loop4:
             do {
@@ -300,7 +300,7 @@ public class VpaLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // src/vpa/interpreter/Vpa.g:114:25: ~ '<'
+            	    // src/vpa/interpreter/Vpa.g:118:25: ~ '<'
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<=';')||(input.LA(1)>='=' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -340,8 +340,8 @@ public class VpaLexer extends Lexer {
         try {
             int _type = GENERIC_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/vpa/interpreter/Vpa.g:116:12: ({...}? => ( LETTER | '_' | ':' ) ( NAMECHAR )* )
-            // src/vpa/interpreter/Vpa.g:116:14: {...}? => ( LETTER | '_' | ':' ) ( NAMECHAR )*
+            // src/vpa/interpreter/Vpa.g:120:12: ({...}? => ( LETTER | '_' | ':' ) ( NAMECHAR )* )
+            // src/vpa/interpreter/Vpa.g:120:14: {...}? => ( LETTER | '_' | ':' ) ( NAMECHAR )*
             {
             if ( !((tagMode)) ) {
                 throw new FailedPredicateException(input, "GENERIC_ID", "tagMode");
@@ -355,7 +355,7 @@ public class VpaLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // src/vpa/interpreter/Vpa.g:116:50: ( NAMECHAR )*
+            // src/vpa/interpreter/Vpa.g:120:50: ( NAMECHAR )*
             loop5:
             do {
                 int alt5=2;
@@ -368,7 +368,7 @@ public class VpaLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // src/vpa/interpreter/Vpa.g:116:51: NAMECHAR
+            	    // src/vpa/interpreter/Vpa.g:120:51: NAMECHAR
             	    {
             	    mNAMECHAR(); 
 
@@ -394,7 +394,7 @@ public class VpaLexer extends Lexer {
     // $ANTLR start "NAMECHAR"
     public final void mNAMECHAR() throws RecognitionException {
         try {
-            // src/vpa/interpreter/Vpa.g:119:5: ( LETTER | DIGIT | '.' | '-' | '_' | ':' )
+            // src/vpa/interpreter/Vpa.g:123:5: ( LETTER | DIGIT | '.' | '-' | '_' | ':' )
             // src/vpa/interpreter/Vpa.g:
             {
             if ( (input.LA(1)>='-' && input.LA(1)<='.')||(input.LA(1)>='0' && input.LA(1)<=':')||(input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
@@ -418,8 +418,8 @@ public class VpaLexer extends Lexer {
     // $ANTLR start "DIGIT"
     public final void mDIGIT() throws RecognitionException {
         try {
-            // src/vpa/interpreter/Vpa.g:123:5: ( '0' .. '9' )
-            // src/vpa/interpreter/Vpa.g:123:7: '0' .. '9'
+            // src/vpa/interpreter/Vpa.g:127:5: ( '0' .. '9' )
+            // src/vpa/interpreter/Vpa.g:127:7: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -434,7 +434,7 @@ public class VpaLexer extends Lexer {
     // $ANTLR start "LETTER"
     public final void mLETTER() throws RecognitionException {
         try {
-            // src/vpa/interpreter/Vpa.g:127:5: ( 'a' .. 'z' | 'A' .. 'Z' )
+            // src/vpa/interpreter/Vpa.g:131:5: ( 'a' .. 'z' | 'A' .. 'Z' )
             // src/vpa/interpreter/Vpa.g:
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
@@ -460,13 +460,13 @@ public class VpaLexer extends Lexer {
         try {
             int _type = WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // src/vpa/interpreter/Vpa.g:131:5: ({...}? => ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' | ) )
-            // src/vpa/interpreter/Vpa.g:131:7: {...}? => ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' | )
+            // src/vpa/interpreter/Vpa.g:135:5: ({...}? => ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' | ) )
+            // src/vpa/interpreter/Vpa.g:135:7: {...}? => ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' | )
             {
             if ( !((tagMode)) ) {
                 throw new FailedPredicateException(input, "WS", "tagMode");
             }
-            // src/vpa/interpreter/Vpa.g:131:20: ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' | )
+            // src/vpa/interpreter/Vpa.g:135:20: ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' | )
             int alt6=6;
             switch ( input.LA(1) ) {
             case ' ':
@@ -499,42 +499,42 @@ public class VpaLexer extends Lexer {
 
             switch (alt6) {
                 case 1 :
-                    // src/vpa/interpreter/Vpa.g:131:21: ' '
+                    // src/vpa/interpreter/Vpa.g:135:21: ' '
                     {
                     match(' '); 
 
                     }
                     break;
                 case 2 :
-                    // src/vpa/interpreter/Vpa.g:131:25: '\\r'
+                    // src/vpa/interpreter/Vpa.g:135:25: '\\r'
                     {
                     match('\r'); 
 
                     }
                     break;
                 case 3 :
-                    // src/vpa/interpreter/Vpa.g:131:30: '\\t'
+                    // src/vpa/interpreter/Vpa.g:135:30: '\\t'
                     {
                     match('\t'); 
 
                     }
                     break;
                 case 4 :
-                    // src/vpa/interpreter/Vpa.g:131:35: '\\u000C'
+                    // src/vpa/interpreter/Vpa.g:135:35: '\\u000C'
                     {
                     match('\f'); 
 
                     }
                     break;
                 case 5 :
-                    // src/vpa/interpreter/Vpa.g:131:44: '\\n'
+                    // src/vpa/interpreter/Vpa.g:135:44: '\\n'
                     {
                     match('\n'); 
 
                     }
                     break;
                 case 6 :
-                    // src/vpa/interpreter/Vpa.g:131:49: 
+                    // src/vpa/interpreter/Vpa.g:135:49: 
                     {
                     }
                     break;
