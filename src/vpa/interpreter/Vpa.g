@@ -15,9 +15,13 @@ import java.util.Vector;
     boolean tagMode = false;
 }
 
+@members {
+    boolean debug = false;
+}
+
 document returns [ParseTreeNode node]
   @init {
-    System.out.println("document");
+    if(debug) System.out.println("document");
   }
   : t1=element
       {
@@ -27,7 +31,7 @@ document returns [ParseTreeNode node]
 
 element returns [ParseTreeNode node]
   @init {
-    System.out.println("element");
+    if(debug) System.out.println("element");
   }
   : ( t1=startTag
         {
@@ -52,7 +56,7 @@ element returns [ParseTreeNode node]
 
 startTag returns [ParseTreeNode node]
   @init {
-    System.out.println("startTag");
+    if(debug) System.out.println("startTag");
   }
   : TAG_START_OPEN t1=GENERIC_ID 
     {
@@ -67,7 +71,7 @@ startTag returns [ParseTreeNode node]
 
 attribute returns [Vector vec]
   @init {
-    System.out.println("attribute");
+    if(debug) System.out.println("attribute");
   }
   : t1=GENERIC_ID ATTR_EQ t2=ATTR_VALUE
       {
@@ -79,14 +83,14 @@ attribute returns [Vector vec]
 
 endTag
   @init {
-    System.out.println("endTag");
+    if(debug) System.out.println("endTag");
   }
   : TAG_END_OPEN GENERIC_ID TAG_CLOSE
   ;
 
 emptyElement returns [ParseTreeNode node]
   @init {
-    System.out.println("emptyElement");
+    if(debug) System.out.println("emptyElement");
   }
   : TAG_START_OPEN t1=GENERIC_ID
       {
@@ -129,4 +133,3 @@ fragment LETTER
     ;
 
 WS  : {tagMode}?=> (' '|'\r'|'\t'|'\u000C'|'\n'|) {_channel=99;};
-

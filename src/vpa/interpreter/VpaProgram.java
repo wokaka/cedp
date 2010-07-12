@@ -172,8 +172,12 @@ public class VpaProgram {
     public void LoadPath(JTextField field)
     {
         ParseTreeNode subroot = GetParseTreeNode(root, "path");
-        if(subroot != null)
-          field.setText(subroot.GetParam("name"));
+        if(subroot != null){
+          String last = subroot.GetParam("name");
+          if(!last.endsWith("/"))
+              last += "/";
+          field.setText(last);
+        }
     }
 
     public void LoadBenchmarkInfo(JTable table)

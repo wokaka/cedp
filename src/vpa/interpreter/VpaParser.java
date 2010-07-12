@@ -1,4 +1,4 @@
-// $ANTLR 3.2 Sep 23, 2009 12:02:23 src/vpa/interpreter/Vpa.g 2010-07-11 18:54:54
+// $ANTLR 3.2 Sep 23, 2009 12:02:23 src/vpa/interpreter/Vpa.g 2010-07-11 20:54:38
 
 package vpa.interpreter;
 
@@ -46,9 +46,12 @@ public class VpaParser extends Parser {
     public String getGrammarFileName() { return "src/vpa/interpreter/Vpa.g"; }
 
 
+        boolean debug = false;
+
+
 
     // $ANTLR start "document"
-    // src/vpa/interpreter/Vpa.g:18:1: document returns [ParseTreeNode node] : t1= element ;
+    // src/vpa/interpreter/Vpa.g:22:1: document returns [ParseTreeNode node] : t1= element ;
     public final ParseTreeNode document() throws RecognitionException {
         ParseTreeNode node = null;
 
@@ -56,13 +59,13 @@ public class VpaParser extends Parser {
 
 
 
-            System.out.println("document");
+            if(debug) System.out.println("document");
           
         try {
-            // src/vpa/interpreter/Vpa.g:22:3: (t1= element )
-            // src/vpa/interpreter/Vpa.g:22:5: t1= element
+            // src/vpa/interpreter/Vpa.g:26:3: (t1= element )
+            // src/vpa/interpreter/Vpa.g:26:5: t1= element
             {
-            pushFollow(FOLLOW_element_in_document49);
+            pushFollow(FOLLOW_element_in_document55);
             t1=element();
 
             state._fsp--;
@@ -86,7 +89,7 @@ public class VpaParser extends Parser {
 
 
     // $ANTLR start "element"
-    // src/vpa/interpreter/Vpa.g:28:1: element returns [ParseTreeNode node] : (t1= startTag (t2= element | t3= PCDATA )* endTag | t4= emptyElement ) ;
+    // src/vpa/interpreter/Vpa.g:32:1: element returns [ParseTreeNode node] : (t1= startTag (t2= element | t3= PCDATA )* endTag | t4= emptyElement ) ;
     public final ParseTreeNode element() throws RecognitionException {
         ParseTreeNode node = null;
 
@@ -99,20 +102,20 @@ public class VpaParser extends Parser {
 
 
 
-            System.out.println("element");
+            if(debug) System.out.println("element");
           
         try {
-            // src/vpa/interpreter/Vpa.g:32:3: ( (t1= startTag (t2= element | t3= PCDATA )* endTag | t4= emptyElement ) )
-            // src/vpa/interpreter/Vpa.g:32:5: (t1= startTag (t2= element | t3= PCDATA )* endTag | t4= emptyElement )
+            // src/vpa/interpreter/Vpa.g:36:3: ( (t1= startTag (t2= element | t3= PCDATA )* endTag | t4= emptyElement ) )
+            // src/vpa/interpreter/Vpa.g:36:5: (t1= startTag (t2= element | t3= PCDATA )* endTag | t4= emptyElement )
             {
-            // src/vpa/interpreter/Vpa.g:32:5: (t1= startTag (t2= element | t3= PCDATA )* endTag | t4= emptyElement )
+            // src/vpa/interpreter/Vpa.g:36:5: (t1= startTag (t2= element | t3= PCDATA )* endTag | t4= emptyElement )
             int alt2=2;
             alt2 = dfa2.predict(input);
             switch (alt2) {
                 case 1 :
-                    // src/vpa/interpreter/Vpa.g:32:7: t1= startTag (t2= element | t3= PCDATA )* endTag
+                    // src/vpa/interpreter/Vpa.g:36:7: t1= startTag (t2= element | t3= PCDATA )* endTag
                     {
-                    pushFollow(FOLLOW_startTag_in_element85);
+                    pushFollow(FOLLOW_startTag_in_element91);
                     t1=startTag();
 
                     state._fsp--;
@@ -120,7 +123,7 @@ public class VpaParser extends Parser {
 
                               node = t1;
                             
-                    // src/vpa/interpreter/Vpa.g:36:7: (t2= element | t3= PCDATA )*
+                    // src/vpa/interpreter/Vpa.g:40:7: (t2= element | t3= PCDATA )*
                     loop1:
                     do {
                         int alt1=3;
@@ -136,9 +139,9 @@ public class VpaParser extends Parser {
 
                         switch (alt1) {
                     	case 1 :
-                    	    // src/vpa/interpreter/Vpa.g:36:8: t2= element
+                    	    // src/vpa/interpreter/Vpa.g:40:8: t2= element
                     	    {
-                    	    pushFollow(FOLLOW_element_in_element106);
+                    	    pushFollow(FOLLOW_element_in_element112);
                     	    t2=element();
 
                     	    state._fsp--;
@@ -150,9 +153,9 @@ public class VpaParser extends Parser {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // src/vpa/interpreter/Vpa.g:40:9: t3= PCDATA
+                    	    // src/vpa/interpreter/Vpa.g:44:9: t3= PCDATA
                     	    {
-                    	    t3=(Token)match(input,PCDATA,FOLLOW_PCDATA_in_element128); 
+                    	    t3=(Token)match(input,PCDATA,FOLLOW_PCDATA_in_element134); 
 
                     	              node.AddBody((t3!=null?t3.getText():null));
                     	            
@@ -165,7 +168,7 @@ public class VpaParser extends Parser {
                         }
                     } while (true);
 
-                    pushFollow(FOLLOW_endTag_in_element155);
+                    pushFollow(FOLLOW_endTag_in_element161);
                     endTag();
 
                     state._fsp--;
@@ -174,9 +177,9 @@ public class VpaParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // src/vpa/interpreter/Vpa.g:46:7: t4= emptyElement
+                    // src/vpa/interpreter/Vpa.g:50:7: t4= emptyElement
                     {
-                    pushFollow(FOLLOW_emptyElement_in_element165);
+                    pushFollow(FOLLOW_emptyElement_in_element171);
                     t4=emptyElement();
 
                     state._fsp--;
@@ -206,7 +209,7 @@ public class VpaParser extends Parser {
 
 
     // $ANTLR start "startTag"
-    // src/vpa/interpreter/Vpa.g:53:1: startTag returns [ParseTreeNode node] : TAG_START_OPEN t1= GENERIC_ID (t2= attribute )* TAG_CLOSE ;
+    // src/vpa/interpreter/Vpa.g:57:1: startTag returns [ParseTreeNode node] : TAG_START_OPEN t1= GENERIC_ID (t2= attribute )* TAG_CLOSE ;
     public final ParseTreeNode startTag() throws RecognitionException {
         ParseTreeNode node = null;
 
@@ -215,18 +218,18 @@ public class VpaParser extends Parser {
 
 
 
-            System.out.println("startTag");
+            if(debug) System.out.println("startTag");
           
         try {
-            // src/vpa/interpreter/Vpa.g:57:3: ( TAG_START_OPEN t1= GENERIC_ID (t2= attribute )* TAG_CLOSE )
-            // src/vpa/interpreter/Vpa.g:57:5: TAG_START_OPEN t1= GENERIC_ID (t2= attribute )* TAG_CLOSE
+            // src/vpa/interpreter/Vpa.g:61:3: ( TAG_START_OPEN t1= GENERIC_ID (t2= attribute )* TAG_CLOSE )
+            // src/vpa/interpreter/Vpa.g:61:5: TAG_START_OPEN t1= GENERIC_ID (t2= attribute )* TAG_CLOSE
             {
-            match(input,TAG_START_OPEN,FOLLOW_TAG_START_OPEN_in_startTag205); 
-            t1=(Token)match(input,GENERIC_ID,FOLLOW_GENERIC_ID_in_startTag209); 
+            match(input,TAG_START_OPEN,FOLLOW_TAG_START_OPEN_in_startTag211); 
+            t1=(Token)match(input,GENERIC_ID,FOLLOW_GENERIC_ID_in_startTag215); 
 
                   node = new ParseTreeNode((t1!=null?t1.getText():null));
                 
-            // src/vpa/interpreter/Vpa.g:61:5: (t2= attribute )*
+            // src/vpa/interpreter/Vpa.g:65:5: (t2= attribute )*
             loop3:
             do {
                 int alt3=2;
@@ -239,9 +242,9 @@ public class VpaParser extends Parser {
 
                 switch (alt3) {
             	case 1 :
-            	    // src/vpa/interpreter/Vpa.g:61:6: t2= attribute
+            	    // src/vpa/interpreter/Vpa.g:65:6: t2= attribute
             	    {
-            	    pushFollow(FOLLOW_attribute_in_startTag225);
+            	    pushFollow(FOLLOW_attribute_in_startTag231);
             	    t2=attribute();
 
             	    state._fsp--;
@@ -258,7 +261,7 @@ public class VpaParser extends Parser {
                 }
             } while (true);
 
-            match(input,TAG_CLOSE,FOLLOW_TAG_CLOSE_in_startTag242); 
+            match(input,TAG_CLOSE,FOLLOW_TAG_CLOSE_in_startTag248); 
 
             }
 
@@ -275,7 +278,7 @@ public class VpaParser extends Parser {
 
 
     // $ANTLR start "attribute"
-    // src/vpa/interpreter/Vpa.g:68:1: attribute returns [Vector vec] : t1= GENERIC_ID ATTR_EQ t2= ATTR_VALUE ;
+    // src/vpa/interpreter/Vpa.g:72:1: attribute returns [Vector vec] : t1= GENERIC_ID ATTR_EQ t2= ATTR_VALUE ;
     public final Vector attribute() throws RecognitionException {
         Vector vec = null;
 
@@ -283,15 +286,15 @@ public class VpaParser extends Parser {
         Token t2=null;
 
 
-            System.out.println("attribute");
+            if(debug) System.out.println("attribute");
           
         try {
-            // src/vpa/interpreter/Vpa.g:72:3: (t1= GENERIC_ID ATTR_EQ t2= ATTR_VALUE )
-            // src/vpa/interpreter/Vpa.g:72:5: t1= GENERIC_ID ATTR_EQ t2= ATTR_VALUE
+            // src/vpa/interpreter/Vpa.g:76:3: (t1= GENERIC_ID ATTR_EQ t2= ATTR_VALUE )
+            // src/vpa/interpreter/Vpa.g:76:5: t1= GENERIC_ID ATTR_EQ t2= ATTR_VALUE
             {
-            t1=(Token)match(input,GENERIC_ID,FOLLOW_GENERIC_ID_in_attribute268); 
-            match(input,ATTR_EQ,FOLLOW_ATTR_EQ_in_attribute270); 
-            t2=(Token)match(input,ATTR_VALUE,FOLLOW_ATTR_VALUE_in_attribute274); 
+            t1=(Token)match(input,GENERIC_ID,FOLLOW_GENERIC_ID_in_attribute274); 
+            match(input,ATTR_EQ,FOLLOW_ATTR_EQ_in_attribute276); 
+            t2=(Token)match(input,ATTR_VALUE,FOLLOW_ATTR_VALUE_in_attribute280); 
 
                     vec = new Vector();
                     vec.add((t1!=null?t1.getText():null));
@@ -313,18 +316,18 @@ public class VpaParser extends Parser {
 
 
     // $ANTLR start "endTag"
-    // src/vpa/interpreter/Vpa.g:80:1: endTag : TAG_END_OPEN GENERIC_ID TAG_CLOSE ;
+    // src/vpa/interpreter/Vpa.g:84:1: endTag : TAG_END_OPEN GENERIC_ID TAG_CLOSE ;
     public final void endTag() throws RecognitionException {
 
-            System.out.println("endTag");
+            if(debug) System.out.println("endTag");
           
         try {
-            // src/vpa/interpreter/Vpa.g:84:3: ( TAG_END_OPEN GENERIC_ID TAG_CLOSE )
-            // src/vpa/interpreter/Vpa.g:84:5: TAG_END_OPEN GENERIC_ID TAG_CLOSE
+            // src/vpa/interpreter/Vpa.g:88:3: ( TAG_END_OPEN GENERIC_ID TAG_CLOSE )
+            // src/vpa/interpreter/Vpa.g:88:5: TAG_END_OPEN GENERIC_ID TAG_CLOSE
             {
-            match(input,TAG_END_OPEN,FOLLOW_TAG_END_OPEN_in_endTag302); 
-            match(input,GENERIC_ID,FOLLOW_GENERIC_ID_in_endTag304); 
-            match(input,TAG_CLOSE,FOLLOW_TAG_CLOSE_in_endTag306); 
+            match(input,TAG_END_OPEN,FOLLOW_TAG_END_OPEN_in_endTag308); 
+            match(input,GENERIC_ID,FOLLOW_GENERIC_ID_in_endTag310); 
+            match(input,TAG_CLOSE,FOLLOW_TAG_CLOSE_in_endTag312); 
 
             }
 
@@ -341,7 +344,7 @@ public class VpaParser extends Parser {
 
 
     // $ANTLR start "emptyElement"
-    // src/vpa/interpreter/Vpa.g:87:1: emptyElement returns [ParseTreeNode node] : TAG_START_OPEN t1= GENERIC_ID (t2= attribute )* TAG_EMPTY_CLOSE ;
+    // src/vpa/interpreter/Vpa.g:91:1: emptyElement returns [ParseTreeNode node] : TAG_START_OPEN t1= GENERIC_ID (t2= attribute )* TAG_EMPTY_CLOSE ;
     public final ParseTreeNode emptyElement() throws RecognitionException {
         ParseTreeNode node = null;
 
@@ -350,18 +353,18 @@ public class VpaParser extends Parser {
 
 
 
-            System.out.println("emptyElement");
+            if(debug) System.out.println("emptyElement");
           
         try {
-            // src/vpa/interpreter/Vpa.g:91:3: ( TAG_START_OPEN t1= GENERIC_ID (t2= attribute )* TAG_EMPTY_CLOSE )
-            // src/vpa/interpreter/Vpa.g:91:5: TAG_START_OPEN t1= GENERIC_ID (t2= attribute )* TAG_EMPTY_CLOSE
+            // src/vpa/interpreter/Vpa.g:95:3: ( TAG_START_OPEN t1= GENERIC_ID (t2= attribute )* TAG_EMPTY_CLOSE )
+            // src/vpa/interpreter/Vpa.g:95:5: TAG_START_OPEN t1= GENERIC_ID (t2= attribute )* TAG_EMPTY_CLOSE
             {
-            match(input,TAG_START_OPEN,FOLLOW_TAG_START_OPEN_in_emptyElement330); 
-            t1=(Token)match(input,GENERIC_ID,FOLLOW_GENERIC_ID_in_emptyElement334); 
+            match(input,TAG_START_OPEN,FOLLOW_TAG_START_OPEN_in_emptyElement336); 
+            t1=(Token)match(input,GENERIC_ID,FOLLOW_GENERIC_ID_in_emptyElement340); 
 
                     node = new ParseTreeNode((t1!=null?t1.getText():null));
                   
-            // src/vpa/interpreter/Vpa.g:95:5: (t2= attribute )*
+            // src/vpa/interpreter/Vpa.g:99:5: (t2= attribute )*
             loop4:
             do {
                 int alt4=2;
@@ -374,9 +377,9 @@ public class VpaParser extends Parser {
 
                 switch (alt4) {
             	case 1 :
-            	    // src/vpa/interpreter/Vpa.g:95:6: t2= attribute
+            	    // src/vpa/interpreter/Vpa.g:99:6: t2= attribute
             	    {
-            	    pushFollow(FOLLOW_attribute_in_emptyElement351);
+            	    pushFollow(FOLLOW_attribute_in_emptyElement357);
             	    t2=attribute();
 
             	    state._fsp--;
@@ -393,7 +396,7 @@ public class VpaParser extends Parser {
                 }
             } while (true);
 
-            match(input,TAG_EMPTY_CLOSE,FOLLOW_TAG_EMPTY_CLOSE_in_emptyElement368); 
+            match(input,TAG_EMPTY_CLOSE,FOLLOW_TAG_EMPTY_CLOSE_in_emptyElement374); 
 
             }
 
@@ -465,30 +468,30 @@ public class VpaParser extends Parser {
             this.transition = DFA2_transition;
         }
         public String getDescription() {
-            return "32:5: (t1= startTag (t2= element | t3= PCDATA )* endTag | t4= emptyElement )";
+            return "36:5: (t1= startTag (t2= element | t3= PCDATA )* endTag | t4= emptyElement )";
         }
     }
  
 
-    public static final BitSet FOLLOW_element_in_document49 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_startTag_in_element85 = new BitSet(new long[]{0x0000000000000430L});
-    public static final BitSet FOLLOW_element_in_element106 = new BitSet(new long[]{0x0000000000000430L});
-    public static final BitSet FOLLOW_PCDATA_in_element128 = new BitSet(new long[]{0x0000000000000430L});
-    public static final BitSet FOLLOW_endTag_in_element155 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_emptyElement_in_element165 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_TAG_START_OPEN_in_startTag205 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_GENERIC_ID_in_startTag209 = new BitSet(new long[]{0x00000000000000C0L});
-    public static final BitSet FOLLOW_attribute_in_startTag225 = new BitSet(new long[]{0x00000000000000C0L});
-    public static final BitSet FOLLOW_TAG_CLOSE_in_startTag242 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_GENERIC_ID_in_attribute268 = new BitSet(new long[]{0x0000000000000100L});
-    public static final BitSet FOLLOW_ATTR_EQ_in_attribute270 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_ATTR_VALUE_in_attribute274 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_TAG_END_OPEN_in_endTag302 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_GENERIC_ID_in_endTag304 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_TAG_CLOSE_in_endTag306 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_TAG_START_OPEN_in_emptyElement330 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_GENERIC_ID_in_emptyElement334 = new BitSet(new long[]{0x0000000000000840L});
-    public static final BitSet FOLLOW_attribute_in_emptyElement351 = new BitSet(new long[]{0x0000000000000840L});
-    public static final BitSet FOLLOW_TAG_EMPTY_CLOSE_in_emptyElement368 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_element_in_document55 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_startTag_in_element91 = new BitSet(new long[]{0x0000000000000430L});
+    public static final BitSet FOLLOW_element_in_element112 = new BitSet(new long[]{0x0000000000000430L});
+    public static final BitSet FOLLOW_PCDATA_in_element134 = new BitSet(new long[]{0x0000000000000430L});
+    public static final BitSet FOLLOW_endTag_in_element161 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_emptyElement_in_element171 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_TAG_START_OPEN_in_startTag211 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_GENERIC_ID_in_startTag215 = new BitSet(new long[]{0x00000000000000C0L});
+    public static final BitSet FOLLOW_attribute_in_startTag231 = new BitSet(new long[]{0x00000000000000C0L});
+    public static final BitSet FOLLOW_TAG_CLOSE_in_startTag248 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_GENERIC_ID_in_attribute274 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_ATTR_EQ_in_attribute276 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_ATTR_VALUE_in_attribute280 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_TAG_END_OPEN_in_endTag308 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_GENERIC_ID_in_endTag310 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_TAG_CLOSE_in_endTag312 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_TAG_START_OPEN_in_emptyElement336 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_GENERIC_ID_in_emptyElement340 = new BitSet(new long[]{0x0000000000000840L});
+    public static final BitSet FOLLOW_attribute_in_emptyElement357 = new BitSet(new long[]{0x0000000000000840L});
+    public static final BitSet FOLLOW_TAG_EMPTY_CLOSE_in_emptyElement374 = new BitSet(new long[]{0x0000000000000002L});
 
 }

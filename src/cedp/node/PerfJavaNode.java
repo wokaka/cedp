@@ -35,6 +35,7 @@ import java.io.FileWriter;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import javax.swing.JFrame;
+import javax.swing.JTable;
 import javax.swing.table.TableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
@@ -77,6 +78,11 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
     }
 
     public String GetCurrentDir()
+    {
+        return homeField.getText() + currDir.getText();
+    }
+
+    public String GetHomeDir()
     {
         return homeField.getText() + currDir.getText();
     }
@@ -715,6 +721,11 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
 
     pack();
   }// </editor-fold>//GEN-END:initComponents
+
+    public JTable GetBenchmarkTable()
+    {
+      return programTable;
+    }
 
     protected void UpdateFileList()
     {

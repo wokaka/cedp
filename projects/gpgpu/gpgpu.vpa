@@ -1,5 +1,5 @@
 <vpa>
-<path name='/home/yim/cedp/cedp/projects/gpgpu/benchmark/'>
+<path name='/home/yim/cedp/cedp/projects/gpgpu/benchmark/parboil/'>
 </path>
 <benchmark>
   <program name='cp' data='default'></program>
@@ -10,140 +10,201 @@
   <program name='sad' data='default'></program>
   <program name='tpacf' data='default'></program>
 </benchmark>
+<script>
+import os
+import string
+
+
+def Clean():
+  VpaAPI.ExecCmd("./parboil clean " + VpaAPI.GetSelectedProgram())
+
+
+def Compile(target):
+  VpaAPI.ExecCmd("./parboil compile " + VpaAPI.GetSelectedProgram() + " " + target)
+
+
+def Execute(target):
+  VpaAPI.ExecCmd("./parboil run " + VpaAPI.GetSelectedProgram() + " " + target + " " + VpaAPI.GetSelectedData())
+
+
+def Profile(target, options):
+  path_dst = VpaAPI.GetHomeDir() + "benchmarks/" + VpaAPI.GetSelectedProgram() + "/src/" + target + "/"
+  VpaAPI.TxFile(".." + VpaAPI.GetFileSeparator() + "instr" + VpaAPI.GetFileSeparator() + "fi_prerun" + VpaAPI.GetFileSeparator() + "gpufi.h", path_dst + "gpufi.h")
+  VpaAPI.TxFile(".." + VpaAPI.GetFileSeparator() + "instr" + VpaAPI.GetFileSeparator() + "fi_prerun" + VpaAPI.GetFileSeparator() + "gpufi_kernel.cu", path_dst + "gpufi_kernel.cu")
+
+  # Make sure no time delay is needed since those above operations are synchronous.
+
+  VpaAPI.ExecCmd("rm " + VpaAPI.GetHomeDir() + "benchmarks/" + VpaAPI.GetSelectedProgram() + "/fi_profile.txt -f")
+  VpaAPI.ExecCmd("echo profile " + options + " > " + VpaAPI.GetHomeDir() + "benchmarks/" + VpaAPI.GetSelectedProgram() + "/fi_cmd.txt")
+  Execute(target)
+  VpaAPI.ExecCmd("cat " + VpaAPI.GetHomeDir() + "benchmarks/" + VpaAPI.GetSelectedProgram() + "/fi_profile.txt")
+
+
+def GetFileList(path):
+  VpaAPI.ExecCmd("ls " + path + " > /tmp/hifi")
+  VpaAPI.RxFile("/tmp/hifi", "tmp/filelist")
+  buffer = VpaAPI.FileRead("tmp/filelist")
+  return buffer.split()
+
+
+def InstrGetFiles(dst):
+  # Gets file list
+  path = VpaAPI.GetHomeDir() + "benchmarks/" + VpaAPI.GetSelectedProgram() + "/src/" + dst + "/"
+  fileList = GetFileList(path)
+
+  path_dst = VpaAPI.GetHomeDir() + "benchmarks/" + VpaAPI.GetSelectedProgram() + "/src/" + dst + "/"
+
+  VpaAPI.TxFile(".." + VpaAPI.GetFileSeparator() + "instr" + VpaAPI.GetFileSeparator() + "before" + VpaAPI.GetFileSeparator() + "gpufi.h", path_dst + "gpufi.h")
+  VpaAPI.FileCopy(".." + VpaAPI.GetFileSeparator() + "instr" + VpaAPI.GetFileSeparator() + "before" + VpaAPI.GetFileSeparator() + "gpufi.h", "gpufi.h")
+
+  # Copies the source code from an injector node to the control server
+  for fileName in fileList:
+    if fileName.equals("gpufi.h") or fileName.equals("gpufi_kernel.cu"):
+      continue
+    if fileName.endsWith(".cu") or fileName.endsWith(".h") or fileName.endsWith(".cpp"):
+      VpaAPI.RxFile(path + fileName, fileName)
+
+  return fileList
+</script>
+
 <command>
 	<item name='Original Program'>
- 
 		<item name='Compile'>
-  
+Clean()
+Compile("cuda")
 		</item>
 		<item name='Execute'>
-  
+Execute("cuda")
 		</item>
 		<item name='Generate a Golden Run'>
-  
+Execute("cuda")
+VpaAPI.ExecCmd("cp " + VpaAPI.GetHomeDir() + benchmarks/" + VpaAPI.GetSelectedProgram() + "/run/" + VpaAPI.GetSelectedData() + "/* " + VpaAPI.GetHomeDir() + benchmarks/" + VpaAPI.GetSelectedProgram() + "/output/ -f")
 		</item>
 		<item name='Execute /wo Loop'>
-  
+Compile("cuda_wo_loop")
+Execute("cuda_wo_loop")
 		</item>
 	</item>
 	<item name='Profiling'>
- 
 		<item name='Instrument'>
-  
 			<item name='Get Files'>
-    
 			</item>
 			<item name='Run CETUS'>
-    
 			</item>
 			<item name='Put Files'>
-    
 			</item>
 		</item>
 		<item name='Compile'>
-  
 		</item>
 		<item name='Get Result'>
-  
+VpaAPI.RxFile(VpaAPI.GetHomeDir() + "benchmarks/" + VpaAPI.GetSelectedProgram() + "/fi_profile.txt", "fi_profile.txt")
 		</item>
 		<item name='Value'>
-  
 			<item name='Loop Iterations'>
-   
+Profile("cuda_profile", "value loop")   
 			</item>
 			<item name='Kernel Instances'>
-   
+Profile("cuda_profile", "value kernel")   
 			</item>
 			<item name='Threads'>
-   
+Profile("cuda_profile", "value kernel " + VpaAPI.InputDialog("Thread #:"))
 			</item>
 			<item name='Blocks'>
-   
+Profile("cuda_profile", "value block")
 			</item>
 		</item>
 		<item name='Control Flow'>
-  
 			<item name='Base'>
-   
 			</item>
 			<item name='Loop Iterations'>
-   
 			</item>
 			<item name='Kernel Instances'>
-   
 			</item>
 			<item name='Threads'>
-   
 			</item>
 			<item name='Blocks'>
-   
 			</item>
 		</item>
 	</item>
 	<item name='Fault Injection'>
   
 		<item name='Instrument'>
-  
+fileList = InstrGetFiles("cuda_cetus")
+InstrRunCetus("cuda_fi", fileList);
+InstrPutFiles("cuda_fi", fileList);
+InstrPutFiles("cuda_fi_prerun", fileList);
 			<item name='Get Files'>
-    
+InstrGetFiles("cuda_cetus");
 			</item>
 			<item name='Run CETUS'>
-    
+InstrRunCetus("cuda_fi", null);
 			</item>
 			<item name='Put Files'>
-    
+InstrPutFiles("cuda_fi", null);
+InstrPutFiles("cuda_fi_prerun", null);
 			</item>
 		</item>
 		<item name='Compile Prerun'>
-  
+Compile("cuda_fi_prerun");
 		</item>
 		<item name='Extract FI Targets'>
-  
+Profile("cuda_fi_prerun", "none");
 		</item>
 		<item name='Generate FI Cmds'>
-  
+Generate("cuda_fi_prerun");
 		</item>
 		<item name='Read FI Cmds'>
-  
+ReadCmds();
 		</item>
 		<item name='Compile FI'>
-  
+Compile("cuda_fi" + nameField.getText());
 		</item>
 		<item name='FI'>
-  
+FiThread fi = new FiThread();
+fi.FI_Exec("cuda_fi" + nameField.getText());
+FI_GetFiles("cuda_fi" + nameField.getText());
+FI_Analysis("cuda_fi" + nameField.getText());
 			<item name='FI Exp'>
-  
+FiThread fi = new FiThread();
+fi.FI_Exec("cuda_fi" + nameField.getText());
 			</item>
 			<item name='Get Files'>
-  
+FI_GetFiles("cuda_fi" + nameField.getText());
 			</item>
 			<item name='Analysis'>
-  
+FI_Analysis("cuda_fi" + nameField.getText());
 			</item>
 		</item>
 		</item>
 		<item name='Error Detector'>
-  
-			<item name='Instrument'>
-  
+  			<item name='Instrument'>
+Vector fileList;
+fileList = InstrGetFiles("cuda_cetus");
+InstrRunCetus("cuda_ed", fileList);
+InstrPutFiles("cuda_ed", fileList);
+System.out.println("FI Instr Done");
 				<item name='Get Files'>
-  
+Vector fileList;
+fileList = InstrGetFiles("cuda_cetus");
 				</item>
 				<item name='Run CETUS'>
-  
+InstrRunCetus("cuda_ed", null);
 				</item>
 				<item name='Put Files'>
-  
+InstrPutFiles("cuda_ed", null);
 				</item>
 			</item>
 			<item name='Compile'>
-  
+Compile("cuda_ed");
 			</item>
-			<item name='Profile'>
-  
+			<item name='Extract FI Targets'>
+Profile("cuda_ed", "none");
+			</item>
+			<item name='Generate FI Cmds'>
+Generate("cuda_ed");
 			</item>
 			<item name='Execute'>
-  
+ED_Exec("cuda_ed");
 			</item>
 		</item>
 		<item name='Fault Injection & Error Detector'>
@@ -191,6 +252,18 @@
 				</item>
 			</item>
 		</item>
+		<item name='Setup'>
+  			<item name='Install CUDA SDK'>
+#for ubuntu
+#sudo apt-get install envyng-gtk -y
+#sudo envyng -t
+  			<item name='Install Parboil'>
+# cd common/src
+# make parboil=$HOME clean
+# make parboil=$HOME
+# cd ../..
+        </item>
+    </item>
 	</item>
 </command>
 </vpa>
