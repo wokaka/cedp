@@ -1,41 +1,56 @@
-
-
 parser grammar VpaParser;
 
 @header {
 package vpa.interpreter;
+
+import vpa.parsetree.ParseTreeNode;
 }
 
-options {
-    tokenVocab=VpaLexer;
-    output=AST;
-}
-
-tokens {
-    ELEMENT;
-    ATTRIBUTE;
-}
-
-document : element ;
+document returns [ParseTreeNode node]
+  @init {
+    node = new ParseTreeNode("root");
+    System.out.println("document");
+  }
+  : element
+  ;
 
 element
-    : ( startTag^
-            (element
-            | PCDATA
-            )*
-            endTag!
-        | emptyElement
-        )
-    ;
+  @init {
+    System.out.println("element");
+  }
+  : ( startTag
+          (element
+          | PCDATA
+          )*
+          endTag
+      | emptyElement
+      )
+  ;
 
-startTag : TAG_START_OPEN GENERIC_ID attribute* TAG_CLOSE
-        -> ^(ELEMENT GENERIC_ID attribute*)
-    ;
+startTag
+  @init {
+    System.out.println("startTag");
+  }
+  : TAG_START_OPEN GENERIC_ID attribute* TAG_CLOSE
+  ;
 
-attribute : GENERIC_ID ATTR_EQ ATTR_VALUE -> ^(ATTRIBUTE GENERIC_ID ATTR_VALUE) ;
+attribute
+  @init {
+    System.out.println("attribute");
+  }
+  : GENERIC_ID ATTR_EQ ATTR_VALUE
+  ;
 
-endTag! : TAG_END_OPEN GENERIC_ID TAG_CLOSE;
+endTag
+  @init {
+    System.out.println("endTag");
+  }
+  : TAG_END_OPEN GENERIC_ID TAG_CLOSE
+  ;
 
-emptyElement : TAG_START_OPEN GENERIC_ID attribute* TAG_EMPTY_CLOSE
-        -> ^(ELEMENT GENERIC_ID attribute*)
-    ;
+emptyElement
+  @init {
+    System.out.println("emptyElement");
+  }
+  : TAG_START_OPEN GENERIC_ID attribute* TAG_EMPTY_CLOSE
+  ;

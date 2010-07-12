@@ -31,14 +31,14 @@ public final class VpaParseTree {
         return root;
     }
     
-    public static void SetName(String n)
+    public static void SetParam(String id, String n)
     {
-        curr.SetName(n);
+      curr.SetParam(id, n);
     }
 
     public static void SetData(String d)
     {
-        curr.SetData(d);
+        curr.AddBody(d);
     }
 
     public static void NodeConfigDone()

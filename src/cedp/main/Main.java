@@ -29,7 +29,7 @@ public class Main extends Applet {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        int generate = 4;
+        int generate = 0;
 
         /* LEXER */
         try{

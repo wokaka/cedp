@@ -573,53 +573,28 @@ translationUnit [TranslationUnit init_tunit] returns [TranslationUnit tunit]
     ;
 
 /* OK */
-packageDeclaration returns [Declaration ret_decl]
-    @init { if(dFlag) System.out.println("packageDeclaration"); LinkedList list = new LinkedList(); }
+packageDeclaration returns [Declaration ret]
+    @init { if(dFlag) System.out.println("packageDeclaration"); }
     :   'package' qualifiedName ';'
             {
-                list.add(new StringDeclaration("package"));
-                list.add(new StringDeclaration($qualifiedName.text));
-                list.add(new StringDeclaration(";"));
-                ret_decl = new StringDeclaration(list);
-
-                //CodeAnnotation anno = new CodeAnnotation("package " + $qualifiedName.text);
-                //ret_decl = new AnnotationDeclaration(anno);
+                NameID id = new NameID($qualifiedName.text);
+                ret = new PackageOrImportDeclaration(Specifier.PACKAGE, id);
             }
     ;
 
 /* OK */
-importDeclaration returns [Declaration ret_decl]
-    @init { if(dFlag) System.out.println("importDeclaration"); LinkedList list = new LinkedList();
-            // int check1=0, check2=0;
-          }
-    :   'import'
-            {
-                list.add(new StringDeclaration("import"));
-            }
-        ('static'
-            {
-                //check1 = 1;
-                list.add(new StringDeclaration("static"));
-            }
-        )?
-        t1=qualifiedName
-            {
-                list.add(new StringDeclaration($t1.text));
-            }
-        ('.' '*'
-            {
-                //check2 = 1;
-                list.add(new StringDeclaration(".*"));
-            }
-        )? ';'
-            {
-                list.add(new StringDeclaration(";"));
-                ret_decl = new StringDeclaration(list);
-
-                //CodeAnnotation anno = new CodeAnnotation("import " + ((check1==1)?"static ":"") + $t1.text + ((check2==1)?".*":"") + ";");
-                //ret_decl = new AnnotationDeclaration(anno);
-            }
-    ;
+importDeclaration returns [Declaration ret]
+  @init { if(dFlag) System.out.println("importDeclaration"); LinkedList list = new LinkedList();
+    NameID id = null;
+  }
+  @after {
+    ret = new PackageOrImportDeclaration(list, id);
+  }
+  : 'import' { list.add(Specifier.IMPORT); }
+    ('static' { list.add(Specifier.STATIC); } )?
+    t1=qualifiedName { id = new NameID($t1.text); }
+    ('.' '*' { id = new NameID(id.getName() + ".*"); } )? ';'
+  ;
 
 /* OK */
 typeDeclaration returns [Declaration ret_decl]
@@ -1850,7 +1825,11 @@ methodBody returns [Declaration ret_decl] //[Statement stat]
     @init { if(dFlag) System.out.println("methodBody"); LinkedList list = new LinkedList(); }
     :   t1=block
             {
-                ret_decl = t1;
+                list.add(new StringDeclaration("{ /* Test */"));
+                list.add(t1);
+                list.add(new StringDeclaration("/* Test Done */ }"));
+                ret_decl = new StringDeclaration(list);
+                //ret_decl = t1;
                 //stat = t1;
             }
     ;
