@@ -1,0 +1,1921 @@
+rm -f build/fi_saleheen1/*
+rm -f build/fi_saleheen/*
+rm -f build/cuda_base/*
+if [ -d build/cuda_base ]; then rmdir build/cuda_base; fi
+rm -f build/base/*
+if [ -d build/base ]; then rmdir build/base; fi
+rm -f build/cuda/*
+if [ -d build/cuda ]; then rmdir build/cuda; fi
+rm -f build/fi/*
+if [ -d build/fi ]; then rmdir build/fi; fi
+Parboil parallel benchmark suite, version 0.1
+
+mkdir -p build/fi
+nvcc -I/usr/local/cuda/include -I/gpufi/parboil/common/include -O3 -Xcompiler "-m32"  -c src/fi/main.cu -o build/fi/main.o
+nvcc -L/gpufi/parboil/common/lib  -Xcompiler "-m32" -L/usr/local/cuda/lib -L/gpufi/parboil/common/src  build/fi/main.o -o build/fi/rpes -lcuda -lparboil 
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 0 0 0 4 0x80000000
+
+>>>>>>> STARTED BASIS SET OUTPUT <<<<<<<
+
+# OF KNOWN ATOMS:  2
+# OF KNOWN SHELLS: 5
+
+
+Atom O (3 shells)
+	Shell O1: 8 primitives
+		primitive 1:   11720.00     0.00
+		primitive 2:    1759.00     0.01
+		primitive 3:     400.80     0.03
+		primitive 4:     113.70     0.10
+		primitive 5:      37.03     0.28
+		primitive 6:      13.27     0.45
+		primitive 7:       5.03     0.27
+		primitive 8:       1.01     0.02
+
+	Shell O2: 8 primitives
+		primitive 1:   11720.00    -0.00
+		primitive 2:    1759.00    -0.00
+		primitive 3:     400.80    -0.01
+		primitive 4:     113.70    -0.05
+		primitive 5:      37.03    -0.14
+		primitive 6:      13.27    -0.33
+		primitive 7:       5.03    -0.23
+		primitive 8:       1.01     1.10
+
+	Shell O3: 1 primitives
+		primitive 1:       0.30     1.00
+
+
+Atom H (2 shells)
+	Shell H1: 3 primitives
+		primitive 1:      13.01     0.03
+		primitive 2:       1.96     0.23
+		primitive 3:       0.44     0.81
+
+	Shell H2: 1 primitives
+		primitive 1:       0.12     1.00
+
+>>>>>>>> DONE BASIS SET OUTPUT <<<<<<<<
+
+
+Total # of integrals to compute: 187240905
+Total # of blocks allocated: 3510150
+Final array size: 1088430
+79.41 MB allocated
+maxblocks = 64
+54 computation cycles will be performed...
+done.
+
+17 reduction cycles will be performed...
+totReductionElements 1088430
+IO:      0.030417
+GPU:     0.000538
+Copy:    0.514667
+Compute: 9.728895
+injected: 1
+Pass
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 0 0 0 4 0x80000000
+rm -f build/fi_saleheen1/*
+rm -f build/fi_saleheen/*
+rm -f build/cuda_base/*
+if [ -d build/cuda_base ]; then rmdir build/cuda_base; fi
+rm -f build/base/*
+if [ -d build/base ]; then rmdir build/base; fi
+rm -f build/cuda/*
+if [ -d build/cuda ]; then rmdir build/cuda; fi
+rm -f build/fi/*
+if [ -d build/fi ]; then rmdir build/fi; fi
+Parboil parallel benchmark suite, version 0.1
+
+mkdir -p build/fi
+nvcc -I/usr/local/cuda/include -I/gpufi/parboil/common/include -O3 -Xcompiler "-m32"  -c src/fi/main.cu -o build/fi/main.o
+nvcc -L/gpufi/parboil/common/lib  -Xcompiler "-m32" -L/usr/local/cuda/lib -L/gpufi/parboil/common/src  build/fi/main.o -o build/fi/rpes -lcuda -lparboil 
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 0 0 5 4 0x80000000
+
+>>>>>>> STARTED BASIS SET OUTPUT <<<<<<<
+
+# OF KNOWN ATOMS:  2
+# OF KNOWN SHELLS: 5
+
+
+Atom O (3 shells)
+	Shell O1: 8 primitives
+		primitive 1:   11720.00     0.00
+		primitive 2:    1759.00     0.01
+		primitive 3:     400.80     0.03
+		primitive 4:     113.70     0.10
+		primitive 5:      37.03     0.28
+		primitive 6:      13.27     0.45
+		primitive 7:       5.03     0.27
+		primitive 8:       1.01     0.02
+
+	Shell O2: 8 primitives
+		primitive 1:   11720.00    -0.00
+		primitive 2:    1759.00    -0.00
+		primitive 3:     400.80    -0.01
+		primitive 4:     113.70    -0.05
+		primitive 5:      37.03    -0.14
+		primitive 6:      13.27    -0.33
+		primitive 7:       5.03    -0.23
+		primitive 8:       1.01     1.10
+
+	Shell O3: 1 primitives
+		primitive 1:       0.30     1.00
+
+
+Atom H (2 shells)
+	Shell H1: 3 primitives
+		primitive 1:      13.01     0.03
+		primitive 2:       1.96     0.23
+		primitive 3:       0.44     0.81
+
+	Shell H2: 1 primitives
+		primitive 1:       0.12     1.00
+
+>>>>>>>> DONE BASIS SET OUTPUT <<<<<<<<
+
+
+Total # of integrals to compute: 187240905
+Total # of blocks allocated: 3510150
+Final array size: 1088430
+79.41 MB allocated
+maxblocks = 64
+54 computation cycles will be performed...
+done.
+
+17 reduction cycles will be performed...
+totReductionElements 1088430
+IO:      0.025645
+GPU:     0.000547
+Copy:    0.515270
+Compute: 9.732438
+injected: 1
+Pass
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 0 0 5 4 0x80000000
+rm -f build/fi_saleheen1/*
+rm -f build/fi_saleheen/*
+rm -f build/cuda_base/*
+if [ -d build/cuda_base ]; then rmdir build/cuda_base; fi
+rm -f build/base/*
+if [ -d build/base ]; then rmdir build/base; fi
+rm -f build/cuda/*
+if [ -d build/cuda ]; then rmdir build/cuda; fi
+rm -f build/fi/*
+if [ -d build/fi ]; then rmdir build/fi; fi
+Parboil parallel benchmark suite, version 0.1
+
+mkdir -p build/fi
+nvcc -I/usr/local/cuda/include -I/gpufi/parboil/common/include -O3 -Xcompiler "-m32"  -c src/fi/main.cu -o build/fi/main.o
+nvcc -L/gpufi/parboil/common/lib  -Xcompiler "-m32" -L/usr/local/cuda/lib -L/gpufi/parboil/common/src  build/fi/main.o -o build/fi/rpes -lcuda -lparboil 
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 0 0 10 4 0x80000000
+
+>>>>>>> STARTED BASIS SET OUTPUT <<<<<<<
+
+# OF KNOWN ATOMS:  2
+# OF KNOWN SHELLS: 5
+
+
+Atom O (3 shells)
+	Shell O1: 8 primitives
+		primitive 1:   11720.00     0.00
+		primitive 2:    1759.00     0.01
+		primitive 3:     400.80     0.03
+		primitive 4:     113.70     0.10
+		primitive 5:      37.03     0.28
+		primitive 6:      13.27     0.45
+		primitive 7:       5.03     0.27
+		primitive 8:       1.01     0.02
+
+	Shell O2: 8 primitives
+		primitive 1:   11720.00    -0.00
+		primitive 2:    1759.00    -0.00
+		primitive 3:     400.80    -0.01
+		primitive 4:     113.70    -0.05
+		primitive 5:      37.03    -0.14
+		primitive 6:      13.27    -0.33
+		primitive 7:       5.03    -0.23
+		primitive 8:       1.01     1.10
+
+	Shell O3: 1 primitives
+		primitive 1:       0.30     1.00
+
+
+Atom H (2 shells)
+	Shell H1: 3 primitives
+		primitive 1:      13.01     0.03
+		primitive 2:       1.96     0.23
+		primitive 3:       0.44     0.81
+
+	Shell H2: 1 primitives
+		primitive 1:       0.12     1.00
+
+>>>>>>>> DONE BASIS SET OUTPUT <<<<<<<<
+
+
+Total # of integrals to compute: 187240905
+Total # of blocks allocated: 3510150
+Final array size: 1088430
+79.41 MB allocated
+maxblocks = 64
+54 computation cycles will be performed...
+done.
+
+17 reduction cycles will be performed...
+totReductionElements 1088430
+IO:      0.024542
+GPU:     0.000368
+Copy:    0.507195
+Compute: 9.780454
+injected: 0
+Pass
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 0 0 10 4 0x80000000
+rm -f build/fi_saleheen1/*
+rm -f build/fi_saleheen/*
+rm -f build/cuda_base/*
+if [ -d build/cuda_base ]; then rmdir build/cuda_base; fi
+rm -f build/base/*
+if [ -d build/base ]; then rmdir build/base; fi
+rm -f build/cuda/*
+if [ -d build/cuda ]; then rmdir build/cuda; fi
+rm -f build/fi/*
+if [ -d build/fi ]; then rmdir build/fi; fi
+Parboil parallel benchmark suite, version 0.1
+
+mkdir -p build/fi
+nvcc -I/usr/local/cuda/include -I/gpufi/parboil/common/include -O3 -Xcompiler "-m32"  -c src/fi/main.cu -o build/fi/main.o
+nvcc -L/gpufi/parboil/common/lib  -Xcompiler "-m32" -L/usr/local/cuda/lib -L/gpufi/parboil/common/src  build/fi/main.o -o build/fi/rpes -lcuda -lparboil 
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 5 0 0 4 0x80000000
+
+>>>>>>> STARTED BASIS SET OUTPUT <<<<<<<
+
+# OF KNOWN ATOMS:  2
+# OF KNOWN SHELLS: 5
+
+
+Atom O (3 shells)
+	Shell O1: 8 primitives
+		primitive 1:   11720.00     0.00
+		primitive 2:    1759.00     0.01
+		primitive 3:     400.80     0.03
+		primitive 4:     113.70     0.10
+		primitive 5:      37.03     0.28
+		primitive 6:      13.27     0.45
+		primitive 7:       5.03     0.27
+		primitive 8:       1.01     0.02
+
+	Shell O2: 8 primitives
+		primitive 1:   11720.00    -0.00
+		primitive 2:    1759.00    -0.00
+		primitive 3:     400.80    -0.01
+		primitive 4:     113.70    -0.05
+		primitive 5:      37.03    -0.14
+		primitive 6:      13.27    -0.33
+		primitive 7:       5.03    -0.23
+		primitive 8:       1.01     1.10
+
+	Shell O3: 1 primitives
+		primitive 1:       0.30     1.00
+
+
+Atom H (2 shells)
+	Shell H1: 3 primitives
+		primitive 1:      13.01     0.03
+		primitive 2:       1.96     0.23
+		primitive 3:       0.44     0.81
+
+	Shell H2: 1 primitives
+		primitive 1:       0.12     1.00
+
+>>>>>>>> DONE BASIS SET OUTPUT <<<<<<<<
+
+
+Total # of integrals to compute: 187240905
+Total # of blocks allocated: 3510150
+Final array size: 1088430
+79.41 MB allocated
+maxblocks = 64
+54 computation cycles will be performed...
+done.
+
+17 reduction cycles will be performed...
+totReductionElements 1088430
+IO:      0.032685
+GPU:     0.000371
+Copy:    0.506859
+Compute: 9.729566
+injected: 1
+Pass
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 5 0 0 4 0x80000000
+rm -f build/fi_saleheen1/*
+rm -f build/fi_saleheen/*
+rm -f build/cuda_base/*
+if [ -d build/cuda_base ]; then rmdir build/cuda_base; fi
+rm -f build/base/*
+if [ -d build/base ]; then rmdir build/base; fi
+rm -f build/cuda/*
+if [ -d build/cuda ]; then rmdir build/cuda; fi
+rm -f build/fi/*
+if [ -d build/fi ]; then rmdir build/fi; fi
+Parboil parallel benchmark suite, version 0.1
+
+mkdir -p build/fi
+nvcc -I/usr/local/cuda/include -I/gpufi/parboil/common/include -O3 -Xcompiler "-m32"  -c src/fi/main.cu -o build/fi/main.o
+nvcc -L/gpufi/parboil/common/lib  -Xcompiler "-m32" -L/usr/local/cuda/lib -L/gpufi/parboil/common/src  build/fi/main.o -o build/fi/rpes -lcuda -lparboil 
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 5 0 5 4 0x80000000
+
+>>>>>>> STARTED BASIS SET OUTPUT <<<<<<<
+
+# OF KNOWN ATOMS:  2
+# OF KNOWN SHELLS: 5
+
+
+Atom O (3 shells)
+	Shell O1: 8 primitives
+		primitive 1:   11720.00     0.00
+		primitive 2:    1759.00     0.01
+		primitive 3:     400.80     0.03
+		primitive 4:     113.70     0.10
+		primitive 5:      37.03     0.28
+		primitive 6:      13.27     0.45
+		primitive 7:       5.03     0.27
+		primitive 8:       1.01     0.02
+
+	Shell O2: 8 primitives
+		primitive 1:   11720.00    -0.00
+		primitive 2:    1759.00    -0.00
+		primitive 3:     400.80    -0.01
+		primitive 4:     113.70    -0.05
+		primitive 5:      37.03    -0.14
+		primitive 6:      13.27    -0.33
+		primitive 7:       5.03    -0.23
+		primitive 8:       1.01     1.10
+
+	Shell O3: 1 primitives
+		primitive 1:       0.30     1.00
+
+
+Atom H (2 shells)
+	Shell H1: 3 primitives
+		primitive 1:      13.01     0.03
+		primitive 2:       1.96     0.23
+		primitive 3:       0.44     0.81
+
+	Shell H2: 1 primitives
+		primitive 1:       0.12     1.00
+
+>>>>>>>> DONE BASIS SET OUTPUT <<<<<<<<
+
+
+Total # of integrals to compute: 187240905
+Total # of blocks allocated: 3510150
+Final array size: 1088430
+79.41 MB allocated
+maxblocks = 64
+54 computation cycles will be performed...
+done.
+
+17 reduction cycles will be performed...
+totReductionElements 1088430
+IO:      0.035002
+GPU:     0.000546
+Copy:    0.593996
+Compute: 9.752775
+injected: 1
+Pass
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 5 0 5 4 0x80000000
+rm -f build/fi_saleheen1/*
+rm -f build/fi_saleheen/*
+rm -f build/cuda_base/*
+if [ -d build/cuda_base ]; then rmdir build/cuda_base; fi
+rm -f build/base/*
+if [ -d build/base ]; then rmdir build/base; fi
+rm -f build/cuda/*
+if [ -d build/cuda ]; then rmdir build/cuda; fi
+rm -f build/fi/*
+if [ -d build/fi ]; then rmdir build/fi; fi
+Parboil parallel benchmark suite, version 0.1
+
+mkdir -p build/fi
+nvcc -I/usr/local/cuda/include -I/gpufi/parboil/common/include -O3 -Xcompiler "-m32"  -c src/fi/main.cu -o build/fi/main.o
+nvcc -L/gpufi/parboil/common/lib  -Xcompiler "-m32" -L/usr/local/cuda/lib -L/gpufi/parboil/common/src  build/fi/main.o -o build/fi/rpes -lcuda -lparboil 
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 5 0 10 4 0x80000000
+
+>>>>>>> STARTED BASIS SET OUTPUT <<<<<<<
+
+# OF KNOWN ATOMS:  2
+# OF KNOWN SHELLS: 5
+
+
+Atom O (3 shells)
+	Shell O1: 8 primitives
+		primitive 1:   11720.00     0.00
+		primitive 2:    1759.00     0.01
+		primitive 3:     400.80     0.03
+		primitive 4:     113.70     0.10
+		primitive 5:      37.03     0.28
+		primitive 6:      13.27     0.45
+		primitive 7:       5.03     0.27
+		primitive 8:       1.01     0.02
+
+	Shell O2: 8 primitives
+		primitive 1:   11720.00    -0.00
+		primitive 2:    1759.00    -0.00
+		primitive 3:     400.80    -0.01
+		primitive 4:     113.70    -0.05
+		primitive 5:      37.03    -0.14
+		primitive 6:      13.27    -0.33
+		primitive 7:       5.03    -0.23
+		primitive 8:       1.01     1.10
+
+	Shell O3: 1 primitives
+		primitive 1:       0.30     1.00
+
+
+Atom H (2 shells)
+	Shell H1: 3 primitives
+		primitive 1:      13.01     0.03
+		primitive 2:       1.96     0.23
+		primitive 3:       0.44     0.81
+
+	Shell H2: 1 primitives
+		primitive 1:       0.12     1.00
+
+>>>>>>>> DONE BASIS SET OUTPUT <<<<<<<<
+
+
+Total # of integrals to compute: 187240905
+Total # of blocks allocated: 3510150
+Final array size: 1088430
+79.41 MB allocated
+maxblocks = 64
+54 computation cycles will be performed...
+done.
+
+17 reduction cycles will be performed...
+totReductionElements 1088430
+IO:      0.039656
+GPU:     0.000372
+Copy:    0.508928
+Compute: 9.730181
+injected: 0
+Pass
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 5 0 10 4 0x80000000
+rm -f build/fi_saleheen1/*
+rm -f build/fi_saleheen/*
+rm -f build/cuda_base/*
+if [ -d build/cuda_base ]; then rmdir build/cuda_base; fi
+rm -f build/base/*
+if [ -d build/base ]; then rmdir build/base; fi
+rm -f build/cuda/*
+if [ -d build/cuda ]; then rmdir build/cuda; fi
+rm -f build/fi/*
+if [ -d build/fi ]; then rmdir build/fi; fi
+Parboil parallel benchmark suite, version 0.1
+
+mkdir -p build/fi
+nvcc -I/usr/local/cuda/include -I/gpufi/parboil/common/include -O3 -Xcompiler "-m32"  -c src/fi/main.cu -o build/fi/main.o
+nvcc -L/gpufi/parboil/common/lib  -Xcompiler "-m32" -L/usr/local/cuda/lib -L/gpufi/parboil/common/src  build/fi/main.o -o build/fi/rpes -lcuda -lparboil 
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 0 0 0 5 0x80000000
+
+>>>>>>> STARTED BASIS SET OUTPUT <<<<<<<
+
+# OF KNOWN ATOMS:  2
+# OF KNOWN SHELLS: 5
+
+
+Atom O (3 shells)
+	Shell O1: 8 primitives
+		primitive 1:   11720.00     0.00
+		primitive 2:    1759.00     0.01
+		primitive 3:     400.80     0.03
+		primitive 4:     113.70     0.10
+		primitive 5:      37.03     0.28
+		primitive 6:      13.27     0.45
+		primitive 7:       5.03     0.27
+		primitive 8:       1.01     0.02
+
+	Shell O2: 8 primitives
+		primitive 1:   11720.00    -0.00
+		primitive 2:    1759.00    -0.00
+		primitive 3:     400.80    -0.01
+		primitive 4:     113.70    -0.05
+		primitive 5:      37.03    -0.14
+		primitive 6:      13.27    -0.33
+		primitive 7:       5.03    -0.23
+		primitive 8:       1.01     1.10
+
+	Shell O3: 1 primitives
+		primitive 1:       0.30     1.00
+
+
+Atom H (2 shells)
+	Shell H1: 3 primitives
+		primitive 1:      13.01     0.03
+		primitive 2:       1.96     0.23
+		primitive 3:       0.44     0.81
+
+	Shell H2: 1 primitives
+		primitive 1:       0.12     1.00
+
+>>>>>>>> DONE BASIS SET OUTPUT <<<<<<<<
+
+
+Total # of integrals to compute: 187240905
+Total # of blocks allocated: 3510150
+Final array size: 1088430
+79.41 MB allocated
+maxblocks = 64
+54 computation cycles will be performed...
+done.
+
+17 reduction cycles will be performed...
+totReductionElements 1088430
+IO:      0.026202
+GPU:     0.000365
+Copy:    0.507538
+Compute: 9.725927
+injected: 1
+Pass
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 0 0 0 5 0x80000000
+rm -f build/fi_saleheen1/*
+rm -f build/fi_saleheen/*
+rm -f build/cuda_base/*
+if [ -d build/cuda_base ]; then rmdir build/cuda_base; fi
+rm -f build/base/*
+if [ -d build/base ]; then rmdir build/base; fi
+rm -f build/cuda/*
+if [ -d build/cuda ]; then rmdir build/cuda; fi
+rm -f build/fi/*
+if [ -d build/fi ]; then rmdir build/fi; fi
+Parboil parallel benchmark suite, version 0.1
+
+mkdir -p build/fi
+nvcc -I/usr/local/cuda/include -I/gpufi/parboil/common/include -O3 -Xcompiler "-m32"  -c src/fi/main.cu -o build/fi/main.o
+nvcc -L/gpufi/parboil/common/lib  -Xcompiler "-m32" -L/usr/local/cuda/lib -L/gpufi/parboil/common/src  build/fi/main.o -o build/fi/rpes -lcuda -lparboil 
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 0 0 5 5 0x80000000
+
+>>>>>>> STARTED BASIS SET OUTPUT <<<<<<<
+
+# OF KNOWN ATOMS:  2
+# OF KNOWN SHELLS: 5
+
+
+Atom O (3 shells)
+	Shell O1: 8 primitives
+		primitive 1:   11720.00     0.00
+		primitive 2:    1759.00     0.01
+		primitive 3:     400.80     0.03
+		primitive 4:     113.70     0.10
+		primitive 5:      37.03     0.28
+		primitive 6:      13.27     0.45
+		primitive 7:       5.03     0.27
+		primitive 8:       1.01     0.02
+
+	Shell O2: 8 primitives
+		primitive 1:   11720.00    -0.00
+		primitive 2:    1759.00    -0.00
+		primitive 3:     400.80    -0.01
+		primitive 4:     113.70    -0.05
+		primitive 5:      37.03    -0.14
+		primitive 6:      13.27    -0.33
+		primitive 7:       5.03    -0.23
+		primitive 8:       1.01     1.10
+
+	Shell O3: 1 primitives
+		primitive 1:       0.30     1.00
+
+
+Atom H (2 shells)
+	Shell H1: 3 primitives
+		primitive 1:      13.01     0.03
+		primitive 2:       1.96     0.23
+		primitive 3:       0.44     0.81
+
+	Shell H2: 1 primitives
+		primitive 1:       0.12     1.00
+
+>>>>>>>> DONE BASIS SET OUTPUT <<<<<<<<
+
+
+Total # of integrals to compute: 187240905
+Total # of blocks allocated: 3510150
+Final array size: 1088430
+79.41 MB allocated
+maxblocks = 64
+54 computation cycles will be performed...
+done.
+
+17 reduction cycles will be performed...
+totReductionElements 1088430
+IO:      0.029194
+GPU:     0.000368
+Copy:    0.507435
+Compute: 9.732542
+injected: 1
+Pass
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 0 0 5 5 0x80000000
+rm -f build/fi_saleheen1/*
+rm -f build/fi_saleheen/*
+rm -f build/cuda_base/*
+if [ -d build/cuda_base ]; then rmdir build/cuda_base; fi
+rm -f build/base/*
+if [ -d build/base ]; then rmdir build/base; fi
+rm -f build/cuda/*
+if [ -d build/cuda ]; then rmdir build/cuda; fi
+rm -f build/fi/*
+if [ -d build/fi ]; then rmdir build/fi; fi
+Parboil parallel benchmark suite, version 0.1
+
+mkdir -p build/fi
+nvcc -I/usr/local/cuda/include -I/gpufi/parboil/common/include -O3 -Xcompiler "-m32"  -c src/fi/main.cu -o build/fi/main.o
+nvcc -L/gpufi/parboil/common/lib  -Xcompiler "-m32" -L/usr/local/cuda/lib -L/gpufi/parboil/common/src  build/fi/main.o -o build/fi/rpes -lcuda -lparboil 
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 0 0 10 5 0x80000000
+
+>>>>>>> STARTED BASIS SET OUTPUT <<<<<<<
+
+# OF KNOWN ATOMS:  2
+# OF KNOWN SHELLS: 5
+
+
+Atom O (3 shells)
+	Shell O1: 8 primitives
+		primitive 1:   11720.00     0.00
+		primitive 2:    1759.00     0.01
+		primitive 3:     400.80     0.03
+		primitive 4:     113.70     0.10
+		primitive 5:      37.03     0.28
+		primitive 6:      13.27     0.45
+		primitive 7:       5.03     0.27
+		primitive 8:       1.01     0.02
+
+	Shell O2: 8 primitives
+		primitive 1:   11720.00    -0.00
+		primitive 2:    1759.00    -0.00
+		primitive 3:     400.80    -0.01
+		primitive 4:     113.70    -0.05
+		primitive 5:      37.03    -0.14
+		primitive 6:      13.27    -0.33
+		primitive 7:       5.03    -0.23
+		primitive 8:       1.01     1.10
+
+	Shell O3: 1 primitives
+		primitive 1:       0.30     1.00
+
+
+Atom H (2 shells)
+	Shell H1: 3 primitives
+		primitive 1:      13.01     0.03
+		primitive 2:       1.96     0.23
+		primitive 3:       0.44     0.81
+
+	Shell H2: 1 primitives
+		primitive 1:       0.12     1.00
+
+>>>>>>>> DONE BASIS SET OUTPUT <<<<<<<<
+
+
+Total # of integrals to compute: 187240905
+Total # of blocks allocated: 3510150
+Final array size: 1088430
+79.41 MB allocated
+maxblocks = 64
+54 computation cycles will be performed...
+done.
+
+17 reduction cycles will be performed...
+totReductionElements 1088430
+IO:      0.025158
+GPU:     0.000546
+Copy:    0.587724
+Compute: 9.733795
+injected: 0
+Pass
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 0 0 10 5 0x80000000
+rm -f build/fi_saleheen1/*
+rm -f build/fi_saleheen/*
+rm -f build/cuda_base/*
+if [ -d build/cuda_base ]; then rmdir build/cuda_base; fi
+rm -f build/base/*
+if [ -d build/base ]; then rmdir build/base; fi
+rm -f build/cuda/*
+if [ -d build/cuda ]; then rmdir build/cuda; fi
+rm -f build/fi/*
+if [ -d build/fi ]; then rmdir build/fi; fi
+Parboil parallel benchmark suite, version 0.1
+
+mkdir -p build/fi
+nvcc -I/usr/local/cuda/include -I/gpufi/parboil/common/include -O3 -Xcompiler "-m32"  -c src/fi/main.cu -o build/fi/main.o
+nvcc -L/gpufi/parboil/common/lib  -Xcompiler "-m32" -L/usr/local/cuda/lib -L/gpufi/parboil/common/src  build/fi/main.o -o build/fi/rpes -lcuda -lparboil 
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 5 0 0 5 0x80000000
+
+>>>>>>> STARTED BASIS SET OUTPUT <<<<<<<
+
+# OF KNOWN ATOMS:  2
+# OF KNOWN SHELLS: 5
+
+
+Atom O (3 shells)
+	Shell O1: 8 primitives
+		primitive 1:   11720.00     0.00
+		primitive 2:    1759.00     0.01
+		primitive 3:     400.80     0.03
+		primitive 4:     113.70     0.10
+		primitive 5:      37.03     0.28
+		primitive 6:      13.27     0.45
+		primitive 7:       5.03     0.27
+		primitive 8:       1.01     0.02
+
+	Shell O2: 8 primitives
+		primitive 1:   11720.00    -0.00
+		primitive 2:    1759.00    -0.00
+		primitive 3:     400.80    -0.01
+		primitive 4:     113.70    -0.05
+		primitive 5:      37.03    -0.14
+		primitive 6:      13.27    -0.33
+		primitive 7:       5.03    -0.23
+		primitive 8:       1.01     1.10
+
+	Shell O3: 1 primitives
+		primitive 1:       0.30     1.00
+
+
+Atom H (2 shells)
+	Shell H1: 3 primitives
+		primitive 1:      13.01     0.03
+		primitive 2:       1.96     0.23
+		primitive 3:       0.44     0.81
+
+	Shell H2: 1 primitives
+		primitive 1:       0.12     1.00
+
+>>>>>>>> DONE BASIS SET OUTPUT <<<<<<<<
+
+
+Total # of integrals to compute: 187240905
+Total # of blocks allocated: 3510150
+Final array size: 1088430
+79.41 MB allocated
+maxblocks = 64
+54 computation cycles will be performed...
+done.
+
+17 reduction cycles will be performed...
+totReductionElements 1088430
+IO:      0.034307
+GPU:     0.000363
+Copy:    0.506690
+Compute: 9.730243
+injected: 1
+Pass
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 5 0 0 5 0x80000000
+rm -f build/fi_saleheen1/*
+rm -f build/fi_saleheen/*
+rm -f build/cuda_base/*
+if [ -d build/cuda_base ]; then rmdir build/cuda_base; fi
+rm -f build/base/*
+if [ -d build/base ]; then rmdir build/base; fi
+rm -f build/cuda/*
+if [ -d build/cuda ]; then rmdir build/cuda; fi
+rm -f build/fi/*
+if [ -d build/fi ]; then rmdir build/fi; fi
+Parboil parallel benchmark suite, version 0.1
+
+mkdir -p build/fi
+nvcc -I/usr/local/cuda/include -I/gpufi/parboil/common/include -O3 -Xcompiler "-m32"  -c src/fi/main.cu -o build/fi/main.o
+nvcc -L/gpufi/parboil/common/lib  -Xcompiler "-m32" -L/usr/local/cuda/lib -L/gpufi/parboil/common/src  build/fi/main.o -o build/fi/rpes -lcuda -lparboil 
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 5 0 5 5 0x80000000
+
+>>>>>>> STARTED BASIS SET OUTPUT <<<<<<<
+
+# OF KNOWN ATOMS:  2
+# OF KNOWN SHELLS: 5
+
+
+Atom O (3 shells)
+	Shell O1: 8 primitives
+		primitive 1:   11720.00     0.00
+		primitive 2:    1759.00     0.01
+		primitive 3:     400.80     0.03
+		primitive 4:     113.70     0.10
+		primitive 5:      37.03     0.28
+		primitive 6:      13.27     0.45
+		primitive 7:       5.03     0.27
+		primitive 8:       1.01     0.02
+
+	Shell O2: 8 primitives
+		primitive 1:   11720.00    -0.00
+		primitive 2:    1759.00    -0.00
+		primitive 3:     400.80    -0.01
+		primitive 4:     113.70    -0.05
+		primitive 5:      37.03    -0.14
+		primitive 6:      13.27    -0.33
+		primitive 7:       5.03    -0.23
+		primitive 8:       1.01     1.10
+
+	Shell O3: 1 primitives
+		primitive 1:       0.30     1.00
+
+
+Atom H (2 shells)
+	Shell H1: 3 primitives
+		primitive 1:      13.01     0.03
+		primitive 2:       1.96     0.23
+		primitive 3:       0.44     0.81
+
+	Shell H2: 1 primitives
+		primitive 1:       0.12     1.00
+
+>>>>>>>> DONE BASIS SET OUTPUT <<<<<<<<
+
+
+Total # of integrals to compute: 187240905
+Total # of blocks allocated: 3510150
+Final array size: 1088430
+79.41 MB allocated
+maxblocks = 64
+54 computation cycles will be performed...
+done.
+
+17 reduction cycles will be performed...
+totReductionElements 1088430
+IO:      0.027481
+GPU:     0.000373
+Copy:    0.508023
+Compute: 9.729635
+injected: 1
+Pass
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 5 0 5 5 0x80000000
+rm -f build/fi_saleheen1/*
+rm -f build/fi_saleheen/*
+rm -f build/cuda_base/*
+if [ -d build/cuda_base ]; then rmdir build/cuda_base; fi
+rm -f build/base/*
+if [ -d build/base ]; then rmdir build/base; fi
+rm -f build/cuda/*
+if [ -d build/cuda ]; then rmdir build/cuda; fi
+rm -f build/fi/*
+if [ -d build/fi ]; then rmdir build/fi; fi
+Parboil parallel benchmark suite, version 0.1
+
+mkdir -p build/fi
+nvcc -I/usr/local/cuda/include -I/gpufi/parboil/common/include -O3 -Xcompiler "-m32"  -c src/fi/main.cu -o build/fi/main.o
+nvcc -L/gpufi/parboil/common/lib  -Xcompiler "-m32" -L/usr/local/cuda/lib -L/gpufi/parboil/common/src  build/fi/main.o -o build/fi/rpes -lcuda -lparboil 
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 5 0 10 5 0x80000000
+
+>>>>>>> STARTED BASIS SET OUTPUT <<<<<<<
+
+# OF KNOWN ATOMS:  2
+# OF KNOWN SHELLS: 5
+
+
+Atom O (3 shells)
+	Shell O1: 8 primitives
+		primitive 1:   11720.00     0.00
+		primitive 2:    1759.00     0.01
+		primitive 3:     400.80     0.03
+		primitive 4:     113.70     0.10
+		primitive 5:      37.03     0.28
+		primitive 6:      13.27     0.45
+		primitive 7:       5.03     0.27
+		primitive 8:       1.01     0.02
+
+	Shell O2: 8 primitives
+		primitive 1:   11720.00    -0.00
+		primitive 2:    1759.00    -0.00
+		primitive 3:     400.80    -0.01
+		primitive 4:     113.70    -0.05
+		primitive 5:      37.03    -0.14
+		primitive 6:      13.27    -0.33
+		primitive 7:       5.03    -0.23
+		primitive 8:       1.01     1.10
+
+	Shell O3: 1 primitives
+		primitive 1:       0.30     1.00
+
+
+Atom H (2 shells)
+	Shell H1: 3 primitives
+		primitive 1:      13.01     0.03
+		primitive 2:       1.96     0.23
+		primitive 3:       0.44     0.81
+
+	Shell H2: 1 primitives
+		primitive 1:       0.12     1.00
+
+>>>>>>>> DONE BASIS SET OUTPUT <<<<<<<<
+
+
+Total # of integrals to compute: 187240905
+Total # of blocks allocated: 3510150
+Final array size: 1088430
+79.41 MB allocated
+maxblocks = 64
+54 computation cycles will be performed...
+done.
+
+17 reduction cycles will be performed...
+totReductionElements 1088430
+IO:      0.040869
+GPU:     0.000542
+Copy:    0.546075
+Compute: 9.730169
+injected: 0
+Pass
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 5 0 10 5 0x80000000
+rm -f build/fi_saleheen1/*
+rm -f build/fi_saleheen/*
+rm -f build/cuda_base/*
+if [ -d build/cuda_base ]; then rmdir build/cuda_base; fi
+rm -f build/base/*
+if [ -d build/base ]; then rmdir build/base; fi
+rm -f build/cuda/*
+if [ -d build/cuda ]; then rmdir build/cuda; fi
+rm -f build/fi/*
+if [ -d build/fi ]; then rmdir build/fi; fi
+Parboil parallel benchmark suite, version 0.1
+
+mkdir -p build/fi
+nvcc -I/usr/local/cuda/include -I/gpufi/parboil/common/include -O3 -Xcompiler "-m32"  -c src/fi/main.cu -o build/fi/main.o
+nvcc -L/gpufi/parboil/common/lib  -Xcompiler "-m32" -L/usr/local/cuda/lib -L/gpufi/parboil/common/src  build/fi/main.o -o build/fi/rpes -lcuda -lparboil 
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 0 0 0 6 0x80000000
+
+>>>>>>> STARTED BASIS SET OUTPUT <<<<<<<
+
+# OF KNOWN ATOMS:  2
+# OF KNOWN SHELLS: 5
+
+
+Atom O (3 shells)
+	Shell O1: 8 primitives
+		primitive 1:   11720.00     0.00
+		primitive 2:    1759.00     0.01
+		primitive 3:     400.80     0.03
+		primitive 4:     113.70     0.10
+		primitive 5:      37.03     0.28
+		primitive 6:      13.27     0.45
+		primitive 7:       5.03     0.27
+		primitive 8:       1.01     0.02
+
+	Shell O2: 8 primitives
+		primitive 1:   11720.00    -0.00
+		primitive 2:    1759.00    -0.00
+		primitive 3:     400.80    -0.01
+		primitive 4:     113.70    -0.05
+		primitive 5:      37.03    -0.14
+		primitive 6:      13.27    -0.33
+		primitive 7:       5.03    -0.23
+		primitive 8:       1.01     1.10
+
+	Shell O3: 1 primitives
+		primitive 1:       0.30     1.00
+
+
+Atom H (2 shells)
+	Shell H1: 3 primitives
+		primitive 1:      13.01     0.03
+		primitive 2:       1.96     0.23
+		primitive 3:       0.44     0.81
+
+	Shell H2: 1 primitives
+		primitive 1:       0.12     1.00
+
+>>>>>>>> DONE BASIS SET OUTPUT <<<<<<<<
+
+
+Total # of integrals to compute: 187240905
+Total # of blocks allocated: 3510150
+Final array size: 1088430
+79.41 MB allocated
+maxblocks = 64
+54 computation cycles will be performed...
+done.
+
+17 reduction cycles will be performed...
+totReductionElements 1088430
+IO:      0.026933
+GPU:     0.000374
+Copy:    0.508956
+Compute: 9.728829
+injected: 1
+Pass
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 0 0 0 6 0x80000000
+rm -f build/fi_saleheen1/*
+rm -f build/fi_saleheen/*
+rm -f build/cuda_base/*
+if [ -d build/cuda_base ]; then rmdir build/cuda_base; fi
+rm -f build/base/*
+if [ -d build/base ]; then rmdir build/base; fi
+rm -f build/cuda/*
+if [ -d build/cuda ]; then rmdir build/cuda; fi
+rm -f build/fi/*
+if [ -d build/fi ]; then rmdir build/fi; fi
+Parboil parallel benchmark suite, version 0.1
+
+mkdir -p build/fi
+nvcc -I/usr/local/cuda/include -I/gpufi/parboil/common/include -O3 -Xcompiler "-m32"  -c src/fi/main.cu -o build/fi/main.o
+nvcc -L/gpufi/parboil/common/lib  -Xcompiler "-m32" -L/usr/local/cuda/lib -L/gpufi/parboil/common/src  build/fi/main.o -o build/fi/rpes -lcuda -lparboil 
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 0 0 5 6 0x80000000
+
+>>>>>>> STARTED BASIS SET OUTPUT <<<<<<<
+
+# OF KNOWN ATOMS:  2
+# OF KNOWN SHELLS: 5
+
+
+Atom O (3 shells)
+	Shell O1: 8 primitives
+		primitive 1:   11720.00     0.00
+		primitive 2:    1759.00     0.01
+		primitive 3:     400.80     0.03
+		primitive 4:     113.70     0.10
+		primitive 5:      37.03     0.28
+		primitive 6:      13.27     0.45
+		primitive 7:       5.03     0.27
+		primitive 8:       1.01     0.02
+
+	Shell O2: 8 primitives
+		primitive 1:   11720.00    -0.00
+		primitive 2:    1759.00    -0.00
+		primitive 3:     400.80    -0.01
+		primitive 4:     113.70    -0.05
+		primitive 5:      37.03    -0.14
+		primitive 6:      13.27    -0.33
+		primitive 7:       5.03    -0.23
+		primitive 8:       1.01     1.10
+
+	Shell O3: 1 primitives
+		primitive 1:       0.30     1.00
+
+
+Atom H (2 shells)
+	Shell H1: 3 primitives
+		primitive 1:      13.01     0.03
+		primitive 2:       1.96     0.23
+		primitive 3:       0.44     0.81
+
+	Shell H2: 1 primitives
+		primitive 1:       0.12     1.00
+
+>>>>>>>> DONE BASIS SET OUTPUT <<<<<<<<
+
+
+Total # of integrals to compute: 187240905
+Total # of blocks allocated: 3510150
+Final array size: 1088430
+79.41 MB allocated
+maxblocks = 64
+54 computation cycles will be performed...
+done.
+
+17 reduction cycles will be performed...
+totReductionElements 1088430
+IO:      0.029364
+GPU:     0.000543
+Copy:    0.516522
+Compute: 9.772172
+injected: 1
+Pass
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 0 0 5 6 0x80000000
+rm -f build/fi_saleheen1/*
+rm -f build/fi_saleheen/*
+rm -f build/cuda_base/*
+if [ -d build/cuda_base ]; then rmdir build/cuda_base; fi
+rm -f build/base/*
+if [ -d build/base ]; then rmdir build/base; fi
+rm -f build/cuda/*
+if [ -d build/cuda ]; then rmdir build/cuda; fi
+rm -f build/fi/*
+if [ -d build/fi ]; then rmdir build/fi; fi
+Parboil parallel benchmark suite, version 0.1
+
+mkdir -p build/fi
+nvcc -I/usr/local/cuda/include -I/gpufi/parboil/common/include -O3 -Xcompiler "-m32"  -c src/fi/main.cu -o build/fi/main.o
+nvcc -L/gpufi/parboil/common/lib  -Xcompiler "-m32" -L/usr/local/cuda/lib -L/gpufi/parboil/common/src  build/fi/main.o -o build/fi/rpes -lcuda -lparboil 
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 0 0 10 6 0x80000000
+
+>>>>>>> STARTED BASIS SET OUTPUT <<<<<<<
+
+# OF KNOWN ATOMS:  2
+# OF KNOWN SHELLS: 5
+
+
+Atom O (3 shells)
+	Shell O1: 8 primitives
+		primitive 1:   11720.00     0.00
+		primitive 2:    1759.00     0.01
+		primitive 3:     400.80     0.03
+		primitive 4:     113.70     0.10
+		primitive 5:      37.03     0.28
+		primitive 6:      13.27     0.45
+		primitive 7:       5.03     0.27
+		primitive 8:       1.01     0.02
+
+	Shell O2: 8 primitives
+		primitive 1:   11720.00    -0.00
+		primitive 2:    1759.00    -0.00
+		primitive 3:     400.80    -0.01
+		primitive 4:     113.70    -0.05
+		primitive 5:      37.03    -0.14
+		primitive 6:      13.27    -0.33
+		primitive 7:       5.03    -0.23
+		primitive 8:       1.01     1.10
+
+	Shell O3: 1 primitives
+		primitive 1:       0.30     1.00
+
+
+Atom H (2 shells)
+	Shell H1: 3 primitives
+		primitive 1:      13.01     0.03
+		primitive 2:       1.96     0.23
+		primitive 3:       0.44     0.81
+
+	Shell H2: 1 primitives
+		primitive 1:       0.12     1.00
+
+>>>>>>>> DONE BASIS SET OUTPUT <<<<<<<<
+
+
+Total # of integrals to compute: 187240905
+Total # of blocks allocated: 3510150
+Final array size: 1088430
+79.41 MB allocated
+maxblocks = 64
+54 computation cycles will be performed...
+done.
+
+17 reduction cycles will be performed...
+totReductionElements 1088430
+IO:      0.029855
+GPU:     0.000530
+Copy:    0.591793
+Compute: 9.808139
+injected: 0
+Pass
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 0 0 10 6 0x80000000
+rm -f build/fi_saleheen1/*
+rm -f build/fi_saleheen/*
+rm -f build/cuda_base/*
+if [ -d build/cuda_base ]; then rmdir build/cuda_base; fi
+rm -f build/base/*
+if [ -d build/base ]; then rmdir build/base; fi
+rm -f build/cuda/*
+if [ -d build/cuda ]; then rmdir build/cuda; fi
+rm -f build/fi/*
+if [ -d build/fi ]; then rmdir build/fi; fi
+Parboil parallel benchmark suite, version 0.1
+
+mkdir -p build/fi
+nvcc -I/usr/local/cuda/include -I/gpufi/parboil/common/include -O3 -Xcompiler "-m32"  -c src/fi/main.cu -o build/fi/main.o
+nvcc -L/gpufi/parboil/common/lib  -Xcompiler "-m32" -L/usr/local/cuda/lib -L/gpufi/parboil/common/src  build/fi/main.o -o build/fi/rpes -lcuda -lparboil 
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 5 0 0 6 0x80000000
+
+>>>>>>> STARTED BASIS SET OUTPUT <<<<<<<
+
+# OF KNOWN ATOMS:  2
+# OF KNOWN SHELLS: 5
+
+
+Atom O (3 shells)
+	Shell O1: 8 primitives
+		primitive 1:   11720.00     0.00
+		primitive 2:    1759.00     0.01
+		primitive 3:     400.80     0.03
+		primitive 4:     113.70     0.10
+		primitive 5:      37.03     0.28
+		primitive 6:      13.27     0.45
+		primitive 7:       5.03     0.27
+		primitive 8:       1.01     0.02
+
+	Shell O2: 8 primitives
+		primitive 1:   11720.00    -0.00
+		primitive 2:    1759.00    -0.00
+		primitive 3:     400.80    -0.01
+		primitive 4:     113.70    -0.05
+		primitive 5:      37.03    -0.14
+		primitive 6:      13.27    -0.33
+		primitive 7:       5.03    -0.23
+		primitive 8:       1.01     1.10
+
+	Shell O3: 1 primitives
+		primitive 1:       0.30     1.00
+
+
+Atom H (2 shells)
+	Shell H1: 3 primitives
+		primitive 1:      13.01     0.03
+		primitive 2:       1.96     0.23
+		primitive 3:       0.44     0.81
+
+	Shell H2: 1 primitives
+		primitive 1:       0.12     1.00
+
+>>>>>>>> DONE BASIS SET OUTPUT <<<<<<<<
+
+
+Total # of integrals to compute: 187240905
+Total # of blocks allocated: 3510150
+Final array size: 1088430
+79.41 MB allocated
+maxblocks = 64
+54 computation cycles will be performed...
+done.
+
+17 reduction cycles will be performed...
+totReductionElements 1088430
+IO:      0.046607
+GPU:     0.000371
+Copy:    0.506806
+Compute: 9.753515
+injected: 1
+Pass
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 5 0 0 6 0x80000000
+rm -f build/fi_saleheen1/*
+rm -f build/fi_saleheen/*
+rm -f build/cuda_base/*
+if [ -d build/cuda_base ]; then rmdir build/cuda_base; fi
+rm -f build/base/*
+if [ -d build/base ]; then rmdir build/base; fi
+rm -f build/cuda/*
+if [ -d build/cuda ]; then rmdir build/cuda; fi
+rm -f build/fi/*
+if [ -d build/fi ]; then rmdir build/fi; fi
+Parboil parallel benchmark suite, version 0.1
+
+mkdir -p build/fi
+nvcc -I/usr/local/cuda/include -I/gpufi/parboil/common/include -O3 -Xcompiler "-m32"  -c src/fi/main.cu -o build/fi/main.o
+nvcc -L/gpufi/parboil/common/lib  -Xcompiler "-m32" -L/usr/local/cuda/lib -L/gpufi/parboil/common/src  build/fi/main.o -o build/fi/rpes -lcuda -lparboil 
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 5 0 5 6 0x80000000
+
+>>>>>>> STARTED BASIS SET OUTPUT <<<<<<<
+
+# OF KNOWN ATOMS:  2
+# OF KNOWN SHELLS: 5
+
+
+Atom O (3 shells)
+	Shell O1: 8 primitives
+		primitive 1:   11720.00     0.00
+		primitive 2:    1759.00     0.01
+		primitive 3:     400.80     0.03
+		primitive 4:     113.70     0.10
+		primitive 5:      37.03     0.28
+		primitive 6:      13.27     0.45
+		primitive 7:       5.03     0.27
+		primitive 8:       1.01     0.02
+
+	Shell O2: 8 primitives
+		primitive 1:   11720.00    -0.00
+		primitive 2:    1759.00    -0.00
+		primitive 3:     400.80    -0.01
+		primitive 4:     113.70    -0.05
+		primitive 5:      37.03    -0.14
+		primitive 6:      13.27    -0.33
+		primitive 7:       5.03    -0.23
+		primitive 8:       1.01     1.10
+
+	Shell O3: 1 primitives
+		primitive 1:       0.30     1.00
+
+
+Atom H (2 shells)
+	Shell H1: 3 primitives
+		primitive 1:      13.01     0.03
+		primitive 2:       1.96     0.23
+		primitive 3:       0.44     0.81
+
+	Shell H2: 1 primitives
+		primitive 1:       0.12     1.00
+
+>>>>>>>> DONE BASIS SET OUTPUT <<<<<<<<
+
+
+Total # of integrals to compute: 187240905
+Total # of blocks allocated: 3510150
+Final array size: 1088430
+79.41 MB allocated
+maxblocks = 64
+54 computation cycles will be performed...
+done.
+
+17 reduction cycles will be performed...
+totReductionElements 1088430
+IO:      0.025677
+GPU:     0.000547
+Copy:    0.517330
+Compute: 9.773416
+injected: 1
+Pass
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 5 0 5 6 0x80000000
+rm -f build/fi_saleheen1/*
+rm -f build/fi_saleheen/*
+rm -f build/cuda_base/*
+if [ -d build/cuda_base ]; then rmdir build/cuda_base; fi
+rm -f build/base/*
+if [ -d build/base ]; then rmdir build/base; fi
+rm -f build/cuda/*
+if [ -d build/cuda ]; then rmdir build/cuda; fi
+rm -f build/fi/*
+if [ -d build/fi ]; then rmdir build/fi; fi
+Parboil parallel benchmark suite, version 0.1
+
+mkdir -p build/fi
+nvcc -I/usr/local/cuda/include -I/gpufi/parboil/common/include -O3 -Xcompiler "-m32"  -c src/fi/main.cu -o build/fi/main.o
+nvcc -L/gpufi/parboil/common/lib  -Xcompiler "-m32" -L/usr/local/cuda/lib -L/gpufi/parboil/common/src  build/fi/main.o -o build/fi/rpes -lcuda -lparboil 
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 5 0 10 6 0x80000000
+
+>>>>>>> STARTED BASIS SET OUTPUT <<<<<<<
+
+# OF KNOWN ATOMS:  2
+# OF KNOWN SHELLS: 5
+
+
+Atom O (3 shells)
+	Shell O1: 8 primitives
+		primitive 1:   11720.00     0.00
+		primitive 2:    1759.00     0.01
+		primitive 3:     400.80     0.03
+		primitive 4:     113.70     0.10
+		primitive 5:      37.03     0.28
+		primitive 6:      13.27     0.45
+		primitive 7:       5.03     0.27
+		primitive 8:       1.01     0.02
+
+	Shell O2: 8 primitives
+		primitive 1:   11720.00    -0.00
+		primitive 2:    1759.00    -0.00
+		primitive 3:     400.80    -0.01
+		primitive 4:     113.70    -0.05
+		primitive 5:      37.03    -0.14
+		primitive 6:      13.27    -0.33
+		primitive 7:       5.03    -0.23
+		primitive 8:       1.01     1.10
+
+	Shell O3: 1 primitives
+		primitive 1:       0.30     1.00
+
+
+Atom H (2 shells)
+	Shell H1: 3 primitives
+		primitive 1:      13.01     0.03
+		primitive 2:       1.96     0.23
+		primitive 3:       0.44     0.81
+
+	Shell H2: 1 primitives
+		primitive 1:       0.12     1.00
+
+>>>>>>>> DONE BASIS SET OUTPUT <<<<<<<<
+
+
+Total # of integrals to compute: 187240905
+Total # of blocks allocated: 3510150
+Final array size: 1088430
+79.41 MB allocated
+maxblocks = 64
+54 computation cycles will be performed...
+done.
+
+17 reduction cycles will be performed...
+totReductionElements 1088430
+IO:      0.025288
+GPU:     0.000370
+Copy:    0.510575
+Compute: 9.727841
+injected: 0
+Pass
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 5 0 10 6 0x80000000
+rm -f build/fi_saleheen1/*
+rm -f build/fi_saleheen/*
+rm -f build/cuda_base/*
+if [ -d build/cuda_base ]; then rmdir build/cuda_base; fi
+rm -f build/base/*
+if [ -d build/base ]; then rmdir build/base; fi
+rm -f build/cuda/*
+if [ -d build/cuda ]; then rmdir build/cuda; fi
+rm -f build/fi/*
+if [ -d build/fi ]; then rmdir build/fi; fi
+Parboil parallel benchmark suite, version 0.1
+
+mkdir -p build/fi
+nvcc -I/usr/local/cuda/include -I/gpufi/parboil/common/include -O3 -Xcompiler "-m32"  -c src/fi/main.cu -o build/fi/main.o
+nvcc -L/gpufi/parboil/common/lib  -Xcompiler "-m32" -L/usr/local/cuda/lib -L/gpufi/parboil/common/src  build/fi/main.o -o build/fi/rpes -lcuda -lparboil 
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 0 0 0 7 0x80000000
+
+>>>>>>> STARTED BASIS SET OUTPUT <<<<<<<
+
+# OF KNOWN ATOMS:  2
+# OF KNOWN SHELLS: 5
+
+
+Atom O (3 shells)
+	Shell O1: 8 primitives
+		primitive 1:   11720.00     0.00
+		primitive 2:    1759.00     0.01
+		primitive 3:     400.80     0.03
+		primitive 4:     113.70     0.10
+		primitive 5:      37.03     0.28
+		primitive 6:      13.27     0.45
+		primitive 7:       5.03     0.27
+		primitive 8:       1.01     0.02
+
+	Shell O2: 8 primitives
+		primitive 1:   11720.00    -0.00
+		primitive 2:    1759.00    -0.00
+		primitive 3:     400.80    -0.01
+		primitive 4:     113.70    -0.05
+		primitive 5:      37.03    -0.14
+		primitive 6:      13.27    -0.33
+		primitive 7:       5.03    -0.23
+		primitive 8:       1.01     1.10
+
+	Shell O3: 1 primitives
+		primitive 1:       0.30     1.00
+
+
+Atom H (2 shells)
+	Shell H1: 3 primitives
+		primitive 1:      13.01     0.03
+		primitive 2:       1.96     0.23
+		primitive 3:       0.44     0.81
+
+	Shell H2: 1 primitives
+		primitive 1:       0.12     1.00
+
+>>>>>>>> DONE BASIS SET OUTPUT <<<<<<<<
+
+
+Total # of integrals to compute: 187240905
+Total # of blocks allocated: 3510150
+Final array size: 1088430
+79.41 MB allocated
+maxblocks = 64
+54 computation cycles will be performed...
+CUDA error: unspecified launch failure, line 198
+Parboil parallel benchmark suite, version 0.1
+
+Run failed!
+fi 0 0 0 0 7 0x80000000
+rm -f build/fi_saleheen1/*
+rm -f build/fi_saleheen/*
+rm -f build/cuda_base/*
+if [ -d build/cuda_base ]; then rmdir build/cuda_base; fi
+rm -f build/base/*
+if [ -d build/base ]; then rmdir build/base; fi
+rm -f build/cuda/*
+if [ -d build/cuda ]; then rmdir build/cuda; fi
+rm -f build/fi/*
+if [ -d build/fi ]; then rmdir build/fi; fi
+Parboil parallel benchmark suite, version 0.1
+
+mkdir -p build/fi
+nvcc -I/usr/local/cuda/include -I/gpufi/parboil/common/include -O3 -Xcompiler "-m32"  -c src/fi/main.cu -o build/fi/main.o
+nvcc -L/gpufi/parboil/common/lib  -Xcompiler "-m32" -L/usr/local/cuda/lib -L/gpufi/parboil/common/src  build/fi/main.o -o build/fi/rpes -lcuda -lparboil 
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 0 0 5 7 0x80000000
+
+>>>>>>> STARTED BASIS SET OUTPUT <<<<<<<
+
+# OF KNOWN ATOMS:  2
+# OF KNOWN SHELLS: 5
+
+
+Atom O (3 shells)
+	Shell O1: 8 primitives
+		primitive 1:   11720.00     0.00
+		primitive 2:    1759.00     0.01
+		primitive 3:     400.80     0.03
+		primitive 4:     113.70     0.10
+		primitive 5:      37.03     0.28
+		primitive 6:      13.27     0.45
+		primitive 7:       5.03     0.27
+		primitive 8:       1.01     0.02
+
+	Shell O2: 8 primitives
+		primitive 1:   11720.00    -0.00
+		primitive 2:    1759.00    -0.00
+		primitive 3:     400.80    -0.01
+		primitive 4:     113.70    -0.05
+		primitive 5:      37.03    -0.14
+		primitive 6:      13.27    -0.33
+		primitive 7:       5.03    -0.23
+		primitive 8:       1.01     1.10
+
+	Shell O3: 1 primitives
+		primitive 1:       0.30     1.00
+
+
+Atom H (2 shells)
+	Shell H1: 3 primitives
+		primitive 1:      13.01     0.03
+		primitive 2:       1.96     0.23
+		primitive 3:       0.44     0.81
+
+	Shell H2: 1 primitives
+		primitive 1:       0.12     1.00
+
+>>>>>>>> DONE BASIS SET OUTPUT <<<<<<<<
+
+
+Total # of integrals to compute: 187240905
+Total # of blocks allocated: 3510150
+Final array size: 1088430
+79.41 MB allocated
+maxblocks = 64
+54 computation cycles will be performed...
+done.
+
+17 reduction cycles will be performed...
+CUDA error: unspecified launch failure, line 144
+Parboil parallel benchmark suite, version 0.1
+
+Run failed!
+fi 0 0 0 5 7 0x80000000
+rm -f build/fi_saleheen1/*
+rm -f build/fi_saleheen/*
+rm -f build/cuda_base/*
+if [ -d build/cuda_base ]; then rmdir build/cuda_base; fi
+rm -f build/base/*
+if [ -d build/base ]; then rmdir build/base; fi
+rm -f build/cuda/*
+if [ -d build/cuda ]; then rmdir build/cuda; fi
+rm -f build/fi/*
+if [ -d build/fi ]; then rmdir build/fi; fi
+Parboil parallel benchmark suite, version 0.1
+
+mkdir -p build/fi
+nvcc -I/usr/local/cuda/include -I/gpufi/parboil/common/include -O3 -Xcompiler "-m32"  -c src/fi/main.cu -o build/fi/main.o
+nvcc -L/gpufi/parboil/common/lib  -Xcompiler "-m32" -L/usr/local/cuda/lib -L/gpufi/parboil/common/src  build/fi/main.o -o build/fi/rpes -lcuda -lparboil 
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 0 0 10 7 0x80000000
+
+>>>>>>> STARTED BASIS SET OUTPUT <<<<<<<
+
+# OF KNOWN ATOMS:  2
+# OF KNOWN SHELLS: 5
+
+
+Atom O (3 shells)
+	Shell O1: 8 primitives
+		primitive 1:   11720.00     0.00
+		primitive 2:    1759.00     0.01
+		primitive 3:     400.80     0.03
+		primitive 4:     113.70     0.10
+		primitive 5:      37.03     0.28
+		primitive 6:      13.27     0.45
+		primitive 7:       5.03     0.27
+		primitive 8:       1.01     0.02
+
+	Shell O2: 8 primitives
+		primitive 1:   11720.00    -0.00
+		primitive 2:    1759.00    -0.00
+		primitive 3:     400.80    -0.01
+		primitive 4:     113.70    -0.05
+		primitive 5:      37.03    -0.14
+		primitive 6:      13.27    -0.33
+		primitive 7:       5.03    -0.23
+		primitive 8:       1.01     1.10
+
+	Shell O3: 1 primitives
+		primitive 1:       0.30     1.00
+
+
+Atom H (2 shells)
+	Shell H1: 3 primitives
+		primitive 1:      13.01     0.03
+		primitive 2:       1.96     0.23
+		primitive 3:       0.44     0.81
+
+	Shell H2: 1 primitives
+		primitive 1:       0.12     1.00
+
+>>>>>>>> DONE BASIS SET OUTPUT <<<<<<<<
+
+
+Total # of integrals to compute: 187240905
+Total # of blocks allocated: 3510150
+Final array size: 1088430
+79.41 MB allocated
+maxblocks = 64
+54 computation cycles will be performed...
+done.
+
+17 reduction cycles will be performed...
+totReductionElements 1088430
+IO:      0.024336
+GPU:     0.000537
+Copy:    0.514179
+Compute: 9.768754
+injected: 0
+Pass
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 0 0 10 7 0x80000000
+rm -f build/fi_saleheen1/*
+rm -f build/fi_saleheen/*
+rm -f build/cuda_base/*
+if [ -d build/cuda_base ]; then rmdir build/cuda_base; fi
+rm -f build/base/*
+if [ -d build/base ]; then rmdir build/base; fi
+rm -f build/cuda/*
+if [ -d build/cuda ]; then rmdir build/cuda; fi
+rm -f build/fi/*
+if [ -d build/fi ]; then rmdir build/fi; fi
+Parboil parallel benchmark suite, version 0.1
+
+mkdir -p build/fi
+nvcc -I/usr/local/cuda/include -I/gpufi/parboil/common/include -O3 -Xcompiler "-m32"  -c src/fi/main.cu -o build/fi/main.o
+nvcc -L/gpufi/parboil/common/lib  -Xcompiler "-m32" -L/usr/local/cuda/lib -L/gpufi/parboil/common/src  build/fi/main.o -o build/fi/rpes -lcuda -lparboil 
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 5 0 0 7 0x80000000
+
+>>>>>>> STARTED BASIS SET OUTPUT <<<<<<<
+
+# OF KNOWN ATOMS:  2
+# OF KNOWN SHELLS: 5
+
+
+Atom O (3 shells)
+	Shell O1: 8 primitives
+		primitive 1:   11720.00     0.00
+		primitive 2:    1759.00     0.01
+		primitive 3:     400.80     0.03
+		primitive 4:     113.70     0.10
+		primitive 5:      37.03     0.28
+		primitive 6:      13.27     0.45
+		primitive 7:       5.03     0.27
+		primitive 8:       1.01     0.02
+
+	Shell O2: 8 primitives
+		primitive 1:   11720.00    -0.00
+		primitive 2:    1759.00    -0.00
+		primitive 3:     400.80    -0.01
+		primitive 4:     113.70    -0.05
+		primitive 5:      37.03    -0.14
+		primitive 6:      13.27    -0.33
+		primitive 7:       5.03    -0.23
+		primitive 8:       1.01     1.10
+
+	Shell O3: 1 primitives
+		primitive 1:       0.30     1.00
+
+
+Atom H (2 shells)
+	Shell H1: 3 primitives
+		primitive 1:      13.01     0.03
+		primitive 2:       1.96     0.23
+		primitive 3:       0.44     0.81
+
+	Shell H2: 1 primitives
+		primitive 1:       0.12     1.00
+
+>>>>>>>> DONE BASIS SET OUTPUT <<<<<<<<
+
+
+Total # of integrals to compute: 187240905
+Total # of blocks allocated: 3510150
+Final array size: 1088430
+79.41 MB allocated
+maxblocks = 64
+54 computation cycles will be performed...
+done.
+
+17 reduction cycles will be performed...
+CUDA error: unspecified launch failure, line 144
+Parboil parallel benchmark suite, version 0.1
+
+Run failed!
+fi 0 5 0 0 7 0x80000000
+rm -f build/fi_saleheen1/*
+rm -f build/fi_saleheen/*
+rm -f build/cuda_base/*
+if [ -d build/cuda_base ]; then rmdir build/cuda_base; fi
+rm -f build/base/*
+if [ -d build/base ]; then rmdir build/base; fi
+rm -f build/cuda/*
+if [ -d build/cuda ]; then rmdir build/cuda; fi
+rm -f build/fi/*
+if [ -d build/fi ]; then rmdir build/fi; fi
+Parboil parallel benchmark suite, version 0.1
+
+mkdir -p build/fi
+nvcc -I/usr/local/cuda/include -I/gpufi/parboil/common/include -O3 -Xcompiler "-m32"  -c src/fi/main.cu -o build/fi/main.o
+nvcc -L/gpufi/parboil/common/lib  -Xcompiler "-m32" -L/usr/local/cuda/lib -L/gpufi/parboil/common/src  build/fi/main.o -o build/fi/rpes -lcuda -lparboil 
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 5 0 5 7 0x80000000
+
+>>>>>>> STARTED BASIS SET OUTPUT <<<<<<<
+
+# OF KNOWN ATOMS:  2
+# OF KNOWN SHELLS: 5
+
+
+Atom O (3 shells)
+	Shell O1: 8 primitives
+		primitive 1:   11720.00     0.00
+		primitive 2:    1759.00     0.01
+		primitive 3:     400.80     0.03
+		primitive 4:     113.70     0.10
+		primitive 5:      37.03     0.28
+		primitive 6:      13.27     0.45
+		primitive 7:       5.03     0.27
+		primitive 8:       1.01     0.02
+
+	Shell O2: 8 primitives
+		primitive 1:   11720.00    -0.00
+		primitive 2:    1759.00    -0.00
+		primitive 3:     400.80    -0.01
+		primitive 4:     113.70    -0.05
+		primitive 5:      37.03    -0.14
+		primitive 6:      13.27    -0.33
+		primitive 7:       5.03    -0.23
+		primitive 8:       1.01     1.10
+
+	Shell O3: 1 primitives
+		primitive 1:       0.30     1.00
+
+
+Atom H (2 shells)
+	Shell H1: 3 primitives
+		primitive 1:      13.01     0.03
+		primitive 2:       1.96     0.23
+		primitive 3:       0.44     0.81
+
+	Shell H2: 1 primitives
+		primitive 1:       0.12     1.00
+
+>>>>>>>> DONE BASIS SET OUTPUT <<<<<<<<
+
+
+Total # of integrals to compute: 187240905
+Total # of blocks allocated: 3510150
+Final array size: 1088430
+79.41 MB allocated
+maxblocks = 64
+54 computation cycles will be performed...
+done.
+
+17 reduction cycles will be performed...
+CUDA error: unspecified launch failure, line 144
+Parboil parallel benchmark suite, version 0.1
+
+Run failed!
+fi 0 5 0 5 7 0x80000000
+rm -f build/fi_saleheen1/*
+rm -f build/fi_saleheen/*
+rm -f build/cuda_base/*
+if [ -d build/cuda_base ]; then rmdir build/cuda_base; fi
+rm -f build/base/*
+if [ -d build/base ]; then rmdir build/base; fi
+rm -f build/cuda/*
+if [ -d build/cuda ]; then rmdir build/cuda; fi
+rm -f build/fi/*
+if [ -d build/fi ]; then rmdir build/fi; fi
+Parboil parallel benchmark suite, version 0.1
+
+mkdir -p build/fi
+nvcc -I/usr/local/cuda/include -I/gpufi/parboil/common/include -O3 -Xcompiler "-m32"  -c src/fi/main.cu -o build/fi/main.o
+nvcc -L/gpufi/parboil/common/lib  -Xcompiler "-m32" -L/usr/local/cuda/lib -L/gpufi/parboil/common/src  build/fi/main.o -o build/fi/rpes -lcuda -lparboil 
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 5 0 10 7 0x80000000
+
+>>>>>>> STARTED BASIS SET OUTPUT <<<<<<<
+
+# OF KNOWN ATOMS:  2
+# OF KNOWN SHELLS: 5
+
+
+Atom O (3 shells)
+	Shell O1: 8 primitives
+		primitive 1:   11720.00     0.00
+		primitive 2:    1759.00     0.01
+		primitive 3:     400.80     0.03
+		primitive 4:     113.70     0.10
+		primitive 5:      37.03     0.28
+		primitive 6:      13.27     0.45
+		primitive 7:       5.03     0.27
+		primitive 8:       1.01     0.02
+
+	Shell O2: 8 primitives
+		primitive 1:   11720.00    -0.00
+		primitive 2:    1759.00    -0.00
+		primitive 3:     400.80    -0.01
+		primitive 4:     113.70    -0.05
+		primitive 5:      37.03    -0.14
+		primitive 6:      13.27    -0.33
+		primitive 7:       5.03    -0.23
+		primitive 8:       1.01     1.10
+
+	Shell O3: 1 primitives
+		primitive 1:       0.30     1.00
+
+
+Atom H (2 shells)
+	Shell H1: 3 primitives
+		primitive 1:      13.01     0.03
+		primitive 2:       1.96     0.23
+		primitive 3:       0.44     0.81
+
+	Shell H2: 1 primitives
+		primitive 1:       0.12     1.00
+
+>>>>>>>> DONE BASIS SET OUTPUT <<<<<<<<
+
+
+Total # of integrals to compute: 187240905
+Total # of blocks allocated: 3510150
+Final array size: 1088430
+79.41 MB allocated
+maxblocks = 64
+54 computation cycles will be performed...
+done.
+
+17 reduction cycles will be performed...
+totReductionElements 1088430
+IO:      0.025268
+GPU:     0.000543
+Copy:    0.517154
+Compute: 9.763007
+injected: 0
+Pass
+Parboil parallel benchmark suite, version 0.1
+
+fi 0 5 0 10 7 0x80000000

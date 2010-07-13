@@ -1,0 +1,3638 @@
+# 199 "/usr/include/math.h" 3
+enum __E1 {
+# 200 "/usr/include/math.h" 3
+FP_NAN,
+# 202 "/usr/include/math.h" 3
+FP_INFINITE,
+# 204 "/usr/include/math.h" 3
+FP_ZERO,
+# 206 "/usr/include/math.h" 3
+FP_SUBNORMAL,
+# 208 "/usr/include/math.h" 3
+FP_NORMAL};
+# 285 "/usr/include/math.h" 3
+enum _LIB_VERSION_TYPE {
+# 286 "/usr/include/math.h" 3
+_IEEE_ = (-1),
+# 287 "/usr/include/math.h" 3
+_SVID_,
+# 288 "/usr/include/math.h" 3
+_XOPEN_,
+# 289 "/usr/include/math.h" 3
+_POSIX_,
+# 290 "/usr/include/math.h" 3
+_ISOC_};
+# 143 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+enum __E2 {
+# 143 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+_ZNSt9__is_voidIvE7__valueE = 1};
+# 163 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+enum __E3 {
+# 163 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+_ZNSt12__is_integerIbE7__valueE = 1};
+# 170 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+enum __E4 {
+# 170 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+_ZNSt12__is_integerIcE7__valueE = 1};
+# 177 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+enum __E5 {
+# 177 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+_ZNSt12__is_integerIaE7__valueE = 1};
+# 184 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+enum __E6 {
+# 184 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+_ZNSt12__is_integerIhE7__valueE = 1};
+# 192 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+enum __E7 {
+# 192 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+_ZNSt12__is_integerIwE7__valueE = 1};
+# 200 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+enum __E8 {
+# 200 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+_ZNSt12__is_integerIsE7__valueE = 1};
+# 207 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+enum __E9 {
+# 207 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+_ZNSt12__is_integerItE7__valueE = 1};
+# 214 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+enum __E10 {
+# 214 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+_ZNSt12__is_integerIiE7__valueE = 1};
+# 221 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+enum __E11 {
+# 221 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+_ZNSt12__is_integerIjE7__valueE = 1};
+# 228 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+enum __E12 {
+# 228 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+_ZNSt12__is_integerIlE7__valueE = 1};
+# 235 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+enum __E13 {
+# 235 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+_ZNSt12__is_integerImE7__valueE = 1};
+# 242 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+enum __E14 {
+# 242 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+_ZNSt12__is_integerIxE7__valueE = 1};
+# 249 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+enum __E15 {
+# 249 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+_ZNSt12__is_integerIyE7__valueE = 1};
+# 267 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+enum __E16 {
+# 267 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+_ZNSt13__is_floatingIfE7__valueE = 1};
+# 274 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+enum __E17 {
+# 274 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+_ZNSt13__is_floatingIdE7__valueE = 1};
+# 281 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+enum __E18 {
+# 281 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+_ZNSt13__is_floatingIeE7__valueE = 1};
+# 388 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+enum __E19 {
+# 388 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+_ZNSt9__is_charIcE7__valueE = 1};
+# 396 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+enum __E20 {
+# 396 "/usr/include/c++/4.2/bits/cpp_type_traits.h" 3
+_ZNSt9__is_charIwE7__valueE = 1};
+# 61 "/usr/local/cuda/bin/../include/cuda_surface_types.h"
+struct _Z7surfaceIvLi1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_surface_types.h"
+struct _Z7surfaceIvLi2EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIcLi1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIaLi1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIhLi1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char1Li1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar1Li1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char2Li1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar2Li1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char4Li1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar4Li1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIsLi1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureItLi1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short1Li1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort1Li1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short2Li1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort2Li1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short4Li1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort4Li1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIiLi1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIjLi1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI4int1Li1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5uint1Li1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI4int2Li1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5uint2Li1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI4int4Li1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5uint4Li1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIfLi1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6float1Li1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6float2Li1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6float4Li1EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIcLi1EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIaLi1EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIhLi1EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char1Li1EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar1Li1EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char2Li1EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar2Li1EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char4Li1EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar4Li1EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIsLi1EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureItLi1EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short1Li1EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort1Li1EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short2Li1EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort2Li1EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short4Li1EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort4Li1EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIcLi2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIaLi2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIhLi2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char1Li2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar1Li2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char2Li2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar2Li2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char4Li2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar4Li2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIsLi2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureItLi2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short1Li2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort1Li2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short2Li2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort2Li2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short4Li2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort4Li2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIiLi2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIjLi2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI4int1Li2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5uint1Li2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI4int2Li2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5uint2Li2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI4int4Li2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5uint4Li2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIfLi2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6float1Li2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6float2Li2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6float4Li2EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIcLi2EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIaLi2EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIhLi2EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char1Li2EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar1Li2EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char2Li2EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar2Li2EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char4Li2EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar4Li2EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIsLi2EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureItLi2EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short1Li2EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort1Li2EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short2Li2EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort2Li2EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short4Li2EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort4Li2EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIcLi3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIaLi3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIhLi3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char1Li3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar1Li3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char2Li3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar2Li3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char4Li3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar4Li3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIsLi3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureItLi3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short1Li3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort1Li3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short2Li3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort2Li3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short4Li3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort4Li3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIiLi3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIjLi3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI4int1Li3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5uint1Li3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI4int2Li3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5uint2Li3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI4int4Li3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5uint4Li3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIfLi3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6float1Li3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6float2Li3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6float4Li3EL19cudaTextureReadMode0EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIcLi3EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIaLi3EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIhLi3EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char1Li3EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar1Li3EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char2Li3EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar2Li3EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char4Li3EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar4Li3EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIsLi3EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureItLi3EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short1Li3EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort1Li3EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short2Li3EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort2Li3EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short4Li3EL19cudaTextureReadMode1EE;
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort4Li3EL19cudaTextureReadMode1EE;
+# 206 "/usr/include/libio.h" 3
+enum __codecvt_result {
+# 208 "/usr/include/libio.h" 3
+__codecvt_ok,
+# 209 "/usr/include/libio.h" 3
+__codecvt_partial,
+# 210 "/usr/include/libio.h" 3
+__codecvt_error,
+# 211 "/usr/include/libio.h" 3
+__codecvt_noconv};
+# 214 "/usr/lib/gcc/x86_64-linux-gnu/4.2.4/include/stddef.h" 3
+typedef unsigned long size_t;
+#include "crt/device_runtime.h"
+# 145 "/usr/include/bits/types.h" 3
+typedef long __clock_t;
+# 61 "/usr/include/time.h" 3
+typedef __clock_t clock_t;
+# 61 "/usr/local/cuda/bin/../include/cuda_surface_types.h"
+struct _Z7surfaceIvLi1EE { struct surfaceReference __b_16surfaceReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_surface_types.h"
+struct _Z7surfaceIvLi2EE { struct surfaceReference __b_16surfaceReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIcLi1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIaLi1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIhLi1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char1Li1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar1Li1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char2Li1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar2Li1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char4Li1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar4Li1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIsLi1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureItLi1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short1Li1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort1Li1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short2Li1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort2Li1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short4Li1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort4Li1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIiLi1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIjLi1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI4int1Li1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5uint1Li1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI4int2Li1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5uint2Li1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI4int4Li1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5uint4Li1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIfLi1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6float1Li1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6float2Li1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6float4Li1EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIcLi1EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIaLi1EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIhLi1EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char1Li1EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar1Li1EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char2Li1EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar2Li1EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char4Li1EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar4Li1EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIsLi1EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureItLi1EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short1Li1EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort1Li1EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short2Li1EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort2Li1EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short4Li1EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort4Li1EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIcLi2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIaLi2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIhLi2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char1Li2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar1Li2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char2Li2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar2Li2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char4Li2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar4Li2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIsLi2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureItLi2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short1Li2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort1Li2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short2Li2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort2Li2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short4Li2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort4Li2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIiLi2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIjLi2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI4int1Li2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5uint1Li2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI4int2Li2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5uint2Li2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI4int4Li2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5uint4Li2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIfLi2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6float1Li2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6float2Li2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6float4Li2EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIcLi2EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIaLi2EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIhLi2EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char1Li2EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar1Li2EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char2Li2EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar2Li2EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char4Li2EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar4Li2EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIsLi2EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureItLi2EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short1Li2EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort1Li2EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short2Li2EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort2Li2EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short4Li2EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort4Li2EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIcLi3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIaLi3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIhLi3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char1Li3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar1Li3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char2Li3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar2Li3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char4Li3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar4Li3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIsLi3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureItLi3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short1Li3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort1Li3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short2Li3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort2Li3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short4Li3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort4Li3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIiLi3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIjLi3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI4int1Li3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5uint1Li3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI4int2Li3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5uint2Li3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI4int4Li3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5uint4Li3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIfLi3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6float1Li3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6float2Li3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6float4Li3EL19cudaTextureReadMode0EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIcLi3EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIaLi3EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIhLi3EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char1Li3EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar1Li3EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char2Li3EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar2Li3EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI5char4Li3EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6uchar4Li3EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureIsLi3EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureItLi3EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short1Li3EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort1Li3EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short2Li3EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort2Li3EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI6short4Li3EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 61 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
+struct _Z7textureI7ushort4Li3EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+#if !defined(__CUDABE__)
+# 61 "/usr/local/cuda/bin/../include/common_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void *memcpy(void *__restrict__, const void *__restrict__, size_t);
+#endif
+#if !defined(__CUDABE__)
+# 59 "/usr/local/cuda/bin/../include/common_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void *memset(void *, int, size_t);
+#endif
+#if !defined(__CUDABE__)
+# 184 "/usr/include/time.h" 3
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) clock_t clock(void);
+#endif
+#if !defined(__CUDABE__)
+# 66 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __attribute__((__const__)) abs(int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) long __attribute__((__const__)) labs(long);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) long long __attribute__((__const__)) llabs(long long);
+#endif
+#if !defined(__CUDABE__)
+# 72 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double __attribute__((__const__)) fabs(double);
+#endif
+#if !defined(__CUDABE__)
+# 74 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __attribute__((__const__)) fabsf(float);
+#endif
+#if !defined(__CUDABE__)
+# 77 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int min(int, int);
+#endif
+#if !defined(__CUDABE__)
+# 79 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned umin(unsigned, unsigned);
+#endif
+#if !defined(__CUDABE__)
+# 81 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) long long llmin(long long, long long);
+#endif
+#if !defined(__CUDABE__)
+# 83 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned long long ullmin(unsigned long long, unsigned long long);
+#endif
+#if !defined(__CUDABE__)
+# 85 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float fminf(float, float);
+#endif
+#if !defined(__CUDABE__)
+# 87 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double fmin(double, double);
+#endif
+#if !defined(__CUDABE__)
+# 90 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int max(int, int);
+#endif
+#if !defined(__CUDABE__)
+# 92 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned umax(unsigned, unsigned);
+#endif
+#if !defined(__CUDABE__)
+# 94 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) long long llmax(long long, long long);
+#endif
+#if !defined(__CUDABE__)
+# 96 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned long long ullmax(unsigned long long, unsigned long long);
+#endif
+#if !defined(__CUDABE__)
+# 98 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float fmaxf(float, float);
+#endif
+#if !defined(__CUDABE__)
+# 100 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double fmax(double, double);
+#endif
+#if !defined(__CUDABE__)
+# 103 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double sin(double);
+#endif
+#if !defined(__CUDABE__)
+# 105 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float sinf(float);
+#endif
+#if !defined(__CUDABE__)
+# 108 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double cos(double);
+#endif
+#if !defined(__CUDABE__)
+# 110 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float cosf(float);
+#endif
+#if !defined(__CUDABE__)
+# 113 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void sincos(double, double *, double *);
+#endif
+#if !defined(__CUDABE__)
+# 115 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void sincosf(float, float *, float *);
+#endif
+#if !defined(__CUDABE__)
+# 118 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double tan(double);
+#endif
+#if !defined(__CUDABE__)
+# 120 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float tanf(float);
+#endif
+#if !defined(__CUDABE__)
+# 123 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double sqrt(double);
+#endif
+#if !defined(__CUDABE__)
+# 125 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float sqrtf(float);
+#endif
+#if !defined(__CUDABE__)
+# 128 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double rsqrt(double);
+#endif
+#if !defined(__CUDABE__)
+# 130 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float rsqrtf(float);
+#endif
+#if !defined(__CUDABE__)
+# 133 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double exp2(double);
+#endif
+#if !defined(__CUDABE__)
+# 135 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float exp2f(float);
+#endif
+#if !defined(__CUDABE__)
+# 138 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double exp10(double);
+#endif
+#if !defined(__CUDABE__)
+# 140 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float exp10f(float);
+#endif
+#if !defined(__CUDABE__)
+# 143 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double expm1(double);
+#endif
+#if !defined(__CUDABE__)
+# 145 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float expm1f(float);
+#endif
+#if !defined(__CUDABE__)
+# 148 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double log2(double);
+#endif
+#if !defined(__CUDABE__)
+# 150 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float log2f(float);
+#endif
+#if !defined(__CUDABE__)
+# 153 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double log10(double);
+#endif
+#if !defined(__CUDABE__)
+# 155 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float log10f(float);
+#endif
+#if !defined(__CUDABE__)
+# 158 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double log(double);
+#endif
+#if !defined(__CUDABE__)
+# 160 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float logf(float);
+#endif
+#if !defined(__CUDABE__)
+# 163 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double log1p(double);
+#endif
+#if !defined(__CUDABE__)
+# 165 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float log1pf(float);
+#endif
+#if !defined(__CUDABE__)
+# 168 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double __attribute__((__const__)) floor(double);
+#endif
+#if !defined(__CUDABE__)
+# 170 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __attribute__((__const__)) floorf(float);
+#endif
+#if !defined(__CUDABE__)
+# 173 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double exp(double);
+#endif
+#if !defined(__CUDABE__)
+# 175 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float expf(float);
+#endif
+#if !defined(__CUDABE__)
+# 178 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double cosh(double);
+#endif
+#if !defined(__CUDABE__)
+# 180 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float coshf(float);
+#endif
+#if !defined(__CUDABE__)
+# 183 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double sinh(double);
+#endif
+#if !defined(__CUDABE__)
+# 185 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float sinhf(float);
+#endif
+#if !defined(__CUDABE__)
+# 188 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double tanh(double);
+#endif
+#if !defined(__CUDABE__)
+# 190 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float tanhf(float);
+#endif
+#if !defined(__CUDABE__)
+# 193 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double acosh(double);
+#endif
+#if !defined(__CUDABE__)
+# 195 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float acoshf(float);
+#endif
+#if !defined(__CUDABE__)
+# 198 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double asinh(double);
+#endif
+#if !defined(__CUDABE__)
+# 200 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float asinhf(float);
+#endif
+#if !defined(__CUDABE__)
+# 203 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double atanh(double);
+#endif
+#if !defined(__CUDABE__)
+# 205 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float atanhf(float);
+#endif
+#if !defined(__CUDABE__)
+# 208 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double ldexp(double, int);
+#endif
+#if !defined(__CUDABE__)
+# 210 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float ldexpf(float, int);
+#endif
+#if !defined(__CUDABE__)
+# 213 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double logb(double);
+#endif
+#if !defined(__CUDABE__)
+# 215 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float logbf(float);
+#endif
+#if !defined(__CUDABE__)
+# 218 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int ilogb(double);
+#endif
+#if !defined(__CUDABE__)
+# 220 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int ilogbf(float);
+#endif
+#if !defined(__CUDABE__)
+# 223 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double scalbn(double, int);
+#endif
+#if !defined(__CUDABE__)
+# 225 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float scalbnf(float, int);
+#endif
+#if !defined(__CUDABE__)
+# 228 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double scalbln(double, long);
+#endif
+#if !defined(__CUDABE__)
+# 230 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float scalblnf(float, long);
+#endif
+#if !defined(__CUDABE__)
+# 233 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double frexp(double, int *);
+#endif
+#if !defined(__CUDABE__)
+# 235 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float frexpf(float, int *);
+#endif
+#if !defined(__CUDABE__)
+# 238 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double __attribute__((__const__)) round(double);
+#endif
+#if !defined(__CUDABE__)
+# 240 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __attribute__((__const__)) roundf(float);
+#endif
+#if !defined(__CUDABE__)
+# 243 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) long lround(double);
+#endif
+#if !defined(__CUDABE__)
+# 245 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) long lroundf(float);
+#endif
+#if !defined(__CUDABE__)
+# 248 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) long long llround(double);
+#endif
+#if !defined(__CUDABE__)
+# 250 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) long long llroundf(float);
+#endif
+#if !defined(__CUDABE__)
+# 253 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double rint(double);
+#endif
+#if !defined(__CUDABE__)
+# 255 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float rintf(float);
+#endif
+#if !defined(__CUDABE__)
+# 258 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) long lrint(double);
+#endif
+#if !defined(__CUDABE__)
+# 260 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) long lrintf(float);
+#endif
+#if !defined(__CUDABE__)
+# 263 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) long long llrint(double);
+#endif
+#if !defined(__CUDABE__)
+# 265 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) long long llrintf(float);
+#endif
+#if !defined(__CUDABE__)
+# 268 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double nearbyint(double);
+#endif
+#if !defined(__CUDABE__)
+# 270 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float nearbyintf(float);
+#endif
+#if !defined(__CUDABE__)
+# 273 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double __attribute__((__const__)) ceil(double);
+#endif
+#if !defined(__CUDABE__)
+# 275 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __attribute__((__const__)) ceilf(float);
+#endif
+#if !defined(__CUDABE__)
+# 278 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double __attribute__((__const__)) trunc(double);
+#endif
+#if !defined(__CUDABE__)
+# 280 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __attribute__((__const__)) truncf(float);
+#endif
+#if !defined(__CUDABE__)
+# 283 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double fdim(double, double);
+#endif
+#if !defined(__CUDABE__)
+# 285 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float fdimf(float, float);
+#endif
+#if !defined(__CUDABE__)
+# 288 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double atan2(double, double);
+#endif
+#if !defined(__CUDABE__)
+# 290 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float atan2f(float, float);
+#endif
+#if !defined(__CUDABE__)
+# 293 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double atan(double);
+#endif
+#if !defined(__CUDABE__)
+# 295 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float atanf(float);
+#endif
+#if !defined(__CUDABE__)
+# 298 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double asin(double);
+#endif
+#if !defined(__CUDABE__)
+# 300 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float asinf(float);
+#endif
+#if !defined(__CUDABE__)
+# 303 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double acos(double);
+#endif
+#if !defined(__CUDABE__)
+# 305 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float acosf(float);
+#endif
+#if !defined(__CUDABE__)
+# 308 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double hypot(double, double);
+#endif
+#if !defined(__CUDABE__)
+# 310 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float hypotf(float, float);
+#endif
+#if !defined(__CUDABE__)
+# 313 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double cbrt(double);
+#endif
+#if !defined(__CUDABE__)
+# 315 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float cbrtf(float);
+#endif
+#if !defined(__CUDABE__)
+# 318 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double rcbrt(double);
+#endif
+#if !defined(__CUDABE__)
+# 320 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float rcbrtf(float);
+#endif
+#if !defined(__CUDABE__)
+# 323 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double sinpi(double);
+#endif
+#if !defined(__CUDABE__)
+# 325 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float sinpif(float);
+#endif
+#if !defined(__CUDABE__)
+# 328 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double pow(double, double);
+#endif
+#if !defined(__CUDABE__)
+# 330 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float powf(float, float);
+#endif
+#if !defined(__CUDABE__)
+# 333 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double modf(double, double *);
+#endif
+#if !defined(__CUDABE__)
+# 335 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float modff(float, float *);
+#endif
+#if !defined(__CUDABE__)
+# 338 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double fmod(double, double);
+#endif
+#if !defined(__CUDABE__)
+# 340 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float fmodf(float, float);
+#endif
+#if !defined(__CUDABE__)
+# 343 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double remainder(double, double);
+#endif
+#if !defined(__CUDABE__)
+# 345 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float remainderf(float, float);
+#endif
+#if !defined(__CUDABE__)
+# 348 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double remquo(double, double, int *);
+#endif
+#if !defined(__CUDABE__)
+# 350 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float remquof(float, float, int *);
+#endif
+#if !defined(__CUDABE__)
+# 353 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double erf(double);
+#endif
+#if !defined(__CUDABE__)
+# 355 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float erff(float);
+#endif
+#if !defined(__CUDABE__)
+# 358 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double erfinv(double);
+#endif
+#if !defined(__CUDABE__)
+# 360 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float erfinvf(float);
+#endif
+#if !defined(__CUDABE__)
+# 363 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double erfc(double);
+#endif
+#if !defined(__CUDABE__)
+# 365 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float erfcf(float);
+#endif
+#if !defined(__CUDABE__)
+# 368 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double erfcinv(double);
+#endif
+#if !defined(__CUDABE__)
+# 370 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float erfcinvf(float);
+#endif
+#if !defined(__CUDABE__)
+# 373 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double lgamma(double);
+#endif
+#if !defined(__CUDABE__)
+# 375 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float lgammaf(float);
+#endif
+#if !defined(__CUDABE__)
+# 378 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double tgamma(double);
+#endif
+#if !defined(__CUDABE__)
+# 380 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float tgammaf(float);
+#endif
+#if !defined(__CUDABE__)
+# 383 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double __attribute__((__const__)) copysign(double, double);
+#endif
+#if !defined(__CUDABE__)
+# 385 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __attribute__((__const__)) copysignf(float, float);
+#endif
+#if !defined(__CUDABE__)
+# 388 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double __attribute__((__const__)) nextafter(double, double);
+#endif
+#if !defined(__CUDABE__)
+# 390 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __attribute__((__const__)) nextafterf(float, float);
+#endif
+#if !defined(__CUDABE__)
+# 393 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double __attribute__((__const__)) nan(const char *);
+#endif
+#if !defined(__CUDABE__)
+# 395 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __attribute__((__const__)) nanf(const char *);
+#endif
+#if !defined(__CUDABE__)
+# 398 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __attribute__((__const__)) __isinf(double);
+#endif
+#if !defined(__CUDABE__)
+# 400 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __attribute__((__const__)) __isinff(float);
+#endif
+#if !defined(__CUDABE__)
+# 403 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __attribute__((__const__)) __isnan(double);
+#endif
+#if !defined(__CUDABE__)
+# 405 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __attribute__((__const__)) __isnanf(float);
+#endif
+#if !defined(__CUDABE__)
+# 419 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __attribute__((__const__)) __finite(double);
+#endif
+#if !defined(__CUDABE__)
+# 421 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __attribute__((__const__)) __finitef(float);
+#endif
+#if !defined(__CUDABE__)
+# 423 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __attribute__((__const__)) __signbit(double);
+#endif
+#if !defined(__CUDABE__)
+# 428 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __attribute__((__const__)) __signbitf(float);
+#endif
+#if !defined(__CUDABE__)
+# 431 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double fma(double, double, double);
+#endif
+#if !defined(__CUDABE__)
+# 433 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float fmaf(float, float, float);
+#endif
+#if !defined(__CUDABE__)
+# 441 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __attribute__((__const__)) __signbitl(long double);
+#endif
+#if !defined(__CUDABE__)
+# 443 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __attribute__((__const__)) __isinfl(long double);
+#endif
+#if !defined(__CUDABE__)
+# 445 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __attribute__((__const__)) __isnanl(long double);
+#endif
+#if !defined(__CUDABE__)
+# 455 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __attribute__((__const__)) __finitel(long double);
+#endif
+#if !defined(__CUDABE__)
+# 118 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __cosf(float);
+#endif
+#if !defined(__CUDABE__)
+# 115 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __sinf(float);
+#endif
+#if !defined(__CUDABE__)
+# 121 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __tanf(float);
+#endif
+#if !defined(__CUDABE__)
+# 124 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __sincosf(float, float *, float *);
+#endif
+#if !defined(__CUDABE__)
+# 127 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __expf(float);
+#endif
+#if !defined(__CUDABE__)
+# 139 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __logf(float);
+#endif
+#if !defined(__CUDABE__)
+# 136 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __log10f(float);
+#endif
+#if !defined(__CUDABE__)
+# 130 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __exp10f(float);
+#endif
+#if !defined(__CUDABE__)
+# 133 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __log2f(float);
+#endif
+#if !defined(__CUDABE__)
+# 142 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __powf(float, float);
+#endif
+#if !defined(__CUDABE__)
+# 61 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __mulhi(int, int);
+#endif
+#if !defined(__CUDABE__)
+# 63 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __umulhi(unsigned, unsigned);
+#endif
+#if !defined(__CUDABE__)
+# 66 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) long long __mul64hi(long long, long long);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned long long __umul64hi(unsigned long long, unsigned long long);
+#endif
+#if !defined(__CUDABE__)
+# 71 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __int_as_float(int);
+#endif
+#if !defined(__CUDABE__)
+# 73 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __float_as_int(float);
+#endif
+#if !defined(__CUDABE__)
+# 77 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __synchronous_start(int);
+#endif
+#if !defined(__CUDABE__)
+# 79 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __synchronous_end(void);
+#endif
+#if !defined(__CUDABE__)
+# 81 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __syncthreads(void);
+#endif
+#if !defined(__CUDABE__)
+# 83 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __prof_trigger(int);
+#endif
+#if !defined(__CUDABE__)
+# 85 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __threadfence(void);
+#endif
+#if !defined(__CUDABE__)
+# 87 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __threadfence_block(void);
+#endif
+#if !defined(__CUDABE__)
+# 89 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __trap(void);
+#endif
+#if !defined(__CUDABE__)
+# 91 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __brkpt(int);
+#endif
+#if !defined(__CUDABE__)
+# 94 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __saturatef(float);
+#endif
+#if !defined(__CUDABE__)
+# 97 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __sad(int, int, unsigned);
+#endif
+#if !defined(__CUDABE__)
+# 99 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __usad(unsigned, unsigned, unsigned);
+#endif
+#if !defined(__CUDABE__)
+# 102 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __mul24(int, int);
+#endif
+#if !defined(__CUDABE__)
+# 104 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __umul24(unsigned, unsigned);
+#endif
+#if !defined(__CUDABE__)
+# 107 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float fdividef(float, float);
+#endif
+#if !defined(__CUDABE__)
+# 109 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fdividef(float, float);
+#endif
+#if !defined(__CUDABE__)
+# 112 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double fdivide(double, double);
+#endif
+#if !defined(__CUDABE__)
+# 145 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __float2int_rn(float);
+#endif
+#if !defined(__CUDABE__)
+# 147 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __float2int_rz(float);
+#endif
+#if !defined(__CUDABE__)
+# 149 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __float2int_ru(float);
+#endif
+#if !defined(__CUDABE__)
+# 151 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __float2int_rd(float);
+#endif
+#if !defined(__CUDABE__)
+# 154 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __float2uint_rn(float);
+#endif
+#if !defined(__CUDABE__)
+# 156 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __float2uint_rz(float);
+#endif
+#if !defined(__CUDABE__)
+# 158 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __float2uint_ru(float);
+#endif
+#if !defined(__CUDABE__)
+# 160 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __float2uint_rd(float);
+#endif
+#if !defined(__CUDABE__)
+# 163 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __int2float_rn(int);
+#endif
+#if !defined(__CUDABE__)
+# 165 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __int2float_rz(int);
+#endif
+#if !defined(__CUDABE__)
+# 167 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __int2float_ru(int);
+#endif
+#if !defined(__CUDABE__)
+# 169 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __int2float_rd(int);
+#endif
+#if !defined(__CUDABE__)
+# 172 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __uint2float_rn(unsigned);
+#endif
+#if !defined(__CUDABE__)
+# 174 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __uint2float_rz(unsigned);
+#endif
+#if !defined(__CUDABE__)
+# 176 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __uint2float_ru(unsigned);
+#endif
+#if !defined(__CUDABE__)
+# 178 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __uint2float_rd(unsigned);
+#endif
+#if !defined(__CUDABE__)
+# 181 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) long long __float2ll_rn(float);
+#endif
+#if !defined(__CUDABE__)
+# 183 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) long long __float2ll_rz(float);
+#endif
+#if !defined(__CUDABE__)
+# 185 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) long long __float2ll_ru(float);
+#endif
+#if !defined(__CUDABE__)
+# 187 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) long long __float2ll_rd(float);
+#endif
+#if !defined(__CUDABE__)
+# 190 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned long long __float2ull_rn(float);
+#endif
+#if !defined(__CUDABE__)
+# 192 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned long long __float2ull_rz(float);
+#endif
+#if !defined(__CUDABE__)
+# 194 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned long long __float2ull_ru(float);
+#endif
+#if !defined(__CUDABE__)
+# 196 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned long long __float2ull_rd(float);
+#endif
+#if !defined(__CUDABE__)
+# 199 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __ll2float_rn(long long);
+#endif
+#if !defined(__CUDABE__)
+# 201 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __ll2float_rz(long long);
+#endif
+#if !defined(__CUDABE__)
+# 203 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __ll2float_ru(long long);
+#endif
+#if !defined(__CUDABE__)
+# 205 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __ll2float_rd(long long);
+#endif
+#if !defined(__CUDABE__)
+# 208 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __ull2float_rn(unsigned long long);
+#endif
+#if !defined(__CUDABE__)
+# 210 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __ull2float_rz(unsigned long long);
+#endif
+#if !defined(__CUDABE__)
+# 212 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __ull2float_ru(unsigned long long);
+#endif
+#if !defined(__CUDABE__)
+# 214 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __ull2float_rd(unsigned long long);
+#endif
+#if !defined(__CUDABE__)
+# 217 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned short __float2half_rn(float);
+#endif
+#if !defined(__CUDABE__)
+# 219 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __half2float(unsigned short);
+#endif
+#if !defined(__CUDABE__)
+# 222 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fadd_rn(float, float);
+#endif
+#if !defined(__CUDABE__)
+# 224 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fadd_rz(float, float);
+#endif
+#if !defined(__CUDABE__)
+# 226 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fadd_ru(float, float);
+#endif
+#if !defined(__CUDABE__)
+# 228 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fadd_rd(float, float);
+#endif
+#if !defined(__CUDABE__)
+# 231 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fmul_rn(float, float);
+#endif
+#if !defined(__CUDABE__)
+# 233 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fmul_rz(float, float);
+#endif
+#if !defined(__CUDABE__)
+# 235 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fmul_ru(float, float);
+#endif
+#if !defined(__CUDABE__)
+# 237 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fmul_rd(float, float);
+#endif
+#if !defined(__CUDABE__)
+# 240 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fmaf_rn(float, float, float);
+#endif
+#if !defined(__CUDABE__)
+# 242 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fmaf_rz(float, float, float);
+#endif
+#if !defined(__CUDABE__)
+# 244 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fmaf_ru(float, float, float);
+#endif
+#if !defined(__CUDABE__)
+# 246 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fmaf_rd(float, float, float);
+#endif
+#if !defined(__CUDABE__)
+# 249 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __frcp_rn(float);
+#endif
+#if !defined(__CUDABE__)
+# 251 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __frcp_rz(float);
+#endif
+#if !defined(__CUDABE__)
+# 253 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __frcp_ru(float);
+#endif
+#if !defined(__CUDABE__)
+# 255 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __frcp_rd(float);
+#endif
+#if !defined(__CUDABE__)
+# 258 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fsqrt_rn(float);
+#endif
+#if !defined(__CUDABE__)
+# 260 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fsqrt_rz(float);
+#endif
+#if !defined(__CUDABE__)
+# 262 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fsqrt_ru(float);
+#endif
+#if !defined(__CUDABE__)
+# 264 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fsqrt_rd(float);
+#endif
+#if !defined(__CUDABE__)
+# 267 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fdiv_rn(float, float);
+#endif
+#if !defined(__CUDABE__)
+# 269 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fdiv_rz(float, float);
+#endif
+#if !defined(__CUDABE__)
+# 271 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fdiv_ru(float, float);
+#endif
+#if !defined(__CUDABE__)
+# 273 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fdiv_rd(float, float);
+#endif
+#if !defined(__CUDABE__)
+# 276 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __clz(int);
+#endif
+#if !defined(__CUDABE__)
+# 278 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __ffs(int);
+#endif
+#if !defined(__CUDABE__)
+# 280 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __popc(unsigned);
+#endif
+#if !defined(__CUDABE__)
+# 282 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __brev(unsigned);
+#endif
+#if !defined(__CUDABE__)
+# 285 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __clzll(long long);
+#endif
+#if !defined(__CUDABE__)
+# 287 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __ffsll(long long);
+#endif
+#if !defined(__CUDABE__)
+# 289 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __popcll(unsigned long long);
+#endif
+#if !defined(__CUDABE__)
+# 291 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned long long __brevll(unsigned long long);
+#endif
+#if !defined(__CUDABE__)
+# 294 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __byte_perm(unsigned, unsigned, unsigned);
+#endif
+#if !defined(__CUDABE__)
+# 61 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uchar1 __surf1Dreadc1(__surface_type__, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 63 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uchar2 __surf1Dreadc2(__surface_type__, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 65 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uchar4 __surf1Dreadc4(__surface_type__, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 67 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) ushort1 __surf1Dreads1(__surface_type__, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 69 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) ushort2 __surf1Dreads2(__surface_type__, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 71 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) ushort4 __surf1Dreads4(__surface_type__, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 73 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint1 __surf1Dreadu1(__surface_type__, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 75 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint2 __surf1Dreadu2(__surface_type__, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 77 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __surf1Dreadu4(__surface_type__, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 79 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) ulonglong1 __surf1Dreadl1(__surface_type__, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 81 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) ulonglong2 __surf1Dreadl2(__surface_type__, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 421 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uchar1 __surf2Dreadc1(__surface_type__, int, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 423 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uchar2 __surf2Dreadc2(__surface_type__, int, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 425 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uchar4 __surf2Dreadc4(__surface_type__, int, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 427 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) ushort1 __surf2Dreads1(__surface_type__, int, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 429 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) ushort2 __surf2Dreads2(__surface_type__, int, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 431 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) ushort4 __surf2Dreads4(__surface_type__, int, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 433 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint1 __surf2Dreadu1(__surface_type__, int, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 435 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint2 __surf2Dreadu2(__surface_type__, int, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 437 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __surf2Dreadu4(__surface_type__, int, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 439 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) ulonglong1 __surf2Dreadl1(__surface_type__, int, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 441 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) ulonglong2 __surf2Dreadl2(__surface_type__, int, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 781 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __surf1Dwritec1(uchar1, __surface_type__, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 783 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __surf1Dwritec2(uchar2, __surface_type__, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 785 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __surf1Dwritec4(uchar4, __surface_type__, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 787 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __surf1Dwrites1(ushort1, __surface_type__, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 789 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __surf1Dwrites2(ushort2, __surface_type__, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 791 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __surf1Dwrites4(ushort4, __surface_type__, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 793 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __surf1Dwriteu1(uint1, __surface_type__, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 795 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __surf1Dwriteu2(uint2, __surface_type__, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 797 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __surf1Dwriteu4(uint4, __surface_type__, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 799 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __surf1Dwritel1(ulonglong1, __surface_type__, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 801 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __surf1Dwritel2(ulonglong2, __surface_type__, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 1074 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __surf2Dwritec1(uchar1, __surface_type__, int, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 1076 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __surf2Dwritec2(uchar2, __surface_type__, int, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 1078 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __surf2Dwritec4(uchar4, __surface_type__, int, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 1080 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __surf2Dwrites1(ushort1, __surface_type__, int, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 1082 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __surf2Dwrites2(ushort2, __surface_type__, int, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 1084 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __surf2Dwrites4(ushort4, __surface_type__, int, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 1086 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __surf2Dwriteu1(uint1, __surface_type__, int, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 1088 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __surf2Dwriteu2(uint2, __surface_type__, int, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 1090 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __surf2Dwriteu4(uint4, __surface_type__, int, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 1092 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __surf2Dwritel1(ulonglong1, __surface_type__, int, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 1094 "/usr/local/cuda/bin/../include/surface_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __surf2Dwritel2(ulonglong2, __surface_type__, int, int, enum cudaSurfaceBoundaryMode);
+#endif
+#if !defined(__CUDABE__)
+# 61 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 63 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 61 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 63 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 61 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 63 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 61 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 63 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 61 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 63 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 61 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 63 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 61 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 63 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 61 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 63 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 61 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 63 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 61 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 63 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 61 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 63 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 61 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 63 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 61 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 65 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float4 __ftexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 65 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float4 __ftexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 65 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float4 __ftexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 65 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float4 __ftexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 61 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 63 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 61 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 63 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 61 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 63 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 61 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 63 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 61 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 63 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 61 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 63 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 61 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 63 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 61 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 63 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 61 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetchi(__texture_type__, int4);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 72 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float4 __ftexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 72 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float4 __ftexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 72 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float4 __ftexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 72 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float4 __ftexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 72 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float4 __ftexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 72 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float4 __ftexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 72 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float4 __ftexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 72 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float4 __ftexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 72 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float4 __ftexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 72 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float4 __ftexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 72 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float4 __ftexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 72 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float4 __ftexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 70 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#if !defined(__CUDABE__)
+# 68 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+__global__ __var_used__ extern void _Z7cenergyifPf(int, float, float *);
+# 25 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+__loc_sc__(__constant__,,) float4 atominfo[4000];
+#include "common_functions.h"
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+#if !defined(__CUDABE__)
+#endif
+__global__ __var_used__ void _Z7cenergyifPf(
+# 30 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+int numatoms, 
+# 30 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+float gridspacing, 
+# 30 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+float *energygrid){
+# 30 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+{
+# 31 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+ unsigned __cuda_local_var_22174_16_xindex;
+# 33 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+ unsigned __cuda_local_var_22176_16_yindex;
+# 34 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+ unsigned __cuda_local_var_22177_16_outaddr;
+# 37 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+ float __cuda_local_var_22180_9_coory;
+# 38 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+ float __cuda_local_var_22181_9_coorx;
+# 40 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+ float __cuda_local_var_22183_9_energyvalx1;
+# 41 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+ float __cuda_local_var_22184_9_energyvalx2;
+# 42 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+ float __cuda_local_var_22185_9_energyvalx3;
+# 43 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+ float __cuda_local_var_22186_9_energyvalx4;
+# 44 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+ float __cuda_local_var_22187_9_energyvalx5;
+# 45 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+ float __cuda_local_var_22188_9_energyvalx6;
+# 46 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+ float __cuda_local_var_22189_9_energyvalx7;
+# 47 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+ float __cuda_local_var_22190_9_energyvalx8;
+# 49 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+ float __cuda_local_var_22192_9_gridspacing_u;
+# 31 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+__cuda_local_var_22174_16_xindex = (((__umul24((blockIdx.x), (blockDim.x))) * 8U) + (threadIdx.x));
+# 33 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+__cuda_local_var_22176_16_yindex = ((__umul24((blockIdx.y), (blockDim.y))) + (threadIdx.y));
+# 34 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+__cuda_local_var_22177_16_outaddr = ((((__umul24((gridDim.x), (blockDim.x))) * 8U) * __cuda_local_var_22176_16_yindex) + __cuda_local_var_22174_16_xindex);
+# 37 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+__cuda_local_var_22180_9_coory = (gridspacing * ((float)__cuda_local_var_22176_16_yindex));
+# 38 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+__cuda_local_var_22181_9_coorx = (gridspacing * ((float)__cuda_local_var_22174_16_xindex));
+# 40 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+__cuda_local_var_22183_9_energyvalx1 = (0.0F);
+# 41 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+__cuda_local_var_22184_9_energyvalx2 = (0.0F);
+# 42 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+__cuda_local_var_22185_9_energyvalx3 = (0.0F);
+# 43 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+__cuda_local_var_22186_9_energyvalx4 = (0.0F);
+# 44 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+__cuda_local_var_22187_9_energyvalx5 = (0.0F);
+# 45 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+__cuda_local_var_22188_9_energyvalx6 = (0.0F);
+# 46 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+__cuda_local_var_22189_9_energyvalx7 = (0.0F);
+# 47 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+__cuda_local_var_22190_9_energyvalx8 = (0.0F);
+# 49 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+__cuda_local_var_22192_9_gridspacing_u = (gridspacing * (16.0F));
+# 77 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+(energygrid[__cuda_local_var_22177_16_outaddr]) += __cuda_local_var_22183_9_energyvalx1;
+# 78 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+(energygrid[(__cuda_local_var_22177_16_outaddr + 16U)]) += __cuda_local_var_22184_9_energyvalx2;
+# 79 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+(energygrid[(__cuda_local_var_22177_16_outaddr + 32U)]) += __cuda_local_var_22185_9_energyvalx3;
+# 80 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+(energygrid[(__cuda_local_var_22177_16_outaddr + 48U)]) += __cuda_local_var_22186_9_energyvalx4;
+# 81 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+(energygrid[(__cuda_local_var_22177_16_outaddr + 64U)]) += __cuda_local_var_22187_9_energyvalx5;
+# 82 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+(energygrid[(__cuda_local_var_22177_16_outaddr + 80U)]) += __cuda_local_var_22188_9_energyvalx6;
+# 83 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+(energygrid[(__cuda_local_var_22177_16_outaddr + 96U)]) += __cuda_local_var_22189_9_energyvalx7;
+# 84 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+(energygrid[(__cuda_local_var_22177_16_outaddr + 112U)]) += __cuda_local_var_22190_9_energyvalx8; 
+# 85 "src/cuda_wo_loop/cuenergy_pre8_coalesce.cu"
+}}

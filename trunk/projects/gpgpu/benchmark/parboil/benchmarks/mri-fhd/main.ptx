@@ -1,0 +1,5851 @@
+	.version 1.4
+	.target sm_11, map_f64_to_f32
+	// compiled with /usr/local/cuda/open64/lib//be
+	// nvopencc 2.3 built on 2009-07-02
+
+	//-----------------------------------------------------------
+	// Compiling main.cpp3.i (/tmp/ccBI#.vjjg0u)
+	//-----------------------------------------------------------
+
+	//-----------------------------------------------------------
+	// Options:
+	//-----------------------------------------------------------
+	//  Target:ptx, ISA:sm_11, Endian:little, Pointer Size:32
+	//  -O3	(Optimization level)
+	//  -g0	(Debug level)
+	//  -m2	(Report advisories)
+	//-----------------------------------------------------------
+
+	.file	1	"<command-line>"
+	.file	2	"main.cudafe2.gpu"
+	.file	3	"src/cuda_fi/gpufi.h"
+	.file	4	"src/cuda_fi/computeFH.cu"
+	.file	5	"/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h"
+	.file	6	"/usr/local/cuda/bin/../include/crt/device_runtime.h"
+	.file	7	"/usr/local/cuda/bin/../include/host_defines.h"
+	.file	8	"/usr/local/cuda/bin/../include/builtin_types.h"
+	.file	9	"/usr/local/cuda/bin/../include/device_types.h"
+	.file	10	"/usr/local/cuda/bin/../include/driver_types.h"
+	.file	11	"/usr/local/cuda/bin/../include/texture_types.h"
+	.file	12	"/usr/local/cuda/bin/../include/vector_types.h"
+	.file	13	"/usr/local/cuda/bin/../include/device_launch_parameters.h"
+	.file	14	"/usr/local/cuda/bin/../include/crt/storage_class.h"
+	.file	15	"/usr/include/bits/types.h"
+	.file	16	"/usr/include/time.h"
+	.file	17	"src/cuda_fi/gpufi_kernel.cu"
+	.file	18	"/usr/local/cuda/bin/../include/common_functions.h"
+	.file	19	"/usr/local/cuda/bin/../include/crt/func_macro.h"
+	.file	20	"/usr/local/cuda/bin/../include/math_functions.h"
+	.file	21	"/usr/local/cuda/bin/../include/device_functions.h"
+	.file	22	"/usr/local/cuda/bin/../include/math_constants.h"
+	.file	23	"/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+	.file	24	"/usr/local/cuda/bin/../include/sm_12_atomic_functions.h"
+	.file	25	"/usr/local/cuda/bin/../include/sm_13_double_functions.h"
+	.file	26	"/usr/local/cuda/bin/../include/common_types.h"
+	.file	27	"/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+	.file	28	"/usr/local/cuda/bin/../include/math_functions_dbl_ptx1.h"
+
+	.global .u32 gpufi_dev;
+	.const .align 4 .b8 c[10240];
+
+	.entry _Z16ComputeRhoPhiGPUiPfS_S_S_S_S_P12_gpufi_data_ (
+		.param .s32 __cudaparm__Z16ComputeRhoPhiGPUiPfS_S_S_S_S_P12_gpufi_data____val_paramnumK,
+		.param .u32 __cudaparm__Z16ComputeRhoPhiGPUiPfS_S_S_S_S_P12_gpufi_data____val_paramphiR,
+		.param .u32 __cudaparm__Z16ComputeRhoPhiGPUiPfS_S_S_S_S_P12_gpufi_data____val_paramphiI,
+		.param .u32 __cudaparm__Z16ComputeRhoPhiGPUiPfS_S_S_S_S_P12_gpufi_data____val_paramdR,
+		.param .u32 __cudaparm__Z16ComputeRhoPhiGPUiPfS_S_S_S_S_P12_gpufi_data____val_paramdI,
+		.param .u32 __cudaparm__Z16ComputeRhoPhiGPUiPfS_S_S_S_S_P12_gpufi_data____val_paramrealRhoPhi,
+		.param .u32 __cudaparm__Z16ComputeRhoPhiGPUiPfS_S_S_S_S_P12_gpufi_data____val_paramimagRhoPhi,
+		.param .u32 __cudaparm__Z16ComputeRhoPhiGPUiPfS_S_S_S_S_P12_gpufi_data__gpufi_dev)
+	{
+	.reg .u16 %rh<4>;
+	.reg .u32 %r<339>;
+	.reg .f32 %f<27>;
+	.reg .pred %p<107>;
+	.loc	4	44	0
+$LBB1__Z16ComputeRhoPhiGPUiPfS_S_S_S_S_P12_gpufi_data_:
+	ld.param.s32 	%r1, [__cudaparm__Z16ComputeRhoPhiGPUiPfS_S_S_S_S_P12_gpufi_data____val_paramnumK];
+	ld.param.u32 	%r2, [__cudaparm__Z16ComputeRhoPhiGPUiPfS_S_S_S_S_P12_gpufi_data____val_paramphiR];
+	ld.param.u32 	%r3, [__cudaparm__Z16ComputeRhoPhiGPUiPfS_S_S_S_S_P12_gpufi_data____val_paramphiI];
+	ld.param.u32 	%r4, [__cudaparm__Z16ComputeRhoPhiGPUiPfS_S_S_S_S_P12_gpufi_data____val_paramdR];
+	ld.param.u32 	%r5, [__cudaparm__Z16ComputeRhoPhiGPUiPfS_S_S_S_S_P12_gpufi_data____val_paramdI];
+	ld.param.u32 	%r6, [__cudaparm__Z16ComputeRhoPhiGPUiPfS_S_S_S_S_P12_gpufi_data____val_paramrealRhoPhi];
+	ld.param.u32 	%r7, [__cudaparm__Z16ComputeRhoPhiGPUiPfS_S_S_S_S_P12_gpufi_data____val_paramimagRhoPhi];
+	.loc	4	46	0
+	ld.param.u32 	%r8, [__cudaparm__Z16ComputeRhoPhiGPUiPfS_S_S_S_S_P12_gpufi_data__gpufi_dev];
+	ld.global.u32 	%r9, [%r8+104];
+	cvt.u32.u16 	%r10, %ctaid.x;
+	setp.ne.u32 	%p1, %r9, %r10;
+	cvt.u32.u16 	%r11, %tid.x;
+	@%p1 bra 	$L_0_88834;
+	ld.global.u32 	%r12, [%r8+108];
+	setp.eq.u32 	%p2, %r12, %r11;
+	@%p2 bra 	$L_0_88578;
+$L_0_88834:
+	mov.s32 	%r13, 1;
+	bra.uni 	$L_0_88322;
+$L_0_88578:
+	mov.s32 	%r13, 0;
+$L_0_88322:
+	mov.u32 	%r14, 0;
+	setp.ne.s32 	%p3, %r13, %r14;
+	@%p3 bra 	$Lt_0_7938;
+	ld.global.s8 	%r15, [%r8+15912];
+	mov.u32 	%r16, 0;
+	setp.ne.s32 	%p4, %r15, %r16;
+	@%p4 bra 	$Lt_0_114946;
+	.loc	17	190	0
+	mov.s16 	%rh1, 1;
+	st.global.s8 	[%r8+15912], %rh1;
+$Lt_0_114946:
+	.loc	17	191	0
+	ld.global.s32 	%r17, [%r8+15924];
+	add.s32 	%r18, %r17, 1;
+	st.global.s32 	[%r8+15924], %r18;
+	.loc	17	194	0
+	mov.s32 	%r19, 0;
+	st.global.s32 	[%r8+76], %r19;
+	.loc	17	195	0
+	ld.global.s32 	%r20, [%r8+15924];
+	sub.s32 	%r21, %r20, 1;
+	st.global.s32 	[%r8+80], %r21;
+	.loc	17	196	0
+	mov.s32 	%r22, -1;
+	st.global.s32 	[%r8+84], %r22;
+	.loc	17	199	0
+	ld.global.s32 	%r23, [%r8+96];
+	add.s32 	%r24, %r23, 1;
+	st.global.s32 	[%r8+96], %r24;
+	.loc	17	201	0
+	mov.s16 	%rh2, 1;
+	mul.lo.u32 	%r25, %r24, 44;
+	add.u32 	%r26, %r8, %r25;
+	st.global.s8 	[%r26+112], %rh2;
+	.loc	17	202	0
+	ld.global.s32 	%r27, [%r8+76];
+	ld.global.u32 	%r28, [%r8+96];
+	mul.lo.u32 	%r29, %r28, 44;
+	add.u32 	%r30, %r8, %r29;
+	st.global.s32 	[%r30+116], %r27;
+	.loc	17	203	0
+	ld.global.s32 	%r31, [%r8+80];
+	ld.global.u32 	%r32, [%r8+96];
+	mul.lo.u32 	%r33, %r32, 44;
+	add.u32 	%r34, %r8, %r33;
+	st.global.s32 	[%r34+120], %r31;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_0_7938:
+	.loc	4	47	0
+	@%p1 bra 	$L_0_89602;
+	ld.global.u32 	%r35, [%r8+108];
+	setp.eq.u32 	%p5, %r35, %r11;
+	@%p5 bra 	$L_0_89346;
+$L_0_89602:
+	mov.s32 	%r36, 1;
+	bra.uni 	$L_0_89090;
+$L_0_89346:
+	mov.s32 	%r36, 0;
+$L_0_89090:
+	mov.u32 	%r37, 0;
+	setp.ne.s32 	%p6, %r36, %r37;
+	@%p6 bra 	$Lt_0_116738;
+	ld.global.s32 	%r38, [%r8+28];
+	mov.u32 	%r39, 0;
+	setp.ne.s32 	%p7, %r38, %r39;
+	@%p7 bra 	$Lt_0_116738;
+	.loc	17	281	0
+	ld.global.s32 	%r40, [%r8+8];
+	mov.u32 	%r41, 0;
+	setp.ne.s32 	%p8, %r40, %r41;
+	@%p8 bra 	$Lt_0_116738;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r44, [%r8+0];
+	ld.global.s32 	%r45, [%r43+116];
+	setp.ne.s32 	%p9, %r44, %r45;
+	@%p9 bra 	$Lt_0_116738;
+	ld.global.s32 	%r46, [%r8+4];
+	ld.global.s32 	%r47, [%r43+120];
+	setp.ne.s32 	%p10, %r46, %r47;
+	@%p10 bra 	$Lt_0_116738;
+	ld.global.s32 	%r48, [%r8+12];
+	mul.lo.u32 	%r49, %r24, 1536;
+	add.u32 	%r50, %r8, %r49;
+	ld.global.s32 	%r51, [%r50+552];
+	setp.ne.s32 	%p11, %r48, %r51;
+	@%p11 bra 	$Lt_0_116738;
+	.loc	17	283	0
+	mov.s32 	%r52, 1;
+	st.global.s32 	[%r8+28], %r52;
+	.loc	17	284	0
+	ld.global.s32 	%r53, [%r8+24];
+	add.s32 	%r54, %r53, 1;
+	st.global.s32 	[%r8+24], %r54;
+	.loc	17	286	0
+	ld.global.u32 	%r55, [%r8+20];
+	xor.b32 	%r1, %r1, %r55;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_0_116738:
+$Lt_0_7426:
+	.loc	4	50	0
+	@%p1 bra 	$L_0_91394;
+	ld.global.u32 	%r56, [%r8+108];
+	setp.eq.u32 	%p12, %r56, %r11;
+	@%p12 bra 	$L_0_91138;
+$L_0_91394:
+	mov.s32 	%r57, 1;
+	bra.uni 	$L_0_90882;
+$L_0_91138:
+	mov.s32 	%r57, 0;
+$L_0_90882:
+	mov.u32 	%r58, 0;
+	setp.ne.s32 	%p13, %r57, %r58;
+	@%p13 bra 	$Lt_0_118530;
+	ld.global.s32 	%r59, [%r8+28];
+	mov.u32 	%r60, 0;
+	setp.ne.s32 	%p14, %r59, %r60;
+	@%p14 bra 	$Lt_0_118530;
+	.loc	17	281	0
+	ld.global.s32 	%r61, [%r8+8];
+	mov.u32 	%r62, 1;
+	setp.ne.s32 	%p15, %r61, %r62;
+	@%p15 bra 	$Lt_0_118530;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r63, [%r8+0];
+	ld.global.s32 	%r64, [%r43+116];
+	setp.ne.s32 	%p16, %r63, %r64;
+	@%p16 bra 	$Lt_0_118530;
+	ld.global.s32 	%r65, [%r8+4];
+	ld.global.s32 	%r66, [%r43+120];
+	setp.ne.s32 	%p17, %r65, %r66;
+	@%p17 bra 	$Lt_0_118530;
+	ld.global.s32 	%r67, [%r8+12];
+	mul.lo.u32 	%r68, %r24, 1536;
+	add.u32 	%r69, %r8, %r68;
+	ld.global.s32 	%r70, [%r69+564];
+	setp.ne.s32 	%p18, %r67, %r70;
+	@%p18 bra 	$Lt_0_118530;
+	.loc	17	283	0
+	mov.s32 	%r71, 1;
+	st.global.s32 	[%r8+28], %r71;
+	.loc	17	284	0
+	ld.global.s32 	%r72, [%r8+24];
+	add.s32 	%r73, %r72, 1;
+	st.global.s32 	[%r8+24], %r73;
+	.loc	17	293	0
+	ld.global.u32 	%r74, [%r8+20];
+	xor.b32 	%r2, %r74, %r2;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_0_118530:
+$Lt_0_6914:
+	.loc	4	53	0
+	@%p1 bra 	$L_0_93186;
+	ld.global.u32 	%r75, [%r8+108];
+	setp.eq.u32 	%p19, %r75, %r11;
+	@%p19 bra 	$L_0_92930;
+$L_0_93186:
+	mov.s32 	%r76, 1;
+	bra.uni 	$L_0_92674;
+$L_0_92930:
+	mov.s32 	%r76, 0;
+$L_0_92674:
+	mov.u32 	%r77, 0;
+	setp.ne.s32 	%p20, %r76, %r77;
+	@%p20 bra 	$Lt_0_120322;
+	ld.global.s32 	%r78, [%r8+28];
+	mov.u32 	%r79, 0;
+	setp.ne.s32 	%p21, %r78, %r79;
+	@%p21 bra 	$Lt_0_120322;
+	.loc	17	281	0
+	ld.global.s32 	%r80, [%r8+8];
+	mov.u32 	%r81, 2;
+	setp.ne.s32 	%p22, %r80, %r81;
+	@%p22 bra 	$Lt_0_120322;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r82, [%r8+0];
+	ld.global.s32 	%r83, [%r43+116];
+	setp.ne.s32 	%p23, %r82, %r83;
+	@%p23 bra 	$Lt_0_120322;
+	ld.global.s32 	%r84, [%r8+4];
+	ld.global.s32 	%r85, [%r43+120];
+	setp.ne.s32 	%p24, %r84, %r85;
+	@%p24 bra 	$Lt_0_120322;
+	ld.global.s32 	%r86, [%r8+12];
+	mul.lo.u32 	%r87, %r24, 1536;
+	add.u32 	%r88, %r8, %r87;
+	ld.global.s32 	%r89, [%r88+576];
+	setp.ne.s32 	%p25, %r86, %r89;
+	@%p25 bra 	$Lt_0_120322;
+	.loc	17	283	0
+	mov.s32 	%r90, 1;
+	st.global.s32 	[%r8+28], %r90;
+	.loc	17	284	0
+	ld.global.s32 	%r91, [%r8+24];
+	add.s32 	%r92, %r91, 1;
+	st.global.s32 	[%r8+24], %r92;
+	.loc	17	293	0
+	ld.global.u32 	%r93, [%r8+20];
+	xor.b32 	%r3, %r93, %r3;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_0_120322:
+$Lt_0_6402:
+	.loc	4	56	0
+	@%p1 bra 	$L_0_94978;
+	ld.global.u32 	%r94, [%r8+108];
+	setp.eq.u32 	%p26, %r94, %r11;
+	@%p26 bra 	$L_0_94722;
+$L_0_94978:
+	mov.s32 	%r95, 1;
+	bra.uni 	$L_0_94466;
+$L_0_94722:
+	mov.s32 	%r95, 0;
+$L_0_94466:
+	mov.u32 	%r96, 0;
+	setp.ne.s32 	%p27, %r95, %r96;
+	@%p27 bra 	$Lt_0_122114;
+	ld.global.s32 	%r97, [%r8+28];
+	mov.u32 	%r98, 0;
+	setp.ne.s32 	%p28, %r97, %r98;
+	@%p28 bra 	$Lt_0_122114;
+	.loc	17	281	0
+	ld.global.s32 	%r99, [%r8+8];
+	mov.u32 	%r100, 3;
+	setp.ne.s32 	%p29, %r99, %r100;
+	@%p29 bra 	$Lt_0_122114;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r101, [%r8+0];
+	ld.global.s32 	%r102, [%r43+116];
+	setp.ne.s32 	%p30, %r101, %r102;
+	@%p30 bra 	$Lt_0_122114;
+	ld.global.s32 	%r103, [%r8+4];
+	ld.global.s32 	%r104, [%r43+120];
+	setp.ne.s32 	%p31, %r103, %r104;
+	@%p31 bra 	$Lt_0_122114;
+	ld.global.s32 	%r105, [%r8+12];
+	mul.lo.u32 	%r106, %r24, 1536;
+	add.u32 	%r107, %r8, %r106;
+	ld.global.s32 	%r108, [%r107+588];
+	setp.ne.s32 	%p32, %r105, %r108;
+	@%p32 bra 	$Lt_0_122114;
+	.loc	17	283	0
+	mov.s32 	%r109, 1;
+	st.global.s32 	[%r8+28], %r109;
+	.loc	17	284	0
+	ld.global.s32 	%r110, [%r8+24];
+	add.s32 	%r111, %r110, 1;
+	st.global.s32 	[%r8+24], %r111;
+	.loc	17	293	0
+	ld.global.u32 	%r112, [%r8+20];
+	xor.b32 	%r4, %r112, %r4;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_0_122114:
+$Lt_0_5890:
+	.loc	4	59	0
+	@%p1 bra 	$L_0_96770;
+	ld.global.u32 	%r113, [%r8+108];
+	setp.eq.u32 	%p33, %r113, %r11;
+	@%p33 bra 	$L_0_96514;
+$L_0_96770:
+	mov.s32 	%r114, 1;
+	bra.uni 	$L_0_96258;
+$L_0_96514:
+	mov.s32 	%r114, 0;
+$L_0_96258:
+	mov.u32 	%r115, 0;
+	setp.ne.s32 	%p34, %r114, %r115;
+	@%p34 bra 	$Lt_0_123906;
+	ld.global.s32 	%r116, [%r8+28];
+	mov.u32 	%r117, 0;
+	setp.ne.s32 	%p35, %r116, %r117;
+	@%p35 bra 	$Lt_0_123906;
+	.loc	17	281	0
+	ld.global.s32 	%r118, [%r8+8];
+	mov.u32 	%r119, 4;
+	setp.ne.s32 	%p36, %r118, %r119;
+	@%p36 bra 	$Lt_0_123906;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r120, [%r8+0];
+	ld.global.s32 	%r121, [%r43+116];
+	setp.ne.s32 	%p37, %r120, %r121;
+	@%p37 bra 	$Lt_0_123906;
+	ld.global.s32 	%r122, [%r8+4];
+	ld.global.s32 	%r123, [%r43+120];
+	setp.ne.s32 	%p38, %r122, %r123;
+	@%p38 bra 	$Lt_0_123906;
+	ld.global.s32 	%r124, [%r8+12];
+	mul.lo.u32 	%r125, %r24, 1536;
+	add.u32 	%r126, %r8, %r125;
+	ld.global.s32 	%r127, [%r126+600];
+	setp.ne.s32 	%p39, %r124, %r127;
+	@%p39 bra 	$Lt_0_123906;
+	.loc	17	283	0
+	mov.s32 	%r128, 1;
+	st.global.s32 	[%r8+28], %r128;
+	.loc	17	284	0
+	ld.global.s32 	%r129, [%r8+24];
+	add.s32 	%r130, %r129, 1;
+	st.global.s32 	[%r8+24], %r130;
+	.loc	17	293	0
+	ld.global.u32 	%r131, [%r8+20];
+	xor.b32 	%r5, %r131, %r5;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_0_123906:
+$Lt_0_5378:
+	.loc	4	62	0
+	@%p1 bra 	$L_0_98562;
+	ld.global.u32 	%r132, [%r8+108];
+	setp.eq.u32 	%p40, %r132, %r11;
+	@%p40 bra 	$L_0_98306;
+$L_0_98562:
+	mov.s32 	%r133, 1;
+	bra.uni 	$L_0_98050;
+$L_0_98306:
+	mov.s32 	%r133, 0;
+$L_0_98050:
+	mov.u32 	%r134, 0;
+	setp.ne.s32 	%p41, %r133, %r134;
+	@%p41 bra 	$Lt_0_125698;
+	ld.global.s32 	%r135, [%r8+28];
+	mov.u32 	%r136, 0;
+	setp.ne.s32 	%p42, %r135, %r136;
+	@%p42 bra 	$Lt_0_125698;
+	.loc	17	281	0
+	ld.global.s32 	%r137, [%r8+8];
+	mov.u32 	%r138, 5;
+	setp.ne.s32 	%p43, %r137, %r138;
+	@%p43 bra 	$Lt_0_125698;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r139, [%r8+0];
+	ld.global.s32 	%r140, [%r43+116];
+	setp.ne.s32 	%p44, %r139, %r140;
+	@%p44 bra 	$Lt_0_125698;
+	ld.global.s32 	%r141, [%r8+4];
+	ld.global.s32 	%r142, [%r43+120];
+	setp.ne.s32 	%p45, %r141, %r142;
+	@%p45 bra 	$Lt_0_125698;
+	ld.global.s32 	%r143, [%r8+12];
+	mul.lo.u32 	%r144, %r24, 1536;
+	add.u32 	%r145, %r8, %r144;
+	ld.global.s32 	%r146, [%r145+612];
+	setp.ne.s32 	%p46, %r143, %r146;
+	@%p46 bra 	$Lt_0_125698;
+	.loc	17	283	0
+	mov.s32 	%r147, 1;
+	st.global.s32 	[%r8+28], %r147;
+	.loc	17	284	0
+	ld.global.s32 	%r148, [%r8+24];
+	add.s32 	%r149, %r148, 1;
+	st.global.s32 	[%r8+24], %r149;
+	.loc	17	293	0
+	ld.global.u32 	%r150, [%r8+20];
+	xor.b32 	%r6, %r150, %r6;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_0_125698:
+$Lt_0_4866:
+	.loc	4	65	0
+	@%p1 bra 	$L_0_100354;
+	ld.global.u32 	%r151, [%r8+108];
+	setp.eq.u32 	%p47, %r151, %r11;
+	@%p47 bra 	$L_0_100098;
+$L_0_100354:
+	mov.s32 	%r152, 1;
+	bra.uni 	$L_0_99842;
+$L_0_100098:
+	mov.s32 	%r152, 0;
+$L_0_99842:
+	mov.u32 	%r153, 0;
+	setp.ne.s32 	%p48, %r152, %r153;
+	@%p48 bra 	$Lt_0_127490;
+	ld.global.s32 	%r154, [%r8+28];
+	mov.u32 	%r155, 0;
+	setp.ne.s32 	%p49, %r154, %r155;
+	@%p49 bra 	$Lt_0_127490;
+	.loc	17	281	0
+	ld.global.s32 	%r156, [%r8+8];
+	mov.u32 	%r157, 6;
+	setp.ne.s32 	%p50, %r156, %r157;
+	@%p50 bra 	$Lt_0_127490;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r158, [%r8+0];
+	ld.global.s32 	%r159, [%r43+116];
+	setp.ne.s32 	%p51, %r158, %r159;
+	@%p51 bra 	$Lt_0_127490;
+	ld.global.s32 	%r160, [%r8+4];
+	ld.global.s32 	%r161, [%r43+120];
+	setp.ne.s32 	%p52, %r160, %r161;
+	@%p52 bra 	$Lt_0_127490;
+	ld.global.s32 	%r162, [%r8+12];
+	mul.lo.u32 	%r163, %r24, 1536;
+	add.u32 	%r164, %r8, %r163;
+	ld.global.s32 	%r165, [%r164+624];
+	setp.ne.s32 	%p53, %r162, %r165;
+	@%p53 bra 	$Lt_0_127490;
+	.loc	17	283	0
+	mov.s32 	%r166, 1;
+	st.global.s32 	[%r8+28], %r166;
+	.loc	17	284	0
+	ld.global.s32 	%r167, [%r8+24];
+	add.s32 	%r168, %r167, 1;
+	st.global.s32 	[%r8+24], %r168;
+	.loc	17	293	0
+	ld.global.u32 	%r169, [%r8+20];
+	xor.b32 	%r7, %r169, %r7;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_0_127490:
+$Lt_0_4354:
+	.loc	4	68	0
+	mul.lo.u32 	%r170, %r10, 512;
+	add.u32 	%r171, %r11, %r170;
+	.loc	4	69	0
+	@%p1 bra 	$L_0_102146;
+	ld.global.u32 	%r172, [%r8+108];
+	setp.eq.u32 	%p54, %r172, %r11;
+	@%p54 bra 	$L_0_101890;
+$L_0_102146:
+	mov.s32 	%r173, 1;
+	bra.uni 	$L_0_101634;
+$L_0_101890:
+	mov.s32 	%r173, 0;
+$L_0_101634:
+	mov.u32 	%r174, 0;
+	setp.ne.s32 	%p55, %r173, %r174;
+	@%p55 bra 	$Lt_0_129282;
+	ld.global.s32 	%r175, [%r8+28];
+	mov.u32 	%r176, 0;
+	setp.ne.s32 	%p56, %r175, %r176;
+	@%p56 bra 	$Lt_0_129282;
+	.loc	17	281	0
+	ld.global.s32 	%r177, [%r8+8];
+	mov.u32 	%r178, 14;
+	setp.ne.s32 	%p57, %r177, %r178;
+	@%p57 bra 	$Lt_0_129282;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r179, [%r8+0];
+	ld.global.s32 	%r180, [%r43+116];
+	setp.ne.s32 	%p58, %r179, %r180;
+	@%p58 bra 	$Lt_0_129282;
+	ld.global.s32 	%r181, [%r8+4];
+	ld.global.s32 	%r182, [%r43+120];
+	setp.ne.s32 	%p59, %r181, %r182;
+	@%p59 bra 	$Lt_0_129282;
+	ld.global.s32 	%r183, [%r8+12];
+	mul.lo.u32 	%r184, %r24, 1536;
+	add.u32 	%r185, %r8, %r184;
+	ld.global.s32 	%r186, [%r185+720];
+	setp.ne.s32 	%p60, %r183, %r186;
+	@%p60 bra 	$Lt_0_129282;
+	.loc	17	283	0
+	mov.s32 	%r187, 1;
+	st.global.s32 	[%r8+28], %r187;
+	.loc	17	284	0
+	ld.global.s32 	%r188, [%r8+24];
+	add.s32 	%r189, %r188, 1;
+	st.global.s32 	[%r8+24], %r189;
+	.loc	17	286	0
+	ld.global.u32 	%r190, [%r8+20];
+	xor.b32 	%r171, %r171, %r190;
+$Lt_0_129282:
+$Lt_0_3842:
+	.loc	4	69	0
+	setp.le.s32 	%p61, %r1, %r171;
+	@%p61 bra 	$Lt_0_140034;
+	.loc	4	74	0
+	mul.lo.u32 	%r191, %r171, 4;
+	add.u32 	%r192, %r191, %r2;
+	ld.global.f32 	%f1, [%r192+0];
+	.loc	4	75	0
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+	@%p1 bra 	$L_0_103938;
+	ld.global.u32 	%r193, [%r8+108];
+	setp.eq.u32 	%p62, %r193, %r11;
+	@%p62 bra 	$L_0_103682;
+$L_0_103938:
+	mov.s32 	%r194, 1;
+	bra.uni 	$L_0_103426;
+$L_0_103682:
+	mov.s32 	%r194, 0;
+$L_0_103426:
+	mov.u32 	%r195, 0;
+	setp.ne.s32 	%p63, %r194, %r195;
+	@%p63 bra 	$Lt_0_131074;
+	ld.global.s32 	%r196, [%r8+28];
+	mov.u32 	%r197, 0;
+	setp.ne.s32 	%p64, %r196, %r197;
+	@%p64 bra 	$Lt_0_131074;
+	.loc	17	281	0
+	mov.f32 	%f2, %f1;
+	ld.global.s32 	%r198, [%r8+8];
+	mov.u32 	%r199, 15;
+	setp.ne.s32 	%p65, %r198, %r199;
+	@%p65 bra 	$Lt_0_132098;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r200, [%r8+0];
+	ld.global.s32 	%r201, [%r43+116];
+	setp.ne.s32 	%p66, %r200, %r201;
+	@%p66 bra 	$Lt_0_132098;
+	ld.global.s32 	%r202, [%r8+4];
+	ld.global.s32 	%r203, [%r43+120];
+	setp.ne.s32 	%p67, %r202, %r203;
+	@%p67 bra 	$Lt_0_132098;
+	ld.global.s32 	%r204, [%r8+12];
+	mul.lo.u32 	%r205, %r24, 1536;
+	add.u32 	%r206, %r8, %r205;
+	ld.global.s32 	%r207, [%r206+732];
+	setp.ne.s32 	%p68, %r204, %r207;
+	@%p68 bra 	$Lt_0_132098;
+	.loc	17	283	0
+	mov.s32 	%r208, 1;
+	st.global.s32 	[%r8+28], %r208;
+	.loc	17	284	0
+	ld.global.s32 	%r209, [%r8+24];
+	add.s32 	%r210, %r209, 1;
+	st.global.s32 	[%r8+24], %r210;
+	.loc	17	296	0
+	ld.global.u32 	%r211, [%r8+20];
+	mov.b32 	%r212, %f2;
+	cvt.rn.f32.s32 	%f3, %r212;
+	mov.b32 	%r213, %f3;
+	xor.b32 	%r214, %r211, %r213;
+	mov.b32 	%f4, %r214;
+	cvt.rzi.s32.f32 	%r215, %f4;
+	mov.b32 	%f2, %r215;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_0_132098:
+$L_0_104194:
+	mov.f32 	%f1, %f2;
+$Lt_0_131074:
+$Lt_0_3330:
+	.loc	4	78	0
+	add.u32 	%r216, %r191, %r3;
+	ld.global.f32 	%f5, [%r216+0];
+	.loc	4	79	0
+	@%p1 bra 	$L_0_105730;
+	ld.global.u32 	%r217, [%r8+108];
+	setp.eq.u32 	%p69, %r217, %r11;
+	@%p69 bra 	$L_0_105474;
+$L_0_105730:
+	mov.s32 	%r218, 1;
+	bra.uni 	$L_0_105218;
+$L_0_105474:
+	mov.s32 	%r218, 0;
+$L_0_105218:
+	mov.u32 	%r219, 0;
+	setp.ne.s32 	%p70, %r218, %r219;
+	@%p70 bra 	$Lt_0_132866;
+	ld.global.s32 	%r220, [%r8+28];
+	mov.u32 	%r221, 0;
+	setp.ne.s32 	%p71, %r220, %r221;
+	@%p71 bra 	$Lt_0_132866;
+	.loc	17	281	0
+	mov.f32 	%f6, %f5;
+	ld.global.s32 	%r222, [%r8+8];
+	mov.u32 	%r223, 16;
+	setp.ne.s32 	%p72, %r222, %r223;
+	@%p72 bra 	$Lt_0_133890;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r224, [%r8+0];
+	ld.global.s32 	%r225, [%r43+116];
+	setp.ne.s32 	%p73, %r224, %r225;
+	@%p73 bra 	$Lt_0_133890;
+	ld.global.s32 	%r226, [%r8+4];
+	ld.global.s32 	%r227, [%r43+120];
+	setp.ne.s32 	%p74, %r226, %r227;
+	@%p74 bra 	$Lt_0_133890;
+	ld.global.s32 	%r228, [%r8+12];
+	mul.lo.u32 	%r229, %r24, 1536;
+	add.u32 	%r230, %r8, %r229;
+	ld.global.s32 	%r231, [%r230+744];
+	setp.ne.s32 	%p75, %r228, %r231;
+	@%p75 bra 	$Lt_0_133890;
+	.loc	17	283	0
+	mov.s32 	%r232, 1;
+	st.global.s32 	[%r8+28], %r232;
+	.loc	17	284	0
+	ld.global.s32 	%r233, [%r8+24];
+	add.s32 	%r234, %r233, 1;
+	st.global.s32 	[%r8+24], %r234;
+	.loc	17	296	0
+	ld.global.u32 	%r235, [%r8+20];
+	mov.b32 	%r236, %f6;
+	cvt.rn.f32.s32 	%f7, %r236;
+	mov.b32 	%r237, %f7;
+	xor.b32 	%r238, %r235, %r237;
+	mov.b32 	%f8, %r238;
+	cvt.rzi.s32.f32 	%r239, %f8;
+	mov.b32 	%f6, %r239;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_0_133890:
+$L_0_105986:
+	mov.f32 	%f5, %f6;
+$Lt_0_132866:
+$Lt_0_2818:
+	.loc	4	82	0
+	add.u32 	%r240, %r191, %r4;
+	ld.global.f32 	%f9, [%r240+0];
+	.loc	4	83	0
+	@%p1 bra 	$L_0_107522;
+	ld.global.u32 	%r241, [%r8+108];
+	setp.eq.u32 	%p76, %r241, %r11;
+	@%p76 bra 	$L_0_107266;
+$L_0_107522:
+	mov.s32 	%r242, 1;
+	bra.uni 	$L_0_107010;
+$L_0_107266:
+	mov.s32 	%r242, 0;
+$L_0_107010:
+	mov.u32 	%r243, 0;
+	setp.ne.s32 	%p77, %r242, %r243;
+	@%p77 bra 	$Lt_0_134658;
+	ld.global.s32 	%r244, [%r8+28];
+	mov.u32 	%r245, 0;
+	setp.ne.s32 	%p78, %r244, %r245;
+	@%p78 bra 	$Lt_0_134658;
+	.loc	17	281	0
+	mov.f32 	%f10, %f9;
+	ld.global.s32 	%r246, [%r8+8];
+	mov.u32 	%r247, 17;
+	setp.ne.s32 	%p79, %r246, %r247;
+	@%p79 bra 	$Lt_0_135682;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r248, [%r8+0];
+	ld.global.s32 	%r249, [%r43+116];
+	setp.ne.s32 	%p80, %r248, %r249;
+	@%p80 bra 	$Lt_0_135682;
+	ld.global.s32 	%r250, [%r8+4];
+	ld.global.s32 	%r251, [%r43+120];
+	setp.ne.s32 	%p81, %r250, %r251;
+	@%p81 bra 	$Lt_0_135682;
+	ld.global.s32 	%r252, [%r8+12];
+	mul.lo.u32 	%r253, %r24, 1536;
+	add.u32 	%r254, %r8, %r253;
+	ld.global.s32 	%r255, [%r254+756];
+	setp.ne.s32 	%p82, %r252, %r255;
+	@%p82 bra 	$Lt_0_135682;
+	.loc	17	283	0
+	mov.s32 	%r256, 1;
+	st.global.s32 	[%r8+28], %r256;
+	.loc	17	284	0
+	ld.global.s32 	%r257, [%r8+24];
+	add.s32 	%r258, %r257, 1;
+	st.global.s32 	[%r8+24], %r258;
+	.loc	17	296	0
+	ld.global.u32 	%r259, [%r8+20];
+	mov.b32 	%r260, %f10;
+	cvt.rn.f32.s32 	%f11, %r260;
+	mov.b32 	%r261, %f11;
+	xor.b32 	%r262, %r259, %r261;
+	mov.b32 	%f12, %r262;
+	cvt.rzi.s32.f32 	%r263, %f12;
+	mov.b32 	%f10, %r263;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_0_135682:
+$L_0_107778:
+	mov.f32 	%f9, %f10;
+$Lt_0_134658:
+$Lt_0_2306:
+	.loc	4	86	0
+	add.u32 	%r264, %r191, %r5;
+	ld.global.f32 	%f13, [%r264+0];
+	.loc	4	87	0
+	@%p1 bra 	$L_0_109314;
+	ld.global.u32 	%r265, [%r8+108];
+	setp.eq.u32 	%p83, %r265, %r11;
+	@%p83 bra 	$L_0_109058;
+$L_0_109314:
+	mov.s32 	%r266, 1;
+	bra.uni 	$L_0_108802;
+$L_0_109058:
+	mov.s32 	%r266, 0;
+$L_0_108802:
+	mov.u32 	%r267, 0;
+	setp.ne.s32 	%p84, %r266, %r267;
+	@%p84 bra 	$Lt_0_136450;
+	ld.global.s32 	%r268, [%r8+28];
+	mov.u32 	%r269, 0;
+	setp.ne.s32 	%p85, %r268, %r269;
+	@%p85 bra 	$Lt_0_136450;
+	.loc	17	281	0
+	mov.f32 	%f14, %f13;
+	ld.global.s32 	%r270, [%r8+8];
+	mov.u32 	%r271, 18;
+	setp.ne.s32 	%p86, %r270, %r271;
+	@%p86 bra 	$Lt_0_137474;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r272, [%r8+0];
+	ld.global.s32 	%r273, [%r43+116];
+	setp.ne.s32 	%p87, %r272, %r273;
+	@%p87 bra 	$Lt_0_137474;
+	ld.global.s32 	%r274, [%r8+4];
+	ld.global.s32 	%r275, [%r43+120];
+	setp.ne.s32 	%p88, %r274, %r275;
+	@%p88 bra 	$Lt_0_137474;
+	ld.global.s32 	%r276, [%r8+12];
+	mul.lo.u32 	%r277, %r24, 1536;
+	add.u32 	%r278, %r8, %r277;
+	ld.global.s32 	%r279, [%r278+768];
+	setp.ne.s32 	%p89, %r276, %r279;
+	@%p89 bra 	$Lt_0_137474;
+	.loc	17	283	0
+	mov.s32 	%r280, 1;
+	st.global.s32 	[%r8+28], %r280;
+	.loc	17	284	0
+	ld.global.s32 	%r281, [%r8+24];
+	add.s32 	%r282, %r281, 1;
+	st.global.s32 	[%r8+24], %r282;
+	.loc	17	296	0
+	ld.global.u32 	%r283, [%r8+20];
+	mov.b32 	%r284, %f14;
+	cvt.rn.f32.s32 	%f15, %r284;
+	mov.b32 	%r285, %f15;
+	xor.b32 	%r286, %r283, %r285;
+	mov.b32 	%f16, %r286;
+	cvt.rzi.s32.f32 	%r287, %f16;
+	mov.b32 	%f14, %r287;
+$Lt_0_137474:
+$L_0_109570:
+	mov.f32 	%f13, %f14;
+$Lt_0_136450:
+$Lt_0_1794:
+	.loc	4	90	0
+	add.u32 	%r288, %r191, %r6;
+	mul.f32 	%f17, %f13, %f5;
+	mad.f32 	%f18, %f1, %f9, %f17;
+	st.global.f32 	[%r288+0], %f18;
+	.loc	4	91	0
+	ld.global.u32 	%r289, [%r8+104];
+	setp.ne.u32 	%p90, %r289, %r10;
+	@%p90 bra 	$L_0_111106;
+	ld.global.u32 	%r290, [%r8+108];
+	setp.eq.u32 	%p91, %r290, %r11;
+	@%p91 bra 	$L_0_110850;
+$L_0_111106:
+	mov.s32 	%r291, 1;
+	bra.uni 	$L_0_110594;
+$L_0_110850:
+	mov.s32 	%r291, 0;
+$L_0_110594:
+	mov.u32 	%r292, 0;
+	setp.ne.s32 	%p92, %r291, %r292;
+	@%p92 bra 	$Lt_0_138242;
+	ld.global.s32 	%r293, [%r8+28];
+	mov.u32 	%r294, 0;
+	setp.ne.s32 	%p93, %r293, %r294;
+	@%p93 bra 	$Lt_0_138242;
+	.loc	17	281	0
+	ld.global.s32 	%r295, [%r8+8];
+	mov.u32 	%r296, 19;
+	setp.ne.s32 	%p94, %r295, %r296;
+	@%p94 bra 	$Lt_0_138242;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r297, [%r8+0];
+	ld.global.s32 	%r298, [%r43+116];
+	setp.ne.s32 	%p95, %r297, %r298;
+	@%p95 bra 	$Lt_0_138242;
+	ld.global.s32 	%r299, [%r8+4];
+	ld.global.s32 	%r300, [%r43+120];
+	setp.ne.s32 	%p96, %r299, %r300;
+	@%p96 bra 	$Lt_0_138242;
+	ld.global.s32 	%r301, [%r8+12];
+	mul.lo.u32 	%r302, %r24, 1536;
+	add.u32 	%r303, %r8, %r302;
+	ld.global.s32 	%r304, [%r303+780];
+	setp.ne.s32 	%p97, %r301, %r304;
+	@%p97 bra 	$Lt_0_138242;
+	.loc	17	283	0
+	mov.s32 	%r305, 1;
+	st.global.s32 	[%r8+28], %r305;
+	.loc	17	284	0
+	ld.global.s32 	%r306, [%r8+24];
+	add.s32 	%r307, %r306, 1;
+	st.global.s32 	[%r8+24], %r307;
+	.loc	17	296	0
+	ld.global.u32 	%r308, [%r8+20];
+	ld.global.s32 	%r309, [%r288+0];
+	cvt.rn.f32.s32 	%f19, %r309;
+	mov.b32 	%r310, %f19;
+	xor.b32 	%r311, %r308, %r310;
+	mov.b32 	%f20, %r311;
+	cvt.rzi.s32.f32 	%r312, %f20;
+	st.global.s32 	[%r288+0], %r312;
+$Lt_0_138242:
+$Lt_0_1282:
+	.loc	4	94	0
+	add.u32 	%r313, %r191, %r7;
+	mul.f32 	%f21, %f9, %f5;
+	mul.f32 	%f22, %f1, %f13;
+	sub.f32 	%f23, %f22, %f21;
+	st.global.f32 	[%r313+0], %f23;
+	.loc	4	95	0
+	ld.global.u32 	%r314, [%r8+104];
+	setp.ne.u32 	%p98, %r314, %r10;
+	@%p98 bra 	$L_0_112898;
+	ld.global.u32 	%r315, [%r8+108];
+	setp.eq.u32 	%p99, %r315, %r11;
+	@%p99 bra 	$L_0_112642;
+$L_0_112898:
+	mov.s32 	%r316, 1;
+	bra.uni 	$L_0_112386;
+$L_0_112642:
+	mov.s32 	%r316, 0;
+$L_0_112386:
+	mov.u32 	%r317, 0;
+	setp.ne.s32 	%p100, %r316, %r317;
+	@%p100 bra 	$Lt_0_140034;
+	ld.global.s32 	%r318, [%r8+28];
+	mov.u32 	%r319, 0;
+	setp.ne.s32 	%p101, %r318, %r319;
+	@%p101 bra 	$Lt_0_140034;
+	.loc	17	281	0
+	ld.global.s32 	%r320, [%r8+8];
+	mov.u32 	%r321, 20;
+	setp.ne.s32 	%p102, %r320, %r321;
+	@%p102 bra 	$Lt_0_140034;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r322, [%r8+0];
+	ld.global.s32 	%r323, [%r43+116];
+	setp.ne.s32 	%p103, %r322, %r323;
+	@%p103 bra 	$Lt_0_140034;
+	ld.global.s32 	%r324, [%r8+4];
+	ld.global.s32 	%r325, [%r43+120];
+	setp.ne.s32 	%p104, %r324, %r325;
+	@%p104 bra 	$Lt_0_140034;
+	ld.global.s32 	%r326, [%r8+12];
+	mul.lo.u32 	%r327, %r24, 1536;
+	add.u32 	%r328, %r8, %r327;
+	ld.global.s32 	%r329, [%r328+792];
+	setp.ne.s32 	%p105, %r326, %r329;
+	@%p105 bra 	$Lt_0_140034;
+	.loc	17	283	0
+	mov.s32 	%r330, 1;
+	st.global.s32 	[%r8+28], %r330;
+	.loc	17	284	0
+	ld.global.s32 	%r331, [%r8+24];
+	add.s32 	%r332, %r331, 1;
+	st.global.s32 	[%r8+24], %r332;
+	.loc	17	296	0
+	ld.global.u32 	%r333, [%r8+20];
+	ld.global.s32 	%r334, [%r313+0];
+	cvt.rn.f32.s32 	%f24, %r334;
+	mov.b32 	%r335, %f24;
+	xor.b32 	%r336, %r333, %r335;
+	mov.b32 	%f25, %r336;
+	cvt.rzi.s32.f32 	%r337, %f25;
+	st.global.s32 	[%r313+0], %r337;
+$Lt_0_140034:
+$Lt_0_770:
+$Lt_0_115458:
+	.loc	4	100	0
+	exit;
+$LDWend__Z16ComputeRhoPhiGPUiPfS_S_S_S_S_P12_gpufi_data_:
+	} // _Z16ComputeRhoPhiGPUiPfS_S_S_S_S_P12_gpufi_data_
+
+	.entry _Z13ComputeFH_GPUiiPfS_S_S_S_P12_gpufi_data_ (
+		.param .s32 __cudaparm__Z13ComputeFH_GPUiiPfS_S_S_S_P12_gpufi_data____val_paramnumK,
+		.param .s32 __cudaparm__Z13ComputeFH_GPUiiPfS_S_S_S_P12_gpufi_data____val_paramkGlobalIndex,
+		.param .u32 __cudaparm__Z13ComputeFH_GPUiiPfS_S_S_S_P12_gpufi_data____val_paramx,
+		.param .u32 __cudaparm__Z13ComputeFH_GPUiiPfS_S_S_S_P12_gpufi_data____val_paramy,
+		.param .u32 __cudaparm__Z13ComputeFH_GPUiiPfS_S_S_S_P12_gpufi_data____val_paramz,
+		.param .u32 __cudaparm__Z13ComputeFH_GPUiiPfS_S_S_S_P12_gpufi_data____val_paramoutR,
+		.param .u32 __cudaparm__Z13ComputeFH_GPUiiPfS_S_S_S_P12_gpufi_data____val_paramoutI,
+		.param .u32 __cudaparm__Z13ComputeFH_GPUiiPfS_S_S_S_P12_gpufi_data__gpufi_dev)
+	{
+	.reg .u16 %rh<4>;
+	.reg .u32 %r<1560>;
+	.reg .f32 %f<217>;
+	.reg .f64 %fd<17>;
+	.reg .pred %p<501>;
+	.loc	4	102	0
+$LBB1__Z13ComputeFH_GPUiiPfS_S_S_S_P12_gpufi_data_:
+	ld.param.s32 	%r1, [__cudaparm__Z13ComputeFH_GPUiiPfS_S_S_S_P12_gpufi_data____val_paramnumK];
+	ld.param.s32 	%r2, [__cudaparm__Z13ComputeFH_GPUiiPfS_S_S_S_P12_gpufi_data____val_paramkGlobalIndex];
+	ld.param.u32 	%r3, [__cudaparm__Z13ComputeFH_GPUiiPfS_S_S_S_P12_gpufi_data____val_paramx];
+	ld.param.u32 	%r4, [__cudaparm__Z13ComputeFH_GPUiiPfS_S_S_S_P12_gpufi_data____val_paramy];
+	ld.param.u32 	%r5, [__cudaparm__Z13ComputeFH_GPUiiPfS_S_S_S_P12_gpufi_data____val_paramz];
+	ld.param.u32 	%r6, [__cudaparm__Z13ComputeFH_GPUiiPfS_S_S_S_P12_gpufi_data____val_paramoutR];
+	ld.param.u32 	%r7, [__cudaparm__Z13ComputeFH_GPUiiPfS_S_S_S_P12_gpufi_data____val_paramoutI];
+	.loc	4	104	0
+	ld.param.u32 	%r8, [__cudaparm__Z13ComputeFH_GPUiiPfS_S_S_S_P12_gpufi_data__gpufi_dev];
+	ld.global.u32 	%r9, [%r8+104];
+	cvt.u32.u16 	%r10, %ctaid.x;
+	setp.ne.u32 	%p1, %r9, %r10;
+	cvt.u32.u16 	%r11, %tid.x;
+	@%p1 bra 	$L_1_418818;
+	ld.global.u32 	%r12, [%r8+108];
+	setp.eq.u32 	%p2, %r12, %r11;
+	@%p2 bra 	$L_1_418562;
+$L_1_418818:
+	mov.s32 	%r13, 1;
+	bra.uni 	$L_1_418306;
+$L_1_418562:
+	mov.s32 	%r13, 0;
+$L_1_418306:
+	mov.u32 	%r14, 0;
+	setp.ne.s32 	%p3, %r13, %r14;
+	@%p3 bra 	$Lt_1_39170;
+	ld.global.s8 	%r15, [%r8+15913];
+	mov.u32 	%r16, 0;
+	setp.ne.s32 	%p4, %r15, %r16;
+	@%p4 bra 	$Lt_1_545538;
+	.loc	17	190	0
+	mov.s16 	%rh1, 1;
+	st.global.s8 	[%r8+15913], %rh1;
+$Lt_1_545538:
+	.loc	17	191	0
+	ld.global.s32 	%r17, [%r8+15928];
+	add.s32 	%r18, %r17, 1;
+	st.global.s32 	[%r8+15928], %r18;
+	.loc	17	194	0
+	mov.s32 	%r19, 1;
+	st.global.s32 	[%r8+76], %r19;
+	.loc	17	195	0
+	ld.global.s32 	%r20, [%r8+15928];
+	sub.s32 	%r21, %r20, 1;
+	st.global.s32 	[%r8+80], %r21;
+	.loc	17	196	0
+	mov.s32 	%r22, -1;
+	st.global.s32 	[%r8+84], %r22;
+	.loc	17	199	0
+	ld.global.s32 	%r23, [%r8+96];
+	add.s32 	%r24, %r23, 1;
+	st.global.s32 	[%r8+96], %r24;
+	.loc	17	201	0
+	mov.s16 	%rh2, 1;
+	mul.lo.u32 	%r25, %r24, 44;
+	add.u32 	%r26, %r8, %r25;
+	st.global.s8 	[%r26+112], %rh2;
+	.loc	17	202	0
+	ld.global.s32 	%r27, [%r8+76];
+	ld.global.u32 	%r28, [%r8+96];
+	mul.lo.u32 	%r29, %r28, 44;
+	add.u32 	%r30, %r8, %r29;
+	st.global.s32 	[%r30+116], %r27;
+	.loc	17	203	0
+	ld.global.s32 	%r31, [%r8+80];
+	ld.global.u32 	%r32, [%r8+96];
+	mul.lo.u32 	%r33, %r32, 44;
+	add.u32 	%r34, %r8, %r33;
+	st.global.s32 	[%r34+120], %r31;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_1_39170:
+	.loc	4	105	0
+	@%p1 bra 	$L_1_419586;
+	ld.global.u32 	%r35, [%r8+108];
+	setp.eq.u32 	%p5, %r35, %r11;
+	@%p5 bra 	$L_1_419330;
+$L_1_419586:
+	mov.s32 	%r36, 1;
+	bra.uni 	$L_1_419074;
+$L_1_419330:
+	mov.s32 	%r36, 0;
+$L_1_419074:
+	mov.u32 	%r37, 0;
+	setp.ne.s32 	%p6, %r36, %r37;
+	@%p6 bra 	$Lt_1_547330;
+	ld.global.s32 	%r38, [%r8+28];
+	mov.u32 	%r39, 0;
+	setp.ne.s32 	%p7, %r38, %r39;
+	@%p7 bra 	$Lt_1_547330;
+	.loc	17	281	0
+	ld.global.s32 	%r40, [%r8+8];
+	mov.u32 	%r41, 10;
+	setp.ne.s32 	%p8, %r40, %r41;
+	@%p8 bra 	$Lt_1_547330;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r44, [%r8+0];
+	ld.global.s32 	%r45, [%r43+116];
+	setp.ne.s32 	%p9, %r44, %r45;
+	@%p9 bra 	$Lt_1_547330;
+	ld.global.s32 	%r46, [%r8+4];
+	ld.global.s32 	%r47, [%r43+120];
+	setp.ne.s32 	%p10, %r46, %r47;
+	@%p10 bra 	$Lt_1_547330;
+	ld.global.s32 	%r48, [%r8+12];
+	mul.lo.u32 	%r49, %r24, 1536;
+	add.u32 	%r50, %r8, %r49;
+	ld.global.s32 	%r51, [%r50+672];
+	setp.ne.s32 	%p11, %r48, %r51;
+	@%p11 bra 	$Lt_1_547330;
+	.loc	17	283	0
+	mov.s32 	%r52, 1;
+	st.global.s32 	[%r8+28], %r52;
+	.loc	17	284	0
+	ld.global.s32 	%r53, [%r8+24];
+	add.s32 	%r54, %r53, 1;
+	st.global.s32 	[%r8+24], %r54;
+	.loc	17	293	0
+	ld.global.u32 	%r55, [%r8+20];
+	xor.b32 	%r4, %r55, %r4;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_1_547330:
+$Lt_1_38658:
+	.loc	4	108	0
+	@%p1 bra 	$L_1_421378;
+	ld.global.u32 	%r56, [%r8+108];
+	setp.eq.u32 	%p12, %r56, %r11;
+	@%p12 bra 	$L_1_421122;
+$L_1_421378:
+	mov.s32 	%r57, 1;
+	bra.uni 	$L_1_420866;
+$L_1_421122:
+	mov.s32 	%r57, 0;
+$L_1_420866:
+	mov.u32 	%r58, 0;
+	setp.ne.s32 	%p13, %r57, %r58;
+	@%p13 bra 	$Lt_1_549122;
+	ld.global.s32 	%r59, [%r8+28];
+	mov.u32 	%r60, 0;
+	setp.ne.s32 	%p14, %r59, %r60;
+	@%p14 bra 	$Lt_1_549122;
+	.loc	17	281	0
+	ld.global.s32 	%r61, [%r8+8];
+	mov.u32 	%r62, 11;
+	setp.ne.s32 	%p15, %r61, %r62;
+	@%p15 bra 	$Lt_1_549122;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r63, [%r8+0];
+	ld.global.s32 	%r64, [%r43+116];
+	setp.ne.s32 	%p16, %r63, %r64;
+	@%p16 bra 	$Lt_1_549122;
+	ld.global.s32 	%r65, [%r8+4];
+	ld.global.s32 	%r66, [%r43+120];
+	setp.ne.s32 	%p17, %r65, %r66;
+	@%p17 bra 	$Lt_1_549122;
+	ld.global.s32 	%r67, [%r8+12];
+	mul.lo.u32 	%r68, %r24, 1536;
+	add.u32 	%r69, %r8, %r68;
+	ld.global.s32 	%r70, [%r69+684];
+	setp.ne.s32 	%p18, %r67, %r70;
+	@%p18 bra 	$Lt_1_549122;
+	.loc	17	283	0
+	mov.s32 	%r71, 1;
+	st.global.s32 	[%r8+28], %r71;
+	.loc	17	284	0
+	ld.global.s32 	%r72, [%r8+24];
+	add.s32 	%r73, %r72, 1;
+	st.global.s32 	[%r8+24], %r73;
+	.loc	17	293	0
+	ld.global.u32 	%r74, [%r8+20];
+	xor.b32 	%r5, %r74, %r5;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_1_549122:
+$Lt_1_38146:
+	.loc	4	111	0
+	@%p1 bra 	$L_1_423170;
+	ld.global.u32 	%r75, [%r8+108];
+	setp.eq.u32 	%p19, %r75, %r11;
+	@%p19 bra 	$L_1_422914;
+$L_1_423170:
+	mov.s32 	%r76, 1;
+	bra.uni 	$L_1_422658;
+$L_1_422914:
+	mov.s32 	%r76, 0;
+$L_1_422658:
+	mov.u32 	%r77, 0;
+	setp.ne.s32 	%p20, %r76, %r77;
+	@%p20 bra 	$Lt_1_550914;
+	ld.global.s32 	%r78, [%r8+28];
+	mov.u32 	%r79, 0;
+	setp.ne.s32 	%p21, %r78, %r79;
+	@%p21 bra 	$Lt_1_550914;
+	.loc	17	281	0
+	ld.global.s32 	%r80, [%r8+8];
+	mov.u32 	%r81, 12;
+	setp.ne.s32 	%p22, %r80, %r81;
+	@%p22 bra 	$Lt_1_550914;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r82, [%r8+0];
+	ld.global.s32 	%r83, [%r43+116];
+	setp.ne.s32 	%p23, %r82, %r83;
+	@%p23 bra 	$Lt_1_550914;
+	ld.global.s32 	%r84, [%r8+4];
+	ld.global.s32 	%r85, [%r43+120];
+	setp.ne.s32 	%p24, %r84, %r85;
+	@%p24 bra 	$Lt_1_550914;
+	ld.global.s32 	%r86, [%r8+12];
+	mul.lo.u32 	%r87, %r24, 1536;
+	add.u32 	%r88, %r8, %r87;
+	ld.global.s32 	%r89, [%r88+696];
+	setp.ne.s32 	%p25, %r86, %r89;
+	@%p25 bra 	$Lt_1_550914;
+	.loc	17	283	0
+	mov.s32 	%r90, 1;
+	st.global.s32 	[%r8+28], %r90;
+	.loc	17	284	0
+	ld.global.s32 	%r91, [%r8+24];
+	add.s32 	%r92, %r91, 1;
+	st.global.s32 	[%r8+24], %r92;
+	.loc	17	293	0
+	ld.global.u32 	%r93, [%r8+20];
+	xor.b32 	%r6, %r93, %r6;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_1_550914:
+$Lt_1_37634:
+	.loc	4	114	0
+	@%p1 bra 	$L_1_424962;
+	ld.global.u32 	%r94, [%r8+108];
+	setp.eq.u32 	%p26, %r94, %r11;
+	@%p26 bra 	$L_1_424706;
+$L_1_424962:
+	mov.s32 	%r95, 1;
+	bra.uni 	$L_1_424450;
+$L_1_424706:
+	mov.s32 	%r95, 0;
+$L_1_424450:
+	mov.u32 	%r96, 0;
+	setp.ne.s32 	%p27, %r95, %r96;
+	@%p27 bra 	$Lt_1_552706;
+	ld.global.s32 	%r97, [%r8+28];
+	mov.u32 	%r98, 0;
+	setp.ne.s32 	%p28, %r97, %r98;
+	@%p28 bra 	$Lt_1_552706;
+	.loc	17	281	0
+	ld.global.s32 	%r99, [%r8+8];
+	mov.u32 	%r100, 13;
+	setp.ne.s32 	%p29, %r99, %r100;
+	@%p29 bra 	$Lt_1_552706;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r101, [%r8+0];
+	ld.global.s32 	%r102, [%r43+116];
+	setp.ne.s32 	%p30, %r101, %r102;
+	@%p30 bra 	$Lt_1_552706;
+	ld.global.s32 	%r103, [%r8+4];
+	ld.global.s32 	%r104, [%r43+120];
+	setp.ne.s32 	%p31, %r103, %r104;
+	@%p31 bra 	$Lt_1_552706;
+	ld.global.s32 	%r105, [%r8+12];
+	mul.lo.u32 	%r106, %r24, 1536;
+	add.u32 	%r107, %r8, %r106;
+	ld.global.s32 	%r108, [%r107+708];
+	setp.ne.s32 	%p32, %r105, %r108;
+	@%p32 bra 	$Lt_1_552706;
+	.loc	17	283	0
+	mov.s32 	%r109, 1;
+	st.global.s32 	[%r8+28], %r109;
+	.loc	17	284	0
+	ld.global.s32 	%r110, [%r8+24];
+	add.s32 	%r111, %r110, 1;
+	st.global.s32 	[%r8+24], %r111;
+	.loc	17	293	0
+	ld.global.u32 	%r112, [%r8+20];
+	xor.b32 	%r7, %r112, %r7;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_1_552706:
+$Lt_1_37122:
+	.loc	4	117	0
+	@%p1 bra 	$L_1_426754;
+	ld.global.u32 	%r113, [%r8+108];
+	setp.eq.u32 	%p33, %r113, %r11;
+	@%p33 bra 	$L_1_426498;
+$L_1_426754:
+	mov.s32 	%r114, 1;
+	bra.uni 	$L_1_426242;
+$L_1_426498:
+	mov.s32 	%r114, 0;
+$L_1_426242:
+	mov.u32 	%r115, 0;
+	setp.ne.s32 	%p34, %r114, %r115;
+	@%p34 bra 	$Lt_1_554498;
+	ld.global.s32 	%r116, [%r8+28];
+	mov.u32 	%r117, 0;
+	setp.ne.s32 	%p35, %r116, %r117;
+	@%p35 bra 	$Lt_1_554498;
+	.loc	17	281	0
+	ld.global.s32 	%r118, [%r8+8];
+	mov.u32 	%r119, 7;
+	setp.ne.s32 	%p36, %r118, %r119;
+	@%p36 bra 	$Lt_1_554498;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r120, [%r8+0];
+	ld.global.s32 	%r121, [%r43+116];
+	setp.ne.s32 	%p37, %r120, %r121;
+	@%p37 bra 	$Lt_1_554498;
+	ld.global.s32 	%r122, [%r8+4];
+	ld.global.s32 	%r123, [%r43+120];
+	setp.ne.s32 	%p38, %r122, %r123;
+	@%p38 bra 	$Lt_1_554498;
+	ld.global.s32 	%r124, [%r8+12];
+	mul.lo.u32 	%r125, %r24, 1536;
+	add.u32 	%r126, %r8, %r125;
+	ld.global.s32 	%r127, [%r126+636];
+	setp.ne.s32 	%p39, %r124, %r127;
+	@%p39 bra 	$Lt_1_554498;
+	.loc	17	283	0
+	mov.s32 	%r128, 1;
+	st.global.s32 	[%r8+28], %r128;
+	.loc	17	284	0
+	ld.global.s32 	%r129, [%r8+24];
+	add.s32 	%r130, %r129, 1;
+	st.global.s32 	[%r8+24], %r130;
+	.loc	17	286	0
+	ld.global.u32 	%r131, [%r8+20];
+	xor.b32 	%r1, %r1, %r131;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_1_554498:
+$Lt_1_36610:
+	.loc	4	120	0
+	@%p1 bra 	$L_1_428546;
+	ld.global.u32 	%r132, [%r8+108];
+	setp.eq.u32 	%p40, %r132, %r11;
+	@%p40 bra 	$L_1_428290;
+$L_1_428546:
+	mov.s32 	%r133, 1;
+	bra.uni 	$L_1_428034;
+$L_1_428290:
+	mov.s32 	%r133, 0;
+$L_1_428034:
+	mov.u32 	%r134, 0;
+	setp.ne.s32 	%p41, %r133, %r134;
+	@%p41 bra 	$Lt_1_556290;
+	ld.global.s32 	%r135, [%r8+28];
+	mov.u32 	%r136, 0;
+	setp.ne.s32 	%p42, %r135, %r136;
+	@%p42 bra 	$Lt_1_556290;
+	.loc	17	281	0
+	ld.global.s32 	%r137, [%r8+8];
+	mov.u32 	%r138, 8;
+	setp.ne.s32 	%p43, %r137, %r138;
+	@%p43 bra 	$Lt_1_556290;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r139, [%r8+0];
+	ld.global.s32 	%r140, [%r43+116];
+	setp.ne.s32 	%p44, %r139, %r140;
+	@%p44 bra 	$Lt_1_556290;
+	ld.global.s32 	%r141, [%r8+4];
+	ld.global.s32 	%r142, [%r43+120];
+	setp.ne.s32 	%p45, %r141, %r142;
+	@%p45 bra 	$Lt_1_556290;
+	ld.global.s32 	%r143, [%r8+12];
+	mul.lo.u32 	%r144, %r24, 1536;
+	add.u32 	%r145, %r8, %r144;
+	ld.global.s32 	%r146, [%r145+648];
+	setp.ne.s32 	%p46, %r143, %r146;
+	@%p46 bra 	$Lt_1_556290;
+	.loc	17	283	0
+	mov.s32 	%r147, 1;
+	st.global.s32 	[%r8+28], %r147;
+	.loc	17	284	0
+	ld.global.s32 	%r148, [%r8+24];
+	add.s32 	%r149, %r148, 1;
+	st.global.s32 	[%r8+24], %r149;
+	.loc	17	286	0
+	ld.global.u32 	%r150, [%r8+20];
+	xor.b32 	%r2, %r2, %r150;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_1_556290:
+$Lt_1_36098:
+	.loc	4	123	0
+	@%p1 bra 	$L_1_430338;
+	ld.global.u32 	%r151, [%r8+108];
+	setp.eq.u32 	%p47, %r151, %r11;
+	@%p47 bra 	$L_1_430082;
+$L_1_430338:
+	mov.s32 	%r152, 1;
+	bra.uni 	$L_1_429826;
+$L_1_430082:
+	mov.s32 	%r152, 0;
+$L_1_429826:
+	mov.u32 	%r153, 0;
+	setp.ne.s32 	%p48, %r152, %r153;
+	@%p48 bra 	$Lt_1_558082;
+	ld.global.s32 	%r154, [%r8+28];
+	mov.u32 	%r155, 0;
+	setp.ne.s32 	%p49, %r154, %r155;
+	@%p49 bra 	$Lt_1_558082;
+	.loc	17	281	0
+	ld.global.s32 	%r156, [%r8+8];
+	mov.u32 	%r157, 9;
+	setp.ne.s32 	%p50, %r156, %r157;
+	@%p50 bra 	$Lt_1_558082;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r158, [%r8+0];
+	ld.global.s32 	%r159, [%r43+116];
+	setp.ne.s32 	%p51, %r158, %r159;
+	@%p51 bra 	$Lt_1_558082;
+	ld.global.s32 	%r160, [%r8+4];
+	ld.global.s32 	%r161, [%r43+120];
+	setp.ne.s32 	%p52, %r160, %r161;
+	@%p52 bra 	$Lt_1_558082;
+	ld.global.s32 	%r162, [%r8+12];
+	mul.lo.u32 	%r163, %r24, 1536;
+	add.u32 	%r164, %r8, %r163;
+	ld.global.s32 	%r165, [%r164+660];
+	setp.ne.s32 	%p53, %r162, %r165;
+	@%p53 bra 	$Lt_1_558082;
+	.loc	17	283	0
+	mov.s32 	%r166, 1;
+	st.global.s32 	[%r8+28], %r166;
+	.loc	17	284	0
+	ld.global.s32 	%r167, [%r8+24];
+	add.s32 	%r168, %r167, 1;
+	st.global.s32 	[%r8+24], %r168;
+	.loc	17	293	0
+	ld.global.u32 	%r169, [%r8+20];
+	xor.b32 	%r3, %r169, %r3;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_1_558082:
+$Lt_1_35586:
+	.loc	4	127	0
+	@%p1 bra 	$L_1_432130;
+	ld.global.u32 	%r170, [%r8+108];
+	setp.eq.u32 	%p54, %r170, %r11;
+	@%p54 bra 	$L_1_431874;
+$L_1_432130:
+	mov.s32 	%r171, 1;
+	bra.uni 	$L_1_431618;
+$L_1_431874:
+	mov.s32 	%r171, 0;
+$L_1_431618:
+	mov.u32 	%r172, 0;
+	setp.ne.s32 	%p55, %r171, %r172;
+	@%p55 bra 	$Lt_1_559874;
+	ld.global.s32 	%r173, [%r8+28];
+	mov.u32 	%r174, 0;
+	setp.ne.s32 	%p56, %r173, %r174;
+	@%p56 bra 	$Lt_1_559874;
+	.loc	17	281	0
+	ld.global.s32 	%r175, [%r8+8];
+	mov.u32 	%r176, 21;
+	setp.ne.s32 	%p57, %r175, %r176;
+	@%p57 bra 	$Lt_1_559874;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r177, [%r8+0];
+	ld.global.s32 	%r178, [%r43+116];
+	setp.ne.s32 	%p58, %r177, %r178;
+	@%p58 bra 	$Lt_1_559874;
+	ld.global.s32 	%r179, [%r8+4];
+	ld.global.s32 	%r180, [%r43+120];
+	setp.ne.s32 	%p59, %r179, %r180;
+	@%p59 bra 	$Lt_1_559874;
+	ld.global.s32 	%r181, [%r8+12];
+	mul.lo.u32 	%r182, %r24, 1536;
+	add.u32 	%r183, %r8, %r182;
+	ld.global.s32 	%r184, [%r183+804];
+	setp.ne.s32 	%p60, %r181, %r184;
+	@%p60 bra 	$Lt_1_559874;
+	.loc	17	283	0
+	mov.s32 	%r185, 1;
+	st.global.s32 	[%r8+28], %r185;
+	.loc	17	284	0
+	ld.global.s32 	%r186, [%r8+24];
+	add.s32 	%r187, %r186, 1;
+	st.global.s32 	[%r8+24], %r187;
+	.loc	17	296	0
+	ld.global.u32 	%r188, [%r8+20];
+	mov.b32 	%r189, %f1;
+	cvt.rn.f32.s32 	%f2, %r189;
+	mov.b32 	%r190, %f2;
+	xor.b32 	%r191, %r188, %r190;
+	mov.b32 	%f3, %r191;
+	cvt.rzi.s32.f32 	%r192, %f3;
+	mov.b32 	%f1, %r192;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_1_559874:
+$Lt_1_35074:
+	.loc	4	131	0
+	@%p1 bra 	$L_1_433922;
+	ld.global.u32 	%r193, [%r8+108];
+	setp.eq.u32 	%p61, %r193, %r11;
+	@%p61 bra 	$L_1_433666;
+$L_1_433922:
+	mov.s32 	%r194, 1;
+	bra.uni 	$L_1_433410;
+$L_1_433666:
+	mov.s32 	%r194, 0;
+$L_1_433410:
+	mov.u32 	%r195, 0;
+	setp.ne.s32 	%p62, %r194, %r195;
+	@%p62 bra 	$Lt_1_561666;
+	ld.global.s32 	%r196, [%r8+28];
+	mov.u32 	%r197, 0;
+	setp.ne.s32 	%p63, %r196, %r197;
+	@%p63 bra 	$Lt_1_561666;
+	.loc	17	281	0
+	ld.global.s32 	%r198, [%r8+8];
+	mov.u32 	%r199, 22;
+	setp.ne.s32 	%p64, %r198, %r199;
+	@%p64 bra 	$Lt_1_561666;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r200, [%r8+0];
+	ld.global.s32 	%r201, [%r43+116];
+	setp.ne.s32 	%p65, %r200, %r201;
+	@%p65 bra 	$Lt_1_561666;
+	ld.global.s32 	%r202, [%r8+4];
+	ld.global.s32 	%r203, [%r43+120];
+	setp.ne.s32 	%p66, %r202, %r203;
+	@%p66 bra 	$Lt_1_561666;
+	ld.global.s32 	%r204, [%r8+12];
+	mul.lo.u32 	%r205, %r24, 1536;
+	add.u32 	%r206, %r8, %r205;
+	ld.global.s32 	%r207, [%r206+816];
+	setp.ne.s32 	%p67, %r204, %r207;
+	@%p67 bra 	$Lt_1_561666;
+	.loc	17	283	0
+	mov.s32 	%r208, 1;
+	st.global.s32 	[%r8+28], %r208;
+	.loc	17	284	0
+	ld.global.s32 	%r209, [%r8+24];
+	add.s32 	%r210, %r209, 1;
+	st.global.s32 	[%r8+24], %r210;
+	.loc	17	296	0
+	ld.global.u32 	%r211, [%r8+20];
+	mov.b32 	%r212, %f4;
+	cvt.rn.f32.s32 	%f5, %r212;
+	mov.b32 	%r213, %f5;
+	xor.b32 	%r214, %r211, %r213;
+	mov.b32 	%f6, %r214;
+	cvt.rzi.s32.f32 	%r215, %f6;
+	mov.b32 	%f4, %r215;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_1_561666:
+$Lt_1_34562:
+	.loc	4	135	0
+	@%p1 bra 	$L_1_435714;
+	ld.global.u32 	%r216, [%r8+108];
+	setp.eq.u32 	%p68, %r216, %r11;
+	@%p68 bra 	$L_1_435458;
+$L_1_435714:
+	mov.s32 	%r217, 1;
+	bra.uni 	$L_1_435202;
+$L_1_435458:
+	mov.s32 	%r217, 0;
+$L_1_435202:
+	mov.u32 	%r218, 0;
+	setp.ne.s32 	%p69, %r217, %r218;
+	@%p69 bra 	$Lt_1_563458;
+	ld.global.s32 	%r219, [%r8+28];
+	mov.u32 	%r220, 0;
+	setp.ne.s32 	%p70, %r219, %r220;
+	@%p70 bra 	$Lt_1_563458;
+	.loc	17	281	0
+	ld.global.s32 	%r221, [%r8+8];
+	mov.u32 	%r222, 23;
+	setp.ne.s32 	%p71, %r221, %r222;
+	@%p71 bra 	$Lt_1_563458;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r223, [%r8+0];
+	ld.global.s32 	%r224, [%r43+116];
+	setp.ne.s32 	%p72, %r223, %r224;
+	@%p72 bra 	$Lt_1_563458;
+	ld.global.s32 	%r225, [%r8+4];
+	ld.global.s32 	%r226, [%r43+120];
+	setp.ne.s32 	%p73, %r225, %r226;
+	@%p73 bra 	$Lt_1_563458;
+	ld.global.s32 	%r227, [%r8+12];
+	mul.lo.u32 	%r228, %r24, 1536;
+	add.u32 	%r229, %r8, %r228;
+	ld.global.s32 	%r230, [%r229+828];
+	setp.ne.s32 	%p74, %r227, %r230;
+	@%p74 bra 	$Lt_1_563458;
+	.loc	17	283	0
+	mov.s32 	%r231, 1;
+	st.global.s32 	[%r8+28], %r231;
+	.loc	17	284	0
+	ld.global.s32 	%r232, [%r8+24];
+	add.s32 	%r233, %r232, 1;
+	st.global.s32 	[%r8+24], %r233;
+	.loc	17	296	0
+	ld.global.u32 	%r234, [%r8+20];
+	mov.b32 	%r235, %f7;
+	cvt.rn.f32.s32 	%f8, %r235;
+	mov.b32 	%r236, %f8;
+	xor.b32 	%r237, %r234, %r236;
+	mov.b32 	%f9, %r237;
+	cvt.rzi.s32.f32 	%r238, %f9;
+	mov.b32 	%f7, %r238;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_1_563458:
+$Lt_1_34050:
+	.loc	4	139	0
+	@%p1 bra 	$L_1_437506;
+	ld.global.u32 	%r239, [%r8+108];
+	setp.eq.u32 	%p75, %r239, %r11;
+	@%p75 bra 	$L_1_437250;
+$L_1_437506:
+	mov.s32 	%r240, 1;
+	bra.uni 	$L_1_436994;
+$L_1_437250:
+	mov.s32 	%r240, 0;
+$L_1_436994:
+	mov.u32 	%r241, 0;
+	setp.ne.s32 	%p76, %r240, %r241;
+	@%p76 bra 	$Lt_1_565250;
+	ld.global.s32 	%r242, [%r8+28];
+	mov.u32 	%r243, 0;
+	setp.ne.s32 	%p77, %r242, %r243;
+	@%p77 bra 	$Lt_1_565250;
+	.loc	17	281	0
+	ld.global.s32 	%r244, [%r8+8];
+	mov.u32 	%r245, 24;
+	setp.ne.s32 	%p78, %r244, %r245;
+	@%p78 bra 	$Lt_1_565250;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r246, [%r8+0];
+	ld.global.s32 	%r247, [%r43+116];
+	setp.ne.s32 	%p79, %r246, %r247;
+	@%p79 bra 	$Lt_1_565250;
+	ld.global.s32 	%r248, [%r8+4];
+	ld.global.s32 	%r249, [%r43+120];
+	setp.ne.s32 	%p80, %r248, %r249;
+	@%p80 bra 	$Lt_1_565250;
+	ld.global.s32 	%r250, [%r8+12];
+	mul.lo.u32 	%r251, %r24, 1536;
+	add.u32 	%r252, %r8, %r251;
+	ld.global.s32 	%r253, [%r252+840];
+	setp.ne.s32 	%p81, %r250, %r253;
+	@%p81 bra 	$Lt_1_565250;
+	.loc	17	283	0
+	mov.s32 	%r254, 1;
+	st.global.s32 	[%r8+28], %r254;
+	.loc	17	284	0
+	ld.global.s32 	%r255, [%r8+24];
+	add.s32 	%r256, %r255, 1;
+	st.global.s32 	[%r8+24], %r256;
+	.loc	17	296	0
+	ld.global.u32 	%r257, [%r8+20];
+	mov.b32 	%r258, %f10;
+	cvt.rn.f32.s32 	%f11, %r258;
+	mov.b32 	%r259, %f11;
+	xor.b32 	%r260, %r257, %r259;
+	mov.b32 	%f12, %r260;
+	cvt.rzi.s32.f32 	%r261, %f12;
+	mov.b32 	%f10, %r261;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_1_565250:
+$Lt_1_33538:
+	.loc	4	143	0
+	@%p1 bra 	$L_1_439298;
+	ld.global.u32 	%r262, [%r8+108];
+	setp.eq.u32 	%p82, %r262, %r11;
+	@%p82 bra 	$L_1_439042;
+$L_1_439298:
+	mov.s32 	%r263, 1;
+	bra.uni 	$L_1_438786;
+$L_1_439042:
+	mov.s32 	%r263, 0;
+$L_1_438786:
+	mov.u32 	%r264, 0;
+	setp.ne.s32 	%p83, %r263, %r264;
+	@%p83 bra 	$Lt_1_567042;
+	ld.global.s32 	%r265, [%r8+28];
+	mov.u32 	%r266, 0;
+	setp.ne.s32 	%p84, %r265, %r266;
+	@%p84 bra 	$Lt_1_567042;
+	.loc	17	281	0
+	ld.global.s32 	%r267, [%r8+8];
+	mov.u32 	%r268, 25;
+	setp.ne.s32 	%p85, %r267, %r268;
+	@%p85 bra 	$Lt_1_567042;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r269, [%r8+0];
+	ld.global.s32 	%r270, [%r43+116];
+	setp.ne.s32 	%p86, %r269, %r270;
+	@%p86 bra 	$Lt_1_567042;
+	ld.global.s32 	%r271, [%r8+4];
+	ld.global.s32 	%r272, [%r43+120];
+	setp.ne.s32 	%p87, %r271, %r272;
+	@%p87 bra 	$Lt_1_567042;
+	ld.global.s32 	%r273, [%r8+12];
+	mul.lo.u32 	%r274, %r24, 1536;
+	add.u32 	%r275, %r8, %r274;
+	ld.global.s32 	%r276, [%r275+852];
+	setp.ne.s32 	%p88, %r273, %r276;
+	@%p88 bra 	$Lt_1_567042;
+	.loc	17	283	0
+	mov.s32 	%r277, 1;
+	st.global.s32 	[%r8+28], %r277;
+	.loc	17	284	0
+	ld.global.s32 	%r278, [%r8+24];
+	add.s32 	%r279, %r278, 1;
+	st.global.s32 	[%r8+24], %r279;
+	.loc	17	296	0
+	ld.global.u32 	%r280, [%r8+20];
+	mov.b32 	%r281, %f13;
+	cvt.rn.f32.s32 	%f14, %r281;
+	mov.b32 	%r282, %f14;
+	xor.b32 	%r283, %r280, %r282;
+	mov.b32 	%f15, %r283;
+	cvt.rzi.s32.f32 	%r284, %f15;
+	mov.b32 	%f13, %r284;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_1_567042:
+$Lt_1_33026:
+	.loc	4	148	0
+	mul.lo.u32 	%r285, %r10, 256;
+	add.u32 	%r286, %r11, %r285;
+	.loc	4	149	0
+	@%p1 bra 	$L_1_441090;
+	ld.global.u32 	%r287, [%r8+108];
+	setp.eq.u32 	%p89, %r287, %r11;
+	@%p89 bra 	$L_1_440834;
+$L_1_441090:
+	mov.s32 	%r288, 1;
+	bra.uni 	$L_1_440578;
+$L_1_440834:
+	mov.s32 	%r288, 0;
+$L_1_440578:
+	mov.u32 	%r289, 0;
+	setp.ne.s32 	%p90, %r288, %r289;
+	@%p90 bra 	$Lt_1_568834;
+	ld.global.s32 	%r290, [%r8+28];
+	mov.u32 	%r291, 0;
+	setp.ne.s32 	%p91, %r290, %r291;
+	@%p91 bra 	$Lt_1_568834;
+	.loc	17	281	0
+	ld.global.s32 	%r292, [%r8+8];
+	mov.u32 	%r293, 26;
+	setp.ne.s32 	%p92, %r292, %r293;
+	@%p92 bra 	$Lt_1_568834;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r294, [%r8+0];
+	ld.global.s32 	%r295, [%r43+116];
+	setp.ne.s32 	%p93, %r294, %r295;
+	@%p93 bra 	$Lt_1_568834;
+	ld.global.s32 	%r296, [%r8+4];
+	ld.global.s32 	%r297, [%r43+120];
+	setp.ne.s32 	%p94, %r296, %r297;
+	@%p94 bra 	$Lt_1_568834;
+	ld.global.s32 	%r298, [%r8+12];
+	mul.lo.u32 	%r299, %r24, 1536;
+	add.u32 	%r300, %r8, %r299;
+	ld.global.s32 	%r301, [%r300+864];
+	setp.ne.s32 	%p95, %r298, %r301;
+	@%p95 bra 	$Lt_1_568834;
+	.loc	17	283	0
+	mov.s32 	%r302, 1;
+	st.global.s32 	[%r8+28], %r302;
+	.loc	17	284	0
+	ld.global.s32 	%r303, [%r8+24];
+	add.s32 	%r304, %r303, 1;
+	st.global.s32 	[%r8+24], %r304;
+	.loc	17	286	0
+	ld.global.u32 	%r305, [%r8+20];
+	xor.b32 	%r286, %r286, %r305;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_1_568834:
+$Lt_1_32514:
+	.loc	4	153	0
+	@%p1 bra 	$L_1_442882;
+	ld.global.u32 	%r306, [%r8+108];
+	setp.eq.u32 	%p96, %r306, %r11;
+	@%p96 bra 	$L_1_442626;
+$L_1_442882:
+	mov.s32 	%r307, 1;
+	bra.uni 	$L_1_442370;
+$L_1_442626:
+	mov.s32 	%r307, 0;
+$L_1_442370:
+	mov.u32 	%r308, 0;
+	setp.ne.s32 	%p97, %r307, %r308;
+	@%p97 bra 	$Lt_1_570626;
+	ld.global.s32 	%r309, [%r8+28];
+	mov.u32 	%r310, 0;
+	setp.ne.s32 	%p98, %r309, %r310;
+	@%p98 bra 	$Lt_1_570626;
+	.loc	17	281	0
+	ld.global.s32 	%r311, [%r8+8];
+	mov.u32 	%r312, 27;
+	setp.ne.s32 	%p99, %r311, %r312;
+	@%p99 bra 	$Lt_1_570626;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r313, [%r8+0];
+	ld.global.s32 	%r314, [%r43+116];
+	setp.ne.s32 	%p100, %r313, %r314;
+	@%p100 bra 	$Lt_1_570626;
+	ld.global.s32 	%r315, [%r8+4];
+	ld.global.s32 	%r316, [%r43+120];
+	setp.ne.s32 	%p101, %r315, %r316;
+	@%p101 bra 	$Lt_1_570626;
+	ld.global.s32 	%r317, [%r8+12];
+	mul.lo.u32 	%r318, %r24, 1536;
+	add.u32 	%r319, %r8, %r318;
+	ld.global.s32 	%r320, [%r319+876];
+	setp.ne.s32 	%p102, %r317, %r320;
+	@%p102 bra 	$Lt_1_570626;
+	.loc	17	283	0
+	mov.s32 	%r321, 1;
+	st.global.s32 	[%r8+28], %r321;
+	.loc	17	284	0
+	ld.global.s32 	%r322, [%r8+24];
+	add.s32 	%r323, %r322, 1;
+	st.global.s32 	[%r8+24], %r323;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_1_570626:
+$Lt_1_32002:
+	.loc	4	157	0
+	@%p1 bra 	$L_1_444674;
+	ld.global.u32 	%r324, [%r8+108];
+	setp.eq.u32 	%p103, %r324, %r11;
+	@%p103 bra 	$L_1_444418;
+$L_1_444674:
+	mov.s32 	%r325, 1;
+	bra.uni 	$L_1_444162;
+$L_1_444418:
+	mov.s32 	%r325, 0;
+$L_1_444162:
+	mov.u32 	%r326, 0;
+	setp.ne.s32 	%p104, %r325, %r326;
+	@%p104 bra 	$Lt_1_572418;
+	ld.global.s32 	%r327, [%r8+28];
+	mov.u32 	%r328, 0;
+	setp.ne.s32 	%p105, %r327, %r328;
+	@%p105 bra 	$Lt_1_572674;
+	.loc	17	281	0
+	ld.global.s32 	%r329, [%r8+8];
+	mov.u32 	%r330, 28;
+	setp.ne.s32 	%p106, %r329, %r330;
+	@%p106 bra 	$Lt_1_572930;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r331, [%r8+0];
+	ld.global.s32 	%r332, [%r43+116];
+	setp.ne.s32 	%p107, %r331, %r332;
+	@%p107 bra 	$Lt_1_573186;
+	ld.global.s32 	%r333, [%r8+4];
+	ld.global.s32 	%r334, [%r43+120];
+	setp.ne.s32 	%p108, %r333, %r334;
+	@%p108 bra 	$Lt_1_573442;
+	ld.global.s32 	%r335, [%r8+12];
+	mul.lo.u32 	%r336, %r24, 1536;
+	add.u32 	%r337, %r8, %r336;
+	ld.global.s32 	%r338, [%r337+888];
+	setp.ne.s32 	%p109, %r335, %r338;
+	@%p109 bra 	$Lt_1_573698;
+	.loc	17	283	0
+	mov.s32 	%r339, 1;
+	st.global.s32 	[%r8+28], %r339;
+	.loc	17	284	0
+	ld.global.s32 	%r340, [%r8+24];
+	add.s32 	%r341, %r340, 1;
+	st.global.s32 	[%r8+24], %r341;
+	.loc	17	286	0
+	ld.global.u32 	%r342, [%r8+20];
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+	bra.uni 	$Lt_1_31490;
+$Lt_1_572930:
+	mov.s32 	%r342, 0;
+	bra.uni 	$Lt_1_31490;
+$Lt_1_573186:
+	mov.s32 	%r342, 0;
+	bra.uni 	$Lt_1_31490;
+$Lt_1_573442:
+	mov.s32 	%r342, 0;
+	bra.uni 	$Lt_1_31490;
+$Lt_1_573698:
+	mov.s32 	%r342, 0;
+	bra.uni 	$Lt_1_31490;
+$Lt_1_572418:
+	mov.s32 	%r342, 0;
+	bra.uni 	$Lt_1_31490;
+$Lt_1_572674:
+	mov.s32 	%r342, 0;
+$Lt_1_31490:
+	.loc	4	161	0
+	@%p1 bra 	$L_1_446466;
+	ld.global.u32 	%r343, [%r8+108];
+	setp.eq.u32 	%p110, %r343, %r11;
+	@%p110 bra 	$L_1_446210;
+$L_1_446466:
+	mov.s32 	%r344, 1;
+	bra.uni 	$L_1_445954;
+$L_1_446210:
+	mov.s32 	%r344, 0;
+$L_1_445954:
+	mov.u32 	%r345, 0;
+	setp.ne.s32 	%p111, %r344, %r345;
+	@%p111 bra 	$Lt_1_574210;
+	ld.global.s32 	%r346, [%r8+28];
+	mov.u32 	%r347, 0;
+	setp.ne.s32 	%p112, %r346, %r347;
+	@%p112 bra 	$Lt_1_574210;
+	.loc	17	281	0
+	ld.global.s32 	%r348, [%r8+8];
+	mov.u32 	%r349, 29;
+	setp.ne.s32 	%p113, %r348, %r349;
+	@%p113 bra 	$Lt_1_574210;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r350, [%r8+0];
+	ld.global.s32 	%r351, [%r43+116];
+	setp.ne.s32 	%p114, %r350, %r351;
+	@%p114 bra 	$Lt_1_574210;
+	ld.global.s32 	%r352, [%r8+4];
+	ld.global.s32 	%r353, [%r43+120];
+	setp.ne.s32 	%p115, %r352, %r353;
+	@%p115 bra 	$Lt_1_574210;
+	ld.global.s32 	%r354, [%r8+12];
+	mul.lo.u32 	%r355, %r24, 1536;
+	add.u32 	%r356, %r8, %r355;
+	ld.global.s32 	%r357, [%r356+900];
+	setp.ne.s32 	%p116, %r354, %r357;
+	@%p116 bra 	$Lt_1_574210;
+	.loc	17	283	0
+	mov.s32 	%r358, 1;
+	st.global.s32 	[%r8+28], %r358;
+	.loc	17	284	0
+	ld.global.s32 	%r359, [%r8+24];
+	add.s32 	%r360, %r359, 1;
+	st.global.s32 	[%r8+24], %r360;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_1_574210:
+$Lt_1_30978:
+	.loc	4	165	0
+	@%p1 bra 	$L_1_448258;
+	ld.global.u32 	%r361, [%r8+108];
+	setp.eq.u32 	%p117, %r361, %r11;
+	@%p117 bra 	$L_1_448002;
+$L_1_448258:
+	mov.s32 	%r362, 1;
+	bra.uni 	$L_1_447746;
+$L_1_448002:
+	mov.s32 	%r362, 0;
+$L_1_447746:
+	mov.u32 	%r363, 0;
+	setp.ne.s32 	%p118, %r362, %r363;
+	@%p118 bra 	$Lt_1_576002;
+	ld.global.s32 	%r364, [%r8+28];
+	mov.u32 	%r365, 0;
+	setp.ne.s32 	%p119, %r364, %r365;
+	@%p119 bra 	$Lt_1_576002;
+	.loc	17	281	0
+	ld.global.s32 	%r366, [%r8+8];
+	mov.u32 	%r367, 30;
+	setp.ne.s32 	%p120, %r366, %r367;
+	@%p120 bra 	$Lt_1_576002;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r368, [%r8+0];
+	ld.global.s32 	%r369, [%r43+116];
+	setp.ne.s32 	%p121, %r368, %r369;
+	@%p121 bra 	$Lt_1_576002;
+	ld.global.s32 	%r370, [%r8+4];
+	ld.global.s32 	%r371, [%r43+120];
+	setp.ne.s32 	%p122, %r370, %r371;
+	@%p122 bra 	$Lt_1_576002;
+	ld.global.s32 	%r372, [%r8+12];
+	mul.lo.u32 	%r373, %r24, 1536;
+	add.u32 	%r374, %r8, %r373;
+	ld.global.s32 	%r375, [%r374+912];
+	setp.ne.s32 	%p123, %r372, %r375;
+	@%p123 bra 	$Lt_1_576002;
+	.loc	17	283	0
+	mov.s32 	%r376, 1;
+	st.global.s32 	[%r8+28], %r376;
+	.loc	17	284	0
+	ld.global.s32 	%r377, [%r8+24];
+	add.s32 	%r378, %r377, 1;
+	st.global.s32 	[%r8+24], %r378;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_1_576002:
+$Lt_1_30466:
+	.loc	4	168	0
+	mul.lo.u32 	%r379, %r286, 4;
+	add.u32 	%r380, %r379, %r3;
+	ld.global.f32 	%f16, [%r380+0];
+	mov.f32 	%f1, %f16;
+	.loc	4	169	0
+	@%p1 bra 	$L_1_450050;
+	ld.global.u32 	%r381, [%r8+108];
+	setp.eq.u32 	%p124, %r381, %r11;
+	@%p124 bra 	$L_1_449794;
+$L_1_450050:
+	mov.s32 	%r382, 1;
+	bra.uni 	$L_1_449538;
+$L_1_449794:
+	mov.s32 	%r382, 0;
+$L_1_449538:
+	mov.u32 	%r383, 0;
+	setp.ne.s32 	%p125, %r382, %r383;
+	@%p125 bra 	$Lt_1_577794;
+	ld.global.s32 	%r384, [%r8+28];
+	mov.u32 	%r385, 0;
+	setp.ne.s32 	%p126, %r384, %r385;
+	@%p126 bra 	$Lt_1_577794;
+	.loc	17	281	0
+	ld.global.s32 	%r386, [%r8+8];
+	mov.u32 	%r387, 31;
+	setp.ne.s32 	%p127, %r386, %r387;
+	@%p127 bra 	$Lt_1_577794;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r388, [%r8+0];
+	ld.global.s32 	%r389, [%r43+116];
+	setp.ne.s32 	%p128, %r388, %r389;
+	@%p128 bra 	$Lt_1_577794;
+	ld.global.s32 	%r390, [%r8+4];
+	ld.global.s32 	%r391, [%r43+120];
+	setp.ne.s32 	%p129, %r390, %r391;
+	@%p129 bra 	$Lt_1_577794;
+	ld.global.s32 	%r392, [%r8+12];
+	mul.lo.u32 	%r393, %r24, 1536;
+	add.u32 	%r394, %r8, %r393;
+	ld.global.s32 	%r395, [%r394+924];
+	setp.ne.s32 	%p130, %r392, %r395;
+	@%p130 bra 	$Lt_1_577794;
+	.loc	17	283	0
+	mov.s32 	%r396, 1;
+	st.global.s32 	[%r8+28], %r396;
+	.loc	17	284	0
+	ld.global.s32 	%r397, [%r8+24];
+	add.s32 	%r398, %r397, 1;
+	st.global.s32 	[%r8+24], %r398;
+	.loc	17	296	0
+	ld.global.u32 	%r399, [%r8+20];
+	mov.b32 	%r400, %f1;
+	cvt.rn.f32.s32 	%f17, %r400;
+	mov.b32 	%r401, %f17;
+	xor.b32 	%r402, %r399, %r401;
+	mov.b32 	%f18, %r402;
+	cvt.rzi.s32.f32 	%r403, %f18;
+	mov.b32 	%f1, %r403;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_1_577794:
+$Lt_1_29954:
+	.loc	4	172	0
+	add.u32 	%r404, %r379, %r4;
+	ld.global.f32 	%f19, [%r404+0];
+	mov.f32 	%f4, %f19;
+	.loc	4	173	0
+	@%p1 bra 	$L_1_451842;
+	ld.global.u32 	%r405, [%r8+108];
+	setp.eq.u32 	%p131, %r405, %r11;
+	@%p131 bra 	$L_1_451586;
+$L_1_451842:
+	mov.s32 	%r406, 1;
+	bra.uni 	$L_1_451330;
+$L_1_451586:
+	mov.s32 	%r406, 0;
+$L_1_451330:
+	mov.u32 	%r407, 0;
+	setp.ne.s32 	%p132, %r406, %r407;
+	@%p132 bra 	$Lt_1_579586;
+	ld.global.s32 	%r408, [%r8+28];
+	mov.u32 	%r409, 0;
+	setp.ne.s32 	%p133, %r408, %r409;
+	@%p133 bra 	$Lt_1_579586;
+	.loc	17	281	0
+	ld.global.s32 	%r410, [%r8+8];
+	mov.u32 	%r411, 32;
+	setp.ne.s32 	%p134, %r410, %r411;
+	@%p134 bra 	$Lt_1_579586;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r412, [%r8+0];
+	ld.global.s32 	%r413, [%r43+116];
+	setp.ne.s32 	%p135, %r412, %r413;
+	@%p135 bra 	$Lt_1_579586;
+	ld.global.s32 	%r414, [%r8+4];
+	ld.global.s32 	%r415, [%r43+120];
+	setp.ne.s32 	%p136, %r414, %r415;
+	@%p136 bra 	$Lt_1_579586;
+	ld.global.s32 	%r416, [%r8+12];
+	mul.lo.u32 	%r417, %r24, 1536;
+	add.u32 	%r418, %r8, %r417;
+	ld.global.s32 	%r419, [%r418+936];
+	setp.ne.s32 	%p137, %r416, %r419;
+	@%p137 bra 	$Lt_1_579586;
+	.loc	17	283	0
+	mov.s32 	%r420, 1;
+	st.global.s32 	[%r8+28], %r420;
+	.loc	17	284	0
+	ld.global.s32 	%r421, [%r8+24];
+	add.s32 	%r422, %r421, 1;
+	st.global.s32 	[%r8+24], %r422;
+	.loc	17	296	0
+	ld.global.u32 	%r423, [%r8+20];
+	mov.b32 	%r424, %f4;
+	cvt.rn.f32.s32 	%f20, %r424;
+	mov.b32 	%r425, %f20;
+	xor.b32 	%r426, %r423, %r425;
+	mov.b32 	%f21, %r426;
+	cvt.rzi.s32.f32 	%r427, %f21;
+	mov.b32 	%f4, %r427;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_1_579586:
+$Lt_1_29442:
+	.loc	4	176	0
+	add.u32 	%r428, %r379, %r5;
+	ld.global.f32 	%f22, [%r428+0];
+	mov.f32 	%f7, %f22;
+	.loc	4	177	0
+	@%p1 bra 	$L_1_453634;
+	ld.global.u32 	%r429, [%r8+108];
+	setp.eq.u32 	%p138, %r429, %r11;
+	@%p138 bra 	$L_1_453378;
+$L_1_453634:
+	mov.s32 	%r430, 1;
+	bra.uni 	$L_1_453122;
+$L_1_453378:
+	mov.s32 	%r430, 0;
+$L_1_453122:
+	mov.u32 	%r431, 0;
+	setp.ne.s32 	%p139, %r430, %r431;
+	@%p139 bra 	$Lt_1_581378;
+	ld.global.s32 	%r432, [%r8+28];
+	mov.u32 	%r433, 0;
+	setp.ne.s32 	%p140, %r432, %r433;
+	@%p140 bra 	$Lt_1_581378;
+	.loc	17	281	0
+	ld.global.s32 	%r434, [%r8+8];
+	mov.u32 	%r435, 33;
+	setp.ne.s32 	%p141, %r434, %r435;
+	@%p141 bra 	$Lt_1_581378;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r436, [%r8+0];
+	ld.global.s32 	%r437, [%r43+116];
+	setp.ne.s32 	%p142, %r436, %r437;
+	@%p142 bra 	$Lt_1_581378;
+	ld.global.s32 	%r438, [%r8+4];
+	ld.global.s32 	%r439, [%r43+120];
+	setp.ne.s32 	%p143, %r438, %r439;
+	@%p143 bra 	$Lt_1_581378;
+	ld.global.s32 	%r440, [%r8+12];
+	mul.lo.u32 	%r441, %r24, 1536;
+	add.u32 	%r442, %r8, %r441;
+	ld.global.s32 	%r443, [%r442+948];
+	setp.ne.s32 	%p144, %r440, %r443;
+	@%p144 bra 	$Lt_1_581378;
+	.loc	17	283	0
+	mov.s32 	%r444, 1;
+	st.global.s32 	[%r8+28], %r444;
+	.loc	17	284	0
+	ld.global.s32 	%r445, [%r8+24];
+	add.s32 	%r446, %r445, 1;
+	st.global.s32 	[%r8+24], %r446;
+	.loc	17	296	0
+	ld.global.u32 	%r447, [%r8+20];
+	mov.b32 	%r448, %f7;
+	cvt.rn.f32.s32 	%f23, %r448;
+	mov.b32 	%r449, %f23;
+	xor.b32 	%r450, %r447, %r449;
+	mov.b32 	%f24, %r450;
+	cvt.rzi.s32.f32 	%r451, %f24;
+	mov.b32 	%f7, %r451;
+$Lt_1_581378:
+$Lt_1_28930:
+	.loc	4	180	0
+	add.u32 	%r452, %r379, %r6;
+	ld.global.f32 	%f25, [%r452+0];
+	mov.f32 	%f10, %f25;
+	.loc	4	181	0
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+	@%p1 bra 	$L_1_455426;
+	ld.global.u32 	%r453, [%r8+108];
+	setp.eq.u32 	%p145, %r453, %r11;
+	@%p145 bra 	$L_1_455170;
+$L_1_455426:
+	mov.s32 	%r454, 1;
+	bra.uni 	$L_1_454914;
+$L_1_455170:
+	mov.s32 	%r454, 0;
+$L_1_454914:
+	mov.u32 	%r455, 0;
+	setp.ne.s32 	%p146, %r454, %r455;
+	@%p146 bra 	$Lt_1_583170;
+	ld.global.s32 	%r456, [%r8+28];
+	mov.u32 	%r457, 0;
+	setp.ne.s32 	%p147, %r456, %r457;
+	@%p147 bra 	$Lt_1_583170;
+	.loc	17	281	0
+	ld.global.s32 	%r458, [%r8+8];
+	mov.u32 	%r459, 34;
+	setp.ne.s32 	%p148, %r458, %r459;
+	@%p148 bra 	$Lt_1_583170;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r460, [%r8+0];
+	ld.global.s32 	%r461, [%r43+116];
+	setp.ne.s32 	%p149, %r460, %r461;
+	@%p149 bra 	$Lt_1_583170;
+	ld.global.s32 	%r462, [%r8+4];
+	ld.global.s32 	%r463, [%r43+120];
+	setp.ne.s32 	%p150, %r462, %r463;
+	@%p150 bra 	$Lt_1_583170;
+	ld.global.s32 	%r464, [%r8+12];
+	mul.lo.u32 	%r465, %r24, 1536;
+	add.u32 	%r466, %r8, %r465;
+	ld.global.s32 	%r467, [%r466+960];
+	setp.ne.s32 	%p151, %r464, %r467;
+	@%p151 bra 	$Lt_1_583170;
+	.loc	17	283	0
+	mov.s32 	%r468, 1;
+	st.global.s32 	[%r8+28], %r468;
+	.loc	17	284	0
+	ld.global.s32 	%r469, [%r8+24];
+	add.s32 	%r470, %r469, 1;
+	st.global.s32 	[%r8+24], %r470;
+	.loc	17	296	0
+	ld.global.u32 	%r471, [%r8+20];
+	mov.b32 	%r472, %f10;
+	cvt.rn.f32.s32 	%f26, %r472;
+	mov.b32 	%r473, %f26;
+	xor.b32 	%r474, %r471, %r473;
+	mov.b32 	%f27, %r474;
+	cvt.rzi.s32.f32 	%r475, %f27;
+	mov.b32 	%f10, %r475;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_1_583170:
+$Lt_1_28418:
+	.loc	4	184	0
+	add.u32 	%r476, %r379, %r7;
+	ld.global.f32 	%f28, [%r476+0];
+	mov.f32 	%f13, %f28;
+	.loc	4	185	0
+	@%p1 bra 	$L_1_457218;
+	ld.global.u32 	%r477, [%r8+108];
+	setp.eq.u32 	%p152, %r477, %r11;
+	@%p152 bra 	$L_1_456962;
+$L_1_457218:
+	mov.s32 	%r478, 1;
+	bra.uni 	$L_1_456706;
+$L_1_456962:
+	mov.s32 	%r478, 0;
+$L_1_456706:
+	mov.u32 	%r479, 0;
+	setp.ne.s32 	%p153, %r478, %r479;
+	@%p153 bra 	$Lt_1_584962;
+	ld.global.s32 	%r480, [%r8+28];
+	mov.u32 	%r481, 0;
+	setp.ne.s32 	%p154, %r480, %r481;
+	@%p154 bra 	$Lt_1_584962;
+	.loc	17	281	0
+	ld.global.s32 	%r482, [%r8+8];
+	mov.u32 	%r483, 35;
+	setp.ne.s32 	%p155, %r482, %r483;
+	@%p155 bra 	$Lt_1_584962;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r484, [%r8+0];
+	ld.global.s32 	%r485, [%r43+116];
+	setp.ne.s32 	%p156, %r484, %r485;
+	@%p156 bra 	$Lt_1_584962;
+	ld.global.s32 	%r486, [%r8+4];
+	ld.global.s32 	%r487, [%r43+120];
+	setp.ne.s32 	%p157, %r486, %r487;
+	@%p157 bra 	$Lt_1_584962;
+	ld.global.s32 	%r488, [%r8+12];
+	mul.lo.u32 	%r489, %r24, 1536;
+	add.u32 	%r490, %r8, %r489;
+	ld.global.s32 	%r491, [%r490+972];
+	setp.ne.s32 	%p158, %r488, %r491;
+	@%p158 bra 	$Lt_1_584962;
+	.loc	17	283	0
+	mov.s32 	%r492, 1;
+	st.global.s32 	[%r8+28], %r492;
+	.loc	17	284	0
+	ld.global.s32 	%r493, [%r8+24];
+	add.s32 	%r494, %r493, 1;
+	st.global.s32 	[%r8+24], %r494;
+	.loc	17	296	0
+	ld.global.u32 	%r495, [%r8+20];
+	mov.b32 	%r496, %f13;
+	cvt.rn.f32.s32 	%f29, %r496;
+	mov.b32 	%r497, %f29;
+	xor.b32 	%r498, %r495, %r497;
+	mov.b32 	%f30, %r498;
+	cvt.rzi.s32.f32 	%r499, %f30;
+	mov.b32 	%f13, %r499;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_1_584962:
+$Lt_1_27906:
+	.loc	4	192	0
+	sub.s32 	%r500, %r1, %r2;
+	.loc	4	193	0
+	@%p1 bra 	$L_1_459010;
+	ld.global.u32 	%r501, [%r8+108];
+	setp.eq.u32 	%p159, %r501, %r11;
+	@%p159 bra 	$L_1_458754;
+$L_1_459010:
+	mov.s32 	%r502, 1;
+	bra.uni 	$L_1_458498;
+$L_1_458754:
+	mov.s32 	%r502, 0;
+$L_1_458498:
+	mov.u32 	%r503, 0;
+	setp.ne.s32 	%p160, %r502, %r503;
+	@%p160 bra 	$Lt_1_586754;
+	ld.global.s32 	%r504, [%r8+28];
+	mov.u32 	%r505, 0;
+	setp.ne.s32 	%p161, %r504, %r505;
+	@%p161 bra 	$Lt_1_586754;
+	.loc	17	281	0
+	ld.global.s32 	%r506, [%r8+8];
+	mov.u32 	%r507, 36;
+	setp.ne.s32 	%p162, %r506, %r507;
+	@%p162 bra 	$Lt_1_586754;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r508, [%r8+0];
+	ld.global.s32 	%r509, [%r43+116];
+	setp.ne.s32 	%p163, %r508, %r509;
+	@%p163 bra 	$Lt_1_586754;
+	ld.global.s32 	%r510, [%r8+4];
+	ld.global.s32 	%r511, [%r43+120];
+	setp.ne.s32 	%p164, %r510, %r511;
+	@%p164 bra 	$Lt_1_586754;
+	ld.global.s32 	%r512, [%r8+12];
+	mul.lo.u32 	%r513, %r24, 1536;
+	add.u32 	%r514, %r8, %r513;
+	ld.global.s32 	%r515, [%r514+984];
+	setp.ne.s32 	%p165, %r512, %r515;
+	@%p165 bra 	$Lt_1_586754;
+	.loc	17	283	0
+	mov.s32 	%r516, 1;
+	st.global.s32 	[%r8+28], %r516;
+	.loc	17	284	0
+	ld.global.s32 	%r517, [%r8+24];
+	add.s32 	%r518, %r517, 1;
+	st.global.s32 	[%r8+24], %r518;
+	.loc	17	286	0
+	ld.global.u32 	%r519, [%r8+20];
+	xor.b32 	%r500, %r500, %r519;
+	ld.global.u32 	%r9, [%r8+104];
+$Lt_1_586754:
+$Lt_1_27394:
+	.loc	4	193	0
+	mov.u32 	%r520, 511;
+	setp.gt.s32 	%p166, %r500, %r520;
+	@%p166 bra 	$Lt_1_600066;
+	.loc	4	202	0
+	shr.s32 	%r521, %r500, 31;
+	mov.s32 	%r522, 3;
+	and.b32 	%r523, %r521, %r522;
+	add.s32 	%r524, %r523, %r500;
+	shr.s32 	%r525, %r524, 2;
+	mul.lo.s32 	%r526, %r525, 4;
+	sub.s32 	%r527, %r500, %r526;
+	mov.u32 	%r528, 0;
+	setp.le.s32 	%p167, %r527, %r528;
+	@%p167 bra 	$Lt_1_588290;
+	setp.le.s32 	%p168, %r1, %r2;
+	mov.s32 	%r342, 0;
+	@%p168 bra 	$Lt_1_588546;
+	mov.f32 	%f31, %f7;
+	mov.f32 	%f32, %f4;
+	mov.f32 	%f33, %f1;
+	mov.u32 	%r529, c;
+$L_1_460290:
+ //<loop> Loop body line 208
+	.loc	4	208	0
+	mul.lo.u32 	%r530, %r342, 20;
+	add.u32 	%r531, %r530, %r529;
+	ld.const.f32 	%f34, [%r531+4];
+	mul.f32 	%f35, %f34, %f32;
+	ld.const.f32 	%f36, [%r531+0];
+	mad.f32 	%f37, %f36, %f33, %f35;
+	ld.const.f32 	%f38, [%r531+8];
+	mad.f32 	%f39, %f38, %f31, %f37;
+	cvt.f64.f32 	%fd1, %f39;
+	mov.f64 	%fd2, 0d401921fb54442d18;	// 6.28319
+	mul.f64 	%fd3, %fd1, %fd2;
+	cvt.rn.f32.f64 	%f40, %fd3;
+	.loc	4	209	0
+	setp.ne.u32 	%p169, %r9, %r10;
+	@%p169 bra 	$L_1_461570;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	ld.global.u32 	%r532, [%r8+108];
+	setp.eq.u32 	%p170, %r532, %r11;
+	@%p170 bra 	$L_1_461314;
+$L_1_461570:
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	mov.s32 	%r533, 1;
+	bra.uni 	$L_1_461058;
+$L_1_461314:
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	mov.s32 	%r533, 0;
+$L_1_461058:
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	mov.u32 	%r534, 0;
+	setp.ne.s32 	%p171, %r533, %r534;
+	@%p171 bra 	$Lt_1_589058;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	ld.global.s32 	%r535, [%r8+28];
+	mov.u32 	%r536, 0;
+	setp.ne.s32 	%p172, %r535, %r536;
+	@%p172 bra 	$Lt_1_589058;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	.loc	17	281	0
+	mov.f32 	%f41, %f40;
+	ld.global.s32 	%r537, [%r8+8];
+	mov.u32 	%r538, 40;
+	setp.ne.s32 	%p173, %r537, %r538;
+	@%p173 bra 	$Lt_1_590082;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r539, [%r8+0];
+	ld.global.s32 	%r540, [%r43+116];
+	setp.ne.s32 	%p174, %r539, %r540;
+	@%p174 bra 	$Lt_1_590082;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	ld.global.s32 	%r541, [%r8+4];
+	ld.global.s32 	%r542, [%r43+120];
+	setp.ne.s32 	%p175, %r541, %r542;
+	@%p175 bra 	$Lt_1_590082;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	ld.global.s32 	%r543, [%r8+12];
+	mul.lo.u32 	%r544, %r24, 1536;
+	add.u32 	%r545, %r8, %r544;
+	ld.global.s32 	%r546, [%r545+1032];
+	setp.ne.s32 	%p176, %r543, %r546;
+	@%p176 bra 	$Lt_1_590082;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	.loc	17	283	0
+	mov.s32 	%r547, 1;
+	st.global.s32 	[%r8+28], %r547;
+	.loc	17	284	0
+	ld.global.s32 	%r548, [%r8+24];
+	add.s32 	%r549, %r548, 1;
+	st.global.s32 	[%r8+24], %r549;
+	.loc	17	296	0
+	ld.global.u32 	%r550, [%r8+20];
+	mov.b32 	%r551, %f41;
+	cvt.rn.f32.s32 	%f42, %r551;
+	mov.b32 	%r552, %f42;
+	xor.b32 	%r553, %r550, %r552;
+	mov.b32 	%f43, %r553;
+	cvt.rzi.s32.f32 	%r554, %f43;
+	mov.b32 	%f41, %r554;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_590082:
+$L_1_461826:
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	mov.f32 	%f40, %f41;
+$Lt_1_589058:
+$Lt_1_25858:
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	.loc	4	212	0
+	cos.approx.f32 	%f44, %f40;
+	.loc	4	213	0
+	@%p169 bra 	$L_1_463362;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	ld.global.u32 	%r555, [%r8+108];
+	setp.eq.u32 	%p177, %r555, %r11;
+	@%p177 bra 	$L_1_463106;
+$L_1_463362:
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	mov.s32 	%r556, 1;
+	bra.uni 	$L_1_462850;
+$L_1_463106:
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	mov.s32 	%r556, 0;
+$L_1_462850:
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	mov.u32 	%r557, 0;
+	setp.ne.s32 	%p178, %r556, %r557;
+	@%p178 bra 	$Lt_1_590850;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	ld.global.s32 	%r558, [%r8+28];
+	mov.u32 	%r559, 0;
+	setp.ne.s32 	%p179, %r558, %r559;
+	@%p179 bra 	$Lt_1_590850;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	.loc	17	281	0
+	mov.f32 	%f45, %f44;
+	ld.global.s32 	%r560, [%r8+8];
+	mov.u32 	%r561, 41;
+	setp.ne.s32 	%p180, %r560, %r561;
+	@%p180 bra 	$Lt_1_591874;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r562, [%r8+0];
+	ld.global.s32 	%r563, [%r43+116];
+	setp.ne.s32 	%p181, %r562, %r563;
+	@%p181 bra 	$Lt_1_591874;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	ld.global.s32 	%r564, [%r8+4];
+	ld.global.s32 	%r565, [%r43+120];
+	setp.ne.s32 	%p182, %r564, %r565;
+	@%p182 bra 	$Lt_1_591874;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	ld.global.s32 	%r566, [%r8+12];
+	mul.lo.u32 	%r567, %r24, 1536;
+	add.u32 	%r568, %r8, %r567;
+	ld.global.s32 	%r569, [%r568+1044];
+	setp.ne.s32 	%p183, %r566, %r569;
+	@%p183 bra 	$Lt_1_591874;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	.loc	17	283	0
+	mov.s32 	%r570, 1;
+	st.global.s32 	[%r8+28], %r570;
+	.loc	17	284	0
+	ld.global.s32 	%r571, [%r8+24];
+	add.s32 	%r572, %r571, 1;
+	st.global.s32 	[%r8+24], %r572;
+	.loc	17	296	0
+	ld.global.u32 	%r573, [%r8+20];
+	mov.b32 	%r574, %f45;
+	cvt.rn.f32.s32 	%f46, %r574;
+	mov.b32 	%r575, %f46;
+	xor.b32 	%r576, %r573, %r575;
+	mov.b32 	%f47, %r576;
+	cvt.rzi.s32.f32 	%r577, %f47;
+	mov.b32 	%f45, %r577;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_591874:
+$L_1_463618:
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	mov.f32 	%f44, %f45;
+$Lt_1_590850:
+$Lt_1_25346:
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	.loc	4	216	0
+	sin.approx.f32 	%f48, %f40;
+	.loc	4	217	0
+	@%p169 bra 	$L_1_465154;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	ld.global.u32 	%r578, [%r8+108];
+	setp.eq.u32 	%p184, %r578, %r11;
+	@%p184 bra 	$L_1_464898;
+$L_1_465154:
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	mov.s32 	%r579, 1;
+	bra.uni 	$L_1_464642;
+$L_1_464898:
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	mov.s32 	%r579, 0;
+$L_1_464642:
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	mov.u32 	%r580, 0;
+	setp.ne.s32 	%p185, %r579, %r580;
+	@%p185 bra 	$Lt_1_592642;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	ld.global.s32 	%r581, [%r8+28];
+	mov.u32 	%r582, 0;
+	setp.ne.s32 	%p186, %r581, %r582;
+	@%p186 bra 	$Lt_1_592642;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	.loc	17	281	0
+	mov.f32 	%f49, %f48;
+	ld.global.s32 	%r583, [%r8+8];
+	mov.u32 	%r584, 42;
+	setp.ne.s32 	%p187, %r583, %r584;
+	@%p187 bra 	$Lt_1_593666;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r585, [%r8+0];
+	ld.global.s32 	%r586, [%r43+116];
+	setp.ne.s32 	%p188, %r585, %r586;
+	@%p188 bra 	$Lt_1_593666;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	ld.global.s32 	%r587, [%r8+4];
+	ld.global.s32 	%r588, [%r43+120];
+	setp.ne.s32 	%p189, %r587, %r588;
+	@%p189 bra 	$Lt_1_593666;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	ld.global.s32 	%r589, [%r8+12];
+	mul.lo.u32 	%r590, %r24, 1536;
+	add.u32 	%r591, %r8, %r590;
+	ld.global.s32 	%r592, [%r591+1056];
+	setp.ne.s32 	%p190, %r589, %r592;
+	@%p190 bra 	$Lt_1_593666;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	.loc	17	283	0
+	mov.s32 	%r593, 1;
+	st.global.s32 	[%r8+28], %r593;
+	.loc	17	284	0
+	ld.global.s32 	%r594, [%r8+24];
+	add.s32 	%r595, %r594, 1;
+	st.global.s32 	[%r8+24], %r595;
+	.loc	17	296	0
+	ld.global.u32 	%r596, [%r8+20];
+	mov.b32 	%r597, %f49;
+	cvt.rn.f32.s32 	%f50, %r597;
+	mov.b32 	%r598, %f50;
+	xor.b32 	%r599, %r596, %r598;
+	mov.b32 	%f51, %r599;
+	cvt.rzi.s32.f32 	%r600, %f51;
+	mov.b32 	%f49, %r600;
+$Lt_1_593666:
+$L_1_465410:
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	mov.f32 	%f48, %f49;
+$Lt_1_592642:
+$Lt_1_24834:
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	.loc	4	220	0
+	ld.const.f32 	%f52, [%r531+16];
+	ld.const.f32 	%f53, [%r531+12];
+	mov.f32 	%f54, %f10;
+	mul.f32 	%f55, %f52, %f48;
+	mul.f32 	%f56, %f53, %f44;
+	sub.f32 	%f57, %f56, %f55;
+	add.f32 	%f58, %f54, %f57;
+	mov.f32 	%f10, %f58;
+	.loc	4	221	0
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+	@%p169 bra 	$L_1_466946;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	ld.global.u32 	%r601, [%r8+108];
+	setp.eq.u32 	%p191, %r601, %r11;
+	@%p191 bra 	$L_1_466690;
+$L_1_466946:
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	mov.s32 	%r602, 1;
+	bra.uni 	$L_1_466434;
+$L_1_466690:
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	mov.s32 	%r602, 0;
+$L_1_466434:
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	mov.u32 	%r603, 0;
+	setp.ne.s32 	%p192, %r602, %r603;
+	@%p192 bra 	$Lt_1_594434;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	ld.global.s32 	%r604, [%r8+28];
+	mov.u32 	%r605, 0;
+	setp.ne.s32 	%p193, %r604, %r605;
+	@%p193 bra 	$Lt_1_594434;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	.loc	17	281	0
+	ld.global.s32 	%r606, [%r8+8];
+	mov.u32 	%r607, 43;
+	setp.ne.s32 	%p194, %r606, %r607;
+	@%p194 bra 	$Lt_1_594434;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r608, [%r8+0];
+	ld.global.s32 	%r609, [%r43+116];
+	setp.ne.s32 	%p195, %r608, %r609;
+	@%p195 bra 	$Lt_1_594434;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	ld.global.s32 	%r610, [%r8+4];
+	ld.global.s32 	%r611, [%r43+120];
+	setp.ne.s32 	%p196, %r610, %r611;
+	@%p196 bra 	$Lt_1_594434;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	ld.global.s32 	%r612, [%r8+12];
+	mul.lo.u32 	%r613, %r24, 1536;
+	add.u32 	%r614, %r8, %r613;
+	ld.global.s32 	%r615, [%r614+1068];
+	setp.ne.s32 	%p197, %r612, %r615;
+	@%p197 bra 	$Lt_1_594434;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	.loc	17	283	0
+	mov.s32 	%r616, 1;
+	st.global.s32 	[%r8+28], %r616;
+	.loc	17	284	0
+	ld.global.s32 	%r617, [%r8+24];
+	add.s32 	%r618, %r617, 1;
+	st.global.s32 	[%r8+24], %r618;
+	.loc	17	296	0
+	ld.global.u32 	%r619, [%r8+20];
+	mov.b32 	%r620, %f10;
+	cvt.rn.f32.s32 	%f59, %r620;
+	mov.b32 	%r621, %f59;
+	xor.b32 	%r622, %r619, %r621;
+	mov.b32 	%f60, %r622;
+	cvt.rzi.s32.f32 	%r623, %f60;
+	mov.b32 	%f10, %r623;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_594434:
+$Lt_1_24322:
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	.loc	4	224	0
+	mov.f32 	%f61, %f13;
+	mul.f32 	%f62, %f52, %f44;
+	mad.f32 	%f63, %f53, %f48, %f62;
+	add.f32 	%f64, %f61, %f63;
+	mov.f32 	%f13, %f64;
+	.loc	4	225	0
+	@%p169 bra 	$L_1_468738;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	ld.global.u32 	%r624, [%r8+108];
+	setp.eq.u32 	%p198, %r624, %r11;
+	@%p198 bra 	$L_1_468482;
+$L_1_468738:
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	mov.s32 	%r625, 1;
+	bra.uni 	$L_1_468226;
+$L_1_468482:
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	mov.s32 	%r625, 0;
+$L_1_468226:
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	mov.u32 	%r626, 0;
+	setp.ne.s32 	%p199, %r625, %r626;
+	@%p199 bra 	$Lt_1_596226;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	ld.global.s32 	%r627, [%r8+28];
+	mov.u32 	%r628, 0;
+	setp.ne.s32 	%p200, %r627, %r628;
+	@%p200 bra 	$Lt_1_596226;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	.loc	17	281	0
+	ld.global.s32 	%r629, [%r8+8];
+	mov.u32 	%r630, 44;
+	setp.ne.s32 	%p201, %r629, %r630;
+	@%p201 bra 	$Lt_1_596226;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r631, [%r8+0];
+	ld.global.s32 	%r632, [%r43+116];
+	setp.ne.s32 	%p202, %r631, %r632;
+	@%p202 bra 	$Lt_1_596226;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	ld.global.s32 	%r633, [%r8+4];
+	ld.global.s32 	%r634, [%r43+120];
+	setp.ne.s32 	%p203, %r633, %r634;
+	@%p203 bra 	$Lt_1_596226;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	ld.global.s32 	%r635, [%r8+12];
+	mul.lo.u32 	%r636, %r24, 1536;
+	add.u32 	%r637, %r8, %r636;
+	ld.global.s32 	%r638, [%r637+1080];
+	setp.ne.s32 	%p204, %r635, %r638;
+	@%p204 bra 	$Lt_1_596226;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	.loc	17	283	0
+	mov.s32 	%r639, 1;
+	st.global.s32 	[%r8+28], %r639;
+	.loc	17	284	0
+	ld.global.s32 	%r640, [%r8+24];
+	add.s32 	%r641, %r640, 1;
+	st.global.s32 	[%r8+24], %r641;
+	.loc	17	296	0
+	ld.global.u32 	%r642, [%r8+20];
+	mov.b32 	%r643, %f13;
+	cvt.rn.f32.s32 	%f65, %r643;
+	mov.b32 	%r644, %f65;
+	xor.b32 	%r645, %r642, %r644;
+	mov.b32 	%f66, %r645;
+	cvt.rzi.s32.f32 	%r646, %f66;
+	mov.b32 	%f13, %r646;
+	ld.global.u32 	%r9, [%r8+104];
+$Lt_1_596226:
+$Lt_1_23810:
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	.loc	4	202	0
+	add.s32 	%r342, %r342, 1;
+	add.s32 	%r2, %r2, 1;
+	setp.le.s32 	%p205, %r527, %r342;
+	@%p205 bra 	$L_1_460546;
+ //<loop> Part of loop body line 208, head labeled $L_1_460290
+	setp.gt.s32 	%p206, %r1, %r2;
+	@%p206 bra 	$L_1_460290;
+	bra.uni 	$L_1_460546;
+$Lt_1_588290:
+	mov.s32 	%r342, 0;
+	bra.uni 	$L_1_460546;
+$Lt_1_588546:
+$L_1_460546:
+	mov.u32 	%r529, c;
+	setp.ne.u32 	%p1, %r9, %r10;
+	@%p1 bra 	$L_1_470786;
+	ld.global.u32 	%r647, [%r8+108];
+	setp.eq.u32 	%p207, %r647, %r11;
+	@%p207 bra 	$L_1_470530;
+$L_1_470786:
+	mov.s32 	%r648, 1;
+	bra.uni 	$L_1_470274;
+$L_1_470530:
+	mov.s32 	%r648, 0;
+$L_1_470274:
+	mov.u32 	%r649, 0;
+	setp.ne.s32 	%p208, %r648, %r649;
+	@%p208 bra 	$Lt_1_598274;
+	ld.global.s32 	%r650, [%r8+28];
+	mov.u32 	%r651, 0;
+	setp.ne.s32 	%p209, %r650, %r651;
+	@%p209 bra 	$Lt_1_598274;
+	.loc	17	281	0
+	ld.global.s32 	%r652, [%r8+8];
+	mov.u32 	%r653, 38;
+	setp.ne.s32 	%p210, %r652, %r653;
+	@%p210 bra 	$Lt_1_598274;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r654, [%r8+0];
+	ld.global.s32 	%r655, [%r43+116];
+	setp.ne.s32 	%p211, %r654, %r655;
+	@%p211 bra 	$Lt_1_598274;
+	ld.global.s32 	%r656, [%r8+4];
+	ld.global.s32 	%r657, [%r43+120];
+	setp.ne.s32 	%p212, %r656, %r657;
+	@%p212 bra 	$Lt_1_598274;
+	ld.global.s32 	%r658, [%r8+12];
+	mul.lo.u32 	%r659, %r24, 1536;
+	add.u32 	%r660, %r8, %r659;
+	ld.global.s32 	%r661, [%r660+1008];
+	setp.ne.s32 	%p213, %r658, %r661;
+	@%p213 bra 	$Lt_1_598274;
+	.loc	17	283	0
+	mov.s32 	%r662, 1;
+	st.global.s32 	[%r8+28], %r662;
+	.loc	17	284	0
+	ld.global.s32 	%r663, [%r8+24];
+	add.s32 	%r664, %r663, 1;
+	st.global.s32 	[%r8+24], %r664;
+	.loc	17	286	0
+	ld.global.u32 	%r665, [%r8+20];
+	xor.b32 	%r342, %r342, %r665;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_1_598274:
+$Lt_1_22786:
+	.loc	4	236	0
+	@%p1 bra 	$L_1_472578;
+	ld.global.u32 	%r666, [%r8+108];
+	setp.eq.u32 	%p214, %r666, %r11;
+	@%p214 bra 	$L_1_472322;
+$L_1_472578:
+	mov.s32 	%r667, 1;
+	bra.uni 	$L_1_472066;
+$L_1_472322:
+	mov.s32 	%r667, 0;
+$L_1_472066:
+	mov.u32 	%r668, 0;
+	setp.ne.s32 	%p215, %r667, %r668;
+	@%p215 bra 	$Lt_1_600066;
+	ld.global.s32 	%r669, [%r8+28];
+	mov.u32 	%r670, 0;
+	setp.ne.s32 	%p216, %r669, %r670;
+	@%p216 bra 	$Lt_1_600066;
+	.loc	17	281	0
+	ld.global.s32 	%r671, [%r8+8];
+	mov.u32 	%r672, 39;
+	setp.ne.s32 	%p217, %r671, %r672;
+	@%p217 bra 	$Lt_1_600066;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r673, [%r8+0];
+	ld.global.s32 	%r674, [%r43+116];
+	setp.ne.s32 	%p218, %r673, %r674;
+	@%p218 bra 	$Lt_1_600066;
+	ld.global.s32 	%r675, [%r8+4];
+	ld.global.s32 	%r676, [%r43+120];
+	setp.ne.s32 	%p219, %r675, %r676;
+	@%p219 bra 	$Lt_1_600066;
+	ld.global.s32 	%r677, [%r8+12];
+	mul.lo.u32 	%r678, %r24, 1536;
+	add.u32 	%r679, %r8, %r678;
+	ld.global.s32 	%r680, [%r679+1020];
+	setp.ne.s32 	%p220, %r677, %r680;
+	@%p220 bra 	$Lt_1_600066;
+	.loc	17	283	0
+	mov.s32 	%r681, 1;
+	st.global.s32 	[%r8+28], %r681;
+	.loc	17	284	0
+	ld.global.s32 	%r682, [%r8+24];
+	add.s32 	%r683, %r682, 1;
+	st.global.s32 	[%r8+24], %r683;
+	.loc	17	286	0
+	ld.global.u32 	%r684, [%r8+20];
+	xor.b32 	%r2, %r2, %r684;
+	ld.global.u32 	%r9, [%r8+104];
+$Lt_1_600066:
+$Lt_1_22274:
+$Lt_1_546050:
+	.loc	4	241	0
+	mov.u32 	%r529, c;
+	.loc	4	244	0
+	mov.u32 	%r685, 511;
+	setp.gt.s32 	%p221, %r342, %r685;
+	@%p221 bra 	$Lt_1_601602;
+	setp.le.s32 	%p222, %r1, %r2;
+	@%p222 bra 	$Lt_1_601602;
+	mov.f32 	%f31, %f7;
+	mov.f32 	%f32, %f4;
+	mov.f32 	%f33, %f1;
+$L_1_473858:
+ //<loop> Loop body line 250
+	.loc	4	250	0
+	mul.lo.u32 	%r686, %r342, 20;
+	add.u32 	%r531, %r686, %r529;
+	ld.const.f32 	%f67, [%r531+4];
+	mul.f32 	%f68, %f67, %f32;
+	ld.const.f32 	%f69, [%r531+0];
+	mad.f32 	%f70, %f69, %f33, %f68;
+	ld.const.f32 	%f71, [%r531+8];
+	mad.f32 	%f72, %f71, %f31, %f70;
+	cvt.f64.f32 	%fd4, %f72;
+	mov.f64 	%fd5, 0d401921fb54442d18;	// 6.28319
+	mul.f64 	%fd6, %fd4, %fd5;
+	cvt.rn.f32.f64 	%f73, %fd6;
+	.loc	4	251	0
+	setp.ne.u32 	%p169, %r9, %r10;
+	@%p169 bra 	$L_1_475138;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r687, [%r8+108];
+	setp.eq.u32 	%p223, %r687, %r11;
+	@%p223 bra 	$L_1_474882;
+$L_1_475138:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r688, 1;
+	bra.uni 	$L_1_474626;
+$L_1_474882:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r688, 0;
+$L_1_474626:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r689, 0;
+	setp.ne.s32 	%p224, %r688, %r689;
+	@%p224 bra 	$Lt_1_602370;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r690, [%r8+28];
+	mov.u32 	%r691, 0;
+	setp.ne.s32 	%p225, %r690, %r691;
+	@%p225 bra 	$Lt_1_602370;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	mov.f32 	%f74, %f73;
+	ld.global.s32 	%r692, [%r8+8];
+	mov.u32 	%r693, 47;
+	setp.ne.s32 	%p226, %r692, %r693;
+	@%p226 bra 	$Lt_1_603394;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r694, [%r8+0];
+	ld.global.s32 	%r695, [%r43+116];
+	setp.ne.s32 	%p227, %r694, %r695;
+	@%p227 bra 	$Lt_1_603394;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r696, [%r8+4];
+	ld.global.s32 	%r697, [%r43+120];
+	setp.ne.s32 	%p228, %r696, %r697;
+	@%p228 bra 	$Lt_1_603394;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r698, [%r8+12];
+	mul.lo.u32 	%r699, %r24, 1536;
+	add.u32 	%r700, %r8, %r699;
+	ld.global.s32 	%r701, [%r700+1116];
+	setp.ne.s32 	%p229, %r698, %r701;
+	@%p229 bra 	$Lt_1_603394;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r702, 1;
+	st.global.s32 	[%r8+28], %r702;
+	.loc	17	284	0
+	ld.global.s32 	%r703, [%r8+24];
+	add.s32 	%r704, %r703, 1;
+	st.global.s32 	[%r8+24], %r704;
+	.loc	17	296	0
+	ld.global.u32 	%r705, [%r8+20];
+	mov.b32 	%r706, %f74;
+	cvt.rn.f32.s32 	%f75, %r706;
+	mov.b32 	%r707, %f75;
+	xor.b32 	%r708, %r705, %r707;
+	mov.b32 	%f76, %r708;
+	cvt.rzi.s32.f32 	%r709, %f76;
+	mov.b32 	%f74, %r709;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_603394:
+$L_1_475394:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.f32 	%f73, %f74;
+$Lt_1_602370:
+$Lt_1_20738:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	254	0
+	cos.approx.f32 	%f77, %f73;
+	.loc	4	255	0
+	@%p169 bra 	$L_1_476930;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r710, [%r8+108];
+	setp.eq.u32 	%p230, %r710, %r11;
+	@%p230 bra 	$L_1_476674;
+$L_1_476930:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r711, 1;
+	bra.uni 	$L_1_476418;
+$L_1_476674:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r711, 0;
+$L_1_476418:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r712, 0;
+	setp.ne.s32 	%p231, %r711, %r712;
+	@%p231 bra 	$Lt_1_604162;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r713, [%r8+28];
+	mov.u32 	%r714, 0;
+	setp.ne.s32 	%p232, %r713, %r714;
+	@%p232 bra 	$Lt_1_604162;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	mov.f32 	%f78, %f77;
+	ld.global.s32 	%r715, [%r8+8];
+	mov.u32 	%r716, 48;
+	setp.ne.s32 	%p233, %r715, %r716;
+	@%p233 bra 	$Lt_1_605186;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r717, [%r8+0];
+	ld.global.s32 	%r718, [%r43+116];
+	setp.ne.s32 	%p234, %r717, %r718;
+	@%p234 bra 	$Lt_1_605186;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r719, [%r8+4];
+	ld.global.s32 	%r720, [%r43+120];
+	setp.ne.s32 	%p235, %r719, %r720;
+	@%p235 bra 	$Lt_1_605186;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r721, [%r8+12];
+	mul.lo.u32 	%r722, %r24, 1536;
+	add.u32 	%r723, %r8, %r722;
+	ld.global.s32 	%r724, [%r723+1128];
+	setp.ne.s32 	%p236, %r721, %r724;
+	@%p236 bra 	$Lt_1_605186;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r725, 1;
+	st.global.s32 	[%r8+28], %r725;
+	.loc	17	284	0
+	ld.global.s32 	%r726, [%r8+24];
+	add.s32 	%r727, %r726, 1;
+	st.global.s32 	[%r8+24], %r727;
+	.loc	17	296	0
+	ld.global.u32 	%r728, [%r8+20];
+	mov.b32 	%r729, %f78;
+	cvt.rn.f32.s32 	%f79, %r729;
+	mov.b32 	%r730, %f79;
+	xor.b32 	%r731, %r728, %r730;
+	mov.b32 	%f80, %r731;
+	cvt.rzi.s32.f32 	%r732, %f80;
+	mov.b32 	%f78, %r732;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_605186:
+$L_1_477186:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.f32 	%f77, %f78;
+$Lt_1_604162:
+$Lt_1_20226:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	258	0
+	sin.approx.f32 	%f81, %f73;
+	.loc	4	259	0
+	@%p169 bra 	$L_1_478722;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r733, [%r8+108];
+	setp.eq.u32 	%p237, %r733, %r11;
+	@%p237 bra 	$L_1_478466;
+$L_1_478722:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r734, 1;
+	bra.uni 	$L_1_478210;
+$L_1_478466:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r734, 0;
+$L_1_478210:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r735, 0;
+	setp.ne.s32 	%p238, %r734, %r735;
+	@%p238 bra 	$Lt_1_605954;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r736, [%r8+28];
+	mov.u32 	%r737, 0;
+	setp.ne.s32 	%p239, %r736, %r737;
+	@%p239 bra 	$Lt_1_605954;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	mov.f32 	%f82, %f81;
+	ld.global.s32 	%r738, [%r8+8];
+	mov.u32 	%r739, 49;
+	setp.ne.s32 	%p240, %r738, %r739;
+	@%p240 bra 	$Lt_1_606978;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r740, [%r8+0];
+	ld.global.s32 	%r741, [%r43+116];
+	setp.ne.s32 	%p241, %r740, %r741;
+	@%p241 bra 	$Lt_1_606978;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r742, [%r8+4];
+	ld.global.s32 	%r743, [%r43+120];
+	setp.ne.s32 	%p242, %r742, %r743;
+	@%p242 bra 	$Lt_1_606978;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r744, [%r8+12];
+	mul.lo.u32 	%r745, %r24, 1536;
+	add.u32 	%r746, %r8, %r745;
+	ld.global.s32 	%r747, [%r746+1140];
+	setp.ne.s32 	%p243, %r744, %r747;
+	@%p243 bra 	$Lt_1_606978;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r748, 1;
+	st.global.s32 	[%r8+28], %r748;
+	.loc	17	284	0
+	ld.global.s32 	%r749, [%r8+24];
+	add.s32 	%r750, %r749, 1;
+	st.global.s32 	[%r8+24], %r750;
+	.loc	17	296	0
+	ld.global.u32 	%r751, [%r8+20];
+	mov.b32 	%r752, %f82;
+	cvt.rn.f32.s32 	%f83, %r752;
+	mov.b32 	%r753, %f83;
+	xor.b32 	%r754, %r751, %r753;
+	mov.b32 	%f84, %r754;
+	cvt.rzi.s32.f32 	%r755, %f84;
+	mov.b32 	%f82, %r755;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_606978:
+$L_1_478978:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.f32 	%f81, %f82;
+$Lt_1_605954:
+$Lt_1_19714:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	263	0
+	@%p169 bra 	$L_1_480514;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r756, [%r8+108];
+	setp.eq.u32 	%p244, %r756, %r11;
+	@%p244 bra 	$L_1_480258;
+$L_1_480514:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r757, 1;
+	bra.uni 	$L_1_480002;
+$L_1_480258:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r757, 0;
+$L_1_480002:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r758, 0;
+	setp.ne.s32 	%p245, %r757, %r758;
+	@%p245 bra 	$Lt_1_607746;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r759, [%r8+28];
+	mov.u32 	%r760, 0;
+	setp.ne.s32 	%p246, %r759, %r760;
+	@%p246 bra 	$Lt_1_607746;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r761, [%r8+8];
+	mov.u32 	%r762, 50;
+	setp.ne.s32 	%p247, %r761, %r762;
+	@%p247 bra 	$Lt_1_607746;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r763, [%r8+0];
+	ld.global.s32 	%r764, [%r43+116];
+	setp.ne.s32 	%p248, %r763, %r764;
+	@%p248 bra 	$Lt_1_607746;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r765, [%r8+4];
+	ld.global.s32 	%r766, [%r43+120];
+	setp.ne.s32 	%p249, %r765, %r766;
+	@%p249 bra 	$Lt_1_607746;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r767, [%r8+12];
+	mul.lo.u32 	%r768, %r24, 1536;
+	add.u32 	%r769, %r8, %r768;
+	ld.global.s32 	%r770, [%r769+1152];
+	setp.ne.s32 	%p250, %r767, %r770;
+	@%p250 bra 	$Lt_1_607746;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r771, 1;
+	st.global.s32 	[%r8+28], %r771;
+	.loc	17	284	0
+	ld.global.s32 	%r772, [%r8+24];
+	add.s32 	%r773, %r772, 1;
+	st.global.s32 	[%r8+24], %r773;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_607746:
+$Lt_1_19202:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	267	0
+	@%p169 bra 	$L_1_482306;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r774, [%r8+108];
+	setp.eq.u32 	%p251, %r774, %r11;
+	@%p251 bra 	$L_1_482050;
+$L_1_482306:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r775, 1;
+	bra.uni 	$L_1_481794;
+$L_1_482050:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r775, 0;
+$L_1_481794:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r776, 0;
+	setp.ne.s32 	%p252, %r775, %r776;
+	@%p252 bra 	$Lt_1_609538;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r777, [%r8+28];
+	mov.u32 	%r778, 0;
+	setp.ne.s32 	%p253, %r777, %r778;
+	@%p253 bra 	$Lt_1_609538;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r779, [%r8+8];
+	mov.u32 	%r780, 51;
+	setp.ne.s32 	%p254, %r779, %r780;
+	@%p254 bra 	$Lt_1_609538;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r781, [%r8+0];
+	ld.global.s32 	%r782, [%r43+116];
+	setp.ne.s32 	%p255, %r781, %r782;
+	@%p255 bra 	$Lt_1_609538;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r783, [%r8+4];
+	ld.global.s32 	%r784, [%r43+120];
+	setp.ne.s32 	%p256, %r783, %r784;
+	@%p256 bra 	$Lt_1_609538;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r785, [%r8+12];
+	mul.lo.u32 	%r786, %r24, 1536;
+	add.u32 	%r787, %r8, %r786;
+	ld.global.s32 	%r788, [%r787+1164];
+	setp.ne.s32 	%p257, %r785, %r788;
+	@%p257 bra 	$Lt_1_609538;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r789, 1;
+	st.global.s32 	[%r8+28], %r789;
+	.loc	17	284	0
+	ld.global.s32 	%r790, [%r8+24];
+	add.s32 	%r791, %r790, 1;
+	st.global.s32 	[%r8+24], %r791;
+	.loc	17	296	0
+	ld.global.u32 	%r792, [%r8+20];
+	mov.b32 	%r793, %f85;
+	cvt.rn.f32.s32 	%f86, %r793;
+	mov.b32 	%r794, %f86;
+	xor.b32 	%r795, %r792, %r794;
+	mov.b32 	%f87, %r795;
+	cvt.rzi.s32.f32 	%r796, %f87;
+	mov.b32 	%f85, %r796;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_609538:
+$Lt_1_18690:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	271	0
+	@%p169 bra 	$L_1_484098;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r797, [%r8+108];
+	setp.eq.u32 	%p258, %r797, %r11;
+	@%p258 bra 	$L_1_483842;
+$L_1_484098:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r798, 1;
+	bra.uni 	$L_1_483586;
+$L_1_483842:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r798, 0;
+$L_1_483586:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r799, 0;
+	setp.ne.s32 	%p259, %r798, %r799;
+	@%p259 bra 	$Lt_1_611330;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r800, [%r8+28];
+	mov.u32 	%r801, 0;
+	setp.ne.s32 	%p260, %r800, %r801;
+	@%p260 bra 	$Lt_1_611330;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r802, [%r8+8];
+	mov.u32 	%r803, 52;
+	setp.ne.s32 	%p261, %r802, %r803;
+	@%p261 bra 	$Lt_1_611330;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r804, [%r8+0];
+	ld.global.s32 	%r805, [%r43+116];
+	setp.ne.s32 	%p262, %r804, %r805;
+	@%p262 bra 	$Lt_1_611330;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r806, [%r8+4];
+	ld.global.s32 	%r807, [%r43+120];
+	setp.ne.s32 	%p263, %r806, %r807;
+	@%p263 bra 	$Lt_1_611330;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r808, [%r8+12];
+	mul.lo.u32 	%r809, %r24, 1536;
+	add.u32 	%r810, %r8, %r809;
+	ld.global.s32 	%r811, [%r810+1176];
+	setp.ne.s32 	%p264, %r808, %r811;
+	@%p264 bra 	$Lt_1_611330;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r812, 1;
+	st.global.s32 	[%r8+28], %r812;
+	.loc	17	284	0
+	ld.global.s32 	%r813, [%r8+24];
+	add.s32 	%r814, %r813, 1;
+	st.global.s32 	[%r8+24], %r814;
+	.loc	17	296	0
+	ld.global.u32 	%r815, [%r8+20];
+	mov.b32 	%r816, %f88;
+	cvt.rn.f32.s32 	%f89, %r816;
+	mov.b32 	%r817, %f89;
+	xor.b32 	%r818, %r815, %r817;
+	mov.b32 	%f90, %r818;
+	cvt.rzi.s32.f32 	%r819, %f90;
+	mov.b32 	%f88, %r819;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_611330:
+$Lt_1_18178:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	275	0
+	@%p169 bra 	$L_1_485890;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r820, [%r8+108];
+	setp.eq.u32 	%p265, %r820, %r11;
+	@%p265 bra 	$L_1_485634;
+$L_1_485890:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r821, 1;
+	bra.uni 	$L_1_485378;
+$L_1_485634:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r821, 0;
+$L_1_485378:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r822, 0;
+	setp.ne.s32 	%p266, %r821, %r822;
+	@%p266 bra 	$Lt_1_613122;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r823, [%r8+28];
+	mov.u32 	%r824, 0;
+	setp.ne.s32 	%p267, %r823, %r824;
+	@%p267 bra 	$Lt_1_613122;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r825, [%r8+8];
+	mov.u32 	%r826, 53;
+	setp.ne.s32 	%p268, %r825, %r826;
+	@%p268 bra 	$Lt_1_613122;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r827, [%r8+0];
+	ld.global.s32 	%r828, [%r43+116];
+	setp.ne.s32 	%p269, %r827, %r828;
+	@%p269 bra 	$Lt_1_613122;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r829, [%r8+4];
+	ld.global.s32 	%r830, [%r43+120];
+	setp.ne.s32 	%p270, %r829, %r830;
+	@%p270 bra 	$Lt_1_613122;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r831, [%r8+12];
+	mul.lo.u32 	%r832, %r24, 1536;
+	add.u32 	%r833, %r8, %r832;
+	ld.global.s32 	%r834, [%r833+1188];
+	setp.ne.s32 	%p271, %r831, %r834;
+	@%p271 bra 	$Lt_1_613122;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r835, 1;
+	st.global.s32 	[%r8+28], %r835;
+	.loc	17	284	0
+	ld.global.s32 	%r836, [%r8+24];
+	add.s32 	%r837, %r836, 1;
+	st.global.s32 	[%r8+24], %r837;
+	.loc	17	296	0
+	ld.global.u32 	%r838, [%r8+20];
+	mov.b32 	%r839, %f91;
+	cvt.rn.f32.s32 	%f92, %r839;
+	mov.b32 	%r840, %f92;
+	xor.b32 	%r841, %r838, %r840;
+	mov.b32 	%f93, %r841;
+	cvt.rzi.s32.f32 	%r842, %f93;
+	mov.b32 	%f91, %r842;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_613122:
+$Lt_1_17666:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	279	0
+	@%p169 bra 	$L_1_487682;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r843, [%r8+108];
+	setp.eq.u32 	%p272, %r843, %r11;
+	@%p272 bra 	$L_1_487426;
+$L_1_487682:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r844, 1;
+	bra.uni 	$L_1_487170;
+$L_1_487426:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r844, 0;
+$L_1_487170:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r845, 0;
+	setp.ne.s32 	%p273, %r844, %r845;
+	@%p273 bra 	$Lt_1_614914;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r846, [%r8+28];
+	mov.u32 	%r847, 0;
+	setp.ne.s32 	%p274, %r846, %r847;
+	@%p274 bra 	$Lt_1_614914;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r848, [%r8+8];
+	mov.u32 	%r849, 54;
+	setp.ne.s32 	%p275, %r848, %r849;
+	@%p275 bra 	$Lt_1_614914;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r850, [%r8+0];
+	ld.global.s32 	%r851, [%r43+116];
+	setp.ne.s32 	%p276, %r850, %r851;
+	@%p276 bra 	$Lt_1_614914;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r852, [%r8+4];
+	ld.global.s32 	%r853, [%r43+120];
+	setp.ne.s32 	%p277, %r852, %r853;
+	@%p277 bra 	$Lt_1_614914;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r854, [%r8+12];
+	mul.lo.u32 	%r855, %r24, 1536;
+	add.u32 	%r856, %r8, %r855;
+	ld.global.s32 	%r857, [%r856+1200];
+	setp.ne.s32 	%p278, %r854, %r857;
+	@%p278 bra 	$Lt_1_614914;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r858, 1;
+	st.global.s32 	[%r8+28], %r858;
+	.loc	17	284	0
+	ld.global.s32 	%r859, [%r8+24];
+	add.s32 	%r860, %r859, 1;
+	st.global.s32 	[%r8+24], %r860;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_614914:
+$Lt_1_17154:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	283	0
+	@%p169 bra 	$L_1_489474;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r861, [%r8+108];
+	setp.eq.u32 	%p279, %r861, %r11;
+	@%p279 bra 	$L_1_489218;
+$L_1_489474:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r862, 1;
+	bra.uni 	$L_1_488962;
+$L_1_489218:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r862, 0;
+$L_1_488962:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r863, 0;
+	setp.ne.s32 	%p280, %r862, %r863;
+	@%p280 bra 	$Lt_1_616706;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r864, [%r8+28];
+	mov.u32 	%r865, 0;
+	setp.ne.s32 	%p281, %r864, %r865;
+	@%p281 bra 	$Lt_1_616706;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r866, [%r8+8];
+	mov.u32 	%r867, 55;
+	setp.ne.s32 	%p282, %r866, %r867;
+	@%p282 bra 	$Lt_1_616706;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r868, [%r8+0];
+	ld.global.s32 	%r869, [%r43+116];
+	setp.ne.s32 	%p283, %r868, %r869;
+	@%p283 bra 	$Lt_1_616706;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r870, [%r8+4];
+	ld.global.s32 	%r871, [%r43+120];
+	setp.ne.s32 	%p284, %r870, %r871;
+	@%p284 bra 	$Lt_1_616706;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r872, [%r8+12];
+	mul.lo.u32 	%r873, %r24, 1536;
+	add.u32 	%r874, %r8, %r873;
+	ld.global.s32 	%r875, [%r874+1212];
+	setp.ne.s32 	%p285, %r872, %r875;
+	@%p285 bra 	$Lt_1_616706;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r876, 1;
+	st.global.s32 	[%r8+28], %r876;
+	.loc	17	284	0
+	ld.global.s32 	%r877, [%r8+24];
+	add.s32 	%r878, %r877, 1;
+	st.global.s32 	[%r8+24], %r878;
+	.loc	17	296	0
+	ld.global.u32 	%r879, [%r8+20];
+	mov.b32 	%r880, %f94;
+	cvt.rn.f32.s32 	%f95, %r880;
+	mov.b32 	%r881, %f95;
+	xor.b32 	%r882, %r879, %r881;
+	mov.b32 	%f96, %r882;
+	cvt.rzi.s32.f32 	%r883, %f96;
+	mov.b32 	%f94, %r883;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_616706:
+$Lt_1_16642:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	287	0
+	@%p169 bra 	$L_1_491266;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r884, [%r8+108];
+	setp.eq.u32 	%p286, %r884, %r11;
+	@%p286 bra 	$L_1_491010;
+$L_1_491266:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r885, 1;
+	bra.uni 	$L_1_490754;
+$L_1_491010:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r885, 0;
+$L_1_490754:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r886, 0;
+	setp.ne.s32 	%p287, %r885, %r886;
+	@%p287 bra 	$Lt_1_618498;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r887, [%r8+28];
+	mov.u32 	%r888, 0;
+	setp.ne.s32 	%p288, %r887, %r888;
+	@%p288 bra 	$Lt_1_618498;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r889, [%r8+8];
+	mov.u32 	%r890, 56;
+	setp.ne.s32 	%p289, %r889, %r890;
+	@%p289 bra 	$Lt_1_618498;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r891, [%r8+0];
+	ld.global.s32 	%r892, [%r43+116];
+	setp.ne.s32 	%p290, %r891, %r892;
+	@%p290 bra 	$Lt_1_618498;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r893, [%r8+4];
+	ld.global.s32 	%r894, [%r43+120];
+	setp.ne.s32 	%p291, %r893, %r894;
+	@%p291 bra 	$Lt_1_618498;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r895, [%r8+12];
+	mul.lo.u32 	%r896, %r24, 1536;
+	add.u32 	%r897, %r8, %r896;
+	ld.global.s32 	%r898, [%r897+1224];
+	setp.ne.s32 	%p292, %r895, %r898;
+	@%p292 bra 	$Lt_1_618498;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r899, 1;
+	st.global.s32 	[%r8+28], %r899;
+	.loc	17	284	0
+	ld.global.s32 	%r900, [%r8+24];
+	add.s32 	%r901, %r900, 1;
+	st.global.s32 	[%r8+24], %r901;
+	.loc	17	296	0
+	ld.global.u32 	%r902, [%r8+20];
+	mov.b32 	%r903, %f97;
+	cvt.rn.f32.s32 	%f98, %r903;
+	mov.b32 	%r904, %f98;
+	xor.b32 	%r905, %r902, %r904;
+	mov.b32 	%f99, %r905;
+	cvt.rzi.s32.f32 	%r906, %f99;
+	mov.b32 	%f97, %r906;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_618498:
+$Lt_1_16130:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	291	0
+	@%p169 bra 	$L_1_493058;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r907, [%r8+108];
+	setp.eq.u32 	%p293, %r907, %r11;
+	@%p293 bra 	$L_1_492802;
+$L_1_493058:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r908, 1;
+	bra.uni 	$L_1_492546;
+$L_1_492802:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r908, 0;
+$L_1_492546:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r909, 0;
+	setp.ne.s32 	%p294, %r908, %r909;
+	@%p294 bra 	$Lt_1_620290;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r910, [%r8+28];
+	mov.u32 	%r911, 0;
+	setp.ne.s32 	%p295, %r910, %r911;
+	@%p295 bra 	$Lt_1_620290;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r912, [%r8+8];
+	mov.u32 	%r913, 57;
+	setp.ne.s32 	%p296, %r912, %r913;
+	@%p296 bra 	$Lt_1_620290;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r914, [%r8+0];
+	ld.global.s32 	%r915, [%r43+116];
+	setp.ne.s32 	%p297, %r914, %r915;
+	@%p297 bra 	$Lt_1_620290;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r916, [%r8+4];
+	ld.global.s32 	%r917, [%r43+120];
+	setp.ne.s32 	%p298, %r916, %r917;
+	@%p298 bra 	$Lt_1_620290;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r918, [%r8+12];
+	mul.lo.u32 	%r919, %r24, 1536;
+	add.u32 	%r920, %r8, %r919;
+	ld.global.s32 	%r921, [%r920+1236];
+	setp.ne.s32 	%p299, %r918, %r921;
+	@%p299 bra 	$Lt_1_620290;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r922, 1;
+	st.global.s32 	[%r8+28], %r922;
+	.loc	17	284	0
+	ld.global.s32 	%r923, [%r8+24];
+	add.s32 	%r924, %r923, 1;
+	st.global.s32 	[%r8+24], %r924;
+	.loc	17	296	0
+	ld.global.u32 	%r925, [%r8+20];
+	mov.b32 	%r926, %f100;
+	cvt.rn.f32.s32 	%f101, %r926;
+	mov.b32 	%r927, %f101;
+	xor.b32 	%r928, %r925, %r927;
+	mov.b32 	%f102, %r928;
+	cvt.rzi.s32.f32 	%r929, %f102;
+	mov.b32 	%f100, %r929;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_620290:
+$Lt_1_15618:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	295	0
+	@%p169 bra 	$L_1_494850;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r930, [%r8+108];
+	setp.eq.u32 	%p300, %r930, %r11;
+	@%p300 bra 	$L_1_494594;
+$L_1_494850:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r931, 1;
+	bra.uni 	$L_1_494338;
+$L_1_494594:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r931, 0;
+$L_1_494338:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r932, 0;
+	setp.ne.s32 	%p301, %r931, %r932;
+	@%p301 bra 	$Lt_1_622082;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r933, [%r8+28];
+	mov.u32 	%r934, 0;
+	setp.ne.s32 	%p302, %r933, %r934;
+	@%p302 bra 	$Lt_1_622082;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r935, [%r8+8];
+	mov.u32 	%r936, 58;
+	setp.ne.s32 	%p303, %r935, %r936;
+	@%p303 bra 	$Lt_1_622082;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r937, [%r8+0];
+	ld.global.s32 	%r938, [%r43+116];
+	setp.ne.s32 	%p304, %r937, %r938;
+	@%p304 bra 	$Lt_1_622082;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r939, [%r8+4];
+	ld.global.s32 	%r940, [%r43+120];
+	setp.ne.s32 	%p305, %r939, %r940;
+	@%p305 bra 	$Lt_1_622082;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r941, [%r8+12];
+	mul.lo.u32 	%r942, %r24, 1536;
+	add.u32 	%r943, %r8, %r942;
+	ld.global.s32 	%r944, [%r943+1248];
+	setp.ne.s32 	%p306, %r941, %r944;
+	@%p306 bra 	$Lt_1_622082;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r945, 1;
+	st.global.s32 	[%r8+28], %r945;
+	.loc	17	284	0
+	ld.global.s32 	%r946, [%r8+24];
+	add.s32 	%r947, %r946, 1;
+	st.global.s32 	[%r8+24], %r947;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_622082:
+$Lt_1_15106:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	299	0
+	@%p169 bra 	$L_1_496642;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r948, [%r8+108];
+	setp.eq.u32 	%p307, %r948, %r11;
+	@%p307 bra 	$L_1_496386;
+$L_1_496642:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r949, 1;
+	bra.uni 	$L_1_496130;
+$L_1_496386:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r949, 0;
+$L_1_496130:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r950, 0;
+	setp.ne.s32 	%p308, %r949, %r950;
+	@%p308 bra 	$Lt_1_623874;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r951, [%r8+28];
+	mov.u32 	%r952, 0;
+	setp.ne.s32 	%p309, %r951, %r952;
+	@%p309 bra 	$Lt_1_623874;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r953, [%r8+8];
+	mov.u32 	%r954, 59;
+	setp.ne.s32 	%p310, %r953, %r954;
+	@%p310 bra 	$Lt_1_623874;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r955, [%r8+0];
+	ld.global.s32 	%r956, [%r43+116];
+	setp.ne.s32 	%p311, %r955, %r956;
+	@%p311 bra 	$Lt_1_623874;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r957, [%r8+4];
+	ld.global.s32 	%r958, [%r43+120];
+	setp.ne.s32 	%p312, %r957, %r958;
+	@%p312 bra 	$Lt_1_623874;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r959, [%r8+12];
+	mul.lo.u32 	%r960, %r24, 1536;
+	add.u32 	%r961, %r8, %r960;
+	ld.global.s32 	%r962, [%r961+1260];
+	setp.ne.s32 	%p313, %r959, %r962;
+	@%p313 bra 	$Lt_1_623874;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r963, 1;
+	st.global.s32 	[%r8+28], %r963;
+	.loc	17	284	0
+	ld.global.s32 	%r964, [%r8+24];
+	add.s32 	%r965, %r964, 1;
+	st.global.s32 	[%r8+24], %r965;
+	.loc	17	296	0
+	ld.global.u32 	%r966, [%r8+20];
+	mov.b32 	%r967, %f103;
+	cvt.rn.f32.s32 	%f104, %r967;
+	mov.b32 	%r968, %f104;
+	xor.b32 	%r969, %r966, %r968;
+	mov.b32 	%f105, %r969;
+	cvt.rzi.s32.f32 	%r970, %f105;
+	mov.b32 	%f103, %r970;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_623874:
+$Lt_1_14594:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	303	0
+	@%p169 bra 	$L_1_498434;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r971, [%r8+108];
+	setp.eq.u32 	%p314, %r971, %r11;
+	@%p314 bra 	$L_1_498178;
+$L_1_498434:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r972, 1;
+	bra.uni 	$L_1_497922;
+$L_1_498178:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r972, 0;
+$L_1_497922:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r973, 0;
+	setp.ne.s32 	%p315, %r972, %r973;
+	@%p315 bra 	$Lt_1_625666;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r974, [%r8+28];
+	mov.u32 	%r975, 0;
+	setp.ne.s32 	%p316, %r974, %r975;
+	@%p316 bra 	$Lt_1_625666;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r976, [%r8+8];
+	mov.u32 	%r977, 60;
+	setp.ne.s32 	%p317, %r976, %r977;
+	@%p317 bra 	$Lt_1_625666;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r978, [%r8+0];
+	ld.global.s32 	%r979, [%r43+116];
+	setp.ne.s32 	%p318, %r978, %r979;
+	@%p318 bra 	$Lt_1_625666;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r980, [%r8+4];
+	ld.global.s32 	%r981, [%r43+120];
+	setp.ne.s32 	%p319, %r980, %r981;
+	@%p319 bra 	$Lt_1_625666;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r982, [%r8+12];
+	mul.lo.u32 	%r983, %r24, 1536;
+	add.u32 	%r984, %r8, %r983;
+	ld.global.s32 	%r985, [%r984+1272];
+	setp.ne.s32 	%p320, %r982, %r985;
+	@%p320 bra 	$Lt_1_625666;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r986, 1;
+	st.global.s32 	[%r8+28], %r986;
+	.loc	17	284	0
+	ld.global.s32 	%r987, [%r8+24];
+	add.s32 	%r988, %r987, 1;
+	st.global.s32 	[%r8+24], %r988;
+	.loc	17	296	0
+	ld.global.u32 	%r989, [%r8+20];
+	mov.b32 	%r990, %f106;
+	cvt.rn.f32.s32 	%f107, %r990;
+	mov.b32 	%r991, %f107;
+	xor.b32 	%r992, %r989, %r991;
+	mov.b32 	%f108, %r992;
+	cvt.rzi.s32.f32 	%r993, %f108;
+	mov.b32 	%f106, %r993;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_625666:
+$Lt_1_14082:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	307	0
+	@%p169 bra 	$L_1_500226;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r994, [%r8+108];
+	setp.eq.u32 	%p321, %r994, %r11;
+	@%p321 bra 	$L_1_499970;
+$L_1_500226:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r995, 1;
+	bra.uni 	$L_1_499714;
+$L_1_499970:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r995, 0;
+$L_1_499714:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r996, 0;
+	setp.ne.s32 	%p322, %r995, %r996;
+	@%p322 bra 	$Lt_1_627458;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r997, [%r8+28];
+	mov.u32 	%r998, 0;
+	setp.ne.s32 	%p323, %r997, %r998;
+	@%p323 bra 	$Lt_1_627458;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r999, [%r8+8];
+	mov.u32 	%r1000, 61;
+	setp.ne.s32 	%p324, %r999, %r1000;
+	@%p324 bra 	$Lt_1_627458;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r1001, [%r8+0];
+	ld.global.s32 	%r1002, [%r43+116];
+	setp.ne.s32 	%p325, %r1001, %r1002;
+	@%p325 bra 	$Lt_1_627458;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1003, [%r8+4];
+	ld.global.s32 	%r1004, [%r43+120];
+	setp.ne.s32 	%p326, %r1003, %r1004;
+	@%p326 bra 	$Lt_1_627458;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1005, [%r8+12];
+	mul.lo.u32 	%r1006, %r24, 1536;
+	add.u32 	%r1007, %r8, %r1006;
+	ld.global.s32 	%r1008, [%r1007+1284];
+	setp.ne.s32 	%p327, %r1005, %r1008;
+	@%p327 bra 	$Lt_1_627458;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r1009, 1;
+	st.global.s32 	[%r8+28], %r1009;
+	.loc	17	284	0
+	ld.global.s32 	%r1010, [%r8+24];
+	add.s32 	%r1011, %r1010, 1;
+	st.global.s32 	[%r8+24], %r1011;
+	.loc	17	296	0
+	ld.global.u32 	%r1012, [%r8+20];
+	mov.b32 	%r1013, %f109;
+	cvt.rn.f32.s32 	%f110, %r1013;
+	mov.b32 	%r1014, %f110;
+	xor.b32 	%r1015, %r1012, %r1014;
+	mov.b32 	%f111, %r1015;
+	cvt.rzi.s32.f32 	%r1016, %f111;
+	mov.b32 	%f109, %r1016;
+$Lt_1_627458:
+$Lt_1_13570:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	310	0
+	ld.const.f32 	%f52, [%r531+16];
+	ld.const.f32 	%f53, [%r531+12];
+	mov.f32 	%f112, %f10;
+	mul.f32 	%f113, %f52, %f81;
+	mul.f32 	%f114, %f53, %f77;
+	sub.f32 	%f115, %f114, %f113;
+	add.f32 	%f116, %f112, %f115;
+	mov.f32 	%f10, %f116;
+	.loc	4	311	0
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+	@%p169 bra 	$L_1_502018;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r1017, [%r8+108];
+	setp.eq.u32 	%p328, %r1017, %r11;
+	@%p328 bra 	$L_1_501762;
+$L_1_502018:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1018, 1;
+	bra.uni 	$L_1_501506;
+$L_1_501762:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1018, 0;
+$L_1_501506:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r1019, 0;
+	setp.ne.s32 	%p329, %r1018, %r1019;
+	@%p329 bra 	$Lt_1_629250;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1020, [%r8+28];
+	mov.u32 	%r1021, 0;
+	setp.ne.s32 	%p330, %r1020, %r1021;
+	@%p330 bra 	$Lt_1_629250;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r1022, [%r8+8];
+	mov.u32 	%r1023, 62;
+	setp.ne.s32 	%p331, %r1022, %r1023;
+	@%p331 bra 	$Lt_1_629250;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r1024, [%r8+0];
+	ld.global.s32 	%r1025, [%r43+116];
+	setp.ne.s32 	%p332, %r1024, %r1025;
+	@%p332 bra 	$Lt_1_629250;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1026, [%r8+4];
+	ld.global.s32 	%r1027, [%r43+120];
+	setp.ne.s32 	%p333, %r1026, %r1027;
+	@%p333 bra 	$Lt_1_629250;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1028, [%r8+12];
+	mul.lo.u32 	%r1029, %r24, 1536;
+	add.u32 	%r1030, %r8, %r1029;
+	ld.global.s32 	%r1031, [%r1030+1296];
+	setp.ne.s32 	%p334, %r1028, %r1031;
+	@%p334 bra 	$Lt_1_629250;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r1032, 1;
+	st.global.s32 	[%r8+28], %r1032;
+	.loc	17	284	0
+	ld.global.s32 	%r1033, [%r8+24];
+	add.s32 	%r1034, %r1033, 1;
+	st.global.s32 	[%r8+24], %r1034;
+	.loc	17	296	0
+	ld.global.u32 	%r1035, [%r8+20];
+	mov.b32 	%r1036, %f10;
+	cvt.rn.f32.s32 	%f117, %r1036;
+	mov.b32 	%r1037, %f117;
+	xor.b32 	%r1038, %r1035, %r1037;
+	mov.b32 	%f118, %r1038;
+	cvt.rzi.s32.f32 	%r1039, %f118;
+	mov.b32 	%f10, %r1039;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_629250:
+$Lt_1_13058:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	314	0
+	mov.f32 	%f119, %f13;
+	mul.f32 	%f120, %f52, %f77;
+	mad.f32 	%f121, %f53, %f81, %f120;
+	add.f32 	%f122, %f119, %f121;
+	.loc	4	315	0
+	@%p169 bra 	$L_1_503810;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r1040, [%r8+108];
+	setp.eq.u32 	%p335, %r1040, %r11;
+	@%p335 bra 	$L_1_503554;
+$L_1_503810:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1041, 1;
+	bra.uni 	$L_1_503298;
+$L_1_503554:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1041, 0;
+$L_1_503298:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r1042, 0;
+	setp.ne.s32 	%p336, %r1041, %r1042;
+	@%p336 bra 	$Lt_1_631042;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1043, [%r8+28];
+	mov.u32 	%r1044, 0;
+	setp.ne.s32 	%p337, %r1043, %r1044;
+	@%p337 bra 	$Lt_1_631042;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	mov.f32 	%f13, %f122;
+	ld.global.s32 	%r1045, [%r8+8];
+	mov.u32 	%r1046, 63;
+	setp.ne.s32 	%p338, %r1045, %r1046;
+	@%p338 bra 	$Lt_1_632066;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r1047, [%r8+0];
+	ld.global.s32 	%r1048, [%r43+116];
+	setp.ne.s32 	%p339, %r1047, %r1048;
+	@%p339 bra 	$Lt_1_632066;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1049, [%r8+4];
+	ld.global.s32 	%r1050, [%r43+120];
+	setp.ne.s32 	%p340, %r1049, %r1050;
+	@%p340 bra 	$Lt_1_632066;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1051, [%r8+12];
+	mul.lo.u32 	%r1052, %r24, 1536;
+	add.u32 	%r1053, %r8, %r1052;
+	ld.global.s32 	%r1054, [%r1053+1308];
+	setp.ne.s32 	%p341, %r1051, %r1054;
+	@%p341 bra 	$Lt_1_632066;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r1055, 1;
+	st.global.s32 	[%r8+28], %r1055;
+	.loc	17	284	0
+	ld.global.s32 	%r1056, [%r8+24];
+	add.s32 	%r1057, %r1056, 1;
+	st.global.s32 	[%r8+24], %r1057;
+	.loc	17	296	0
+	ld.global.u32 	%r1058, [%r8+20];
+	mov.b32 	%r1059, %f13;
+	cvt.rn.f32.s32 	%f123, %r1059;
+	mov.b32 	%r1060, %f123;
+	xor.b32 	%r1061, %r1058, %r1060;
+	mov.b32 	%f124, %r1061;
+	cvt.rzi.s32.f32 	%r1062, %f124;
+	mov.b32 	%f13, %r1062;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_632066:
+$L_1_504066:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.f32 	%f122, %f13;
+$Lt_1_631042:
+$Lt_1_12546:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	318	0
+	add.s32 	%r1063, %r342, 1;
+	.loc	4	319	0
+	@%p169 bra 	$L_1_505602;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r1064, [%r8+108];
+	setp.eq.u32 	%p342, %r1064, %r11;
+	@%p342 bra 	$L_1_505346;
+$L_1_505602:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1065, 1;
+	bra.uni 	$L_1_505090;
+$L_1_505346:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1065, 0;
+$L_1_505090:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r1066, 0;
+	setp.ne.s32 	%p343, %r1065, %r1066;
+	@%p343 bra 	$Lt_1_632834;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1067, [%r8+28];
+	mov.u32 	%r1068, 0;
+	setp.ne.s32 	%p344, %r1067, %r1068;
+	@%p344 bra 	$Lt_1_632834;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r1069, [%r8+8];
+	mov.u32 	%r1070, 64;
+	setp.ne.s32 	%p345, %r1069, %r1070;
+	@%p345 bra 	$Lt_1_632834;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r1071, [%r8+0];
+	ld.global.s32 	%r1072, [%r43+116];
+	setp.ne.s32 	%p346, %r1071, %r1072;
+	@%p346 bra 	$Lt_1_632834;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1073, [%r8+4];
+	ld.global.s32 	%r1074, [%r43+120];
+	setp.ne.s32 	%p347, %r1073, %r1074;
+	@%p347 bra 	$Lt_1_632834;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1075, [%r8+12];
+	mul.lo.u32 	%r1076, %r24, 1536;
+	add.u32 	%r1077, %r8, %r1076;
+	ld.global.s32 	%r1078, [%r1077+1320];
+	setp.ne.s32 	%p348, %r1075, %r1078;
+	@%p348 bra 	$Lt_1_632834;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r1079, 1;
+	st.global.s32 	[%r8+28], %r1079;
+	.loc	17	284	0
+	ld.global.s32 	%r1080, [%r8+24];
+	add.s32 	%r1081, %r1080, 1;
+	st.global.s32 	[%r8+24], %r1081;
+	.loc	17	286	0
+	ld.global.u32 	%r1082, [%r8+20];
+	xor.b32 	%r1063, %r1063, %r1082;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_632834:
+$Lt_1_12034:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	322	0
+	mul.lo.u32 	%r1083, %r1063, 20;
+	add.u32 	%r1084, %r1083, %r529;
+	ld.const.f32 	%f125, [%r1084+4];
+	mul.f32 	%f126, %f125, %f32;
+	ld.const.f32 	%f127, [%r1084+0];
+	mad.f32 	%f128, %f127, %f33, %f126;
+	ld.const.f32 	%f129, [%r1084+8];
+	mad.f32 	%f130, %f129, %f31, %f128;
+	cvt.f64.f32 	%fd7, %f130;
+	mov.f64 	%fd8, 0d401921fb54442d18;	// 6.28319
+	mul.f64 	%fd9, %fd7, %fd8;
+	cvt.rn.f32.f64 	%f131, %fd9;
+	mov.f32 	%f85, %f131;
+	.loc	4	323	0
+	@%p169 bra 	$L_1_507394;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r1085, [%r8+108];
+	setp.eq.u32 	%p349, %r1085, %r11;
+	@%p349 bra 	$L_1_507138;
+$L_1_507394:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1086, 1;
+	bra.uni 	$L_1_506882;
+$L_1_507138:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1086, 0;
+$L_1_506882:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r1087, 0;
+	setp.ne.s32 	%p350, %r1086, %r1087;
+	@%p350 bra 	$Lt_1_634626;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1088, [%r8+28];
+	mov.u32 	%r1089, 0;
+	setp.ne.s32 	%p351, %r1088, %r1089;
+	@%p351 bra 	$Lt_1_634626;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r1090, [%r8+8];
+	mov.u32 	%r1091, 65;
+	setp.ne.s32 	%p352, %r1090, %r1091;
+	@%p352 bra 	$Lt_1_635650;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r1092, [%r8+0];
+	ld.global.s32 	%r1093, [%r43+116];
+	setp.ne.s32 	%p353, %r1092, %r1093;
+	@%p353 bra 	$Lt_1_635650;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1094, [%r8+4];
+	ld.global.s32 	%r1095, [%r43+120];
+	setp.ne.s32 	%p354, %r1094, %r1095;
+	@%p354 bra 	$Lt_1_635650;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1096, [%r8+12];
+	mul.lo.u32 	%r1097, %r24, 1536;
+	add.u32 	%r1098, %r8, %r1097;
+	ld.global.s32 	%r1099, [%r1098+1332];
+	setp.ne.s32 	%p355, %r1096, %r1099;
+	@%p355 bra 	$Lt_1_635650;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r1100, 1;
+	st.global.s32 	[%r8+28], %r1100;
+	.loc	17	284	0
+	ld.global.s32 	%r1101, [%r8+24];
+	add.s32 	%r1102, %r1101, 1;
+	st.global.s32 	[%r8+24], %r1102;
+	.loc	17	296	0
+	ld.global.u32 	%r1103, [%r8+20];
+	mov.b32 	%r1104, %f85;
+	cvt.rn.f32.s32 	%f132, %r1104;
+	mov.b32 	%r1105, %f132;
+	xor.b32 	%r1106, %r1103, %r1105;
+	mov.b32 	%f133, %r1106;
+	cvt.rzi.s32.f32 	%r1107, %f133;
+	mov.b32 	%f85, %r1107;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_635650:
+$L_1_507650:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.f32 	%f131, %f85;
+$Lt_1_634626:
+$Lt_1_11522:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	326	0
+	cos.approx.f32 	%f134, %f131;
+	mov.f32 	%f88, %f134;
+	.loc	4	327	0
+	@%p169 bra 	$L_1_509186;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r1108, [%r8+108];
+	setp.eq.u32 	%p356, %r1108, %r11;
+	@%p356 bra 	$L_1_508930;
+$L_1_509186:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1109, 1;
+	bra.uni 	$L_1_508674;
+$L_1_508930:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1109, 0;
+$L_1_508674:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r1110, 0;
+	setp.ne.s32 	%p357, %r1109, %r1110;
+	@%p357 bra 	$Lt_1_636418;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1111, [%r8+28];
+	mov.u32 	%r1112, 0;
+	setp.ne.s32 	%p358, %r1111, %r1112;
+	@%p358 bra 	$Lt_1_636418;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r1113, [%r8+8];
+	mov.u32 	%r1114, 66;
+	setp.ne.s32 	%p359, %r1113, %r1114;
+	@%p359 bra 	$Lt_1_637442;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r1115, [%r8+0];
+	ld.global.s32 	%r1116, [%r43+116];
+	setp.ne.s32 	%p360, %r1115, %r1116;
+	@%p360 bra 	$Lt_1_637442;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1117, [%r8+4];
+	ld.global.s32 	%r1118, [%r43+120];
+	setp.ne.s32 	%p361, %r1117, %r1118;
+	@%p361 bra 	$Lt_1_637442;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1119, [%r8+12];
+	mul.lo.u32 	%r1120, %r24, 1536;
+	add.u32 	%r1121, %r8, %r1120;
+	ld.global.s32 	%r1122, [%r1121+1344];
+	setp.ne.s32 	%p362, %r1119, %r1122;
+	@%p362 bra 	$Lt_1_637442;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r1123, 1;
+	st.global.s32 	[%r8+28], %r1123;
+	.loc	17	284	0
+	ld.global.s32 	%r1124, [%r8+24];
+	add.s32 	%r1125, %r1124, 1;
+	st.global.s32 	[%r8+24], %r1125;
+	.loc	17	296	0
+	ld.global.u32 	%r1126, [%r8+20];
+	mov.b32 	%r1127, %f88;
+	cvt.rn.f32.s32 	%f135, %r1127;
+	mov.b32 	%r1128, %f135;
+	xor.b32 	%r1129, %r1126, %r1128;
+	mov.b32 	%f136, %r1129;
+	cvt.rzi.s32.f32 	%r1130, %f136;
+	mov.b32 	%f88, %r1130;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_637442:
+$L_1_509442:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.f32 	%f134, %f88;
+$Lt_1_636418:
+$Lt_1_11010:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	330	0
+	sin.approx.f32 	%f137, %f131;
+	mov.f32 	%f91, %f137;
+	.loc	4	331	0
+	@%p169 bra 	$L_1_510978;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r1131, [%r8+108];
+	setp.eq.u32 	%p363, %r1131, %r11;
+	@%p363 bra 	$L_1_510722;
+$L_1_510978:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1132, 1;
+	bra.uni 	$L_1_510466;
+$L_1_510722:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1132, 0;
+$L_1_510466:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r1133, 0;
+	setp.ne.s32 	%p364, %r1132, %r1133;
+	@%p364 bra 	$Lt_1_638210;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1134, [%r8+28];
+	mov.u32 	%r1135, 0;
+	setp.ne.s32 	%p365, %r1134, %r1135;
+	@%p365 bra 	$Lt_1_638210;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r1136, [%r8+8];
+	mov.u32 	%r1137, 67;
+	setp.ne.s32 	%p366, %r1136, %r1137;
+	@%p366 bra 	$Lt_1_639234;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r1138, [%r8+0];
+	ld.global.s32 	%r1139, [%r43+116];
+	setp.ne.s32 	%p367, %r1138, %r1139;
+	@%p367 bra 	$Lt_1_639234;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1140, [%r8+4];
+	ld.global.s32 	%r1141, [%r43+120];
+	setp.ne.s32 	%p368, %r1140, %r1141;
+	@%p368 bra 	$Lt_1_639234;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1142, [%r8+12];
+	mul.lo.u32 	%r1143, %r24, 1536;
+	add.u32 	%r1144, %r8, %r1143;
+	ld.global.s32 	%r1145, [%r1144+1356];
+	setp.ne.s32 	%p369, %r1142, %r1145;
+	@%p369 bra 	$Lt_1_639234;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r1146, 1;
+	st.global.s32 	[%r8+28], %r1146;
+	.loc	17	284	0
+	ld.global.s32 	%r1147, [%r8+24];
+	add.s32 	%r1148, %r1147, 1;
+	st.global.s32 	[%r8+24], %r1148;
+	.loc	17	296	0
+	ld.global.u32 	%r1149, [%r8+20];
+	mov.b32 	%r1150, %f91;
+	cvt.rn.f32.s32 	%f138, %r1150;
+	mov.b32 	%r1151, %f138;
+	xor.b32 	%r1152, %r1149, %r1151;
+	mov.b32 	%f139, %r1152;
+	cvt.rzi.s32.f32 	%r1153, %f139;
+	mov.b32 	%f91, %r1153;
+$Lt_1_639234:
+$L_1_511234:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.f32 	%f137, %f91;
+$Lt_1_638210:
+$Lt_1_10498:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	334	0
+	ld.const.f32 	%f140, [%r1084+16];
+	ld.const.f32 	%f141, [%r1084+12];
+	mov.f32 	%f142, %f10;
+	mul.f32 	%f143, %f140, %f137;
+	mul.f32 	%f144, %f141, %f134;
+	sub.f32 	%f145, %f144, %f143;
+	add.f32 	%f146, %f142, %f145;
+	mov.f32 	%f10, %f146;
+	.loc	4	335	0
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+	@%p169 bra 	$L_1_512770;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r1154, [%r8+108];
+	setp.eq.u32 	%p370, %r1154, %r11;
+	@%p370 bra 	$L_1_512514;
+$L_1_512770:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1155, 1;
+	bra.uni 	$L_1_512258;
+$L_1_512514:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1155, 0;
+$L_1_512258:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r1156, 0;
+	setp.ne.s32 	%p371, %r1155, %r1156;
+	@%p371 bra 	$Lt_1_640002;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1157, [%r8+28];
+	mov.u32 	%r1158, 0;
+	setp.ne.s32 	%p372, %r1157, %r1158;
+	@%p372 bra 	$Lt_1_640002;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r1159, [%r8+8];
+	mov.u32 	%r1160, 68;
+	setp.ne.s32 	%p373, %r1159, %r1160;
+	@%p373 bra 	$Lt_1_640002;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r1161, [%r8+0];
+	ld.global.s32 	%r1162, [%r43+116];
+	setp.ne.s32 	%p374, %r1161, %r1162;
+	@%p374 bra 	$Lt_1_640002;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1163, [%r8+4];
+	ld.global.s32 	%r1164, [%r43+120];
+	setp.ne.s32 	%p375, %r1163, %r1164;
+	@%p375 bra 	$Lt_1_640002;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1165, [%r8+12];
+	mul.lo.u32 	%r1166, %r24, 1536;
+	add.u32 	%r1167, %r8, %r1166;
+	ld.global.s32 	%r1168, [%r1167+1368];
+	setp.ne.s32 	%p376, %r1165, %r1168;
+	@%p376 bra 	$Lt_1_640002;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r1169, 1;
+	st.global.s32 	[%r8+28], %r1169;
+	.loc	17	284	0
+	ld.global.s32 	%r1170, [%r8+24];
+	add.s32 	%r1171, %r1170, 1;
+	st.global.s32 	[%r8+24], %r1171;
+	.loc	17	296	0
+	ld.global.u32 	%r1172, [%r8+20];
+	mov.b32 	%r1173, %f10;
+	cvt.rn.f32.s32 	%f147, %r1173;
+	mov.b32 	%r1174, %f147;
+	xor.b32 	%r1175, %r1172, %r1174;
+	mov.b32 	%f148, %r1175;
+	cvt.rzi.s32.f32 	%r1176, %f148;
+	mov.b32 	%f10, %r1176;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_640002:
+$Lt_1_9986:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	338	0
+	mul.f32 	%f149, %f140, %f134;
+	mad.f32 	%f150, %f141, %f137, %f149;
+	add.f32 	%f122, %f122, %f150;
+	.loc	4	339	0
+	@%p169 bra 	$L_1_514562;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r1177, [%r8+108];
+	setp.eq.u32 	%p377, %r1177, %r11;
+	@%p377 bra 	$L_1_514306;
+$L_1_514562:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1178, 1;
+	bra.uni 	$L_1_514050;
+$L_1_514306:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1178, 0;
+$L_1_514050:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r1179, 0;
+	setp.ne.s32 	%p378, %r1178, %r1179;
+	@%p378 bra 	$Lt_1_641794;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1180, [%r8+28];
+	mov.u32 	%r1181, 0;
+	setp.ne.s32 	%p379, %r1180, %r1181;
+	@%p379 bra 	$Lt_1_641794;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	mov.f32 	%f13, %f122;
+	ld.global.s32 	%r1182, [%r8+8];
+	mov.u32 	%r1183, 69;
+	setp.ne.s32 	%p380, %r1182, %r1183;
+	@%p380 bra 	$Lt_1_642818;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r1184, [%r8+0];
+	ld.global.s32 	%r1185, [%r43+116];
+	setp.ne.s32 	%p381, %r1184, %r1185;
+	@%p381 bra 	$Lt_1_642818;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1186, [%r8+4];
+	ld.global.s32 	%r1187, [%r43+120];
+	setp.ne.s32 	%p382, %r1186, %r1187;
+	@%p382 bra 	$Lt_1_642818;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1188, [%r8+12];
+	mul.lo.u32 	%r1189, %r24, 1536;
+	add.u32 	%r1190, %r8, %r1189;
+	ld.global.s32 	%r1191, [%r1190+1380];
+	setp.ne.s32 	%p383, %r1188, %r1191;
+	@%p383 bra 	$Lt_1_642818;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r1192, 1;
+	st.global.s32 	[%r8+28], %r1192;
+	.loc	17	284	0
+	ld.global.s32 	%r1193, [%r8+24];
+	add.s32 	%r1194, %r1193, 1;
+	st.global.s32 	[%r8+24], %r1194;
+	.loc	17	296	0
+	ld.global.u32 	%r1195, [%r8+20];
+	mov.b32 	%r1196, %f13;
+	cvt.rn.f32.s32 	%f151, %r1196;
+	mov.b32 	%r1197, %f151;
+	xor.b32 	%r1198, %r1195, %r1197;
+	mov.b32 	%f152, %r1198;
+	cvt.rzi.s32.f32 	%r1199, %f152;
+	mov.b32 	%f13, %r1199;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_642818:
+$L_1_514818:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.f32 	%f122, %f13;
+$Lt_1_641794:
+$Lt_1_9474:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	342	0
+	add.s32 	%r1200, %r342, 2;
+	.loc	4	343	0
+	@%p169 bra 	$L_1_516354;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r1201, [%r8+108];
+	setp.eq.u32 	%p384, %r1201, %r11;
+	@%p384 bra 	$L_1_516098;
+$L_1_516354:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1202, 1;
+	bra.uni 	$L_1_515842;
+$L_1_516098:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1202, 0;
+$L_1_515842:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r1203, 0;
+	setp.ne.s32 	%p385, %r1202, %r1203;
+	@%p385 bra 	$Lt_1_643586;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1204, [%r8+28];
+	mov.u32 	%r1205, 0;
+	setp.ne.s32 	%p386, %r1204, %r1205;
+	@%p386 bra 	$Lt_1_643586;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r1206, [%r8+8];
+	mov.u32 	%r1207, 70;
+	setp.ne.s32 	%p387, %r1206, %r1207;
+	@%p387 bra 	$Lt_1_643586;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r1208, [%r8+0];
+	ld.global.s32 	%r1209, [%r43+116];
+	setp.ne.s32 	%p388, %r1208, %r1209;
+	@%p388 bra 	$Lt_1_643586;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1210, [%r8+4];
+	ld.global.s32 	%r1211, [%r43+120];
+	setp.ne.s32 	%p389, %r1210, %r1211;
+	@%p389 bra 	$Lt_1_643586;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1212, [%r8+12];
+	mul.lo.u32 	%r1213, %r24, 1536;
+	add.u32 	%r1214, %r8, %r1213;
+	ld.global.s32 	%r1215, [%r1214+1392];
+	setp.ne.s32 	%p390, %r1212, %r1215;
+	@%p390 bra 	$Lt_1_643586;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r1216, 1;
+	st.global.s32 	[%r8+28], %r1216;
+	.loc	17	284	0
+	ld.global.s32 	%r1217, [%r8+24];
+	add.s32 	%r1218, %r1217, 1;
+	st.global.s32 	[%r8+24], %r1218;
+	.loc	17	286	0
+	ld.global.u32 	%r1219, [%r8+20];
+	xor.b32 	%r1200, %r1200, %r1219;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_643586:
+$Lt_1_8962:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	346	0
+	mul.lo.u32 	%r1220, %r1200, 20;
+	add.u32 	%r1221, %r1220, %r529;
+	ld.const.f32 	%f153, [%r1221+4];
+	mul.f32 	%f154, %f153, %f32;
+	ld.const.f32 	%f155, [%r1221+0];
+	mad.f32 	%f156, %f155, %f33, %f154;
+	ld.const.f32 	%f157, [%r1221+8];
+	mad.f32 	%f158, %f157, %f31, %f156;
+	cvt.f64.f32 	%fd10, %f158;
+	mov.f64 	%fd11, 0d401921fb54442d18;	// 6.28319
+	mul.f64 	%fd12, %fd10, %fd11;
+	cvt.rn.f32.f64 	%f159, %fd12;
+	mov.f32 	%f94, %f159;
+	.loc	4	347	0
+	@%p169 bra 	$L_1_518146;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r1222, [%r8+108];
+	setp.eq.u32 	%p391, %r1222, %r11;
+	@%p391 bra 	$L_1_517890;
+$L_1_518146:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1223, 1;
+	bra.uni 	$L_1_517634;
+$L_1_517890:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1223, 0;
+$L_1_517634:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r1224, 0;
+	setp.ne.s32 	%p392, %r1223, %r1224;
+	@%p392 bra 	$Lt_1_645378;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1225, [%r8+28];
+	mov.u32 	%r1226, 0;
+	setp.ne.s32 	%p393, %r1225, %r1226;
+	@%p393 bra 	$Lt_1_645378;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r1227, [%r8+8];
+	mov.u32 	%r1228, 71;
+	setp.ne.s32 	%p394, %r1227, %r1228;
+	@%p394 bra 	$Lt_1_646402;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r1229, [%r8+0];
+	ld.global.s32 	%r1230, [%r43+116];
+	setp.ne.s32 	%p395, %r1229, %r1230;
+	@%p395 bra 	$Lt_1_646402;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1231, [%r8+4];
+	ld.global.s32 	%r1232, [%r43+120];
+	setp.ne.s32 	%p396, %r1231, %r1232;
+	@%p396 bra 	$Lt_1_646402;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1233, [%r8+12];
+	mul.lo.u32 	%r1234, %r24, 1536;
+	add.u32 	%r1235, %r8, %r1234;
+	ld.global.s32 	%r1236, [%r1235+1404];
+	setp.ne.s32 	%p397, %r1233, %r1236;
+	@%p397 bra 	$Lt_1_646402;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r1237, 1;
+	st.global.s32 	[%r8+28], %r1237;
+	.loc	17	284	0
+	ld.global.s32 	%r1238, [%r8+24];
+	add.s32 	%r1239, %r1238, 1;
+	st.global.s32 	[%r8+24], %r1239;
+	.loc	17	296	0
+	ld.global.u32 	%r1240, [%r8+20];
+	mov.b32 	%r1241, %f94;
+	cvt.rn.f32.s32 	%f160, %r1241;
+	mov.b32 	%r1242, %f160;
+	xor.b32 	%r1243, %r1240, %r1242;
+	mov.b32 	%f161, %r1243;
+	cvt.rzi.s32.f32 	%r1244, %f161;
+	mov.b32 	%f94, %r1244;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_646402:
+$L_1_518402:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.f32 	%f159, %f94;
+$Lt_1_645378:
+$Lt_1_8450:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	350	0
+	cos.approx.f32 	%f162, %f159;
+	mov.f32 	%f97, %f162;
+	.loc	4	351	0
+	@%p169 bra 	$L_1_519938;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r1245, [%r8+108];
+	setp.eq.u32 	%p398, %r1245, %r11;
+	@%p398 bra 	$L_1_519682;
+$L_1_519938:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1246, 1;
+	bra.uni 	$L_1_519426;
+$L_1_519682:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1246, 0;
+$L_1_519426:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r1247, 0;
+	setp.ne.s32 	%p399, %r1246, %r1247;
+	@%p399 bra 	$Lt_1_647170;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1248, [%r8+28];
+	mov.u32 	%r1249, 0;
+	setp.ne.s32 	%p400, %r1248, %r1249;
+	@%p400 bra 	$Lt_1_647170;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r1250, [%r8+8];
+	mov.u32 	%r1251, 72;
+	setp.ne.s32 	%p401, %r1250, %r1251;
+	@%p401 bra 	$Lt_1_648194;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r1252, [%r8+0];
+	ld.global.s32 	%r1253, [%r43+116];
+	setp.ne.s32 	%p402, %r1252, %r1253;
+	@%p402 bra 	$Lt_1_648194;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1254, [%r8+4];
+	ld.global.s32 	%r1255, [%r43+120];
+	setp.ne.s32 	%p403, %r1254, %r1255;
+	@%p403 bra 	$Lt_1_648194;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1256, [%r8+12];
+	mul.lo.u32 	%r1257, %r24, 1536;
+	add.u32 	%r1258, %r8, %r1257;
+	ld.global.s32 	%r1259, [%r1258+1416];
+	setp.ne.s32 	%p404, %r1256, %r1259;
+	@%p404 bra 	$Lt_1_648194;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r1260, 1;
+	st.global.s32 	[%r8+28], %r1260;
+	.loc	17	284	0
+	ld.global.s32 	%r1261, [%r8+24];
+	add.s32 	%r1262, %r1261, 1;
+	st.global.s32 	[%r8+24], %r1262;
+	.loc	17	296	0
+	ld.global.u32 	%r1263, [%r8+20];
+	mov.b32 	%r1264, %f97;
+	cvt.rn.f32.s32 	%f163, %r1264;
+	mov.b32 	%r1265, %f163;
+	xor.b32 	%r1266, %r1263, %r1265;
+	mov.b32 	%f164, %r1266;
+	cvt.rzi.s32.f32 	%r1267, %f164;
+	mov.b32 	%f97, %r1267;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_648194:
+$L_1_520194:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.f32 	%f162, %f97;
+$Lt_1_647170:
+$Lt_1_7938:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	354	0
+	sin.approx.f32 	%f165, %f159;
+	mov.f32 	%f100, %f165;
+	.loc	4	355	0
+	@%p169 bra 	$L_1_521730;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r1268, [%r8+108];
+	setp.eq.u32 	%p405, %r1268, %r11;
+	@%p405 bra 	$L_1_521474;
+$L_1_521730:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1269, 1;
+	bra.uni 	$L_1_521218;
+$L_1_521474:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1269, 0;
+$L_1_521218:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r1270, 0;
+	setp.ne.s32 	%p406, %r1269, %r1270;
+	@%p406 bra 	$Lt_1_648962;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1271, [%r8+28];
+	mov.u32 	%r1272, 0;
+	setp.ne.s32 	%p407, %r1271, %r1272;
+	@%p407 bra 	$Lt_1_648962;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r1273, [%r8+8];
+	mov.u32 	%r1274, 73;
+	setp.ne.s32 	%p408, %r1273, %r1274;
+	@%p408 bra 	$Lt_1_649986;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r1275, [%r8+0];
+	ld.global.s32 	%r1276, [%r43+116];
+	setp.ne.s32 	%p409, %r1275, %r1276;
+	@%p409 bra 	$Lt_1_649986;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1277, [%r8+4];
+	ld.global.s32 	%r1278, [%r43+120];
+	setp.ne.s32 	%p410, %r1277, %r1278;
+	@%p410 bra 	$Lt_1_649986;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1279, [%r8+12];
+	mul.lo.u32 	%r1280, %r24, 1536;
+	add.u32 	%r1281, %r8, %r1280;
+	ld.global.s32 	%r1282, [%r1281+1428];
+	setp.ne.s32 	%p411, %r1279, %r1282;
+	@%p411 bra 	$Lt_1_649986;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r1283, 1;
+	st.global.s32 	[%r8+28], %r1283;
+	.loc	17	284	0
+	ld.global.s32 	%r1284, [%r8+24];
+	add.s32 	%r1285, %r1284, 1;
+	st.global.s32 	[%r8+24], %r1285;
+	.loc	17	296	0
+	ld.global.u32 	%r1286, [%r8+20];
+	mov.b32 	%r1287, %f100;
+	cvt.rn.f32.s32 	%f166, %r1287;
+	mov.b32 	%r1288, %f166;
+	xor.b32 	%r1289, %r1286, %r1288;
+	mov.b32 	%f167, %r1289;
+	cvt.rzi.s32.f32 	%r1290, %f167;
+	mov.b32 	%f100, %r1290;
+$Lt_1_649986:
+$L_1_521986:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.f32 	%f165, %f100;
+$Lt_1_648962:
+$Lt_1_7426:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	358	0
+	ld.const.f32 	%f168, [%r1221+16];
+	ld.const.f32 	%f169, [%r1221+12];
+	mov.f32 	%f170, %f10;
+	mul.f32 	%f171, %f168, %f165;
+	mul.f32 	%f172, %f169, %f162;
+	sub.f32 	%f173, %f172, %f171;
+	add.f32 	%f174, %f170, %f173;
+	mov.f32 	%f10, %f174;
+	.loc	4	359	0
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+	@%p169 bra 	$L_1_523522;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r1291, [%r8+108];
+	setp.eq.u32 	%p412, %r1291, %r11;
+	@%p412 bra 	$L_1_523266;
+$L_1_523522:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1292, 1;
+	bra.uni 	$L_1_523010;
+$L_1_523266:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1292, 0;
+$L_1_523010:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r1293, 0;
+	setp.ne.s32 	%p413, %r1292, %r1293;
+	@%p413 bra 	$Lt_1_650754;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1294, [%r8+28];
+	mov.u32 	%r1295, 0;
+	setp.ne.s32 	%p414, %r1294, %r1295;
+	@%p414 bra 	$Lt_1_650754;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r1296, [%r8+8];
+	mov.u32 	%r1297, 74;
+	setp.ne.s32 	%p415, %r1296, %r1297;
+	@%p415 bra 	$Lt_1_650754;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r1298, [%r8+0];
+	ld.global.s32 	%r1299, [%r43+116];
+	setp.ne.s32 	%p416, %r1298, %r1299;
+	@%p416 bra 	$Lt_1_650754;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1300, [%r8+4];
+	ld.global.s32 	%r1301, [%r43+120];
+	setp.ne.s32 	%p417, %r1300, %r1301;
+	@%p417 bra 	$Lt_1_650754;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1302, [%r8+12];
+	mul.lo.u32 	%r1303, %r24, 1536;
+	add.u32 	%r1304, %r8, %r1303;
+	ld.global.s32 	%r1305, [%r1304+1440];
+	setp.ne.s32 	%p418, %r1302, %r1305;
+	@%p418 bra 	$Lt_1_650754;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r1306, 1;
+	st.global.s32 	[%r8+28], %r1306;
+	.loc	17	284	0
+	ld.global.s32 	%r1307, [%r8+24];
+	add.s32 	%r1308, %r1307, 1;
+	st.global.s32 	[%r8+24], %r1308;
+	.loc	17	296	0
+	ld.global.u32 	%r1309, [%r8+20];
+	mov.b32 	%r1310, %f10;
+	cvt.rn.f32.s32 	%f175, %r1310;
+	mov.b32 	%r1311, %f175;
+	xor.b32 	%r1312, %r1309, %r1311;
+	mov.b32 	%f176, %r1312;
+	cvt.rzi.s32.f32 	%r1313, %f176;
+	mov.b32 	%f10, %r1313;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_650754:
+$Lt_1_6914:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	362	0
+	mul.f32 	%f177, %f168, %f162;
+	mad.f32 	%f178, %f169, %f165, %f177;
+	add.f32 	%f122, %f122, %f178;
+	.loc	4	363	0
+	@%p169 bra 	$L_1_525314;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r1314, [%r8+108];
+	setp.eq.u32 	%p419, %r1314, %r11;
+	@%p419 bra 	$L_1_525058;
+$L_1_525314:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1315, 1;
+	bra.uni 	$L_1_524802;
+$L_1_525058:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1315, 0;
+$L_1_524802:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r1316, 0;
+	setp.ne.s32 	%p420, %r1315, %r1316;
+	@%p420 bra 	$Lt_1_652546;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1317, [%r8+28];
+	mov.u32 	%r1318, 0;
+	setp.ne.s32 	%p421, %r1317, %r1318;
+	@%p421 bra 	$Lt_1_652546;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	mov.f32 	%f13, %f122;
+	ld.global.s32 	%r1319, [%r8+8];
+	mov.u32 	%r1320, 75;
+	setp.ne.s32 	%p422, %r1319, %r1320;
+	@%p422 bra 	$Lt_1_653570;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r1321, [%r8+0];
+	ld.global.s32 	%r1322, [%r43+116];
+	setp.ne.s32 	%p423, %r1321, %r1322;
+	@%p423 bra 	$Lt_1_653570;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1323, [%r8+4];
+	ld.global.s32 	%r1324, [%r43+120];
+	setp.ne.s32 	%p424, %r1323, %r1324;
+	@%p424 bra 	$Lt_1_653570;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1325, [%r8+12];
+	mul.lo.u32 	%r1326, %r24, 1536;
+	add.u32 	%r1327, %r8, %r1326;
+	ld.global.s32 	%r1328, [%r1327+1452];
+	setp.ne.s32 	%p425, %r1325, %r1328;
+	@%p425 bra 	$Lt_1_653570;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r1329, 1;
+	st.global.s32 	[%r8+28], %r1329;
+	.loc	17	284	0
+	ld.global.s32 	%r1330, [%r8+24];
+	add.s32 	%r1331, %r1330, 1;
+	st.global.s32 	[%r8+24], %r1331;
+	.loc	17	296	0
+	ld.global.u32 	%r1332, [%r8+20];
+	mov.b32 	%r1333, %f13;
+	cvt.rn.f32.s32 	%f179, %r1333;
+	mov.b32 	%r1334, %f179;
+	xor.b32 	%r1335, %r1332, %r1334;
+	mov.b32 	%f180, %r1335;
+	cvt.rzi.s32.f32 	%r1336, %f180;
+	mov.b32 	%f13, %r1336;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_653570:
+$L_1_525570:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.f32 	%f122, %f13;
+$Lt_1_652546:
+$Lt_1_6402:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	366	0
+	add.s32 	%r1337, %r342, 3;
+	.loc	4	367	0
+	@%p169 bra 	$L_1_527106;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r1338, [%r8+108];
+	setp.eq.u32 	%p426, %r1338, %r11;
+	@%p426 bra 	$L_1_526850;
+$L_1_527106:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1339, 1;
+	bra.uni 	$L_1_526594;
+$L_1_526850:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1339, 0;
+$L_1_526594:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r1340, 0;
+	setp.ne.s32 	%p427, %r1339, %r1340;
+	@%p427 bra 	$Lt_1_654338;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1341, [%r8+28];
+	mov.u32 	%r1342, 0;
+	setp.ne.s32 	%p428, %r1341, %r1342;
+	@%p428 bra 	$Lt_1_654338;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r1343, [%r8+8];
+	mov.u32 	%r1344, 76;
+	setp.ne.s32 	%p429, %r1343, %r1344;
+	@%p429 bra 	$Lt_1_654338;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r1345, [%r8+0];
+	ld.global.s32 	%r1346, [%r43+116];
+	setp.ne.s32 	%p430, %r1345, %r1346;
+	@%p430 bra 	$Lt_1_654338;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1347, [%r8+4];
+	ld.global.s32 	%r1348, [%r43+120];
+	setp.ne.s32 	%p431, %r1347, %r1348;
+	@%p431 bra 	$Lt_1_654338;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1349, [%r8+12];
+	mul.lo.u32 	%r1350, %r24, 1536;
+	add.u32 	%r1351, %r8, %r1350;
+	ld.global.s32 	%r1352, [%r1351+1464];
+	setp.ne.s32 	%p432, %r1349, %r1352;
+	@%p432 bra 	$Lt_1_654338;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r1353, 1;
+	st.global.s32 	[%r8+28], %r1353;
+	.loc	17	284	0
+	ld.global.s32 	%r1354, [%r8+24];
+	add.s32 	%r1355, %r1354, 1;
+	st.global.s32 	[%r8+24], %r1355;
+	.loc	17	286	0
+	ld.global.u32 	%r1356, [%r8+20];
+	xor.b32 	%r1337, %r1337, %r1356;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_654338:
+$Lt_1_5890:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	370	0
+	mul.lo.u32 	%r1357, %r1337, 20;
+	add.u32 	%r1358, %r1357, %r529;
+	ld.const.f32 	%f181, [%r1358+4];
+	mul.f32 	%f182, %f181, %f32;
+	ld.const.f32 	%f183, [%r1358+0];
+	mad.f32 	%f184, %f183, %f33, %f182;
+	ld.const.f32 	%f185, [%r1358+8];
+	mad.f32 	%f186, %f185, %f31, %f184;
+	cvt.f64.f32 	%fd13, %f186;
+	mov.f64 	%fd14, 0d401921fb54442d18;	// 6.28319
+	mul.f64 	%fd15, %fd13, %fd14;
+	cvt.rn.f32.f64 	%f187, %fd15;
+	mov.f32 	%f103, %f187;
+	.loc	4	371	0
+	@%p169 bra 	$L_1_528898;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r1359, [%r8+108];
+	setp.eq.u32 	%p433, %r1359, %r11;
+	@%p433 bra 	$L_1_528642;
+$L_1_528898:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1360, 1;
+	bra.uni 	$L_1_528386;
+$L_1_528642:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1360, 0;
+$L_1_528386:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r1361, 0;
+	setp.ne.s32 	%p434, %r1360, %r1361;
+	@%p434 bra 	$Lt_1_656130;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1362, [%r8+28];
+	mov.u32 	%r1363, 0;
+	setp.ne.s32 	%p435, %r1362, %r1363;
+	@%p435 bra 	$Lt_1_656130;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r1364, [%r8+8];
+	mov.u32 	%r1365, 77;
+	setp.ne.s32 	%p436, %r1364, %r1365;
+	@%p436 bra 	$Lt_1_657154;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r1366, [%r8+0];
+	ld.global.s32 	%r1367, [%r43+116];
+	setp.ne.s32 	%p437, %r1366, %r1367;
+	@%p437 bra 	$Lt_1_657154;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1368, [%r8+4];
+	ld.global.s32 	%r1369, [%r43+120];
+	setp.ne.s32 	%p438, %r1368, %r1369;
+	@%p438 bra 	$Lt_1_657154;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1370, [%r8+12];
+	mul.lo.u32 	%r1371, %r24, 1536;
+	add.u32 	%r1372, %r8, %r1371;
+	ld.global.s32 	%r1373, [%r1372+1476];
+	setp.ne.s32 	%p439, %r1370, %r1373;
+	@%p439 bra 	$Lt_1_657154;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r1374, 1;
+	st.global.s32 	[%r8+28], %r1374;
+	.loc	17	284	0
+	ld.global.s32 	%r1375, [%r8+24];
+	add.s32 	%r1376, %r1375, 1;
+	st.global.s32 	[%r8+24], %r1376;
+	.loc	17	296	0
+	ld.global.u32 	%r1377, [%r8+20];
+	mov.b32 	%r1378, %f103;
+	cvt.rn.f32.s32 	%f188, %r1378;
+	mov.b32 	%r1379, %f188;
+	xor.b32 	%r1380, %r1377, %r1379;
+	mov.b32 	%f189, %r1380;
+	cvt.rzi.s32.f32 	%r1381, %f189;
+	mov.b32 	%f103, %r1381;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_657154:
+$L_1_529154:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.f32 	%f187, %f103;
+$Lt_1_656130:
+$Lt_1_5378:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	374	0
+	cos.approx.f32 	%f190, %f187;
+	mov.f32 	%f106, %f190;
+	.loc	4	375	0
+	@%p169 bra 	$L_1_530690;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r1382, [%r8+108];
+	setp.eq.u32 	%p440, %r1382, %r11;
+	@%p440 bra 	$L_1_530434;
+$L_1_530690:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1383, 1;
+	bra.uni 	$L_1_530178;
+$L_1_530434:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1383, 0;
+$L_1_530178:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r1384, 0;
+	setp.ne.s32 	%p441, %r1383, %r1384;
+	@%p441 bra 	$Lt_1_657922;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1385, [%r8+28];
+	mov.u32 	%r1386, 0;
+	setp.ne.s32 	%p442, %r1385, %r1386;
+	@%p442 bra 	$Lt_1_657922;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r1387, [%r8+8];
+	mov.u32 	%r1388, 78;
+	setp.ne.s32 	%p443, %r1387, %r1388;
+	@%p443 bra 	$Lt_1_658946;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r1389, [%r8+0];
+	ld.global.s32 	%r1390, [%r43+116];
+	setp.ne.s32 	%p444, %r1389, %r1390;
+	@%p444 bra 	$Lt_1_658946;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1391, [%r8+4];
+	ld.global.s32 	%r1392, [%r43+120];
+	setp.ne.s32 	%p445, %r1391, %r1392;
+	@%p445 bra 	$Lt_1_658946;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1393, [%r8+12];
+	mul.lo.u32 	%r1394, %r24, 1536;
+	add.u32 	%r1395, %r8, %r1394;
+	ld.global.s32 	%r1396, [%r1395+1488];
+	setp.ne.s32 	%p446, %r1393, %r1396;
+	@%p446 bra 	$Lt_1_658946;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r1397, 1;
+	st.global.s32 	[%r8+28], %r1397;
+	.loc	17	284	0
+	ld.global.s32 	%r1398, [%r8+24];
+	add.s32 	%r1399, %r1398, 1;
+	st.global.s32 	[%r8+24], %r1399;
+	.loc	17	296	0
+	ld.global.u32 	%r1400, [%r8+20];
+	mov.b32 	%r1401, %f106;
+	cvt.rn.f32.s32 	%f191, %r1401;
+	mov.b32 	%r1402, %f191;
+	xor.b32 	%r1403, %r1400, %r1402;
+	mov.b32 	%f192, %r1403;
+	cvt.rzi.s32.f32 	%r1404, %f192;
+	mov.b32 	%f106, %r1404;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_658946:
+$L_1_530946:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.f32 	%f190, %f106;
+$Lt_1_657922:
+$Lt_1_4866:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	378	0
+	sin.approx.f32 	%f193, %f187;
+	mov.f32 	%f109, %f193;
+	.loc	4	379	0
+	@%p169 bra 	$L_1_532482;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r1405, [%r8+108];
+	setp.eq.u32 	%p447, %r1405, %r11;
+	@%p447 bra 	$L_1_532226;
+$L_1_532482:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1406, 1;
+	bra.uni 	$L_1_531970;
+$L_1_532226:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1406, 0;
+$L_1_531970:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r1407, 0;
+	setp.ne.s32 	%p448, %r1406, %r1407;
+	@%p448 bra 	$Lt_1_659714;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1408, [%r8+28];
+	mov.u32 	%r1409, 0;
+	setp.ne.s32 	%p449, %r1408, %r1409;
+	@%p449 bra 	$Lt_1_659714;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r1410, [%r8+8];
+	mov.u32 	%r1411, 79;
+	setp.ne.s32 	%p450, %r1410, %r1411;
+	@%p450 bra 	$Lt_1_660738;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r1412, [%r8+0];
+	ld.global.s32 	%r1413, [%r43+116];
+	setp.ne.s32 	%p451, %r1412, %r1413;
+	@%p451 bra 	$Lt_1_660738;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1414, [%r8+4];
+	ld.global.s32 	%r1415, [%r43+120];
+	setp.ne.s32 	%p452, %r1414, %r1415;
+	@%p452 bra 	$Lt_1_660738;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1416, [%r8+12];
+	mul.lo.u32 	%r1417, %r24, 1536;
+	add.u32 	%r1418, %r8, %r1417;
+	ld.global.s32 	%r1419, [%r1418+1500];
+	setp.ne.s32 	%p453, %r1416, %r1419;
+	@%p453 bra 	$Lt_1_660738;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r1420, 1;
+	st.global.s32 	[%r8+28], %r1420;
+	.loc	17	284	0
+	ld.global.s32 	%r1421, [%r8+24];
+	add.s32 	%r1422, %r1421, 1;
+	st.global.s32 	[%r8+24], %r1422;
+	.loc	17	296	0
+	ld.global.u32 	%r1423, [%r8+20];
+	mov.b32 	%r1424, %f109;
+	cvt.rn.f32.s32 	%f194, %r1424;
+	mov.b32 	%r1425, %f194;
+	xor.b32 	%r1426, %r1423, %r1425;
+	mov.b32 	%f195, %r1426;
+	cvt.rzi.s32.f32 	%r1427, %f195;
+	mov.b32 	%f109, %r1427;
+$Lt_1_660738:
+$L_1_532738:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.f32 	%f193, %f109;
+$Lt_1_659714:
+$Lt_1_4354:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	382	0
+	ld.const.f32 	%f196, [%r1358+16];
+	ld.const.f32 	%f197, [%r1358+12];
+	mov.f32 	%f198, %f10;
+	mul.f32 	%f199, %f196, %f193;
+	mul.f32 	%f200, %f197, %f190;
+	sub.f32 	%f201, %f200, %f199;
+	add.f32 	%f202, %f198, %f201;
+	mov.f32 	%f10, %f202;
+	.loc	4	383	0
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+	@%p169 bra 	$L_1_534274;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r1428, [%r8+108];
+	setp.eq.u32 	%p454, %r1428, %r11;
+	@%p454 bra 	$L_1_534018;
+$L_1_534274:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1429, 1;
+	bra.uni 	$L_1_533762;
+$L_1_534018:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1429, 0;
+$L_1_533762:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r1430, 0;
+	setp.ne.s32 	%p455, %r1429, %r1430;
+	@%p455 bra 	$Lt_1_661506;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1431, [%r8+28];
+	mov.u32 	%r1432, 0;
+	setp.ne.s32 	%p456, %r1431, %r1432;
+	@%p456 bra 	$Lt_1_661506;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r1433, [%r8+8];
+	mov.u32 	%r1434, 80;
+	setp.ne.s32 	%p457, %r1433, %r1434;
+	@%p457 bra 	$Lt_1_661506;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r1435, [%r8+0];
+	ld.global.s32 	%r1436, [%r43+116];
+	setp.ne.s32 	%p458, %r1435, %r1436;
+	@%p458 bra 	$Lt_1_661506;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1437, [%r8+4];
+	ld.global.s32 	%r1438, [%r43+120];
+	setp.ne.s32 	%p459, %r1437, %r1438;
+	@%p459 bra 	$Lt_1_661506;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1439, [%r8+12];
+	mul.lo.u32 	%r1440, %r24, 1536;
+	add.u32 	%r1441, %r8, %r1440;
+	ld.global.s32 	%r1442, [%r1441+1512];
+	setp.ne.s32 	%p460, %r1439, %r1442;
+	@%p460 bra 	$Lt_1_661506;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r1443, 1;
+	st.global.s32 	[%r8+28], %r1443;
+	.loc	17	284	0
+	ld.global.s32 	%r1444, [%r8+24];
+	add.s32 	%r1445, %r1444, 1;
+	st.global.s32 	[%r8+24], %r1445;
+	.loc	17	296	0
+	ld.global.u32 	%r1446, [%r8+20];
+	mov.b32 	%r1447, %f10;
+	cvt.rn.f32.s32 	%f203, %r1447;
+	mov.b32 	%r1448, %f203;
+	xor.b32 	%r1449, %r1446, %r1448;
+	mov.b32 	%f204, %r1449;
+	cvt.rzi.s32.f32 	%r1450, %f204;
+	mov.b32 	%f10, %r1450;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p169, %r9, %r10;
+$Lt_1_661506:
+$Lt_1_3842:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	386	0
+	mul.f32 	%f205, %f196, %f190;
+	mad.f32 	%f206, %f197, %f193, %f205;
+	add.f32 	%f207, %f122, %f206;
+	mov.f32 	%f13, %f207;
+	.loc	4	387	0
+	@%p169 bra 	$L_1_536066;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r1451, [%r8+108];
+	setp.eq.u32 	%p461, %r1451, %r11;
+	@%p461 bra 	$L_1_535810;
+$L_1_536066:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1452, 1;
+	bra.uni 	$L_1_535554;
+$L_1_535810:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.s32 	%r1452, 0;
+$L_1_535554:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	mov.u32 	%r1453, 0;
+	setp.ne.s32 	%p462, %r1452, %r1453;
+	@%p462 bra 	$Lt_1_663298;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1454, [%r8+28];
+	mov.u32 	%r1455, 0;
+	setp.ne.s32 	%p463, %r1454, %r1455;
+	@%p463 bra 	$Lt_1_663298;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	281	0
+	ld.global.s32 	%r1456, [%r8+8];
+	mov.u32 	%r1457, 81;
+	setp.ne.s32 	%p464, %r1456, %r1457;
+	@%p464 bra 	$Lt_1_663298;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r1458, [%r8+0];
+	ld.global.s32 	%r1459, [%r43+116];
+	setp.ne.s32 	%p465, %r1458, %r1459;
+	@%p465 bra 	$Lt_1_663298;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1460, [%r8+4];
+	ld.global.s32 	%r1461, [%r43+120];
+	setp.ne.s32 	%p466, %r1460, %r1461;
+	@%p466 bra 	$Lt_1_663298;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	ld.global.s32 	%r1462, [%r8+12];
+	mul.lo.u32 	%r1463, %r24, 1536;
+	add.u32 	%r1464, %r8, %r1463;
+	ld.global.s32 	%r1465, [%r1464+1524];
+	setp.ne.s32 	%p467, %r1462, %r1465;
+	@%p467 bra 	$Lt_1_663298;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	17	283	0
+	mov.s32 	%r1466, 1;
+	st.global.s32 	[%r8+28], %r1466;
+	.loc	17	284	0
+	ld.global.s32 	%r1467, [%r8+24];
+	add.s32 	%r1468, %r1467, 1;
+	st.global.s32 	[%r8+24], %r1468;
+	.loc	17	296	0
+	ld.global.u32 	%r1469, [%r8+20];
+	mov.b32 	%r1470, %f13;
+	cvt.rn.f32.s32 	%f208, %r1470;
+	mov.b32 	%r1471, %f208;
+	xor.b32 	%r1472, %r1469, %r1471;
+	mov.b32 	%f209, %r1472;
+	cvt.rzi.s32.f32 	%r1473, %f209;
+	mov.b32 	%f13, %r1473;
+	ld.global.u32 	%r9, [%r8+104];
+$Lt_1_663298:
+$Lt_1_3330:
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	.loc	4	244	0
+	add.s32 	%r342, %r342, 4;
+	add.s32 	%r2, %r2, 4;
+	mov.u32 	%r1474, 511;
+	setp.gt.s32 	%p468, %r342, %r1474;
+	@%p468 bra 	$Lt_1_601602;
+ //<loop> Part of loop body line 250, head labeled $L_1_473858
+	setp.gt.s32 	%p469, %r1, %r2;
+	@%p469 bra 	$L_1_473858;
+$Lt_1_601602:
+$L_1_474114:
+	.loc	4	395	0
+	setp.ne.u32 	%p1, %r9, %r10;
+	@%p1 bra 	$L_1_538114;
+	ld.global.u32 	%r1475, [%r8+108];
+	setp.eq.u32 	%p470, %r1475, %r11;
+	@%p470 bra 	$L_1_537858;
+$L_1_538114:
+	mov.s32 	%r1476, 1;
+	bra.uni 	$L_1_537602;
+$L_1_537858:
+	mov.s32 	%r1476, 0;
+$L_1_537602:
+	mov.u32 	%r1477, 0;
+	setp.ne.s32 	%p471, %r1476, %r1477;
+	@%p471 bra 	$Lt_1_665346;
+	ld.global.s32 	%r1478, [%r8+28];
+	mov.u32 	%r1479, 0;
+	setp.ne.s32 	%p472, %r1478, %r1479;
+	@%p472 bra 	$Lt_1_665346;
+	.loc	17	281	0
+	ld.global.s32 	%r1480, [%r8+8];
+	mov.u32 	%r1481, 45;
+	setp.ne.s32 	%p473, %r1480, %r1481;
+	@%p473 bra 	$Lt_1_665346;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r1482, [%r8+0];
+	ld.global.s32 	%r1483, [%r43+116];
+	setp.ne.s32 	%p474, %r1482, %r1483;
+	@%p474 bra 	$Lt_1_665346;
+	ld.global.s32 	%r1484, [%r8+4];
+	ld.global.s32 	%r1485, [%r43+120];
+	setp.ne.s32 	%p475, %r1484, %r1485;
+	@%p475 bra 	$Lt_1_665346;
+	ld.global.s32 	%r1486, [%r8+12];
+	mul.lo.u32 	%r1487, %r24, 1536;
+	add.u32 	%r1488, %r8, %r1487;
+	ld.global.s32 	%r1489, [%r1488+1092];
+	setp.ne.s32 	%p476, %r1486, %r1489;
+	@%p476 bra 	$Lt_1_665346;
+	.loc	17	283	0
+	mov.s32 	%r1490, 1;
+	st.global.s32 	[%r8+28], %r1490;
+	.loc	17	284	0
+	ld.global.s32 	%r1491, [%r8+24];
+	add.s32 	%r1492, %r1491, 1;
+	st.global.s32 	[%r8+24], %r1492;
+	ld.global.u32 	%r9, [%r8+104];
+	setp.ne.u32 	%p1, %r9, %r10;
+$Lt_1_665346:
+$Lt_1_2306:
+	.loc	4	398	0
+	@%p1 bra 	$L_1_539906;
+	ld.global.u32 	%r1493, [%r8+108];
+	setp.eq.u32 	%p477, %r1493, %r11;
+	@%p477 bra 	$L_1_539650;
+$L_1_539906:
+	mov.s32 	%r1494, 1;
+	bra.uni 	$L_1_539394;
+$L_1_539650:
+	mov.s32 	%r1494, 0;
+$L_1_539394:
+	mov.u32 	%r1495, 0;
+	setp.ne.s32 	%p478, %r1494, %r1495;
+	@%p478 bra 	$Lt_1_667138;
+	ld.global.s32 	%r1496, [%r8+28];
+	mov.u32 	%r1497, 0;
+	setp.ne.s32 	%p479, %r1496, %r1497;
+	@%p479 bra 	$Lt_1_667138;
+	.loc	17	281	0
+	ld.global.s32 	%r1498, [%r8+8];
+	mov.u32 	%r1499, 46;
+	setp.ne.s32 	%p480, %r1498, %r1499;
+	@%p480 bra 	$Lt_1_667138;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r1500, [%r8+0];
+	ld.global.s32 	%r1501, [%r43+116];
+	setp.ne.s32 	%p481, %r1500, %r1501;
+	@%p481 bra 	$Lt_1_667138;
+	ld.global.s32 	%r1502, [%r8+4];
+	ld.global.s32 	%r1503, [%r43+120];
+	setp.ne.s32 	%p482, %r1502, %r1503;
+	@%p482 bra 	$Lt_1_667138;
+	ld.global.s32 	%r1504, [%r8+12];
+	mul.lo.u32 	%r1505, %r24, 1536;
+	add.u32 	%r1506, %r8, %r1505;
+	ld.global.s32 	%r1507, [%r1506+1104];
+	setp.ne.s32 	%p483, %r1504, %r1507;
+	@%p483 bra 	$Lt_1_667138;
+	.loc	17	283	0
+	mov.s32 	%r1508, 1;
+	st.global.s32 	[%r8+28], %r1508;
+	.loc	17	284	0
+	ld.global.s32 	%r1509, [%r8+24];
+	add.s32 	%r1510, %r1509, 1;
+	st.global.s32 	[%r8+24], %r1510;
+$Lt_1_667138:
+$Lt_1_1794:
+	.loc	4	401	0
+	mov.f32 	%f210, %f10;
+	st.global.f32 	[%r452+0], %f210;
+	.loc	4	402	0
+	ld.global.u32 	%r1511, [%r8+104];
+	setp.ne.u32 	%p484, %r1511, %r10;
+	@%p484 bra 	$L_1_541698;
+	ld.global.u32 	%r1512, [%r8+108];
+	setp.eq.u32 	%p485, %r1512, %r11;
+	@%p485 bra 	$L_1_541442;
+$L_1_541698:
+	mov.s32 	%r1513, 1;
+	bra.uni 	$L_1_541186;
+$L_1_541442:
+	mov.s32 	%r1513, 0;
+$L_1_541186:
+	mov.u32 	%r1514, 0;
+	setp.ne.s32 	%p486, %r1513, %r1514;
+	@%p486 bra 	$Lt_1_668930;
+	ld.global.s32 	%r1515, [%r8+28];
+	mov.u32 	%r1516, 0;
+	setp.ne.s32 	%p487, %r1515, %r1516;
+	@%p487 bra 	$Lt_1_668930;
+	.loc	17	281	0
+	ld.global.s32 	%r1517, [%r8+8];
+	mov.u32 	%r1518, 82;
+	setp.ne.s32 	%p488, %r1517, %r1518;
+	@%p488 bra 	$Lt_1_668930;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r1519, [%r8+0];
+	ld.global.s32 	%r1520, [%r43+116];
+	setp.ne.s32 	%p489, %r1519, %r1520;
+	@%p489 bra 	$Lt_1_668930;
+	ld.global.s32 	%r1521, [%r8+4];
+	ld.global.s32 	%r1522, [%r43+120];
+	setp.ne.s32 	%p490, %r1521, %r1522;
+	@%p490 bra 	$Lt_1_668930;
+	ld.global.s32 	%r1523, [%r8+12];
+	mul.lo.u32 	%r1524, %r24, 1536;
+	add.u32 	%r1525, %r8, %r1524;
+	ld.global.s32 	%r1526, [%r1525+1536];
+	setp.ne.s32 	%p491, %r1523, %r1526;
+	@%p491 bra 	$Lt_1_668930;
+	.loc	17	283	0
+	mov.s32 	%r1527, 1;
+	st.global.s32 	[%r8+28], %r1527;
+	.loc	17	284	0
+	ld.global.s32 	%r1528, [%r8+24];
+	add.s32 	%r1529, %r1528, 1;
+	st.global.s32 	[%r8+24], %r1529;
+	.loc	17	296	0
+	ld.global.u32 	%r1530, [%r8+20];
+	ld.global.s32 	%r1531, [%r452+0];
+	cvt.rn.f32.s32 	%f211, %r1531;
+	mov.b32 	%r1532, %f211;
+	xor.b32 	%r1533, %r1530, %r1532;
+	mov.b32 	%f212, %r1533;
+	cvt.rzi.s32.f32 	%r1534, %f212;
+	st.global.s32 	[%r452+0], %r1534;
+$Lt_1_668930:
+$Lt_1_1282:
+	.loc	4	405	0
+	mov.f32 	%f213, %f13;
+	st.global.f32 	[%r476+0], %f213;
+	.loc	4	406	0
+	ld.global.u32 	%r1535, [%r8+104];
+	setp.ne.u32 	%p492, %r1535, %r10;
+	@%p492 bra 	$L_1_543490;
+	ld.global.u32 	%r1536, [%r8+108];
+	setp.eq.u32 	%p493, %r1536, %r11;
+	@%p493 bra 	$L_1_543234;
+$L_1_543490:
+	mov.s32 	%r1537, 1;
+	bra.uni 	$L_1_542978;
+$L_1_543234:
+	mov.s32 	%r1537, 0;
+$L_1_542978:
+	mov.u32 	%r1538, 0;
+	setp.ne.s32 	%p494, %r1537, %r1538;
+	@%p494 bra 	$Lt_1_670722;
+	ld.global.s32 	%r1539, [%r8+28];
+	mov.u32 	%r1540, 0;
+	setp.ne.s32 	%p495, %r1539, %r1540;
+	@%p495 bra 	$Lt_1_670722;
+	.loc	17	281	0
+	ld.global.s32 	%r1541, [%r8+8];
+	mov.u32 	%r1542, 83;
+	setp.ne.s32 	%p496, %r1541, %r1542;
+	@%p496 bra 	$Lt_1_670722;
+	ld.global.u32 	%r24, [%r8+96];
+	mul.lo.u32 	%r42, %r24, 44;
+	add.u32 	%r43, %r42, %r8;
+	ld.global.s32 	%r1543, [%r8+0];
+	ld.global.s32 	%r1544, [%r43+116];
+	setp.ne.s32 	%p497, %r1543, %r1544;
+	@%p497 bra 	$Lt_1_670722;
+	ld.global.s32 	%r1545, [%r8+4];
+	ld.global.s32 	%r1546, [%r43+120];
+	setp.ne.s32 	%p498, %r1545, %r1546;
+	@%p498 bra 	$Lt_1_670722;
+	ld.global.s32 	%r1547, [%r8+12];
+	mul.lo.u32 	%r1548, %r24, 1536;
+	add.u32 	%r1549, %r8, %r1548;
+	ld.global.s32 	%r1550, [%r1549+1548];
+	setp.ne.s32 	%p499, %r1547, %r1550;
+	@%p499 bra 	$Lt_1_670722;
+	.loc	17	283	0
+	mov.s32 	%r1551, 1;
+	st.global.s32 	[%r8+28], %r1551;
+	.loc	17	284	0
+	ld.global.s32 	%r1552, [%r8+24];
+	add.s32 	%r1553, %r1552, 1;
+	st.global.s32 	[%r8+24], %r1553;
+	.loc	17	296	0
+	ld.global.u32 	%r1554, [%r8+20];
+	ld.global.s32 	%r1555, [%r476+0];
+	cvt.rn.f32.s32 	%f214, %r1555;
+	mov.b32 	%r1556, %f214;
+	xor.b32 	%r1557, %r1554, %r1556;
+	mov.b32 	%f215, %r1557;
+	cvt.rzi.s32.f32 	%r1558, %f215;
+	st.global.s32 	[%r476+0], %r1558;
+$Lt_1_670722:
+$Lt_1_770:
+	.loc	4	410	0
+	exit;
+$LDWend__Z13ComputeFH_GPUiiPfS_S_S_S_P12_gpufi_data_:
+	} // _Z13ComputeFH_GPUiiPfS_S_S_S_P12_gpufi_data_
+

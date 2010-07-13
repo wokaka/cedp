@@ -1,0 +1,69 @@
+
+(c) 2007 The Board of Trustees of the University of Illinois.
+
+This software is distributed under the Illinois Open Source License agreement.
+The LICENSE file contains a copy of the license agreement.
+
+
+Introduction
+------------
+
+The Parboil suite was developed from a collection of benchmarks used at the
+University of Illinois to measure and compare the performance of
+computation-intensive algorithms executing on either a CPU or a GPU.  The
+GPU algorithms are written for the CUDA compiler and runtime, to run on the
+G80 and compatible GPUs.
+
+
+Quick setup guide
+-----------------
+
+To use the parboil benchmark suite:
+
+Change to the common/src subdirectory and type 'make PARBOIL_ROOT=$parboil'
+where $parboil should be replaced with the actual path to the 'parboil'
+directory.
+
+Create a 'benchmarks' subdirectory (you can also use a symbolic link) and put
+benchmarks in it.  There should be one subdirectory for each benchmark.  We
+distribute some benchmarks as a separate archive file.
+
+There are a number of files that are not automatically marked executable
+after unpacking.  Ensure that they are executable by running 'chmod u+x'
+with the filename as its argument.  If your shell is bash, the following
+will work:
+
+  chmod u+x ./parboil
+  for x in benchmarks/*/tools/compare-output; do chmod u+x $x; done
+
+Type './parboil help' to display the driver commands.  You can get help on
+a particular comand X with './parboil help X'.
+
+Run './parboil' with options to do stuff.
+
+
+Running a benchmark
+-------------------
+
+You can see a list of benchmarks, and the available versions of each
+benchmark, with the command
+
+  ./parboil list
+
+Suppose you want to compile and run the CUDA version of the benchmark
+"mri-fhd".  Then the following commands will do this:
+
+  ./parboil compile mri-fhd cuda
+  ./parboil run     mri-fhd cuda default
+
+The CUDA timing information is generally not accurate with newer versions 
+of the CUDA API, because some CUDA calls execute asynchronously (they return
+before they finish executing).  To get accurate timing information,
+pass the -S flag when running the benchmark.
+
+  ./parboil run     mri-fhd cuda default -S
+
+When the program finishes, the driver prints the time spent in execution
+on the CPU, execution on the GPU, GPU data transfer time, and CPU I/O time.
+The driver prints "Pass" if the benchmark's output appears to be correct.
+

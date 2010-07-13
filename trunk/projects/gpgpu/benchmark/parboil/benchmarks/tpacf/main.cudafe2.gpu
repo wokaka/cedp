@@ -1,0 +1,3624 @@
+#if defined(__cplusplus)
+#if !defined(__CUDACC__) &&! defined(__CUDABE__) && !defined(__MULTI_CORE__)
+namespace __cuda_emu {
+#endif
+extern "C" {
+#endif
+#if defined(__CUDACC__) || defined(__CUDABE__) || defined(__MULTI_CORE__) || defined(__cplusplus)
+# 14 "src/cuda_fi_prerun/gpufi.h"
+struct _gpufi_fault_;
+# 46 "src/cuda_fi_prerun/gpufi.h"
+struct _gpufi_profile_kernel_;
+# 54 "src/cuda_fi_prerun/gpufi.h"
+struct _gpufi_profile_variable_;
+# 60 "src/cuda_fi_prerun/gpufi.h"
+struct _gpufi_profile_;
+# 76 "src/cuda_fi_prerun/gpufi.h"
+struct _gpufi_current_;
+# 98 "src/cuda_fi_prerun/gpufi.h"
+struct _gpufi_data_;
+# 214 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3
+typedef unsigned size_t;
+#endif
+#include "crt/device_runtime.h"
+#if defined(__CUDACC__) || defined(__CUDABE__) || defined(__MULTI_CORE__) || defined(__cplusplus)
+# 145 "/usr/include/bits/types.h" 3
+typedef long __clock_t;
+# 61 "/usr/include/time.h" 3
+typedef __clock_t clock_t;
+# 14 "src/cuda_fi_prerun/gpufi.h"
+struct _gpufi_fault_ {
+# 15 "src/cuda_fi_prerun/gpufi.h"
+int kernel;
+# 17 "src/cuda_fi_prerun/gpufi.h"
+int instance;
+# 18 "src/cuda_fi_prerun/gpufi.h"
+int varid;
+# 19 "src/cuda_fi_prerun/gpufi.h"
+int call;
+# 21 "src/cuda_fi_prerun/gpufi.h"
+int mask_type;
+# 24 "src/cuda_fi_prerun/gpufi.h"
+unsigned mask;
+# 25 "src/cuda_fi_prerun/gpufi.h"
+int injected;
+# 26 "src/cuda_fi_prerun/gpufi.h"
+int disabled;
+# 27 "src/cuda_fi_prerun/gpufi.h"
+int mode;};
+# 46 "src/cuda_fi_prerun/gpufi.h"
+struct _gpufi_profile_kernel_ {
+# 47 "src/cuda_fi_prerun/gpufi.h"
+char state;
+# 48 "src/cuda_fi_prerun/gpufi.h"
+int id;
+# 49 "src/cuda_fi_prerun/gpufi.h"
+int instance;
+# 50 "src/cuda_fi_prerun/gpufi.h"
+char name[32];};
+# 54 "src/cuda_fi_prerun/gpufi.h"
+struct _gpufi_profile_variable_ {
+# 55 "src/cuda_fi_prerun/gpufi.h"
+int call_count;
+# 56 "src/cuda_fi_prerun/gpufi.h"
+int loop_id;
+# 57 "src/cuda_fi_prerun/gpufi.h"
+int type;};
+# 60 "src/cuda_fi_prerun/gpufi.h"
+struct _gpufi_profile_ {
+# 62 "src/cuda_fi_prerun/gpufi.h"
+struct _gpufi_profile_kernel_ kernel[10];
+# 63 "src/cuda_fi_prerun/gpufi.h"
+struct _gpufi_profile_variable_ variable[10][512];
+# 66 "src/cuda_fi_prerun/gpufi.h"
+char kernel_bitmap[10];
+# 67 "src/cuda_fi_prerun/gpufi.h"
+int kernel_instance[10];
+# 69 "src/cuda_fi_prerun/gpufi.h"
+char variable_bitmap[512];
+# 70 "src/cuda_fi_prerun/gpufi.h"
+char variable_name[512][32];};
+# 76 "src/cuda_fi_prerun/gpufi.h"
+struct _gpufi_current_ {
+# 77 "src/cuda_fi_prerun/gpufi.h"
+int mode;
+# 78 "src/cuda_fi_prerun/gpufi.h"
+int kernel;
+# 79 "src/cuda_fi_prerun/gpufi.h"
+int instance;
+# 80 "src/cuda_fi_prerun/gpufi.h"
+int loop;
+# 81 "src/cuda_fi_prerun/gpufi.h"
+int loop_count;
+# 82 "src/cuda_fi_prerun/gpufi.h"
+int iteration;
+# 84 "src/cuda_fi_prerun/gpufi.h"
+int profile_index;
+# 85 "src/cuda_fi_prerun/gpufi.h"
+int profile_mode;
+# 93 "src/cuda_fi_prerun/gpufi.h"
+int blid;
+# 94 "src/cuda_fi_prerun/gpufi.h"
+int thid;};
+# 98 "src/cuda_fi_prerun/gpufi.h"
+struct _gpufi_data_ {
+# 99 "src/cuda_fi_prerun/gpufi.h"
+struct _gpufi_fault_ fault;
+# 103 "src/cuda_fi_prerun/gpufi.h"
+struct _gpufi_fault_ debug;
+# 104 "src/cuda_fi_prerun/gpufi.h"
+struct _gpufi_current_ current;
+# 105 "src/cuda_fi_prerun/gpufi.h"
+struct _gpufi_profile_ profile;};
+# 23 "src/cuda_fi_prerun/model.h"
+typedef unsigned long hist_t;
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 184 "/usr/include/time.h" 3
+/*DEVICE_BUILTIN*/extern clock_t clock(void);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 38 "/usr/include/string.h" 3
+/*DEVICE_BUILTIN*/extern void *memcpy(void *__restrict__, const void *__restrict__, size_t);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 59 "/usr/include/string.h" 3
+/*DEVICE_BUILTIN*/extern void *memset(void *, int, size_t);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 65 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern int abs(int) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 67 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern long labs(long) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 69 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern long long llabs(long long) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 71 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double fabs(double) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 73 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float fabsf(float) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 76 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern int min(int, int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 78 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern unsigned umin(unsigned, unsigned);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 80 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern long long llmin(long long, long long);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 82 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern unsigned long long ullmin(unsigned long long, unsigned long long);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 84 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float fminf(float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 86 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double fmin(double, double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 89 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern int max(int, int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 91 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern unsigned umax(unsigned, unsigned);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 93 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern long long llmax(long long, long long);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 95 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern unsigned long long ullmax(unsigned long long, unsigned long long);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 97 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float fmaxf(float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 99 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double fmax(double, double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 102 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double sin(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 104 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float sinf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 107 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double cos(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 109 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float cosf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 112 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern void sincos(double, double *, double *);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 114 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern void sincosf(float, float *, float *);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 117 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double tan(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 119 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float tanf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 122 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double sqrt(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 124 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float sqrtf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 127 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double rsqrt(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 129 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float rsqrtf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 132 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double exp2(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 134 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float exp2f(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 137 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double exp10(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 139 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float exp10f(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 142 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double expm1(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 144 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float expm1f(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 147 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double log2(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 149 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float log2f(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 152 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double log10(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 154 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float log10f(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 157 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double log(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 159 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float logf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 162 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double log1p(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 164 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float log1pf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 167 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double floor(double) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 169 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float floorf(float) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 172 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double exp(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 174 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float expf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 177 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double cosh(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 179 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float coshf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 182 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double sinh(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 184 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float sinhf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 187 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double tanh(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 189 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float tanhf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 192 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double acosh(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 194 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float acoshf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 197 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double asinh(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 199 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float asinhf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 202 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double atanh(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 204 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float atanhf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 207 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double ldexp(double, int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 209 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float ldexpf(float, int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 212 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double logb(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 214 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float logbf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 217 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern int ilogb(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 219 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern int ilogbf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 222 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double scalbn(double, int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 224 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float scalbnf(float, int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 227 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double scalbln(double, long);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 229 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float scalblnf(float, long);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 232 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double frexp(double, int *);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 234 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float frexpf(float, int *);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 237 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double round(double) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 239 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float roundf(float) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 242 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern long lround(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 244 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern long lroundf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 247 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern long long llround(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 249 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern long long llroundf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 252 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double rint(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 254 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float rintf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 257 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern long lrint(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 259 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern long lrintf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 262 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern long long llrint(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 264 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern long long llrintf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 267 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double nearbyint(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 269 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float nearbyintf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 272 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double ceil(double) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 274 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float ceilf(float) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 277 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double trunc(double) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 279 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float truncf(float) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 282 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double fdim(double, double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 284 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float fdimf(float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 287 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double atan2(double, double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 289 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float atan2f(float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 292 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double atan(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 294 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float atanf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 297 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double asin(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 299 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float asinf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 302 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double acos(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 304 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float acosf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 307 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double hypot(double, double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 309 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float hypotf(float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 312 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double cbrt(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 314 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float cbrtf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 317 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double pow(double, double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 319 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float powf(float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 322 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double modf(double, double *);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 324 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float modff(float, float *);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 327 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double fmod(double, double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 329 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float fmodf(float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 332 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double remainder(double, double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 334 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float remainderf(float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 337 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double remquo(double, double, int *);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 339 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float remquof(float, float, int *);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 342 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double erf(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 344 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float erff(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 347 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double erfinv(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 349 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float erfinvf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 352 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double erfc(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 354 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float erfcf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 357 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double erfcinv(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 359 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float erfcinvf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 362 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double lgamma(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 364 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float lgammaf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 367 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double tgamma(double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 369 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float tgammaf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 372 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double copysign(double, double) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 374 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float copysignf(float, float) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 377 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double nextafter(double, double) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 379 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float nextafterf(float, float) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 382 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double nan(const char *) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 384 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float nanf(const char *) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 387 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern int __isinf(double) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 389 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern int __isinff(float) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 392 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern int __isnan(double) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 394 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern int __isnanf(float) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 408 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern int __finite(double) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 410 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern int __finitef(float) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 420 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern double fma(double, double, double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 422 "/usr/local/cuda/bin/../include/math_functions.h"
+/*DEVICE_BUILTIN*/extern float fmaf(float, float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 64 "/usr/include/bits/mathcalls.h" 3
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __cosf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 66 "/usr/include/bits/mathcalls.h" 3
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __sinf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 68 "/usr/include/bits/mathcalls.h" 3
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __tanf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 82 "/usr/include/bits/mathcalls.h" 3
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __sincosf(float, float *, float *);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 101 "/usr/include/bits/mathcalls.h" 3
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __expf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 110 "/usr/include/bits/mathcalls.h" 3
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __logf(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 113 "/usr/include/bits/mathcalls.h" 3
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __log10f(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 121 "/usr/include/bits/mathcalls.h" 3
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __exp10f(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 145 "/usr/include/bits/mathcalls.h" 3
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __log2f(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 154 "/usr/include/bits/mathcalls.h" 3
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __powf(float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 193 "/usr/include/bits/mathcalls.h" 3
+/*DEVICE_BUILTIN*/extern int __isinfl(long double) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 196 "/usr/include/bits/mathcalls.h" 3
+/*DEVICE_BUILTIN*/extern int __finitel(long double) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 231 "/usr/include/bits/mathcalls.h" 3
+/*DEVICE_BUILTIN*/extern int __isnanl(long double) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 36 "/usr/include/bits/mathinline.h" 3
+/*DEVICE_BUILTIN*/extern __inline__ int __signbitf(float) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 42 "/usr/include/bits/mathinline.h" 3
+/*DEVICE_BUILTIN*/extern __inline__ int __signbit(double) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 48 "/usr/include/bits/mathinline.h" 3
+/*DEVICE_BUILTIN*/extern __inline__ int __signbitl(long double) __attribute__((__const__));
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 60 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __mulhi(int, int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 62 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __umulhi(unsigned, unsigned);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 65 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) long long __mul64hi(long long, long long);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 67 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned long long __umul64hi(unsigned long long, unsigned long long);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 70 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __int_as_float(int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 72 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __float_as_int(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 76 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __syncthreads(void);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 78 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __prof_trigger(int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 80 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __threadfence(void);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 82 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __threadfence_block(void);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 84 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __trap(void);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 86 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) void __brkpt(int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 89 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __saturatef(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 92 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __sad(int, int, unsigned);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 94 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __usad(unsigned, unsigned, unsigned);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 97 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __mul24(int, int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 99 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __umul24(unsigned, unsigned);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 102 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float fdividef(float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 104 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fdividef(float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 107 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) double fdivide(double, double);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 140 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __float2int_rn(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 142 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __float2int_rz(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 144 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __float2int_ru(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 146 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __float2int_rd(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 149 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __float2uint_rn(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 151 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __float2uint_rz(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 153 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __float2uint_ru(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 155 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __float2uint_rd(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 158 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __int2float_rn(int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 160 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __int2float_rz(int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 162 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __int2float_ru(int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 164 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __int2float_rd(int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 167 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __uint2float_rn(unsigned);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 169 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __uint2float_rz(unsigned);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 171 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __uint2float_ru(unsigned);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 173 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __uint2float_rd(unsigned);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 176 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) long long __float2ll_rn(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 178 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) long long __float2ll_rz(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 180 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) long long __float2ll_ru(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 182 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) long long __float2ll_rd(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 185 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned long long __float2ull_rn(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 187 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned long long __float2ull_rz(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 189 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned long long __float2ull_ru(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 191 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned long long __float2ull_rd(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 194 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __ll2float_rn(long long);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 197 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __ull2float_rn(unsigned long long);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 200 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned short __float2half_rn(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 202 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __half2float(unsigned short);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 205 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fadd_rn(float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 207 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fadd_rz(float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 209 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fadd_ru(float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 211 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fadd_rd(float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 214 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fmul_rn(float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 216 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fmul_rz(float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 218 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fmul_ru(float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 220 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fmul_rd(float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 223 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fmaf_rn(float, float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 225 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fmaf_rz(float, float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 227 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fmaf_ru(float, float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 229 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fmaf_rd(float, float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 232 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __frcp_rn(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 234 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __frcp_rz(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 236 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __frcp_ru(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 238 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __frcp_rd(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 241 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fsqrt_rn(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 243 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fsqrt_rz(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 245 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fsqrt_ru(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 247 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fsqrt_rd(float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 250 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fdiv_rn(float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 252 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fdiv_rz(float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 254 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fdiv_ru(float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 256 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fdiv_rd(float, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 259 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __clz(int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 261 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __ffs(int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 263 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __popc(unsigned);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 265 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __brev(unsigned);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 268 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __clzll(long long);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 270 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __ffsll(long long);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 272 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __popcll(unsigned long long);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 274 "/usr/local/cuda/bin/../include/device_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned long long __brevll(unsigned long long);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 55 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __iAtomicAdd(int *, int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 57 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __uAtomicAdd(unsigned *, unsigned);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 59 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __iAtomicExch(int *, int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 61 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __uAtomicExch(unsigned *, unsigned);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 63 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float __fAtomicExch(float *, float);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 65 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __iAtomicMin(int *, int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 67 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __uAtomicMin(unsigned *, unsigned);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 69 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __iAtomicMax(int *, int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 71 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __uAtomicMax(unsigned *, unsigned);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 73 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __uAtomicInc(unsigned *, unsigned);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 75 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __uAtomicDec(unsigned *, unsigned);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 77 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __iAtomicAnd(int *, int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 79 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __uAtomicAnd(unsigned *, unsigned);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 81 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __iAtomicOr(int *, int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 83 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __uAtomicOr(unsigned *, unsigned);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 85 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __iAtomicXor(int *, int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 87 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __uAtomicXor(unsigned *, unsigned);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 89 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int __iAtomicCAS(int *, int, int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 91 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) unsigned __uAtomicCAS(unsigned *, unsigned, unsigned);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 60 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetchi(__texture_type__, int4);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 62 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetchi(__texture_type__, int4);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 64 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float4 __ftexfetchi(__texture_type__, int4);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 67 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) uint4 __utexfetch(__texture_type__, float4, int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 69 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) int4 __itexfetch(__texture_type__, float4, int);
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+# 71 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
+/*DEVICE_BUILTIN*/___device__(extern  __no_sc__) float4 __ftexfetch(__texture_type__, float4, int);
+#endif
+#endif
+#if !defined(__multi_core__)
+# 101 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+___device__(static  __no_sc__) __inline__ int _Z9atomicAddPii(int *, int);
+#endif
+#if !defined(__multi_core__)
+# 159 "src/cuda_fi_prerun/gpufi_kernel.cu"
+___device__(extern  __no_sc__) void _Z16GPUFI_KERNEL_DECPi(int *);
+#endif
+#if !defined(__multi_core__)
+# 168 "src/cuda_fi_prerun/gpufi_kernel.cu"
+___device__(extern  __no_sc__) void _Z16GPUFI_KERNEL_SETPii(int *, int);
+#endif
+#if !defined(__multi_core__)
+# 177 "src/cuda_fi_prerun/gpufi_kernel.cu"
+___device__(extern  __no_sc__) void _Z10CudaStrcpyPcS_i(char *, char *, int);
+#endif
+#if !defined(__multi_core__)
+# 187 "src/cuda_fi_prerun/gpufi_kernel.cu"
+___device__(extern  __no_sc__) int _Z12GPUFI_STRCMPPcS_(char *, char *);
+#endif
+#if !defined(__multi_core__)
+# 203 "src/cuda_fi_prerun/gpufi_kernel.cu"
+___device__(extern  __no_sc__) void _Z15GPUFI_DEBUG_LOCP12_gpufi_data_(struct _gpufi_data_ *);
+#endif
+#if !defined(__multi_core__)
+# 220 "src/cuda_fi_prerun/gpufi_kernel.cu"
+___device__(extern  __no_sc__) int _Z10GPUFI_EXITi(int);
+#endif
+#if !defined(__multi_core__)
+# 261 "src/cuda_fi_prerun/gpufi_kernel.cu"
+___device__(extern  __no_sc__) void _Z12GPUFI_KERNELP12_gpufi_data_iiPc(struct _gpufi_data_ *, int, int, char *);
+#endif
+#if !defined(__multi_core__)
+# 307 "src/cuda_fi_prerun/gpufi_kernel.cu"
+___device__(extern  __no_sc__) void _Z17GPUFI_KERNEL_LOOPP12_gpufi_data_i(struct _gpufi_data_ *, int);
+#endif
+#if !defined(__multi_core__)
+# 327 "src/cuda_fi_prerun/gpufi_kernel.cu"
+___device__(extern  __no_sc__) void _Z22GPUFI_KERNEL_ITERATIONP12_gpufi_data_(struct _gpufi_data_ *);
+#endif
+#if !defined(__multi_core__)
+# 356 "src/cuda_fi_prerun/gpufi_kernel.cu"
+___device__(extern  __no_sc__) void _Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(struct _gpufi_data_ *, int, char *, int *, int);
+#endif
+#if !defined(__multi_core__)
+# 376 "src/cuda_fi_prerun/gpufi_kernel.cu"
+___device__(extern  __no_sc__) void _Z28GPUFI_KERNEL_VARIABLE_STREAMP12_gpufi_data_iPcPiii(struct _gpufi_data_ *, int, char *, int *, int, int);
+#endif
+#if !defined(__multi_core__)
+# 45 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+__global__ __var_used__ extern void _Z9gen_histsPmPfS0_S0_iiP12_gpufi_data_(__in_type__(hist_t *const,hist_t *), __in_type__(float *const,float *), __in_type__(float *const,float *), __in_type__(float *const,float *), __in_type__(const int,int), __in_type__(const int,int), __in_type__(struct _gpufi_data_ *const,struct _gpufi_data_ *));
+#endif
+# 10 "src/cuda_fi_prerun/gpufi_kernel.cu"
+__loc_sc__(__device__,,) struct _gpufi_data_ *gpufi_dev;
+# 26 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+__loc_sc__(__constant__,,) float dev_binb[21];
+#include "common_functions.h"
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__CUDABE__)
+#if !defined(__multi_core__)
+#endif
+#endif
+#if !defined(__multi_core__)
+# 101 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+___device__(static  __no_sc__) __inline__ int _Z9atomicAddPii(
+# 101 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+int *address, 
+# 101 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+int val)
+# 102 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+{
+# 103 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+return __iAtomicAdd(address, val);
+# 104 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+}
+#endif
+#if !defined(__multi_core__)
+# 159 "src/cuda_fi_prerun/gpufi_kernel.cu"
+___device__( __no_sc__) void _Z16GPUFI_KERNEL_DECPi(
+# 159 "src/cuda_fi_prerun/gpufi_kernel.cu"
+int *count)
+# 160 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 161 "src/cuda_fi_prerun/gpufi_kernel.cu"
+if ((*count))
+# 161 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 162 "src/cuda_fi_prerun/gpufi_kernel.cu"
+count--;
+# 162 "src/cuda_fi_prerun/gpufi_kernel.cu"
+} 
+# 165 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+#endif
+#if !defined(__multi_core__)
+# 168 "src/cuda_fi_prerun/gpufi_kernel.cu"
+___device__( __no_sc__) void _Z16GPUFI_KERNEL_SETPii(
+# 168 "src/cuda_fi_prerun/gpufi_kernel.cu"
+int *count, 
+# 168 "src/cuda_fi_prerun/gpufi_kernel.cu"
+int value)
+# 169 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 170 "src/cuda_fi_prerun/gpufi_kernel.cu"
+(*count) = value; 
+# 171 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+#endif
+#if !defined(__multi_core__)
+# 177 "src/cuda_fi_prerun/gpufi_kernel.cu"
+___device__( __no_sc__) void _Z10CudaStrcpyPcS_i(
+# 177 "src/cuda_fi_prerun/gpufi_kernel.cu"
+char *dst, 
+# 177 "src/cuda_fi_prerun/gpufi_kernel.cu"
+char *src, 
+# 177 "src/cuda_fi_prerun/gpufi_kernel.cu"
+int max)
+# 178 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 179 "src/cuda_fi_prerun/gpufi_kernel.cu"
+auto int i;
+# 181 "src/cuda_fi_prerun/gpufi_kernel.cu"
+for (i = 0; (((int)(src[i])) && (i < (max - 1))); i++)
+# 181 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 182 "src/cuda_fi_prerun/gpufi_kernel.cu"
+(dst[i]) = (src[i]);
+# 182 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+# 183 "src/cuda_fi_prerun/gpufi_kernel.cu"
+(dst[i]) = ((char)0); 
+# 184 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+#endif
+#if !defined(__multi_core__)
+# 187 "src/cuda_fi_prerun/gpufi_kernel.cu"
+___device__( __no_sc__) int _Z12GPUFI_STRCMPPcS_(
+# 187 "src/cuda_fi_prerun/gpufi_kernel.cu"
+char *src, 
+# 187 "src/cuda_fi_prerun/gpufi_kernel.cu"
+char *dst)
+# 188 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 189 "src/cuda_fi_prerun/gpufi_kernel.cu"
+auto int i;
+# 191 "src/cuda_fi_prerun/gpufi_kernel.cu"
+for (i = 0; (((int)(src[i])) && ((int)(dst[i]))); i++)
+# 191 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 192 "src/cuda_fi_prerun/gpufi_kernel.cu"
+if (((int)(src[i])) != ((int)(dst[i])))
+# 192 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 193 "src/cuda_fi_prerun/gpufi_kernel.cu"
+return 1;
+# 193 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+# 194 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+# 196 "src/cuda_fi_prerun/gpufi_kernel.cu"
+if (((int)(src[i])) == ((int)(dst[i])))
+# 196 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 197 "src/cuda_fi_prerun/gpufi_kernel.cu"
+return 0;
+# 197 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+# 199 "src/cuda_fi_prerun/gpufi_kernel.cu"
+return 1;
+# 200 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+#endif
+#if !defined(__multi_core__)
+# 203 "src/cuda_fi_prerun/gpufi_kernel.cu"
+___device__( __no_sc__) void _Z15GPUFI_DEBUG_LOCP12_gpufi_data_(
+# 203 "src/cuda_fi_prerun/gpufi_kernel.cu"
+struct _gpufi_data_ *gpufi_dev)
+# 204 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 204 "src/cuda_fi_prerun/gpufi_kernel.cu"
+# 217 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+#endif
+#if !defined(__multi_core__)
+# 220 "src/cuda_fi_prerun/gpufi_kernel.cu"
+___device__( __no_sc__) int _Z10GPUFI_EXITi(
+# 220 "src/cuda_fi_prerun/gpufi_kernel.cu"
+int errno)
+# 221 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 222 "src/cuda_fi_prerun/gpufi_kernel.cu"
+auto int *addr;
+# 222 "src/cuda_fi_prerun/gpufi_kernel.cu"
+addr = ((int *)0);
+# 224 "src/cuda_fi_prerun/gpufi_kernel.cu"
+(*addr) = 128;
+# 225 "src/cuda_fi_prerun/gpufi_kernel.cu"
+return 100 / errno;
+# 226 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+#endif
+#if !defined(__multi_core__)
+# 261 "src/cuda_fi_prerun/gpufi_kernel.cu"
+___device__( __no_sc__) void _Z12GPUFI_KERNELP12_gpufi_data_iiPc(
+# 261 "src/cuda_fi_prerun/gpufi_kernel.cu"
+struct _gpufi_data_ *gpufi_dev, 
+# 261 "src/cuda_fi_prerun/gpufi_kernel.cu"
+int begin, 
+# 261 "src/cuda_fi_prerun/gpufi_kernel.cu"
+int type, 
+# 261 "src/cuda_fi_prerun/gpufi_kernel.cu"
+char *name)
+# 262 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 263 "src/cuda_fi_prerun/gpufi_kernel.cu"
+if ((((__cudaGet_blockIdx().x)) != ((unsigned)(((gpufi_dev->current).blid)))) || (((__cudaGet_threadIdx().x)) != ((unsigned)(((gpufi_dev->current).thid)))))
+# 263 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 264 "src/cuda_fi_prerun/gpufi_kernel.cu"
+return;
+# 264 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+# 266 "src/cuda_fi_prerun/gpufi_kernel.cu"
+if ((((gpufi_dev->fault).mode)) == 1)
+# 266 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 267 "src/cuda_fi_prerun/gpufi_kernel.cu"
+if (begin == 0)
+# 267 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 270 "src/cuda_fi_prerun/gpufi_kernel.cu"
+if (((int)(((char *)(&(gpufi_dev->profile).kernel_bitmap))[type])) == 0)
+# 270 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 271 "src/cuda_fi_prerun/gpufi_kernel.cu"
+(((char *)(&(gpufi_dev->profile).kernel_bitmap))[type]) = ((char)1);
+# 271 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+# 272 "src/cuda_fi_prerun/gpufi_kernel.cu"
+(((int *)(&(gpufi_dev->profile).kernel_instance))[type])++;
+# 275 "src/cuda_fi_prerun/gpufi_kernel.cu"
+((gpufi_dev->current).kernel) = type;
+# 276 "src/cuda_fi_prerun/gpufi_kernel.cu"
+((gpufi_dev->current).instance) = ((((int *)(&(gpufi_dev->profile).kernel_instance))[type]) - 1);
+# 277 "src/cuda_fi_prerun/gpufi_kernel.cu"
+((gpufi_dev->current).loop) = (-1);
+# 280 "src/cuda_fi_prerun/gpufi_kernel.cu"
+((gpufi_dev->current).profile_index)++;
+# 282 "src/cuda_fi_prerun/gpufi_kernel.cu"
+if ((((gpufi_dev->current).profile_index)) < 10)
+# 282 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 283 "src/cuda_fi_prerun/gpufi_kernel.cu"
+((((struct _gpufi_profile_kernel_ *)(&(gpufi_dev->profile).kernel))[((gpufi_dev->current).profile_index)]).state) = ((char)1);
+# 284 "src/cuda_fi_prerun/gpufi_kernel.cu"
+((((struct _gpufi_profile_kernel_ *)(&(gpufi_dev->profile).kernel))[((gpufi_dev->current).profile_index)]).id) = (((gpufi_dev->current).kernel));
+# 285 "src/cuda_fi_prerun/gpufi_kernel.cu"
+_Z10CudaStrcpyPcS_i(((char *)(&(((struct _gpufi_profile_kernel_ *)(&(gpufi_dev->profile).kernel))[((gpufi_dev->current).profile_index)]).name)), name, 32);
+# 286 "src/cuda_fi_prerun/gpufi_kernel.cu"
+((((struct _gpufi_profile_kernel_ *)(&(gpufi_dev->profile).kernel))[((gpufi_dev->current).profile_index)]).instance) = (((gpufi_dev->current).instance));
+# 287 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+# 288 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+# 289 "src/cuda_fi_prerun/gpufi_kernel.cu"
+} 
+# 290 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+#endif
+#if !defined(__multi_core__)
+# 307 "src/cuda_fi_prerun/gpufi_kernel.cu"
+___device__( __no_sc__) void _Z17GPUFI_KERNEL_LOOPP12_gpufi_data_i(
+# 307 "src/cuda_fi_prerun/gpufi_kernel.cu"
+struct _gpufi_data_ *gpufi_dev, 
+# 307 "src/cuda_fi_prerun/gpufi_kernel.cu"
+int begin)
+# 308 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 309 "src/cuda_fi_prerun/gpufi_kernel.cu"
+if ((((__cudaGet_blockIdx().x)) != ((unsigned)(((gpufi_dev->current).blid)))) || (((__cudaGet_threadIdx().x)) != ((unsigned)(((gpufi_dev->current).thid)))))
+# 309 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 310 "src/cuda_fi_prerun/gpufi_kernel.cu"
+return;
+# 310 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+# 312 "src/cuda_fi_prerun/gpufi_kernel.cu"
+if ((((gpufi_dev->fault).mode)) == 1)
+# 312 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 313 "src/cuda_fi_prerun/gpufi_kernel.cu"
+if (begin == 0)
+# 313 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 315 "src/cuda_fi_prerun/gpufi_kernel.cu"
+((gpufi_dev->current).loop) = (((gpufi_dev->current).loop_count));
+# 316 "src/cuda_fi_prerun/gpufi_kernel.cu"
+((gpufi_dev->current).iteration) = (-1);
+# 317 "src/cuda_fi_prerun/gpufi_kernel.cu"
+((gpufi_dev->current).loop_count)++;
+# 318 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+# 319 "src/cuda_fi_prerun/gpufi_kernel.cu"
+else 
+# 319 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 321 "src/cuda_fi_prerun/gpufi_kernel.cu"
+((gpufi_dev->current).loop) = (-1);
+# 322 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+# 323 "src/cuda_fi_prerun/gpufi_kernel.cu"
+} 
+# 324 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+#endif
+#if !defined(__multi_core__)
+# 327 "src/cuda_fi_prerun/gpufi_kernel.cu"
+___device__( __no_sc__) void _Z22GPUFI_KERNEL_ITERATIONP12_gpufi_data_(
+# 327 "src/cuda_fi_prerun/gpufi_kernel.cu"
+struct _gpufi_data_ *gpufi_dev)
+# 328 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 329 "src/cuda_fi_prerun/gpufi_kernel.cu"
+if ((((__cudaGet_blockIdx().x)) != ((unsigned)(((gpufi_dev->current).blid)))) || (((__cudaGet_threadIdx().x)) != ((unsigned)(((gpufi_dev->current).thid)))))
+# 329 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 330 "src/cuda_fi_prerun/gpufi_kernel.cu"
+return;
+# 330 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+# 332 "src/cuda_fi_prerun/gpufi_kernel.cu"
+if ((((gpufi_dev->fault).mode)) == 1)
+# 332 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 334 "src/cuda_fi_prerun/gpufi_kernel.cu"
+((gpufi_dev->current).iteration)++;
+# 335 "src/cuda_fi_prerun/gpufi_kernel.cu"
+} 
+# 336 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+#endif
+#if !defined(__multi_core__)
+# 356 "src/cuda_fi_prerun/gpufi_kernel.cu"
+___device__( __no_sc__) void _Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(
+# 356 "src/cuda_fi_prerun/gpufi_kernel.cu"
+struct _gpufi_data_ *gpufi_dev, 
+# 356 "src/cuda_fi_prerun/gpufi_kernel.cu"
+int varid, 
+# 356 "src/cuda_fi_prerun/gpufi_kernel.cu"
+char *name, 
+# 356 "src/cuda_fi_prerun/gpufi_kernel.cu"
+int *variable, 
+# 356 "src/cuda_fi_prerun/gpufi_kernel.cu"
+int var_type)
+# 357 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 359 "src/cuda_fi_prerun/gpufi_kernel.cu"
+if ((((__cudaGet_blockIdx().x)) != ((unsigned)(((gpufi_dev->current).blid)))) || (((__cudaGet_threadIdx().x)) != ((unsigned)(((gpufi_dev->current).thid)))))
+# 359 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 360 "src/cuda_fi_prerun/gpufi_kernel.cu"
+return;
+# 360 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+# 362 "src/cuda_fi_prerun/gpufi_kernel.cu"
+if ((((gpufi_dev->fault).mode)) == 1)
+# 362 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 363 "src/cuda_fi_prerun/gpufi_kernel.cu"
+if (((((gpufi_dev->current).profile_index)) < 10) && (varid < 512))
+# 363 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 364 "src/cuda_fi_prerun/gpufi_kernel.cu"
+_Z9atomicAddPii((&(((struct _gpufi_profile_variable_ *)(((struct _gpufi_profile_variable_ (*)[512])(&(gpufi_dev->profile).variable)) + (((gpufi_dev->current).profile_index))))[varid]).call_count), 1);
+# 365 "src/cuda_fi_prerun/gpufi_kernel.cu"
+if (((int)(((char *)(&(gpufi_dev->profile).variable_bitmap))[varid])) == 0)
+# 365 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 366 "src/cuda_fi_prerun/gpufi_kernel.cu"
+(((char *)(&(gpufi_dev->profile).variable_bitmap))[varid]) = ((char)1);
+# 367 "src/cuda_fi_prerun/gpufi_kernel.cu"
+_Z10CudaStrcpyPcS_i(((char *)(((char (*)[32])(&(gpufi_dev->profile).variable_name)) + varid)), name, 32);
+# 368 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+# 369 "src/cuda_fi_prerun/gpufi_kernel.cu"
+((((struct _gpufi_profile_variable_ *)(((struct _gpufi_profile_variable_ (*)[512])(&(gpufi_dev->profile).variable)) + (((gpufi_dev->current).profile_index))))[varid]).loop_id) = (((gpufi_dev->current).loop));
+# 370 "src/cuda_fi_prerun/gpufi_kernel.cu"
+((((struct _gpufi_profile_variable_ *)(((struct _gpufi_profile_variable_ (*)[512])(&(gpufi_dev->profile).variable)) + (((gpufi_dev->current).profile_index))))[varid]).type) = var_type;
+# 371 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+# 372 "src/cuda_fi_prerun/gpufi_kernel.cu"
+} 
+# 373 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+#endif
+#if !defined(__multi_core__)
+# 376 "src/cuda_fi_prerun/gpufi_kernel.cu"
+___device__( __no_sc__) void _Z28GPUFI_KERNEL_VARIABLE_STREAMP12_gpufi_data_iPcPiii(
+# 376 "src/cuda_fi_prerun/gpufi_kernel.cu"
+struct _gpufi_data_ *gpufi_dev, 
+# 376 "src/cuda_fi_prerun/gpufi_kernel.cu"
+int varid, 
+# 376 "src/cuda_fi_prerun/gpufi_kernel.cu"
+char *name, 
+# 376 "src/cuda_fi_prerun/gpufi_kernel.cu"
+int *variable, 
+# 376 "src/cuda_fi_prerun/gpufi_kernel.cu"
+int length, 
+# 376 "src/cuda_fi_prerun/gpufi_kernel.cu"
+int count)
+# 377 "src/cuda_fi_prerun/gpufi_kernel.cu"
+{
+# 377 "src/cuda_fi_prerun/gpufi_kernel.cu"
+# 388 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+#endif
+#if !defined(__multi_core__)
+# 45 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+__global__ __var_used__ void _Z9gen_histsPmPfS0_S0_iiP12_gpufi_data_(
+# 45 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+__in__(hist_t *const __val_param(histograms),hist_t *__val_param(histograms)), 
+# 45 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+__in__(float *const __val_param(all_x_data),float *__val_param(all_x_data)), 
+# 45 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+__in__(float *const __val_param(all_y_data),float *__val_param(all_y_data)), 
+# 45 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+__in__(float *const __val_param(all_z_data),float *__val_param(all_z_data)), 
+# 45 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+__in__(const int __val_param(NUM_SETS),int __val_param(NUM_SETS)), 
+# 45 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+__in__(const int __val_param(NUM_ELEMENTS),int __val_param(NUM_ELEMENTS)), 
+# 45 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+__in__(struct _gpufi_data_ *const gpufi_dev,struct _gpufi_data_ *gpufi_dev)){__copy_param(hist_t *histograms,__val_param(histograms));__copy_param(float *all_x_data,__val_param(all_x_data));__copy_param(float *all_y_data,__val_param(all_y_data));__copy_param(float *all_z_data,__val_param(all_z_data));__copy_param(int NUM_SETS,__val_param(NUM_SETS));__copy_param(int NUM_ELEMENTS,__val_param(NUM_ELEMENTS));
+# 45 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+{
+# 46 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+{
+# 66 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto unsigned bx;
+# 70 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto unsigned tid;
+# 74 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto char do_self;
+# 78 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto float *data_x;
+# 82 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto float *data_y;
+# 86 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto float *data_z;
+# 90 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto float *random_x;
+# 94 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto float *random_y;
+# 98 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto float *random_z;
+# 102 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+__loc_sc__(__shared__,,auto ) float data_x_s[256];
+# 106 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+__loc_sc__(__shared__,,auto ) float data_y_s[256];
+# 110 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+__loc_sc__(__shared__,,auto ) float data_z_s[256];
+# 114 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+__loc_sc__(__shared__,,auto ) volatile unsigned warp_hists[20][128];
+# 120 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto unsigned w;
+# 124 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto unsigned i;
+# 128 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto unsigned warp_index;
+# 132 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto unsigned bin_index;
+# 136 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto unsigned offset;
+# 140 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto unsigned bin_base;
+# 144 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto hist_t *hist_base;
+# 47 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z12GPUFI_KERNELP12_gpufi_data_iiPc(gpufi_dev, 0, 0, "gen_hists");
+# 48 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 0, "histograms", ((int *)(&histograms)), 5);
+# 51 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 1, "all_x_data", ((int *)(&all_x_data)), 4);
+# 54 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 2, "all_y_data", ((int *)(&all_y_data)), 4);
+# 57 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 3, "all_z_data", ((int *)(&all_z_data)), 4);
+# 60 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 4, "NUM_SETS", (&NUM_SETS), 1);
+# 63 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 5, "NUM_ELEMENTS", (&NUM_ELEMENTS), 1);
+# 66 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+bx = ((__cudaGet_blockIdx().x));
+# 67 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 6, "bx", ((int *)(&bx)), 1);
+# 70 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+tid = ((__cudaGet_threadIdx().x));
+# 71 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 7, "tid", ((int *)(&tid)), 1);
+# 74 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+do_self = ((char)(bx < ((unsigned)(NUM_SETS + 1))));
+# 75 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 8, "do_self", ((int *)(&do_self)), 0);
+# 79 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 9, "data_x", ((int *)(&data_x)), 4);
+# 83 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 10, "data_y", ((int *)(&data_y)), 4);
+# 87 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 11, "data_z", ((int *)(&data_z)), 4);
+# 91 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 12, "random_x", ((int *)(&random_x)), 4);
+# 95 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 13, "random_y", ((int *)(&random_y)), 4);
+# 99 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 14, "random_z", ((int *)(&random_z)), 4);
+# 103 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 15, "data_x_s", ((int *)((float *)data_x_s)), 2);
+# 107 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 16, "data_y_s", ((int *)((float *)data_y_s)), 2);
+# 111 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 17, "data_z_s", ((int *)((float *)data_z_s)), 2);
+# 115 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 18, "warp_hists", ((int *)((volatile unsigned (*)[128])warp_hists)), 1);
+# 121 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 19, "w", ((int *)(&w)), 1);
+# 125 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 20, "i", ((int *)(&i)), 1);
+# 129 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 21, "warp_index", ((int *)(&warp_index)), 1);
+# 133 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 22, "bin_index", ((int *)(&bin_index)), 1);
+# 137 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 23, "offset", ((int *)(&offset)), 1);
+# 141 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 24, "bin_base", ((int *)(&bin_base)), 1);
+# 145 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 25, "hist_base", ((int *)(&hist_base)), 5);
+# 149 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z17GPUFI_KERNEL_LOOPP12_gpufi_data_i(gpufi_dev, 0);
+# 152 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+for (w = 0U; (w < 2560U); w += 256U)
+# 153 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+{
+# 155 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z22GPUFI_KERNEL_ITERATIONP12_gpufi_data_(gpufi_dev);
+# 158 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+if ((w + tid) < 2560U)
+# 159 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+{
+# 160 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+(((volatile unsigned *)(((volatile unsigned (*)[128])warp_hists) + ((w + tid) / 128U)))[(w + tid) % 128U]) = 0U;
+# 161 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 28, "warp_hists[((w+tid)/((256/32)*16))][((w+tid)%((256/32)*16))]", ((int *)(((volatile unsigned *)(((volatile unsigned (*)[128])warp_hists) + ((w + tid) / 128U))) + ((w + tid) % 128U))), 1);
+# 164 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+}
+# 165 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+}
+# 167 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z17GPUFI_KERNEL_LOOPP12_gpufi_data_i(gpufi_dev, 1);
+# 170 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 27, "w", ((int *)(&w)), 1);
+# 175 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+if (!((int)do_self))
+# 176 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+{
+# 177 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+data_x = all_x_data;
+# 178 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 29, "data_x", ((int *)(&data_x)), 4);
+# 181 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+data_y = all_y_data;
+# 182 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 30, "data_y", ((int *)(&data_y)), 4);
+# 185 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+data_z = all_z_data;
+# 186 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 31, "data_z", ((int *)(&data_z)), 4);
+# 189 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+random_x = (all_x_data + (((unsigned)NUM_ELEMENTS) * (bx - ((unsigned)NUM_SETS))));
+# 190 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 32, "random_x", ((int *)(&random_x)), 4);
+# 193 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+random_y = (all_y_data + (((unsigned)NUM_ELEMENTS) * (bx - ((unsigned)NUM_SETS))));
+# 194 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 33, "random_y", ((int *)(&random_y)), 4);
+# 197 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+random_z = (all_z_data + (((unsigned)NUM_ELEMENTS) * (bx - ((unsigned)NUM_SETS))));
+# 198 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 34, "random_z", ((int *)(&random_z)), 4);
+# 201 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+}
+# 203 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+else 
+# 203 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+{
+# 204 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+random_x = (all_x_data + (((unsigned)NUM_ELEMENTS) * bx));
+# 205 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 35, "random_x", ((int *)(&random_x)), 4);
+# 208 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+random_y = (all_y_data + (((unsigned)NUM_ELEMENTS) * bx));
+# 209 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 36, "random_y", ((int *)(&random_y)), 4);
+# 212 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+random_z = (all_z_data + (((unsigned)NUM_ELEMENTS) * bx));
+# 213 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 37, "random_z", ((int *)(&random_z)), 4);
+# 216 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+data_x = random_x;
+# 217 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 38, "data_x", ((int *)(&data_x)), 4);
+# 220 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+data_y = random_y;
+# 221 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 39, "data_y", ((int *)(&data_y)), 4);
+# 224 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+data_z = random_z;
+# 225 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 40, "data_z", ((int *)(&data_z)), 4);
+# 228 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+}
+# 232 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z17GPUFI_KERNEL_LOOPP12_gpufi_data_i(gpufi_dev, 0);
+# 235 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+for (i = 0U; (i < ((unsigned)NUM_ELEMENTS)); i += 256U)
+# 236 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+{
+# 245 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto unsigned j;
+# 238 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z22GPUFI_KERNEL_ITERATIONP12_gpufi_data_(gpufi_dev);
+# 246 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 43, "j", ((int *)(&j)), 1);
+# 249 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+if ((tid + i) < ((unsigned)NUM_ELEMENTS))
+# 250 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+{
+# 253 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+(((float *)data_x_s)[tid]) = (data_x[(tid + i)]);
+# 254 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 44, "data_x_s[tid]", ((int *)(((float *)data_x_s) + tid)), 2);
+# 257 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+(((float *)data_y_s)[tid]) = (data_y[(tid + i)]);
+# 258 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 45, "data_y_s[tid]", ((int *)(((float *)data_y_s) + tid)), 2);
+# 261 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+(((float *)data_z_s)[tid]) = (data_z[(tid + i)]);
+# 262 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 46, "data_z_s[tid]", ((int *)(((float *)data_z_s) + tid)), 2);
+# 265 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+}
+# 266 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+__syncthreads();
+# 269 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+for (j = (((int)do_self) ? (i + 1U) : 0U); (j < ((unsigned)NUM_ELEMENTS)); j += 256U)
+# 270 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+{
+# 273 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto float random_x_s;
+# 277 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto float random_y_s;
+# 281 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto float random_z_s;
+# 285 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto unsigned k;
+# 274 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 49, "random_x_s", ((int *)(&random_x_s)), 2);
+# 278 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 50, "random_y_s", ((int *)(&random_y_s)), 2);
+# 282 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 51, "random_z_s", ((int *)(&random_z_s)), 2);
+# 286 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 52, "k", ((int *)(&k)), 1);
+# 289 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+if ((tid + j) < ((unsigned)NUM_ELEMENTS))
+# 290 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+{
+# 291 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+random_x_s = (random_x[(tid + j)]);
+# 292 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 53, "random_x_s", ((int *)(&random_x_s)), 2);
+# 295 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+random_y_s = (random_y[(tid + j)]);
+# 296 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 54, "random_y_s", ((int *)(&random_y_s)), 2);
+# 299 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+random_z_s = (random_z[(tid + j)]);
+# 300 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 55, "random_z_s", ((int *)(&random_z_s)), 2);
+# 303 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+}
+# 312 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+for (k = 0U; ((k < 256U) && ((k + i) < ((unsigned)NUM_ELEMENTS))); k += 1U)
+# 313 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+{
+# 316 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto float distance;
+# 322 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto unsigned bin_index;
+# 326 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto unsigned min;
+# 330 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto unsigned max;
+# 334 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto unsigned k2;
+# 338 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto unsigned warpnum;
+# 316 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+distance = ((((((float *)data_x_s)[k]) * random_x_s) + ((((float *)data_y_s)[k]) * random_y_s)) + ((((float *)data_z_s)[k]) * random_z_s));
+# 317 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 58, "distance", ((int *)(&distance)), 2);
+# 323 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 59, "bin_index", ((int *)(&bin_index)), 1);
+# 326 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+min = 0U;
+# 327 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 60, "min", ((int *)(&min)), 1);
+# 330 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+max = 20U;
+# 331 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 61, "max", ((int *)(&max)), 1);
+# 335 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 62, "k2", ((int *)(&k2)), 1);
+# 339 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 63, "warpnum", ((int *)(&warpnum)), 1);
+# 342 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+while (max > (min + 1U))
+# 343 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+{
+# 344 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+k2 = ((min + max) / 2U);
+# 345 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 64, "k2", ((int *)(&k2)), 1);
+# 348 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+if (distance >= (dev_binb[k2]))
+# 349 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+{
+# 350 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+max = k2;
+# 351 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 65, "max", ((int *)(&max)), 1);
+# 354 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+}
+# 356 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+else 
+# 356 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+{
+# 357 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+min = k2;
+# 358 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 66, "min", ((int *)(&min)), 1);
+# 361 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+}
+# 362 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+}
+# 363 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+warpnum = (tid / 2U);
+# 364 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 67, "warpnum", ((int *)(&warpnum)), 1);
+# 367 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+if ((((distance < (dev_binb[min])) && (distance >= (dev_binb[max]))) && ((!((int)do_self)) || ((tid + j) > (i + k)))) && ((tid + j) < ((unsigned)NUM_ELEMENTS)))
+# 368 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+{
+# 369 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto unsigned long myVal;
+# 370 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 68, "myVal", ((int *)(&myVal)), 0);
+# 373 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+bin_index = (max - 1U);
+# 374 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 69, "bin_index", ((int *)(&bin_index)), 1);
+# 381 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+do
+# 382 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+{
+# 385 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+myVal = ((unsigned long)((((volatile unsigned *)(((volatile unsigned (*)[128])warp_hists) + bin_index))[warpnum]) & 134217727U));
+# 386 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 70, "myVal", ((int *)(&myVal)), 0);
+# 391 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+myVal = (((unsigned long)((tid & 31U) << 27)) | (myVal + 1UL));
+# 392 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 71, "myVal", ((int *)(&myVal)), 0);
+# 397 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+(((volatile unsigned *)(((volatile unsigned (*)[128])warp_hists) + bin_index))[warpnum]) = ((unsigned)myVal);
+# 398 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 72, "warp_hists[bin_index][warpnum]", ((int *)(((volatile unsigned *)(((volatile unsigned (*)[128])warp_hists) + bin_index)) + warpnum)), 1);
+# 403 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+} while (((unsigned long)(((volatile unsigned *)(((volatile unsigned (*)[128])warp_hists) + bin_index))[warpnum])) != myVal);
+# 406 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+}
+# 407 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+__syncthreads();
+# 408 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+}
+# 409 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 57, "k", ((int *)(&k)), 1);
+# 412 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+}
+# 413 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 48, "j", ((int *)(&j)), 1);
+# 416 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+}
+# 418 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z17GPUFI_KERNEL_LOOPP12_gpufi_data_i(gpufi_dev, 1);
+# 421 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 42, "i", ((int *)(&i)), 1);
+# 426 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+warp_index = (tid & 63U);
+# 427 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 73, "warp_index", ((int *)(&warp_index)), 1);
+# 430 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+bin_index = (tid / 64U);
+# 431 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 74, "bin_index", ((int *)(&bin_index)), 1);
+# 435 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z17GPUFI_KERNEL_LOOPP12_gpufi_data_i(gpufi_dev, 0);
+# 438 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+for (offset = 64U; (offset > 0U); offset >>= 1)
+# 439 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+{
+# 441 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z22GPUFI_KERNEL_ITERATIONP12_gpufi_data_(gpufi_dev);
+# 444 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+for (bin_base = 0U; (bin_base < 20U); bin_base += 4U)
+# 445 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+{
+# 446 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+__syncthreads();
+# 447 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+if ((warp_index < offset) && ((bin_base + bin_index) < 20U))
+# 448 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+{
+# 449 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+auto unsigned long sum;
+# 449 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+sum = ((unsigned long)((((volatile unsigned *)(((volatile unsigned (*)[128])warp_hists) + (bin_base + bin_index)))[warp_index]) + (((volatile unsigned *)(((volatile unsigned (*)[128])warp_hists) + (bin_base + bin_index)))[(warp_index + offset)])));
+# 450 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 79, "sum", ((int *)(&sum)), 0);
+# 453 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+(((volatile unsigned *)(((volatile unsigned (*)[128])warp_hists) + (bin_base + bin_index)))[warp_index]) = ((unsigned)sum);
+# 454 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 80, "warp_hists[(bin_base+bin_index)][warp_index]", ((int *)(((volatile unsigned *)(((volatile unsigned (*)[128])warp_hists) + (bin_base + bin_index))) + warp_index)), 1);
+# 457 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+}
+# 458 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+}
+# 459 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 78, "bin_base", ((int *)(&bin_base)), 1);
+# 462 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+}
+# 464 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z17GPUFI_KERNEL_LOOPP12_gpufi_data_i(gpufi_dev, 1);
+# 467 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 76, "offset", ((int *)(&offset)), 1);
+# 470 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+__syncthreads();
+# 475 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+hist_base = (histograms + (20U * bx));
+# 476 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 81, "hist_base", ((int *)(&hist_base)), 5);
+# 479 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+if (tid < 20U)
+# 480 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+{
+# 481 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+(hist_base[tid]) = ((hist_t)((((volatile unsigned *)(((volatile unsigned (*)[128])warp_hists) + tid))[0]) & 134217727U));
+# 482 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 82, "hist_base[tid]", ((int *)(hist_base + tid)), 0);
+# 485 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+}
+# 486 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+_Z12GPUFI_KERNELP12_gpufi_data_iiPc(gpufi_dev, 1, 0, "gen_hists");
+# 487 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+} 
+# 487 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+}}
+#endif
+#if defined(__cplusplus)
+}
+#if !defined(__CUDACC__) &&! defined(__CUDABE__) && !defined(__MULTI_CORE__)
+}
+#endif
+#endif

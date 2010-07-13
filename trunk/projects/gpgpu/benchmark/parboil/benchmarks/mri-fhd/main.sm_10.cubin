@@ -1,0 +1,59 @@
+architecture {sm_10}
+abiversion   {1}
+modname      {cubin}
+consts {
+		name    = c
+		segname = const
+		segnum  = 0
+		offset  = 0
+		bytes   = 10240
+}
+code {
+	name = _Z13ComputeFH_GPUiiPfS_S_S_S_
+	lmem = 0
+	smem = 44
+	reg  = 4
+	bar  = 0
+	const {
+			segname = const
+			segnum  = 1
+			offset  = 0
+			bytes   = 4
+		mem {
+			0x00000100 
+		}
+	}
+	bincode {
+		0xa0000001 0x04000780 0x61002c01 0x00000013 
+		0x30020001 0xc4100780 0x2100f208 0x2100f40c 
+		0xd00e0405 0x80c00780 0xd00e0601 0x80c00780 
+		0xd00e0405 0xa0c00780 0xd00e0601 0xa0c00781 
+	}
+}
+code {
+	name = _Z16ComputeRhoPhiGPUiPfS_S_S_S_S_
+	lmem = 0
+	smem = 44
+	reg  = 7
+	bar  = 0
+	const {
+			segname = const
+			segnum  = 1
+			offset  = 0
+			bytes   = 4
+		mem {
+			0x00000200 
+		}
+	}
+	bincode {
+		0xa0000001 0x04000780 0x61002c01 0x00000023 
+		0x3000c9fd 0x6c20c7c8 0x30000003 0x00000280 
+		0x30020001 0xc4100780 0x2100ec04 0x2100f010 
+		0x2100ea0c 0x2100ee14 0xd00e0209 0x80c00780 
+		0xd00e0805 0x80c00780 0xd00e0611 0x80c00780 
+		0xd00e0a0d 0x80c00780 0xc0010414 0xc0020618 
+		0xe003080d 0x00014780 0x2000d209 0x04200780 
+		0xe0010805 0x08018780 0xd00e040d 0xa0c00780 
+		0x2000d401 0x04200780 0xd00e0005 0xa0c00781 
+	}
+}
