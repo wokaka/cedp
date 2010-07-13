@@ -1,0 +1,4 @@
+#!/bin/sh
+find . -exec touch {} \;
+make clean dbg=1 emu=1
+make dbg=1 emu=1

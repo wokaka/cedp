@@ -1,0 +1,811 @@
+#ifndef __GPUFI_KERNEL__
+#define __GPUFI_KERNEL__
+
+#include <stdio.h>
+
+#define MAX2(x,y) ((x>y)?x:y)
+#define MAX3(x,y,z) ((x>y)?MAX2(x,z):MAX2(y,z))
+
+struct _gpufi_data_ gpufi_host = {0, };
+__device__ struct _gpufi_data_ *gpufi_dev;
+
+
+#if GPUFI_GLOBAL
+
+int gpufi_table_int[GPUFI_TABLE_SIZE] = {
+					-2147483648,
+					-1000000000,
+					-100000000, 
+					-10000000, 
+					-1000000, 
+					-100000, 
+					-10000,
+					-1000, 
+					-100, 
+					-10, 
+					-1, 
+					0,
+					1, 
+					10, 
+					100, 
+					1000, 
+					10000,
+					100000, 
+					1000000, 
+					10000000, 
+					100000000, 
+					1000000000,
+					2147483647, 
+					0,0,0,0,0,0,0,0,0,0,
+					0,0,0,0,0,0,0,0,0,0,
+					0,0,0,0,0,0,0,0,0,0,
+					0,0,0,0,0,0,0,0,0,0,
+					0,0,0,0,0,0,0,0,0,0,
+					0,0,0,0,0,0,0,0};
+					
+    // INT
+   	// -2147483648 ~ 2147483648-1
+
+float gpufi_table_float[GPUFI_TABLE_SIZE] = {
+#ifndef GPU_ABSOLUTE
+					-1e21,-1e20,-1e19,-1e18,-1e17, 
+					-1e16,-1e15,-1e14,-1e13,-1e12, 
+					-1e11,-1e10,-1e9,-1e8,-1e7, 
+					-1e6,-1e5,-1e4,-1e3,-1e2, 
+					-1e1,-1,-1e-1,-1e-2,-1e-3, 
+					-1e-4,-1e-5,-1e-6, -1e-7, -1e-8, 
+					-1e-9, -1e-10, -1e-11, -1e-12, -1e-13, 
+					-1e-14, -1e-15, -1e-16, -1e-17, -1e-18, 
+#endif
+					0,
+					1e-18, 1e-17, 1e-16, 1e-15, 1e-14, 
+					1e-13, 1e-12, 1e-11, 1e-10, 1e-9,
+					1e-8, 1e-7, 1e-6, 1e-5, 1e-4, 
+					1e-3, 1e-2, 1e-1, 1, 1e1,
+					1e2, 1e3, 1e4, 1e5, 1e6, 
+					1e7, 1e8, 1e9, 1e10, 1e11,
+					1e12, 1e13, 1e14, 1e15, 1e16, 
+					1e17, 1e18, 1e19, 1e20, 1e21
+#if GPU_ABSOLUTE
+					,0,0,0,0,0, 
+					0,0,0,0,0, 
+					0,0,0,0,0, 
+					0,0,0,0,0, 
+					0,0,0,0,0, 
+					0,0,0,0,0, 
+					0,0,0,0,0, 
+					0,0,0,0,0 
+#endif
+					};
+					
+    // FP
+    // 1¡¿10^-101 and the largest is 9999999¡¿10^90 (9.999999¡¿10^96)
+
+#endif
+
+
+#if GPUFI_FUNC_INIT
+////////////////////////////////////////////////////
+// CPU PART
+////////////////////////////////////////////////////
+
+int variable_count;
+int kernel_count;
+
+/*
+ * @about   Fetch a fault injection command (including fault type and time)
+ *          from a file, namely fi_cmd.txt
+ */
+int GPUFI_INIT(int kernel_cnt, int variable_cnt)
+{
+    FILE    *fp;
+    char    cmd[32];
+		int i;
+	
+    kernel_count = kernel_cnt + 1;
+    variable_count = variable_cnt;
+
+    memset(&gpufi_host, 0, sizeof(struct _gpufi_data_));
+
+    fp = fopen("fi_cmd.txt", "rt");
+
+    if(!fp){
+        printf("file open error\n");
+        system("pwd");
+        return -1;
+    }
+
+		for(i=0; i<GPUFI_TABLE_SIZE; i++){
+			gpufi_host.table_int[i] = gpufi_table_int[i];
+			gpufi_host.table_float[i] = gpufi_table_float[i];
+		}
+
+    fscanf(fp, "%s", cmd);
+    printf("%s ", cmd);
+    if(!strcmp(cmd, "profile")){
+        gpufi_host.current.blid = 0;
+        gpufi_host.current.thid = 0;
+
+        gpufi_host.fault.mode = GPUFI_PROFILE;
+        gpufi_host.current.profile_index = -1;
+        fscanf(fp, "%s", cmd);
+	      printf("%s ", cmd);
+        if(!strcmp(cmd, "none")){
+	        gpufi_host.current.profile_mode = PROFILE_MODE_NONE;
+	      }
+        else if(!strcmp(cmd, "value")){
+	        fscanf(fp, "%s", cmd);
+  	      printf("%s ", cmd);
+					if(!strcmp(cmd, "loop"))
+		        gpufi_host.current.profile_mode = PROFILE_MODE_VALUE_LOOP;
+	        else if(!strcmp(cmd, "kernel"))
+		        gpufi_host.current.profile_mode = PROFILE_MODE_VALUE_KERNEL;
+	        else if(!strcmp(cmd, "thread")){
+		        gpufi_host.current.profile_mode = PROFILE_MODE_VALUE_THREAD;
+		        fscanf(fp, "%d", &gpufi_host.current.blid);
+	      		printf(" %d ", gpufi_host.current.blid);
+	        }
+	        else if(!strcmp(cmd, "block")){
+		        gpufi_host.current.profile_mode = PROFILE_MODE_VALUE_BLOCK;
+		      }
+	      }
+	      printf(" (%d)\n", gpufi_host.current.profile_mode);
+    }
+    else if(!strcmp(cmd, "fi")){
+        gpufi_host.fault.mode = GPUFI_FI;
+        gpufi_host.current.profile_index = -1;
+
+        fscanf(fp, "%d %d %d %d 0x%x\n",
+                &gpufi_host.fault.kernel,
+                &gpufi_host.fault.instance,
+								&gpufi_host.fault.varid,
+                &gpufi_host.fault.call,
+                &gpufi_host.fault.mask);
+
+        gpufi_host.fault.mask_type = MASK_XOR;
+				gpufi_host.fault.injected = 0;
+
+        gpufi_host.current.blid = 0;
+        gpufi_host.current.thid = 0;
+
+       	printf("fi_cmd %d %d %d %d 0x%x\n", gpufi_host.fault.kernel, gpufi_host.fault.instance,
+    		gpufi_host.fault.varid, gpufi_host.fault.call, gpufi_host.fault.mask);
+    }
+
+    fclose(fp);
+
+    return 0;
+}
+
+#else 
+
+int GPUFI_INIT(int x, int y)
+{
+    return 0;
+}
+
+#endif
+
+
+#if GPUFI_FUNC_HALT
+
+int GPUFI_HALT(char *fname)
+{
+    FILE    *fp;
+    int i, j, k, m;
+
+    if(gpufi_host.fault.mode == GPUFI_PROFILE){
+        //char    cmd[32];
+
+        fp = fopen(fname, "wt");
+        if(!fp){
+        	  printf("can't write to an output file, %s\n", fname);
+            return -1;
+        }
+
+        for(i=0; i<MAX_KERNEL; i++){
+            if(gpufi_host.profile.kernel[i].state == 1)
+                fprintf(fp, "kernel\t%d\t%s\t%d\n",
+                        gpufi_host.profile.kernel[i].id,
+                        gpufi_host.profile.kernel[i].name,
+                        gpufi_host.profile.kernel[i].instance);
+            else
+                break;
+
+            for(j=0; j<variable_count; j++){
+                if(gpufi_host.profile.variable[i][j].call_count != 0){
+                  fprintf(fp, "variable\t%d\t%s\t%d\t%d\t%s\t",
+                          j,
+             							gpufi_host.profile.variable_bitmap[j]?gpufi_host.profile.variable_name[j]:"",
+                          gpufi_host.profile.variable[i][j].call_count,
+                          gpufi_host.profile.variable[i][j].loop_id,
+                          (gpufi_host.profile.variable[i][j].type == GPUFI_DATATYPE_INTEGER)?"int":
+                          ((gpufi_host.profile.variable[i][j].type == GPUFI_DATATYPE_FLOAT)?"fp":"others"));
+
+				        	if(gpufi_host.current.profile_mode != PROFILE_MODE_NONE){
+
+				        		int max = 0, maxsum[5];
+				        		
+				        		if(gpufi_host.profile.variable[i][j].type == GPUFI_DATATYPE_INTEGER ||
+				        		   gpufi_host.profile.variable[i][j].type == GPUFI_DATATYPE_FLOAT){
+											for(k=0; k<GPUFI_TABLE_SIZE; k++){
+												fprintf(fp, "%d\t", gpufi_host.profile.variable[i][j].dist[k]);
+												if(gpufi_host.profile.variable[i][j].dist[k] > max){
+													max = gpufi_host.profile.variable[i][j].dist[k];
+													// -1,0       0,1        -1,0,1     -2,-1,0     0,1,2
+													maxsum[0] = maxsum[1] = maxsum[2] = maxsum[3] = maxsum[4] = max;
+													
+												  if(k-2>=0){
+												  	maxsum[3] += gpufi_host.profile.variable[i][j].dist[k-2];
+												  }
+												  if(k-1>=0){
+												  	maxsum[0] += gpufi_host.profile.variable[i][j].dist[k-1];
+												  	maxsum[2] += gpufi_host.profile.variable[i][j].dist[k-1];
+												  	maxsum[3] += gpufi_host.profile.variable[i][j].dist[k-1];
+												  }
+	 									  		if(k+1<GPUFI_TABLE_SIZE){
+												  	maxsum[1] += gpufi_host.profile.variable[i][j].dist[k+1];
+												  	maxsum[2] += gpufi_host.profile.variable[i][j].dist[k+1];
+												  	maxsum[4] += gpufi_host.profile.variable[i][j].dist[k+1];
+	 									  		}
+	 									  		if(k+2<GPUFI_TABLE_SIZE){
+												  	maxsum[4] += gpufi_host.profile.variable[i][j].dist[k-2];
+	 									  		}
+												}
+											}
+										}
+										
+										fprintf(fp, "%f%%\t%f%%\t%f%%\n", (double)max * 100.0 / (double)gpufi_host.profile.variable[i][j].call_count,
+																											MAX2((double)maxsum[0] * 100.0 / (double)gpufi_host.profile.variable[i][j].call_count,
+																								  		(double)maxsum[1] * 100.0 / (double)gpufi_host.profile.variable[i][j].call_count),
+																											MAX3((double)maxsum[2] * 100.0 / (double)gpufi_host.profile.variable[i][j].call_count,
+																									 	  (double)maxsum[3] * 100.0 / (double)gpufi_host.profile.variable[i][j].call_count,
+																											(double)maxsum[4] * 100.0 / (double)gpufi_host.profile.variable[i][j].call_count));
+									}
+								}
+            }
+            fprintf(fp, "\n");
+        }
+
+       	if(gpufi_host.current.profile_mode != PROFILE_MODE_NONE){
+					fprintf(fp, "\nINT\t");
+	     		for(k=0; k<GPUFI_TABLE_SIZE; k++)
+						fprintf(fp, "%d\t", gpufi_host.table_int[k]);
+					fprintf(fp, "\nFP\t");
+	     		for(k=0; k<GPUFI_TABLE_SIZE; k++)
+						fprintf(fp, "%f\t", gpufi_host.table_float[k]);
+				}
+				
+        fclose(fp);
+    }
+    else{
+        printf("* injected: %d\n", gpufi_host.fault.injected);
+#if DEBUG_INJECT_LOC
+        if(gpufi_host.fault.injected){
+					printf("%d %d %d %d %d\n", gpufi_host.injected.kernel,
+						gpufi_host.injected.instance,
+						gpufi_host.injected.loop,
+						gpufi_host.injected.iteration,
+						gpufi_host.injected.varid);
+				}
+#endif
+       printf("fi %d %d %d %d 0x%x\n", gpufi_host.fault.kernel, gpufi_host.fault.instance,
+    	gpufi_host.fault.varid, gpufi_host.fault.call, gpufi_host.fault.mask);
+
+       if(!gpufi_host.fault.injected)
+        for(i=0; i<MAX_KERNEL; i++){
+            if(gpufi_host.profile.kernel[i].state == 1)
+                printf("kernel\t%d\tinstance\t%d\tcall\t%d\n",
+                        gpufi_host.profile.kernel[i].id,
+                        gpufi_host.profile.kernel[i].instance,
+                        gpufi_host.profile.variable[i][gpufi_host.fault.varid].call_count);
+            else
+                break;
+            printf("\n");
+        }
+
+        /*
+        if(gpufi_host.debug.injected){
+					printf("debug - %d %d %d %d\n", gpufi_host.debug.kernel,
+						gpufi_host.debug.instance,
+						gpufi_host.debug.loop,
+						gpufi_host.debug.iteration);
+				}
+        */
+    }
+
+    return 0;
+}
+
+#else
+
+
+int GPUFI_HALT(char *x)
+{
+    return 0;
+}
+
+
+#endif
+
+
+
+////////////////////////////////////////////////////
+// DEVICE PART
+////////////////////////////////////////////////////
+
+#if GPUFI_FUNC_LIB
+
+__device__
+void GPUFI_KERNEL_DEC(int *count)
+{
+    if(*count != 0)
+        *count--;
+    // else
+    /* be ready to inject fault when GPUFI_KERNEL_INJECT is called */
+}
+
+__device__
+void GPUFI_KERNEL_SET(int *count, int value)
+{
+    *count = value;
+}
+
+/*
+ * @about   Event generated when a GPU kernel is executed
+ */
+__device__
+void CudaStrcpy(char *dst, char *src, int max)
+{
+    int i;
+	
+    for(i=0; src[i]!=0 && i<max-1; i++)
+        dst[i] = src[i];
+    dst[i] = 0;
+}
+
+__device__
+int GPUFI_STRCMP(char *src, char *dst)
+{
+	int	i;
+
+	for(i=0; src[i] && dst[i]; i++){
+		if(src[i] != dst[i])
+			return 1;
+	}
+	
+	if(src[i] == dst[i])
+		return 0;
+
+	return 1;
+}
+
+__device__
+void GPUFI_DEBUG_LOC(struct _gpufi_data_ *gpufi_dev)
+{
+#if 0
+    if(blockIdx.x != gpufi_dev->current.blid || threadIdx.x != gpufi_dev->current.thid)
+        return;
+
+	if(!gpufi_dev->debug.injected){
+								gpufi_dev->debug.injected = 1;
+								gpufi_dev->debug.kernel = gpufi_dev->current.kernel;
+								gpufi_dev->debug.instance = gpufi_dev->current.instance;
+								gpufi_dev->debug.loop = gpufi_dev->current.loop;
+								gpufi_dev->debug.iteration = gpufi_dev->current.iteration;
+	}
+#endif
+}
+
+__device__ 
+int GPUFI_EXIT(int errno)
+{
+	int *addr = 0x0;
+	
+	*addr = 0x80;
+	return 100 / errno;
+}
+
+#else
+
+__device__
+int GPUFI_STRCMP(char *src, char *dst)
+{
+	return 1;
+}
+
+__device__
+void CudaStrcpy(char *dst, char *src, int max)
+{
+}
+
+__device__ int GPUFI_EXIT(int errno)
+{
+	return 0;
+}
+
+__device__
+void GPUFI_KERNEL_DEC(int *count)
+{
+}
+
+__device__
+void GPUFI_KERNEL_SET(int *count, int value)
+{
+}
+
+#endif
+
+#if GPUFI_FUNC_KERNEL
+
+__device__
+void GPUFI_KERNEL(struct _gpufi_data_ *gpufi_dev, int begin, int type, char *name)
+{
+    if(blockIdx.x != gpufi_dev->current.blid || threadIdx.x != gpufi_dev->current.thid)
+        return;
+
+    if(gpufi_dev->fault.mode == GPUFI_PROFILE){
+        if(begin == GPUFI_KERNEL_BEGIN){
+            /* 1: update current */
+            
+            if(gpufi_dev->profile.kernel_bitmap[type] == 0)
+                gpufi_dev->profile.kernel_bitmap[type] = 1; /* kernel */
+            gpufi_dev->profile.kernel_instance[type]++; /* instance */
+
+            /* update current */
+            gpufi_dev->current.kernel = type;
+            gpufi_dev->current.instance = gpufi_dev->profile.kernel_instance[type] - 1;
+            gpufi_dev->current.loop = -1;
+
+            /* 2: profiling */
+						if(gpufi_dev->current.profile_mode == PROFILE_MODE_NONE ||
+						   gpufi_dev->current.profile_mode == PROFILE_MODE_VALUE_LOOP ){
+            	gpufi_dev->current.profile_index++;
+						}
+						else{
+            	gpufi_dev->current.profile_index = type;
+						}
+
+						if(gpufi_dev->current.profile_index < MAX_KERNEL){
+	            gpufi_dev->profile.kernel[gpufi_dev->current.profile_index].state  = 1;
+	            gpufi_dev->profile.kernel[gpufi_dev->current.profile_index].id  = gpufi_dev->current.kernel;
+	            CudaStrcpy(gpufi_dev->profile.kernel[gpufi_dev->current.profile_index].name, name, MAX_NAME);
+	            gpufi_dev->profile.kernel[gpufi_dev->current.profile_index].instance  = gpufi_dev->current.instance;
+					  }
+        }
+    }
+    else{
+        if(begin == GPUFI_KERNEL_BEGIN){
+            /* 1: update current */
+            if(gpufi_dev->profile.kernel_bitmap[type] == 0) /* kernel */
+                gpufi_dev->profile.kernel_bitmap[type] = 1;
+            gpufi_dev->profile.kernel_instance[type]++; /* instance */
+
+            /* update current */
+            gpufi_dev->current.kernel = type;
+            gpufi_dev->current.instance = gpufi_dev->profile.kernel_instance[type] - 1;
+            gpufi_dev->current.loop = -1;
+
+            /* 2: profiling */
+            gpufi_dev->current.profile_index++;
+
+            gpufi_dev->profile.kernel[gpufi_dev->current.profile_index].state  = 1;
+            gpufi_dev->profile.kernel[gpufi_dev->current.profile_index].id  = gpufi_dev->current.kernel;
+            gpufi_dev->profile.kernel[gpufi_dev->current.profile_index].instance  = gpufi_dev->current.instance;
+
+#if 0
+        if(gpufi_dev->current.kernel != type)
+            gpufi_dev->current.instance = 0;
+        else    
+        	gpufi_dev->current.instance++;
+
+        gpufi_dev->current.kernel = type;
+        gpufi_dev->current.loop = -1;
+        gpufi_dev->current.iteration = -1;
+        gpufi_dev->current.iteration = -1;
+
+/*
+//        if(type == gpufi_dev->fault.kernel_type){
+            if(gpufi_dev->fault.kernel != type){
+                gpufi_dev->fault.kernel = gpufi_dev->fault.kernel_count;
+                GPUFI_KERNEL_SET(&gpufi_dev->fault.instance, gpufi_dev->fault.instance_count);
+            }
+            else{
+                GPUFI_KERNEL_DEC(&gpufi_dev->fault.instance);
+            }
+            GPUFI_KERNEL_SET(&gpufi_dev->fault.loop, gpufi_dev->fault.loop_count);
+            GPUFI_KERNEL_SET(&gpufi_dev->fault.iteration, gpufi_dev->fault.iteration_count);
+            
+            gpufi_dev->fault.disable = 0;
+//        }
+//        else{
+//            gpufi_dev->fault.disable = 1;
+//        }
+*/
+#endif
+        }
+    }
+}
+
+#else
+
+// DEVICE PART
+
+__device__
+void GPUFI_KERNEL(struct _gpufi_data_ *gpufi_dev, int begin, int type, char *name)
+{
+}
+
+#endif
+
+
+#if GPUFI_FUNC_LOOP
+
+__device__
+void GPUFI_KERNEL_LOOP(struct _gpufi_data_ *gpufi_dev, int begin)
+{
+    if(blockIdx.x != gpufi_dev->current.blid || threadIdx.x != gpufi_dev->current.thid)
+        return;
+
+    if(gpufi_dev->fault.mode == GPUFI_PROFILE){
+        if(begin == GPUFI_LOOP_BEGIN){
+            //gpufi_dev->profile.loop[gpufi_dev->current.kernel][gpufi_dev->current.instance]++;
+            gpufi_dev->current.loop = gpufi_dev->current.loop_count;// = gpufi_dev->profile.loop[gpufi_dev->current.kernel][gpufi_dev->current.instance] - 1;
+            gpufi_dev->current.iteration = -1;
+            gpufi_dev->current.loop_count++;
+        }
+        else{
+            //gpufi_dev->profile.loop[gpufi_dev->current.kernel][gpufi_dev->current.instance]++;
+            gpufi_dev->current.loop = -1;
+        }
+    }
+    else{
+/*
+        gpufi_dev->current.loop++;
+        gpufi_dev->current.iteration = -1;
+        gpufi_dev->current.kernel = type;
+
+
+//        if(gpufi_dev->fault.disable)
+//            return;
+            
+        GPUFI_KERNEL_DEC(&gpufi_dev->fault.loop);
+        GPUFI_KERNEL_SET(&gpufi_dev->fault.iteration, gpufi_dev->fault.iteration_count);
+*/
+    }
+}
+
+__device__
+void GPUFI_KERNEL_ITERATION(struct _gpufi_data_ *gpufi_dev)
+{
+    if(blockIdx.x != gpufi_dev->current.blid || threadIdx.x != gpufi_dev->current.thid)
+        return;
+
+    if(gpufi_dev->fault.mode == GPUFI_PROFILE){
+//        gpufi_dev->profile.iteration[gpufi_dev->current.kernel][gpufi_dev->current.instance][gpufi_dev->current.loop]++;
+        gpufi_dev->current.iteration++;
+    }
+    else{
+/*
+        gpufi_dev->current.iteration++;
+        if(gpufi_dev->fault.disable)
+            return;
+
+        GPUFI_KERNEL_DEC(&gpufi_dev->fault.iteration);
+*/
+    }
+}
+
+#else
+
+__device__
+void GPUFI_KERNEL_LOOP(struct _gpufi_data_ *gpufi_dev, int begin)
+{
+}
+
+__device__
+void GPUFI_KERNEL_ITERATION(struct _gpufi_data_ *gpufi_dev)
+{
+}
+
+#endif
+
+
+#if GPUFI_FUNC_VARIABLE
+
+__device__
+void GPUFI_KERNEL_VARIABLE(struct _gpufi_data_ *gpufi_dev, int varid, char *name, int *variable, int var_type)
+{
+    int i;
+    if(blockIdx.x != gpufi_dev->current.blid) // || threadIdx.x != gpufi_dev->current.thid)
+        return;
+
+    if(gpufi_dev->fault.mode == GPUFI_PROFILE){
+    		if(gpufi_dev->current.profile_index < MAX_KERNEL && varid < MAX_VARIABLE){
+					switch(gpufi_dev->current.profile_mode){
+					case PROFILE_MODE_NONE:
+				    if(blockIdx.x != gpufi_dev->current.blid || threadIdx.x != gpufi_dev->current.thid)
+				        return;
+	        	atomicAdd(&gpufi_dev->profile.variable[gpufi_dev->current.profile_index][varid].call_count, 1);
+	        	if(gpufi_dev->profile.variable_bitmap[varid] == 0){
+	        		gpufi_dev->profile.variable_bitmap[varid] = 1;
+	        		CudaStrcpy(gpufi_dev->profile.variable_name[varid], name, MAX_NAME);
+	        	}
+	        	gpufi_dev->profile.variable[gpufi_dev->current.profile_index][varid].loop_id = gpufi_dev->current.loop;
+						break;
+					case PROFILE_MODE_VALUE_LOOP:
+					case PROFILE_MODE_VALUE_KERNEL:
+				    if(threadIdx.x != gpufi_dev->current.thid)
+				        return;
+					case PROFILE_MODE_VALUE_THREAD:
+				    if(blockIdx.x != gpufi_dev->current.blid)
+				        return;
+					case PROFILE_MODE_VALUE_BLOCK:
+	        	
+	        	if(gpufi_dev->profile.variable_bitmap[varid] == 0){
+	        		gpufi_dev->profile.variable_bitmap[varid] = 1;
+	        		CudaStrcpy(gpufi_dev->profile.variable_name[varid], name, MAX_NAME);
+	        	}
+	        	gpufi_dev->profile.variable[gpufi_dev->current.profile_index][varid].loop_id = gpufi_dev->current.loop;
+
+	        	atomicAdd(&gpufi_dev->profile.variable[gpufi_dev->current.profile_index][varid].call_count, 1);
+	        	
+	        	if(var_type == GPUFI_DATATYPE_INTEGER){
+	        		struct _gpufi_profile_variable_ *var = &gpufi_dev->profile.variable[gpufi_dev->current.profile_index][varid];
+
+	        		var->type = GPUFI_DATATYPE_INTEGER;
+							for(i=0; i<GPUFI_TABLE_SIZE; i++){
+								if(gpufi_dev->table_int[i] > *variable){
+									atomicAdd(&var->dist[i], 1);
+									break;
+								}
+							}	        		
+							if(i == GPUFI_TABLE_SIZE){
+								atomicAdd(&var->dist[i-1], 1);
+							}
+	          }
+	        	else if(var_type == GPUFI_DATATYPE_FLOAT){
+	        	  float v = *((float *)variable);
+	        		struct _gpufi_profile_variable_ *var = &gpufi_dev->profile.variable[gpufi_dev->current.profile_index][varid];
+
+#if GPU_ABSOLUTE
+						  if(v<0)
+						  		v *= -1;
+#endif
+
+	        		var->type = GPUFI_DATATYPE_FLOAT;
+							for(i=0; i<GPUFI_TABLE_SIZE; i++){
+								if(gpufi_dev->table_float[i] > v){
+									atomicAdd(&var->dist[i], 1);
+									break;
+								}
+							}
+							if(i == GPUFI_TABLE_SIZE){
+								atomicAdd(&var->dist[i-1], 1);
+							}
+	          }
+						break;
+					}
+      	}
+    }
+    else{
+	    if(blockIdx.x != gpufi_dev->current.blid || threadIdx.x != gpufi_dev->current.thid)
+	        return;
+	        
+        if(gpufi_dev->fault.disabled)
+            return;
+
+        if(varid == gpufi_dev->fault.varid){
+            if(gpufi_dev->profile.kernel[gpufi_dev->current.profile_index].id == gpufi_dev->fault.kernel &&
+               gpufi_dev->profile.kernel[gpufi_dev->current.profile_index].instance == gpufi_dev->fault.instance){
+                if(gpufi_dev->profile.variable[gpufi_dev->current.profile_index][varid].call_count == gpufi_dev->fault.call){
+                    gpufi_dev->fault.injected++;
+                    gpufi_dev->fault.disabled = 1;
+                    /* injected fault */
+                    switch(gpufi_dev->fault.mask_type){
+                    case MASK_XOR:
+                        *variable ^= gpufi_dev->fault.mask;
+                        break;
+                    }
+                }
+            }
+        }
+
+#if DEBUG_INJECT_LOC
+        gpufi_dev->injected.kernel = gpufi_dev->current.kernel;
+        gpufi_dev->injected.instance = gpufi_dev->current.instance;
+        gpufi_dev->injected.loop = gpufi_dev->current.loop;
+        gpufi_dev->injected.iteration = gpufi_dev->current.iteration;
+        gpufi_dev->injected.varid = varid;
+#endif
+
+        gpufi_dev->profile.variable[gpufi_dev->current.profile_index][varid].call_count++;
+    }
+}
+
+__device__
+void GPUFI_KERNEL_VARIABLE_FORCE(struct _gpufi_data_ *gpufi_dev, int varid, char *name, int *variable)
+{
+#if 0
+    if(blockIdx.x != gpufi_dev->current.blid || threadIdx.x != gpufi_dev->current.thid)
+        return;
+
+    if(gpufi_dev->fault.mode == GPUFI_PROFILE){
+    }
+    else{
+        if(gpufi_dev->fault.kernel == gpufi_dev->current.kernel && 
+            gpufi_dev->fault.instance == gpufi_dev->current.instance && 
+            gpufi_dev->fault.loop == gpufi_dev->current.loop &&
+	          gpufi_dev->fault.varid == varid){
+
+            gpufi_dev->fault.injected++;
+
+            /* injected fault */
+            switch(gpufi_dev->fault.mask_type){
+            case MASK_XOR:
+                *variable ^= gpufi_dev->fault.mask;
+                break;
+            }
+        }
+    }
+#endif
+}
+
+__device__
+void GPUFI_KERNEL_VARIABLE_STREAM(struct _gpufi_data_ *gpufi_dev, int varid, char *name, int *variable, int length, int count)
+{
+#if 0
+    int i;
+
+    if(blockIdx.x != gpufi_dev->current.blid || threadIdx.x != gpufi_dev->current.thid)
+        return;
+
+    if(gpufi_dev->fault.mode == GPUFI_PROFILE){
+//        gpufi_dev->profile.variable[gpufi_dev->current.kernel][gpufi_dev->current.instance][gpufi_dev->current.loop][varid]++;
+    }
+    else{
+//        if(gpufi_dev->fault.disable)
+//            return;
+		for(i=0; i<count; i++){
+//        if(!gpufi_dev->fault.injected){
+            if(gpufi_dev->fault.kernel == gpufi_dev->current.kernel &&
+               gpufi_dev->fault.instance == gpufi_dev->current.instance &&
+               gpufi_dev->fault.loop == gpufi_dev->current.loop &&
+               gpufi_dev->fault.iteration == gpufi_dev->current.iteration &&
+	           gpufi_dev->fault.varid == varid
+            ){
+/*            if(0 == gpufi_dev->current.kernel &&
+               1 == gpufi_dev->current.instance &&
+               1 == gpufi_dev->current.loop &&
+               1 == gpufi_dev->current.iteration &&
+	           0 == varid){*/
+                gpufi_dev->fault.injected++;
+
+                /* injected fault */
+                switch(gpufi_dev->fault.mask_type){
+                case MASK_XOR:
+                    variable[length*i/count] ^= gpufi_dev->fault.mask;
+                    break;
+                }
+            }
+//        }
+	}
+    }
+#endif
+}
+
+#else
+
+__device__
+void GPUFI_KERNEL_VARIABLE(struct _gpufi_data_ *gpufi_dev, int varid, char *name, int *variable, int var_type)
+{
+}
+
+__device__
+void GPUFI_KERNEL_VARIABLE_FORCE(struct _gpufi_data_ *gpufi_dev, int varid, char *name, int *variable)
+{
+}
+
+#endif
+
+#endif

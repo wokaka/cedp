@@ -1,0 +1,143 @@
+#include "gpufi.h"
+/*
+__device__
+struct _gpufi_profile_ gpufi_profile = {0, };
+
+__device__
+struct _gpufi_current_ gpufi_current = {0, };
+ 
+
+__device__
+struct _gpufi_fault_ gpufi_fault = {0, };
+*/
+
+
+__device__
+void GPUFI_KERNEL_DEC(int *count)
+{
+    if(*count != 0)
+        *count--;
+    // else
+    /* be ready to inject fault when GPUFI_KERNEL_INJECT is called */
+}
+
+__device__
+void GPUFI_KERNEL_SET(int *count, int value)
+{
+    *count = value;
+}
+
+__device__
+static char gpufi_kernel_bitmap[MAX_KERNEL] = {0, };
+
+/*
+ * @about   Event generated when a GPU kernel is executed
+ */
+__device__
+void GPUFI_KERNEL_KERNEL(int type)
+{
+    if(gpufi_dev.fault.mode == GPUFI_PROFILE){
+        /* kernel */
+
+        if(gpufi_kernel_bitmap[type] == 0){
+            gpufi_dev.profile.kernels++;
+            gpufi_kernel_bitmap[type] = 1;
+        }
+
+        /* instance */
+        gpufi_dev.profile.instance[type]++;
+
+        /* update current */
+        gpufi_dev.current.kernel = type;
+        gpufi_dev.current.instance = gpufi_dev.profile.instance[type] - 1;
+    }
+    else{
+        if(type == gpufi_dev.fault.kernel_type){
+            if(gpufi_dev.fault.kernel != type){
+                gpufi_dev.fault.kernel = gpufi_dev.fault.kernel_count;
+                GPUFI_KERNEL_SET(&gpufi_dev.fault.instance, gpufi_dev.fault.instance_count);
+            }
+            else{
+                GPUFI_KERNEL_DEC(&gpufi_dev.fault.instance);
+            }
+            GPUFI_KERNEL_SET(&gpufi_dev.fault.loop, gpufi_dev.fault.loop_count);
+            GPUFI_KERNEL_SET(&gpufi_dev.fault.iteration, gpufi_dev.fault.iteration_count);
+            
+            gpufi_dev.fault.disable = 0;
+        }
+        else{
+            gpufi_dev.fault.disable = 1;
+        }
+    }
+}
+
+__device__
+void GPUFI_KERNEL_LOOP()
+{
+    if(gpufi_dev.fault.mode == GPUFI_PROFILE){
+        gpufi_dev.profile.loop[gpufi_dev.current.kernel][gpufi_dev.current.instance]++;
+        gpufi_dev.current.loop = gpufi_dev.profile.loop[gpufi_dev.current.kernel][gpufi_dev.current.instance] - 1;
+    }
+    else{
+        if(gpufi_dev.fault.disable)
+            return;
+            
+        GPUFI_KERNEL_DEC(&gpufi_dev.fault.loop);
+        GPUFI_KERNEL_SET(&gpufi_dev.fault.iteration, gpufi_dev.fault.iteration_count);
+    }
+}
+
+__device__
+void GPUFI_KERNEL_ITERATION()
+{
+    if(gpufi_dev.fault.mode == GPUFI_PROFILE){
+        gpufi_dev.profile.iteration[gpufi_dev.current.kernel][gpufi_dev.current.instance][gpufi_dev.current.loop]++;
+    }
+    else{
+        if(gpufi_dev.fault.disable)
+            return;
+
+        GPUFI_KERNEL_DEC(&gpufi_dev.fault.iteration);
+    }
+}
+
+__device__
+int GPUFI_STRCMP(char *src, char *dst)
+{
+	int	i;
+
+	for(i=0; src[i] && dst[i]; i++){
+		if(src[i] != dst[i])
+			return 1;
+	}
+	
+	if(src[i] == dst[i])
+		return 0;
+
+	return 1;
+}
+
+__device__
+void GPUFI_KERNEL_VARIABLE(char *name, int *variable)
+{
+    if(gpufi_dev.fault.disable)
+        return;
+
+    if(!gpufi_dev.fault.injected){
+        if(gpufi_dev.fault.instance == 0 && 
+           gpufi_dev.fault.loop == 0 &&
+           gpufi_dev.fault.iteration == 0 &&
+	   !GPUFI_STRCMP(gpufi_dev.fault.variable_name, name)){
+            gpufi_dev.fault.injected = 1;
+        
+            /* injected fault */
+            switch((*gpufi_fault).mask_type){
+            case MASK_XOR:
+                *variable ^= (*gpufi_fault).mask;
+                break;
+            }
+        }
+    }
+}
+
+

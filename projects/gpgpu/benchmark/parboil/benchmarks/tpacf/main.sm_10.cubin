@@ -1,0 +1,33 @@
+architecture {sm_10}
+abiversion   {1}
+modname      {cubin}
+consts {
+		name    = dev_binb
+		segname = const
+		segnum  = 0
+		offset  = 0
+		bytes   = 84
+}
+code {
+	name = _Z9gen_histsPmPfS0_S0_ii
+	lmem = 0
+	smem = 10280
+	reg  = 3
+	bar  = 0
+	const {
+			segname = const
+			segnum  = 1
+			offset  = 0
+			bytes   = 12
+		mem {
+			0x00000013 0x07ffffff 0x00000050 
+		}
+	}
+	bincode {
+		0xa0000005 0x04000780 0x308003fd 0x644107c8 
+		0x30000003 0x00000280 0x1000c801 0x0423c780 
+		0x30020209 0xc4100780 0x61102c01 0x00000007 
+		0x00090205 0xc0000780 0x20000005 0x04008780 
+		0xd481d401 0x04600780 0xd00e0201 0xa0c00781 
+	}
+}

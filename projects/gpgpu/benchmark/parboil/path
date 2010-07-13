@@ -1,0 +1,4 @@
+export PATH=/gpufi/parboil:/usr/local/cuda/bin:$PATH
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib
+
+#export LD_LIBRARY_PATH=/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/tool/compiler/gcc/usr-4.0.4-x86/lib:/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/tool/compiler/gcc/usr-4.0.4-x86/lib:

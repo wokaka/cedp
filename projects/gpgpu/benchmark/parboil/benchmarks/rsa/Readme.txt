@@ -1,0 +1,3 @@
+- 'One' and 'e' moved to constant memory. 
+- dExp changed.
+- A bit faster than RSA_06.29

@@ -1,0 +1,87 @@
+#include "gpufi.h"
+
+////////////////////////////////////////////////////
+// CPU PART
+////////////////////////////////////////////////////
+
+
+struct _gpufi_data_ gpufi_host = {0, };
+
+
+
+/*
+ * @about   Fetch a fault injection command (including fault type and time)
+ *          from a file, namely fi_cmd.txt
+ */
+int GPUFI_FETCH_COMMAND()
+{
+    FILE    *fp;
+    char    cmd[32];
+
+
+    fp = fopen("fi_cmd.txt", "rt");
+   
+
+    if(!fp){
+        printf("file open error\n");
+        system("pwd");
+        return -1;
+    }
+
+    fscanf(fp, "%s", &cmd);
+    if(!strcmp(cmd, "profile")){
+	   gpufi_host.fault.mode = GPUFI_PROFILE;
+    }
+    else if(!strcmp(cmd, "fi")){
+	   gpufi_host.fault.mode = GPUFI_FI;
+	    fscanf(fp, "%d %d %d %d %s %d\n", &gpufi_host.fault.kernel, &gpufi_host.fault.instance,
+		&gpufi_host.fault.loop, &gpufi_host.fault.iteration,
+		gpufi_host.fault.variable_name, &gpufi_host.fault.mask);
+	    gpufi_host.fault.kernel_count = gpufi_host.fault.kernel;
+	    gpufi_host.fault.mask_type = MASK_XOR;
+	    gpufi_host.fault.injected = 0;
+    }
+
+    fclose(fp);
+
+    return 0;
+}
+
+int GPUFI_END()
+{
+    FILE    *fp;
+    int i, j, k, l;
+
+    if(gpufi_host.fault.mode == GPUFI_PROFILE){
+        //char    cmd[32];
+
+        fp = fopen("fi_profile.txt", "wt");
+        if(!fp)
+            return -1;
+
+        fprintf(fp, "kernel\t%d\n", gpufi_host.profile.kernels);
+        for(i=0; i<gpufi_host.profile.kernels; i++){
+            fprintf(fp, "kernel#\t%d\n", i);
+            fprintf(fp, "instance\t%d\n", gpufi_host.profile.instance[i]);
+
+            for(j=0; j<gpufi_host.profile.instance[i]; j++){
+                fprintf(fp, "instance#\t%d\n", j);
+                fprintf(fp, "loop\t%d\n", gpufi_host.profile.loop[i][j]);
+
+                for(k=0; k<gpufi_host.profile.loop[i][j]; k++){
+                    fprintf(fp, "loop#\t%d\n", j);
+                    fprintf(fp, "iteration\t%d\n", gpufi_host.profile.iteration[i][j][k]);
+
+                    for(l=0; l<MAX_VARIABLE; l++){
+                        fprintf(fp, "variable\t%d\n", gpufi_host.profile.variable[i][j][k][l]);
+                    }
+                }
+            }
+        }
+
+        fclose(fp);
+    }
+
+
+    return 0;
+}
