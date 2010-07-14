@@ -1,0 +1,73 @@
+#ifndef __GPU_FI_H__
+#define __GPU_FI_H__
+
+//#define GPU_ABSOLUTE				0			// Profile value distribution using abolute number for floating-point variables
+
+#define GPUFI_CHECK(n1,n2) { if(n1 != n2) GPUFI_EXIT(0);}
+
+#define MAX_VARIABLE	1024
+#define MAX_NAME    	32
+#define GPUFI_TABLE_SIZE 81
+
+struct _gpufi_profile_variable_ {
+    int type;
+    int dist[GPUFI_TABLE_SIZE];
+};
+
+struct _gpufi_profile_ {
+    struct _gpufi_profile_variable_ variable[MAX_VARIABLE];
+
+    int variable_bitmap[MAX_VARIABLE];
+    char variable_name[MAX_VARIABLE][MAX_NAME];
+};
+
+//__device__ extern struct _gpufi_current_ gpufi_current;
+struct _gpufi_data_ {
+  struct _gpufi_profile_ profile;
+	int table_int[GPUFI_TABLE_SIZE];
+	float table_float[GPUFI_TABLE_SIZE];
+	int sdc;
+};
+
+#define GPUFI_DATATYPE_UNKNOWN 0
+#define GPUFI_DATATYPE_INTEGER 10
+#define GPUFI_DATATYPE_FLOAT 20
+#define GPUFI_DATATYPE_INTEGER_POINTER 30
+#define GPUFI_DATATYPE_FLOAT_POINTER 40
+#define GPUFI_DATATYPE_UNKNOWN_POINTER 50
+
+__device__ void GPUFI_KERNEL_DEC(struct _gpufi_data_ *, int *count);
+__device__ void GPUFI_KERNEL_SET(struct _gpufi_data_ *, int *count, int value);
+__device__ void GPUFI_KERNEL(struct _gpufi_data_ *, int begin, int type, char *);
+__device__ void GPUFI_KERNEL_LOOP(struct _gpufi_data_ *, int);
+__device__ void GPUFI_KERNEL_ITERATION(struct _gpufi_data_ *);
+__device__ void GPUFI_KERNEL_VARIABLE(struct _gpufi_data_ *, int varid, char *name, int *variable, int var_type);
+__device__ void GPUFI_KERNEL_VARIABLE_STREAM(struct _gpufi_data_ *gpufi_dev, int varid, char *name, int *variable, int length, int count);
+__device__ void GPUFI_DEBUG_LOC(struct _gpufi_data_ *gpufi_dev);
+__device__ int GPUFI_EXIT(int errno);
+int GPUFI_INIT(int, int);
+int GPUFI_HALT(char *fname);
+__device__ void CudaStrcpy(char *dst, char *src, int max);
+
+extern struct _gpufi_data_ gpufi_host;
+
+#define GPUFI_KERNEL_BEGIN 0
+#define GPUFI_KERNEL_END 1
+#define GPUFI_LOOP_BEGIN 0
+#define GPUFI_LOOP_END 1
+
+//extern __device__ struct _gpufi_data_ *gpufi_dev;
+
+#ifndef CUDA_ERRCK
+#define CUDA_ERRCK							\
+  {cudaError_t err;							\
+    if ((err = cudaGetLastError()) != cudaSuccess) {			\
+      fprintf(stderr, "CUDA error on line %d: %s\n", __LINE__, cudaGetErrorString(err)); \
+      exit(-1);								\
+    }									\
+  }
+#endif
+
+#include "gpufi_kernel.cu"
+
+#endif

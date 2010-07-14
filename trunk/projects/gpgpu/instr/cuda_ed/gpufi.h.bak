@@ -1,0 +1,8 @@
+#ifndef __GPU_FI_H__
+#define __GPU_FI_H__
+
+#define GPUFI_CHECK(n1,n2) { if(n1 != n2) GPUFI_EXIT(0); }
+
+#include "gpufi_kernel.cu"
+
+#endif
