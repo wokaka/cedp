@@ -8,14 +8,15 @@ package vpa.runtime;
 import cedp.node.PerfJavaNode;
 import cedp.util.extlib.JcraftWrapper;
 import cedp.util.UtilFile;
+import cedp.util.extlib.AStyleWrapper;
 import cedp.util.extlib.CetusWrapper;
+import cetus.exec.Driver;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.Vector;
-import javax.swing.JDialog;
 import javax.swing.JTable;
 
 /**
@@ -70,7 +71,22 @@ public class VpaAPI {
         net.FtpBlocked(src, dst, net.FtpPut);
     }
 
-    public static String CopyFile(String src, String dst)
+    public static String FileRead(String fileName)
+    {
+        String str = "";
+
+        try{
+            BufferedReader file = new BufferedReader(new FileReader(fileName));
+            while(file.ready())
+                str += file.readLine() + "\n";
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return str;
+    }
+
+    public static String FileCopy(String src, String dst)
     {
         String str = "";
 
@@ -96,66 +112,32 @@ public class VpaAPI {
         return str;
     }
 
-  public void InstrRunCetus(String target, Vector fileList)
-  {
-    int i;
-    String fileName;
-    String currentPath = "";
-
-    if(fileList == null){
-      String path = GetHomeDir() + "benchmarks/" + GetSelectedProgram() + "/src/cuda_cetus/";
-      fileList = GetFileList(path);
-    }
-
-    try{
-      currentPath = new java.io.File(".").getCanonicalPath();
-    } catch(Exception e){
-      e.printStackTrace();
-    }
-
-    for(i=0; i<fileList.size(); i++){
-      fileName = "" + fileList.elementAt(i);
-      if(fileName.equals("gpufi_kernel.cu"))
-        continue;
-      
-      if(fileName.endsWith(".cu")){
-        String args[] = null;
-        System.out.println("Instrment: " + fileName);
-        //args[0] = "-cuda-inj";
-        if(target.equals("cuda_fi")){
-          args = new String[2];
-          args[0] = "-fault-injector";
-          args[1] = fileName;
-        }
-        else if(target.equals("cuda_ed")){
-          args = new String[2];
-          args[0] = "-error-detector1pt";
-          args[1] = fileName;
-        }
-        else if(target.equals("cuda_fied")){
-          args = new String[3];
-          args[0] = "-fault-injector";
-          args[1] = "-error-detector";
-          args[2] = fileName;
-        }
-        else{
-          args = new String[2];
-          args[0] = "-fault-injector";
-          args[1] = fileName;
-        }
-
-        Driver cetusDriver = new Driver();
-        cetusDriver.run(args);
-        /* C beautifier for instrumented code */
-        AStyleWrapper.Buautifier(fileName, fileName + ".beauty");
-        AStyleWrapper.Buautifier("cetus_output" + File.separator + fileName, "cetus_output" + File.separator + fileName + ".beauty");
-      }
-    }
-  }
-
     public static String GetCurrentDir()
     {
         return node.GetCurrentDir();
+    }
+
+    public static String GetCurrentLocalPath()
+    {
+      try{
+        return new java.io.File(".").getCanonicalPath();
+        //currentPath = currentPath.substring(0, currentPath.length()-1) + File.pathSeparator;
+      } catch(Exception e){
+        e.printStackTrace();
+      }
+
+      return null;
+    }
+
+    public static void RunCetus(String args[])
+    {
+      Driver cetusDriver = new Driver();
+      cetusDriver.run(args);
+    }
+
+    public static void Beautifier(String src, String dst)
+    {
+      AStyleWrapper.Buautifier(src, dst);
     }
 
     public static String GetFileSeparator()
