@@ -1,6 +1,6 @@
 #include "__cudaFatFormat.h"
 
-#define __gpud__DebugInfo_998482c1fd590f1b 0
+#define __gpud__DebugInfo_f3038ce452fcffa7 0
 
 #ifdef __cplusplus
 extern "C" {
@@ -14,7 +14,7 @@ static const unsigned long long __deviceText_$compute_11$[] = {
 0x2d2f2f090a0a3230ull,0x2d2d2d2d2d2d2d2dull,0x2d2d2d2d2d2d2d2dull,0x2d2d2d2d2d2d2d2dull,
 0x2d2d2d2d2d2d2d2dull,0x2d2d2d2d2d2d2d2dull,0x2d2d2d2d2d2d2d2dull,0x2d2d2d2d2d2d2d2dull,
 0x43202f2f090a2d2dull,0x676e696c69706d6full,0x70632e6e69616d20ull,0x742f2820692e3370ull,
-0x23494263632f706dull,0x295a6b366159702eull,0x2d2d2d2d2f2f090aull,0x2d2d2d2d2d2d2d2dull,
+0x23494263632f706dull,0x2978586a57514c2eull,0x2d2d2d2d2f2f090aull,0x2d2d2d2d2d2d2d2dull,
 0x2d2d2d2d2d2d2d2dull,0x2d2d2d2d2d2d2d2dull,0x2d2d2d2d2d2d2d2dull,0x2d2d2d2d2d2d2d2dull,
 0x2d2d2d2d2d2d2d2dull,0x0a2d2d2d2d2d2d2dull,0x2d2d2d2d2f2f090aull,0x2d2d2d2d2d2d2d2dull,
 0x2d2d2d2d2d2d2d2dull,0x2d2d2d2d2d2d2d2dull,0x2d2d2d2d2d2d2d2dull,0x2d2d2d2d2d2d2d2dull,
@@ -11446,4 +11446,4 @@ static __cudaFatDebugEntry __debugEntries0 = {0, 0, 0, 0} ;
 #define __ptxExport 0
 #define __ptxImport 0
 #define __CUDAFATBINSECTION  ".nvFatBinSegment"
-static __cudaFatCudaBinary __fatDeviceText __attribute__ ((section (__CUDAFATBINSECTION)))= {__cudaFatMAGIC,__cudaFatVERSION,0x8ecc680c,(char*)"998482c1fd590f1b",(char*)"src/cuda_fi_prerun/main.cu",(char*)" ",__ptxEntries,__cubinEntries,&__debugEntries0,__gpud__DebugInfo_998482c1fd590f1b,0,__ptxExport,__ptxImport,0,0xe4186f4b};
+static __cudaFatCudaBinary __fatDeviceText __attribute__ ((section (__CUDAFATBINSECTION)))= {__cudaFatMAGIC,__cudaFatVERSION,0x8ecc680c,(char*)"f3038ce452fcffa7",(char*)"src/cuda_fi_prerun/main.cu",(char*)" ",__ptxEntries,__cubinEntries,&__debugEntries0,__gpud__DebugInfo_f3038ce452fcffa7,0,__ptxExport,__ptxImport,0,0x3c5731e0};

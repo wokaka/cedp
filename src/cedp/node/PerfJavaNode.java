@@ -168,6 +168,7 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
     jToolBar1 = new javax.swing.JToolBar();
     connButton = new javax.swing.JButton();
     jButton3 = new javax.swing.JButton();
+    execButton = new javax.swing.JButton();
     jButton1 = new javax.swing.JButton();
     jSplitPane1 = new javax.swing.JSplitPane();
     jPanel2 = new javax.swing.JPanel();
@@ -264,6 +265,17 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
     });
     jToolBar1.add(jButton3);
 
+    execButton.setText("Exec Command");
+    execButton.setFocusable(false);
+    execButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+    execButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+    execButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        execButtonActionPerformed(evt);
+      }
+    });
+    jToolBar1.add(execButton);
+
     jButton1.setText("Web Browser");
     jButton1.setFocusable(false);
     jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -327,22 +339,22 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
         .addComponent(jLabel4)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(cmdField, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
         .addComponent(progBar, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(jButton5)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addContainerGap())
-      .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 938, Short.MAX_VALUE)
+      .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 934, Short.MAX_VALUE)
     );
     jPanel8Layout.setVerticalGroup(
       jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(jPanel8Layout.createSequentialGroup()
-        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(progBar, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+          .addComponent(progBar, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
           .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
             .addComponent(jButton5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 21, Short.MAX_VALUE)
             .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -362,11 +374,11 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
     jPanel1.setLayout(jPanel1Layout);
     jPanel1Layout.setHorizontalGroup(
       jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 938, Short.MAX_VALUE)
+      .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 934, Short.MAX_VALUE)
     );
     jPanel1Layout.setVerticalGroup(
       jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+      .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
     );
 
     messagePanel.addTab("Messages", jPanel1);
@@ -389,11 +401,11 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
     jPanel12.setLayout(jPanel12Layout);
     jPanel12Layout.setHorizontalGroup(
       jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 646, Short.MAX_VALUE)
+      .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
     );
     jPanel12Layout.setVerticalGroup(
       jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
+      .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
     );
 
     jTabbedPane4.addTab("Source", jPanel12);
@@ -402,11 +414,11 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
     jPanel13.setLayout(jPanel13Layout);
     jPanel13Layout.setHorizontalGroup(
       jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 646, Short.MAX_VALUE)
+      .addGap(0, 642, Short.MAX_VALUE)
     );
     jPanel13Layout.setVerticalGroup(
       jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 269, Short.MAX_VALUE)
+      .addGap(0, 267, Short.MAX_VALUE)
     );
 
     jTabbedPane4.addTab("Http", jPanel13);
@@ -432,11 +444,11 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
     jPanel10.setLayout(jPanel10Layout);
     jPanel10Layout.setHorizontalGroup(
       jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+      .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
     );
     jPanel10Layout.setVerticalGroup(
       jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
+      .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
     );
 
     jTabbedPane5.addTab("Layout", jPanel10);
@@ -449,11 +461,11 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
     jPanel2.setLayout(jPanel2Layout);
     jPanel2Layout.setHorizontalGroup(
       jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jSplitPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 942, Short.MAX_VALUE)
+      .addComponent(jSplitPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 943, Short.MAX_VALUE)
     );
     jPanel2Layout.setVerticalGroup(
       jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jSplitPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE)
+      .addComponent(jSplitPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
     );
 
     jSplitPane1.setRightComponent(jPanel2);
@@ -518,7 +530,7 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
             .addContainerGap()
             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+              .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
               .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
               .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -526,13 +538,13 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
                   .addComponent(jLabel2))
                 .addGap(22, 22, 22)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                  .addComponent(configFileField, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-                  .addComponent(homeField, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-                  .addComponent(benchmarkField, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)))
+                  .addComponent(configFileField, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                  .addComponent(homeField, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                  .addComponent(benchmarkField, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)))
               .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fileFilterField, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)))
+                .addComponent(fileFilterField, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)))
             .addGap(20, 20, 20)))
         .addContainerGap())
     );
@@ -561,7 +573,7 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jButton4)
           .addComponent(jButton6))
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addContainerGap(14, Short.MAX_VALUE))
     );
 
     jTabbedPane1.addTab("Config", jPanel6);
@@ -595,15 +607,15 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
     jPanel5.setLayout(jPanel5Layout);
     jPanel5Layout.setHorizontalGroup(
       jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
-      .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+      .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+      .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
     );
     jPanel5Layout.setVerticalGroup(
       jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(jPanel5Layout.createSequentialGroup()
         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
+        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
     );
 
     jTabbedPane2.addTab("VPA", jPanel5);
@@ -646,15 +658,15 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
     jPanel3.setLayout(jPanel3Layout);
     jPanel3Layout.setHorizontalGroup(
       jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
-      .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+      .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+      .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
     );
     jPanel3Layout.setVerticalGroup(
       jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(jPanel3Layout.createSequentialGroup()
         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE))
+        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE))
     );
 
     jTabbedPane2.addTab("Files", jPanel3);
@@ -708,15 +720,15 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 1216, Short.MAX_VALUE)
-      .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1216, Short.MAX_VALUE)
+      .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 1218, Short.MAX_VALUE)
+      .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1218, Short.MAX_VALUE)
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE))
+        .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE))
     );
 
     pack();
@@ -1455,6 +1467,7 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
             progBar.Process();
 
             net.RunCommandBlocked("cd " + homeField.getText());
+            net.RunCommandBlocked("source path");
             UpdateFileList();
 
             progBar.Done();
@@ -1533,6 +1546,11 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
         // TODO add your handling code here:
         LoadConfig(pjtPath, configFileField.getText());
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void execButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_execButtonActionPerformed
+        // TODO add your handling code here:
+      JythonWrapper.Exec(vpaProgram.GetScript() + "\n" + cmdArea.getText());
+    }//GEN-LAST:event_execButtonActionPerformed
 
     private void installButtonActionPerformed(java.awt.event.ActionEvent evt) {                                              
         
@@ -1716,6 +1734,7 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
   private javax.swing.JButton connButton;
   private javax.swing.JTextArea consoleArea;
   private javax.swing.JTextArea currDir;
+  private javax.swing.JButton execButton;
   private javax.swing.JTextField fileFilterField;
   private javax.swing.JTable fileTable;
   private javax.swing.JTextField homeField;

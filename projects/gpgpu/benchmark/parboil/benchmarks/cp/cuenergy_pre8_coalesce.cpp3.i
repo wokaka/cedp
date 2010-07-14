@@ -1,23 +1,20 @@
 # 1 "cuenergy_pre8_coalesce.cudafe2.gpu"
-# 1 "/home/yim/cedp/cedp/projects/gpgpu/benchmark/parboil/benchmarks/cp//"
+# 1 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/benchmarks/cp//"
 # 1 "<built-in>"
 # 1 "<command-line>"
 # 1 "cuenergy_pre8_coalesce.cudafe2.gpu"
-# 214 "/usr/lib/gcc/x86_64-linux-gnu/4.2.4/include/stddef.h" 3
-typedef unsigned long size_t;
+# 214 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3
+typedef unsigned size_t;
+
 # 1 "/usr/local/cuda/bin/../include/crt/device_runtime.h" 1 3
-# 38 "/usr/local/cuda/bin/../include/crt/device_runtime.h" 3
+# 42 "/usr/local/cuda/bin/../include/crt/device_runtime.h" 3
 # 1 "/usr/local/cuda/bin/../include/host_defines.h" 1 3
-# 39 "/usr/local/cuda/bin/../include/crt/device_runtime.h" 2 3
-
-
-
-
-
+# 43 "/usr/local/cuda/bin/../include/crt/device_runtime.h" 2 3
+# 55 "/usr/local/cuda/bin/../include/crt/device_runtime.h" 3
 typedef const void *__texture_type__;
 
 typedef const void *__surface_type__;
-# 98 "/usr/local/cuda/bin/../include/crt/device_runtime.h" 3
+# 279 "/usr/local/cuda/bin/../include/crt/device_runtime.h" 3
 # 1 "/usr/local/cuda/bin/../include/builtin_types.h" 1 3
 # 42 "/usr/local/cuda/bin/../include/builtin_types.h" 3
 # 1 "/usr/local/cuda/bin/../include/device_types.h" 1 3
@@ -31,7 +28,7 @@ enum cudaRoundMode
 };
 # 43 "/usr/local/cuda/bin/../include/builtin_types.h" 2 3
 # 1 "/usr/local/cuda/bin/../include/driver_types.h" 1 3
-# 94 "/usr/local/cuda/bin/../include/driver_types.h" 3
+# 91 "/usr/local/cuda/bin/../include/driver_types.h" 3
 enum cudaError
 {
   cudaSuccess = 0,
@@ -57,11 +54,6 @@ enum cudaError
   cudaErrorInvalidChannelDescriptor = 20,
   cudaErrorInvalidMemcpyDirection = 21,
   cudaErrorAddressOfConstant = 22,
-
-
-
-
-
   cudaErrorTextureFetchFailed = 23,
   cudaErrorTextureNotBound = 24,
   cudaErrorSynchronizationError = 25,
@@ -76,16 +68,7 @@ enum cudaError
   cudaErrorNotReady = 34,
   cudaErrorInsufficientDriver = 35,
   cudaErrorSetOnActiveProcess = 36,
-  cudaErrorInvalidSurface = 37,
   cudaErrorNoDevice = 38,
-  cudaErrorECCUncorrectable = 39,
-  cudaErrorSharedObjectSymbolNotFound = 40,
-  cudaErrorSharedObjectInitFailed = 41,
-  cudaErrorUnsupportedLimit = 42,
-  cudaErrorDuplicateVariableName = 43,
-  cudaErrorDuplicateTextureName = 44,
-  cudaErrorDuplicateSurfaceName = 45,
-  cudaErrorDevicesUnavailable = 46,
   cudaErrorStartupFailure = 0x7f,
   cudaErrorApiFailureBase = 10000
 };
@@ -137,7 +120,6 @@ enum cudaMemcpyKind
 
 
 
-
 struct cudaPitchedPtr
 {
   void *ptr;
@@ -150,14 +132,12 @@ struct cudaPitchedPtr
 
 
 
-
 struct cudaExtent
 {
   size_t width;
   size_t height;
   size_t depth;
 };
-
 
 
 
@@ -192,45 +172,6 @@ struct cudaMemcpy3DParms
 
 
 
-struct cudaGraphicsResource;
-
-
-
-
-
-enum cudaGraphicsRegisterFlags
-{
-  cudaGraphicsRegisterFlagsNone = 0
-};
-
-
-
-
-
-enum cudaGraphicsMapFlags
-{
-  cudaGraphicsMapFlagsNone = 0,
-  cudaGraphicsMapFlagsReadOnly = 1,
-  cudaGraphicsMapFlagsWriteDiscard = 2
-};
-
-
-
-
-
-enum cudaGraphicsCubeFace {
-  cudaGraphicsCubeFacePositiveX = 0x00,
-  cudaGraphicsCubeFaceNegativeX = 0x01,
-  cudaGraphicsCubeFacePositiveY = 0x02,
-  cudaGraphicsCubeFaceNegativeY = 0x03,
-  cudaGraphicsCubeFacePositiveZ = 0x04,
-  cudaGraphicsCubeFaceNegativeZ = 0x05
-};
-
-
-
-
-
 struct cudaFuncAttributes
 {
    size_t sharedSizeBytes;
@@ -238,30 +179,7 @@ struct cudaFuncAttributes
    size_t localSizeBytes;
    int maxThreadsPerBlock;
    int numRegs;
-
-
-
-
-
-   int ptxVersion;
-
-
-
-
-
-   int binaryVersion;
-   int __cudaReserved[6];
-};
-
-
-
-
-
-enum cudaFuncCache
-{
-  cudaFuncCachePreferNone = 0,
-  cudaFuncCachePreferShared = 1,
-  cudaFuncCachePreferL1 = 2
+   int __cudaReserved[8];
 };
 
 
@@ -275,15 +193,6 @@ enum cudaComputeMode
   cudaComputeModeProhibited = 2
 };
 
-
-
-
-
-enum cudaLimit
-{
-    cudaLimitStackSize = 0x00,
-    cudaLimitPrintfFifoSize = 0x01
-};
 
 
 
@@ -311,67 +220,29 @@ struct cudaDeviceProp
   int integrated;
   int canMapHostMemory;
   int computeMode;
-  int maxTexture1D;
-  int maxTexture2D[2];
-  int maxTexture3D[3];
-  int maxTexture2DArray[3];
-  size_t surfaceAlignment;
-  int concurrentKernels;
-  int ECCEnabled;
-  int pciBusID;
-  int pciDeviceID;
-  int __cudaReserved[22];
+  int __cudaReserved[36];
 };
-# 426 "/usr/local/cuda/bin/../include/driver_types.h" 3
+# 319 "/usr/local/cuda/bin/../include/driver_types.h" 3
 typedef enum cudaError cudaError_t;
 
 
 
 
 
-typedef struct CUstream_st *cudaStream_t;
+typedef int cudaStream_t;
 
 
 
 
 
-typedef struct CUevent_st *cudaEvent_t;
-
-
-
-
-
-typedef struct CUuuid_st cudaUUID_t;
+typedef int cudaEvent_t;
 # 44 "/usr/local/cuda/bin/../include/builtin_types.h" 2 3
-# 1 "/usr/local/cuda/bin/../include/surface_types.h" 1 3
-# 54 "/usr/local/cuda/bin/../include/surface_types.h" 3
-enum cudaSurfaceBoundaryMode
-{
-  cudaBoundaryModeZero = 0,
-  cudaBoundaryModeClamp = 1,
-  cudaBoundaryModeTrap = 2
-};
-
-
-enum cudaSurfaceFormatMode
-{
-  cudaFormatModeForced,
-  cudaFormatModeAuto
-};
-
-
-struct surfaceReference
-{
-  struct cudaChannelFormatDesc channelDesc;
-};
-# 45 "/usr/local/cuda/bin/../include/builtin_types.h" 2 3
 # 1 "/usr/local/cuda/bin/../include/texture_types.h" 1 3
 # 54 "/usr/local/cuda/bin/../include/texture_types.h" 3
 enum cudaTextureAddressMode
 {
   cudaAddressModeWrap,
-  cudaAddressModeClamp,
-  cudaAddressModeMirror
+  cudaAddressModeClamp
 };
 
 
@@ -397,170 +268,191 @@ struct textureReference
   struct cudaChannelFormatDesc channelDesc;
   int __cudaReserved[16];
 };
-# 46 "/usr/local/cuda/bin/../include/builtin_types.h" 2 3
+# 45 "/usr/local/cuda/bin/../include/builtin_types.h" 2 3
 # 1 "/usr/local/cuda/bin/../include/vector_types.h" 1 3
 # 45 "/usr/local/cuda/bin/../include/vector_types.h" 3
-# 1 "/usr/local/cuda/bin/../include/builtin_types.h" 1 3
-# 46 "/usr/local/cuda/bin/../include/builtin_types.h" 3
-# 1 "/usr/local/cuda/bin/../include/vector_types.h" 1 3
-# 46 "/usr/local/cuda/bin/../include/builtin_types.h" 2 3
-# 46 "/usr/local/cuda/bin/../include/vector_types.h" 2 3
 # 1 "/usr/local/cuda/bin/../include/host_defines.h" 1 3
-# 47 "/usr/local/cuda/bin/../include/vector_types.h" 2 3
-# 75 "/usr/local/cuda/bin/../include/vector_types.h" 3
+# 46 "/usr/local/cuda/bin/../include/vector_types.h" 2 3
+# 82 "/usr/local/cuda/bin/../include/vector_types.h" 3
 struct char1
 {
   signed char x;
+ 
 };
 
 
 struct uchar1
 {
   unsigned char x;
+ 
 };
 
 
-struct __attribute__((aligned(2))) char2
+struct __attribute__((__aligned__(2))) char2
 {
   signed char x, y;
+ 
 };
 
 
-struct __attribute__((aligned(2))) uchar2
+struct __attribute__((__aligned__(2))) uchar2
 {
   unsigned char x, y;
+ 
 };
 
 
 struct char3
 {
   signed char x, y, z;
+ 
 };
 
 
 struct uchar3
 {
   unsigned char x, y, z;
+ 
 };
 
 
-struct __attribute__((aligned(4))) char4
+struct __attribute__((__aligned__(4))) char4
 {
   signed char x, y, z, w;
+ 
 };
 
 
-struct __attribute__((aligned(4))) uchar4
+struct __attribute__((__aligned__(4))) uchar4
 {
   unsigned char x, y, z, w;
+ 
 };
 
 
 struct short1
 {
   short x;
+ 
 };
 
 
 struct ushort1
 {
   unsigned short x;
+ 
 };
 
 
-struct __attribute__((aligned(4))) short2
+struct __attribute__((__aligned__(4))) short2
 {
   short x, y;
+ 
 };
 
 
-struct __attribute__((aligned(4))) ushort2
+struct __attribute__((__aligned__(4))) ushort2
 {
   unsigned short x, y;
+ 
 };
 
 
 struct short3
 {
   short x, y, z;
+ 
 };
 
 
 struct ushort3
 {
   unsigned short x, y, z;
+ 
 };
 
 
-struct __attribute__((aligned(8))) short4 { short x; short y; short z; short w; };
+struct __attribute__((__aligned__(8))) short4 { short x, y, z, w; };
 
 
-struct __attribute__((aligned(8))) ushort4 { unsigned short x; unsigned short y; unsigned short z; unsigned short w; };
+struct __attribute__((__aligned__(8))) ushort4 { unsigned short x, y, z, w; };
 
 
 struct int1
 {
   int x;
+ 
 };
 
 
 struct uint1
 {
   unsigned int x;
+ 
 };
 
 
-struct __attribute__((aligned(8))) int2 { int x; int y; };
+struct __attribute__((__aligned__(8))) int2 { int x, y; };
 
 
-struct __attribute__((aligned(8))) uint2 { unsigned int x; unsigned int y; };
+struct __attribute__((__aligned__(8))) uint2 { unsigned int x, y; };
 
 
 struct int3
 {
   int x, y, z;
+ 
 };
 
 
 struct uint3
 {
   unsigned int x, y, z;
+ 
 };
 
 
-struct __attribute__((aligned(16))) int4
+struct __attribute__((__aligned__(16))) int4
 {
   int x, y, z, w;
+ 
 };
 
 
-struct __attribute__((aligned(16))) uint4
+struct __attribute__((__aligned__(16))) uint4
 {
   unsigned int x, y, z, w;
+ 
 };
 
 
 struct long1
 {
   long int x;
+ 
 };
 
 
 struct ulong1
 {
   unsigned long x;
+ 
 };
-# 229 "/usr/local/cuda/bin/../include/vector_types.h" 3
-struct __attribute__((aligned(2*sizeof(long int)))) long2
+# 258 "/usr/local/cuda/bin/../include/vector_types.h" 3
+struct __attribute__((__aligned__(2*sizeof(long int)))) long2
 {
   long int x, y;
+ 
 };
 
 
-struct __attribute__((aligned(2*sizeof(unsigned long int)))) ulong2
+struct __attribute__((__aligned__(2*sizeof(unsigned long int)))) ulong2
 {
   unsigned long int x, y;
+ 
 };
+
+
 
 
 
@@ -568,119 +460,98 @@ struct __attribute__((aligned(2*sizeof(unsigned long int)))) ulong2
 struct long3
 {
   long int x, y, z;
+ 
 };
 
 
 struct ulong3
 {
   unsigned long int x, y, z;
+ 
 };
 
 
-struct __attribute__((aligned(16))) long4
+struct __attribute__((__aligned__(16))) long4
 {
   long int x, y, z, w;
+ 
 };
 
 
-struct __attribute__((aligned(16))) ulong4
+struct __attribute__((__aligned__(16))) ulong4
 {
   unsigned long int x, y, z, w;
+ 
 };
+
+
 
 
 struct float1
 {
   float x;
+ 
 };
 
 
-struct __attribute__((aligned(8))) float2 { float x; float y; };
+struct __attribute__((__aligned__(8))) float2 { float x, y; };
 
 
 struct float3
 {
   float x, y, z;
+ 
 };
 
 
-struct __attribute__((aligned(16))) float4
+struct __attribute__((__aligned__(16))) float4
 {
   float x, y, z, w;
+ 
 };
 
 
 struct longlong1
 {
   long long int x;
+ 
 };
 
 
 struct ulonglong1
 {
   unsigned long long int x;
+ 
 };
 
 
-struct __attribute__((aligned(16))) longlong2
+struct __attribute__((__aligned__(16))) longlong2
 {
   long long int x, y;
+ 
 };
 
 
-struct __attribute__((aligned(16))) ulonglong2
+struct __attribute__((__aligned__(16))) ulonglong2
 {
   unsigned long long int x, y;
-};
-
-
-struct longlong3
-{
-  long long int x, y, z;
-};
-
-
-struct ulonglong3
-{
-  unsigned long long int x, y, z;
-};
-
-
-struct __attribute__((aligned(16))) longlong4
-{
-  long long int x, y, z ,w;
-};
-
-
-struct __attribute__((aligned(16))) ulonglong4
-{
-  unsigned long long int x, y, z, w;
+ 
 };
 
 
 struct double1
 {
   double x;
+ 
 };
 
 
-struct __attribute__((aligned(16))) double2
+struct __attribute__((__aligned__(16))) double2
 {
   double x, y;
+ 
 };
-
-
-struct double3
-{
-  double x, y, z;
-};
-
-
-struct __attribute__((aligned(16))) double4
-{
-  double x, y, z, w;
-};
-# 366 "/usr/local/cuda/bin/../include/vector_types.h" 3
+# 378 "/usr/local/cuda/bin/../include/vector_types.h" 3
 typedef struct char1 char1;
 
 typedef struct uchar1 uchar1;
@@ -761,21 +632,9 @@ typedef struct longlong2 longlong2;
 
 typedef struct ulonglong2 ulonglong2;
 
-typedef struct longlong3 longlong3;
-
-typedef struct ulonglong3 ulonglong3;
-
-typedef struct longlong4 longlong4;
-
-typedef struct ulonglong4 ulonglong4;
-
 typedef struct double1 double1;
 
 typedef struct double2 double2;
-
-typedef struct double3 double3;
-
-typedef struct double4 double4;
 # 469 "/usr/local/cuda/bin/../include/vector_types.h" 3
 struct dim3
 {
@@ -789,8 +648,8 @@ struct dim3
 
 
 typedef struct dim3 dim3;
-# 46 "/usr/local/cuda/bin/../include/builtin_types.h" 2 3
-# 99 "/usr/local/cuda/bin/../include/crt/device_runtime.h" 2 3
+# 45 "/usr/local/cuda/bin/../include/builtin_types.h" 2 3
+# 280 "/usr/local/cuda/bin/../include/crt/device_runtime.h" 2 3
 # 1 "/usr/local/cuda/bin/../include/device_launch_parameters.h" 1 3
 # 53 "/usr/local/cuda/bin/../include/device_launch_parameters.h" 3
 uint3 extern const threadIdx;
@@ -802,106 +661,74 @@ dim3 extern const blockDim;
 dim3 extern const gridDim;
 
 int extern const warpSize;
-# 100 "/usr/local/cuda/bin/../include/crt/device_runtime.h" 2 3
+# 281 "/usr/local/cuda/bin/../include/crt/device_runtime.h" 2 3
 # 1 "/usr/local/cuda/bin/../include/crt/storage_class.h" 1 3
-# 100 "/usr/local/cuda/bin/../include/crt/device_runtime.h" 2 3
-# 216 "/usr/lib/gcc/x86_64-linux-gnu/4.2.4/include/stddef.h" 2 3
+# 281 "/usr/local/cuda/bin/../include/crt/device_runtime.h" 2 3
+# 217 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 2 3
 # 145 "/usr/include/bits/types.h" 3
 typedef long __clock_t;
 # 61 "/usr/include/time.h" 3
 typedef __clock_t clock_t;
-# 985 "src/cuda/cuenergy_pre8_coalesce.cu"
-__attribute__((global)) __attribute__((__used__)) extern void _Z7cenergyifPf(int, float, float *);
+# 30 "src/cuda/cuenergy_pre8_coalesce.cu"
+__attribute__((__global__)) __attribute__((__used__)) extern void _Z7cenergyifPf(const int, const float, float *const);
 # 25 "src/cuda/cuenergy_pre8_coalesce.cu"
-static __attribute__((__used__)) __attribute__((constant)) float4 atominfo[4000];
+static __attribute__((__used__)) __attribute__((__constant__)) float4 atominfo[4000];
 # 1 "/usr/local/cuda/bin/../include/common_functions.h" 1
-# 87 "/usr/local/cuda/bin/../include/common_functions.h"
+# 68 "/usr/local/cuda/bin/../include/common_functions.h"
+# 1 "/usr/local/cuda/bin/../include/crt/func_macro.h" 1 3
+# 69 "/usr/local/cuda/bin/../include/common_functions.h" 2
+
+static clock_t __cuda_clock(void)
+{
+  return clock();
+}
+
+static void *__cuda_memset(void *s, int c, size_t n)
+{
+  return memset(s, c, n);
+}
+
+static void *__cuda_memcpy(void *d, const void *s, size_t n)
+{
+  return memcpy(d, s, n);
+}
+# 93 "/usr/local/cuda/bin/../include/common_functions.h"
 # 1 "/usr/local/cuda/bin/../include/math_functions.h" 1 3
-# 948 "/usr/local/cuda/bin/../include/math_functions.h" 3
-# 1 "/usr/local/cuda/bin/../include/math_constants.h" 1 3
-# 949 "/usr/local/cuda/bin/../include/math_functions.h" 2 3
+# 912 "/usr/local/cuda/bin/../include/math_functions.h" 3
+int __cuda_error_not_implememted(void);
+# 972 "/usr/local/cuda/bin/../include/math_functions.h" 3
+static int __cuda_abs(int a)
+{
+  return abs(a);
+}
+
+static float __cuda_fabsf(float a)
+{
+  return fabsf(a);
+}
+
+static long long int __cuda_llabs(long long int a)
+{
 
 
 
+  return llabs(a);
 
+}
 
+static float __cuda_exp2f(float a)
+{
+  return exp2f(a);
+}
 
 # 1 "/usr/local/cuda/bin/../include/device_functions.h" 1 3
-# 474 "/usr/local/cuda/bin/../include/device_functions.h" 3
-static __inline__ __attribute__((always_inline)) float __sinf(float a)
-{
-  return __builtin_sinf(a);
-}
-
-static __inline__ __attribute__((always_inline)) float __cosf(float a)
-{
-  return __builtin_cosf(a);
-}
-
-static __inline__ __attribute__((always_inline)) float __log2f(float a)
-{
-  return __builtin_log2f(a);
-}
+# 442 "/usr/local/cuda/bin/../include/device_functions.h" 3
+# 1 "/usr/local/cuda/bin/../include/math_constants.h" 1 3
+# 443 "/usr/local/cuda/bin/../include/device_functions.h" 2 3
 
 
 
-
-
-
-
-static __inline__ __attribute__((always_inline)) float __tanf(float a)
-{
-  return __fdividef (__sinf(a), __cosf(a));
-}
-
-static __inline__ __attribute__((always_inline)) void __sincosf(float a, float *sptr, float *cptr)
-{
-  *sptr = __sinf(a);
-  *cptr = __cosf(a);
-}
-
-static __inline__ __attribute__((always_inline)) float __expf(float a)
-{
-  return exp2f(a * 1.442695041f);
-}
-
-static __inline__ __attribute__((always_inline)) float __exp10f(float a)
-{
-  return exp2f(a * 3.321928094f);
-}
-
-static __inline__ __attribute__((always_inline)) float __log10f(float a)
-{
-  return 0.301029996f * __log2f(a);
-}
-
-static __inline__ __attribute__((always_inline)) float __logf(float a)
-{
-  return 0.693147181f * __log2f(a);
-}
-
-static __inline__ __attribute__((always_inline)) float __powf(float a, float b)
-{
-  return exp2f(b * __log2f(a));
-}
-
-static __inline__ __attribute__((always_inline)) float fdividef(float a, float b)
-{
-
-
-
-  return a / b;
-
-}
-
-
-
-static __inline__ __attribute__((always_inline)) double fdivide(double a, double b)
-{
-  return (double)fdividef((float)a, (float)b);
-}
-# 560 "/usr/local/cuda/bin/../include/device_functions.h" 3
-static __inline__ __attribute__((always_inline)) float __frcp_rn (float x)
+static float __frcp_rn (float x)
 {
   unsigned int expo;
   unsigned f, y;
@@ -939,7 +766,7 @@ static __inline__ __attribute__((always_inline)) float __frcp_rn (float x)
   return 1.0f / x;
 }
 
-static __inline__ __attribute__((always_inline)) float __frcp_rz (float x)
+static float __frcp_rz (float x)
 {
   unsigned int expo;
   unsigned f, y;
@@ -967,7 +794,7 @@ static __inline__ __attribute__((always_inline)) float __frcp_rz (float x)
   return 1.0f / x;
 }
 
-static __inline__ __attribute__((always_inline)) float __frcp_rd (float x)
+static float __frcp_rd (float x)
 {
   unsigned int expo;
   unsigned f, y;
@@ -998,7 +825,7 @@ static __inline__ __attribute__((always_inline)) float __frcp_rd (float x)
   return 1.0f / x;
 }
 
-static __inline__ __attribute__((always_inline)) float __frcp_ru (float x)
+static float __frcp_ru (float x)
 {
   unsigned int expo;
   unsigned f, y;
@@ -1029,7 +856,7 @@ static __inline__ __attribute__((always_inline)) float __frcp_ru (float x)
   return 1.0f / x;
 }
 
-static __inline__ __attribute__((always_inline)) float __fsqrt_rn (float radicand)
+static float __fsqrt_rn (float radicand)
 {
   unsigned int expo, argi;
   unsigned int s, f, x;
@@ -1063,7 +890,7 @@ static __inline__ __attribute__((always_inline)) float __fsqrt_rn (float radican
   return sqrtf(radicand);
 }
 
-static __inline__ __attribute__((always_inline)) float __fsqrt_rz (float radicand)
+static float __fsqrt_rz (float radicand)
 {
   unsigned int expo, argi;
   unsigned int s, f, x;
@@ -1094,7 +921,7 @@ static __inline__ __attribute__((always_inline)) float __fsqrt_rz (float radican
   return sqrtf(radicand);
 }
 
-static __inline__ __attribute__((always_inline)) float __fsqrt_ru (float radicand)
+static float __fsqrt_ru (float radicand)
 {
   unsigned int expo, argi;
   unsigned int s, f, x;
@@ -1124,7 +951,7 @@ static __inline__ __attribute__((always_inline)) float __fsqrt_ru (float radican
   return sqrtf(radicand);
 }
 
-static __inline__ __attribute__((always_inline)) float __fsqrt_rd (float radicand)
+static float __fsqrt_rd (float radicand)
 {
   unsigned int expo, argi;
   unsigned int s, f, x;
@@ -1155,7 +982,7 @@ static __inline__ __attribute__((always_inline)) float __fsqrt_rd (float radican
   return sqrtf(radicand);
 }
 
-static __inline__ __attribute__((always_inline)) float __fdiv_rn (float dividend, float divisor)
+static float __fdiv_rn (float dividend, float divisor)
 {
   unsigned long long prod;
   unsigned r, f, x, y, expox, expoy, sign;
@@ -1218,14 +1045,14 @@ static __inline__ __attribute__((always_inline)) float __fdiv_rn (float dividend
       return __int_as_float(sign | resi);
     }
   }
-  if (fabsf(divisor) > 8.507059173e37f) {
+  if (__cuda_fabsf(divisor) > 8.507059173e37f) {
     divisor *= 0.25f;
     dividend *= 0.25f;
   }
   return __fdividef (dividend, divisor);
 }
 
-static __inline__ __attribute__((always_inline)) float __fdiv_rz (float dividend, float divisor)
+static float __fdiv_rz (float dividend, float divisor)
 {
   unsigned long long prod;
   unsigned r, f, x, y, expox, expoy, sign;
@@ -1286,14 +1113,14 @@ static __inline__ __attribute__((always_inline)) float __fdiv_rz (float dividend
       return __int_as_float(sign | resi);
     }
   }
-  if (fabsf(divisor) > 8.507059173e37f) {
+  if (__cuda_fabsf(divisor) > 8.507059173e37f) {
     divisor *= 0.25f;
     dividend *= 0.25f;
   }
   return __fdividef (dividend, divisor);
 }
 
-static __inline__ __attribute__((always_inline)) float __fdiv_ru (float dividend, float divisor)
+static float __fdiv_ru (float dividend, float divisor)
 {
   unsigned long long prod;
   unsigned r, f, x, y, expox, expoy, sign;
@@ -1356,14 +1183,14 @@ static __inline__ __attribute__((always_inline)) float __fdiv_ru (float dividend
       return __int_as_float(sign | resi);
     }
   }
-  if (fabsf(divisor) > 8.507059173e37f) {
+  if (__cuda_fabsf(divisor) > 8.507059173e37f) {
     divisor *= 0.25f;
     dividend *= 0.25f;
   }
   return __fdividef (dividend, divisor);
 }
 
-static __inline__ __attribute__((always_inline)) float __fdiv_rd (float dividend, float divisor)
+static float __fdiv_rd (float dividend, float divisor)
 {
   unsigned long long prod;
   unsigned r, f, x, y, expox, expoy, sign;
@@ -1426,14 +1253,14 @@ static __inline__ __attribute__((always_inline)) float __fdiv_rd (float dividend
       return __int_as_float(sign | resi);
     }
   }
-  if (fabsf(divisor) > 8.507059173e37f) {
+  if (__cuda_fabsf(divisor) > 8.507059173e37f) {
     divisor *= 0.25f;
     dividend *= 0.25f;
   }
   return __fdividef (dividend, divisor);
 }
 
-static __inline__ __attribute__((always_inline)) float __fadd_ru (float a, float b)
+static float __fadd_ru (float a, float b)
 {
   unsigned int expo_x, expo_y;
   unsigned int xxi, yyi, temp;
@@ -1536,7 +1363,7 @@ static __inline__ __attribute__((always_inline)) float __fadd_ru (float a, float
   }
 }
 
-static __inline__ __attribute__((always_inline)) float __fadd_rd (float a, float b)
+static float __fadd_rd (float a, float b)
 {
   unsigned int expo_x, expo_y;
   unsigned int xxi, yyi, temp;
@@ -1644,7 +1471,7 @@ static __inline__ __attribute__((always_inline)) float __fadd_rd (float a, float
   }
 }
 
-static __inline__ __attribute__((always_inline)) float __fmul_ru (float a, float b)
+static float __fmul_ru (float a, float b)
 {
   unsigned long long product;
   unsigned int expo_x, expo_y;
@@ -1702,7 +1529,7 @@ static __inline__ __attribute__((always_inline)) float __fmul_ru (float a, float
   }
 }
 
-static __inline__ __attribute__((always_inline)) float __fmul_rd (float a, float b)
+static float __fmul_rd (float a, float b)
 {
   unsigned long long product;
   unsigned int expo_x, expo_y;
@@ -1760,7 +1587,7 @@ static __inline__ __attribute__((always_inline)) float __fmul_rd (float a, float
   }
 }
 
-static __inline__ __attribute__((always_inline)) float __fmaf_rn (float a, float b, float c)
+static float __fmaf_rn (float a, float b, float c)
 {
   unsigned long long product;
   unsigned int xx, yy, zz, ww;
@@ -1800,7 +1627,7 @@ static __inline__ __attribute__((always_inline)) float __fmaf_rn (float a, float
     if ((xx << 1) > 0xff000000) {
       return rsqrtf(a);
     }
-# 1470 "/usr/local/cuda/bin/../include/device_functions.h" 3
+# 1356 "/usr/local/cuda/bin/../include/device_functions.h" 3
     if ((((xx << 1) == 0) && ((yy << 1) == 0xff000000)) ||
         (((yy << 1) == 0) && ((xx << 1) == 0xff000000))) {
       return rsqrtf(__int_as_float(0xffc00000));
@@ -2025,7 +1852,7 @@ static __inline__ __attribute__((always_inline)) float __fmaf_rn (float a, float
   return __int_as_float(xx);
 }
 
-static __inline__ __attribute__((always_inline)) float __fmaf_rz (float a, float b, float c)
+static float __fmaf_rz (float a, float b, float c)
 {
   unsigned long long product;
   unsigned int xx, yy, zz, ww;
@@ -2065,7 +1892,7 @@ static __inline__ __attribute__((always_inline)) float __fmaf_rz (float a, float
     if ((xx << 1) > 0xff000000) {
       return rsqrtf(a);
     }
-# 1745 "/usr/local/cuda/bin/../include/device_functions.h" 3
+# 1631 "/usr/local/cuda/bin/../include/device_functions.h" 3
     if ((((xx << 1) == 0) && ((yy << 1) == 0xff000000)) ||
         (((yy << 1) == 0) && ((xx << 1) == 0xff000000))) {
       return rsqrtf(__int_as_float(0xffc00000));
@@ -2279,7 +2106,7 @@ static __inline__ __attribute__((always_inline)) float __fmaf_rz (float a, float
   return __int_as_float(expo_y);
 }
 
-static __inline__ __attribute__((always_inline)) float __fmaf_ru (float a, float b, float c)
+static float __fmaf_ru (float a, float b, float c)
 {
   unsigned long long product;
   unsigned int xx, yy, zz, ww;
@@ -2319,7 +2146,7 @@ static __inline__ __attribute__((always_inline)) float __fmaf_ru (float a, float
     if ((xx << 1) > 0xff000000) {
       return rsqrtf(a);
     }
-# 2009 "/usr/local/cuda/bin/../include/device_functions.h" 3
+# 1895 "/usr/local/cuda/bin/../include/device_functions.h" 3
     if ((((xx << 1) == 0) && ((yy << 1) == 0xff000000)) ||
         (((yy << 1) == 0) && ((xx << 1) == 0xff000000))) {
       return rsqrtf(__int_as_float(0xffc00000));
@@ -2538,7 +2365,7 @@ static __inline__ __attribute__((always_inline)) float __fmaf_ru (float a, float
   return __int_as_float(expo_y | xx);
 }
 
-static __inline__ __attribute__((always_inline)) float __fmaf_rd (float a, float b, float c)
+static float __fmaf_rd (float a, float b, float c)
 {
   unsigned long long product;
   unsigned int xx, yy, zz, ww;
@@ -2578,7 +2405,7 @@ static __inline__ __attribute__((always_inline)) float __fmaf_rd (float a, float
     if ((xx << 1) > 0xff000000) {
       return rsqrtf(a);
     }
-# 2278 "/usr/local/cuda/bin/../include/device_functions.h" 3
+# 2164 "/usr/local/cuda/bin/../include/device_functions.h" 3
     if ((((xx << 1) == 0) && ((yy << 1) == 0xff000000)) ||
         (((yy << 1) == 0) && ((xx << 1) == 0xff000000))) {
       return rsqrtf(__int_as_float(0xffc00000));
@@ -2796,13 +2623,124 @@ static __inline__ __attribute__((always_inline)) float __fmaf_rd (float a, float
   if ((expo_x > 25) || (xx != 0x00800000)) xx = 0;
   return __int_as_float(expo_y | xx);
 }
+# 4398 "/usr/local/cuda/bin/../include/device_functions.h" 3
+static float __sinf(float a)
+{
 
-static __inline__ __attribute__((always_inline)) int __clz(int a)
+
+
+
+
+  return sinf(a);
+}
+
+static float __cosf(float a)
+{
+
+
+
+
+
+  return cosf(a);
+}
+
+static float __log2f(float a)
+{
+  return log2f(a);
+}
+
+
+
+
+
+
+
+static float __internal_accurate_fdividef(float a, float b)
+{
+  return a / b;
+}
+
+static float __tanf(float a)
+{
+
+
+
+  return __fdividef (__sinf(a), __cosf(a));
+
+}
+
+static void __sincosf(float a, float *sptr, float *cptr)
+{
+
+
+
+  *sptr = __sinf(a);
+  *cptr = __cosf(a);
+
+}
+
+static float __expf(float a)
+{
+
+
+
+  return __cuda_exp2f(a * 1.442695041f);
+
+}
+
+static float __exp10f(float a)
+{
+
+
+
+  return __cuda_exp2f(a * 3.321928094f);
+
+}
+
+static float __log10f(float a)
+{
+
+
+
+  return 0.301029996f * __log2f(a);
+
+}
+
+static float __logf(float a)
+{
+
+
+
+  return 0.693147181f * __log2f(a);
+
+}
+
+static float __powf(float a, float b)
+{
+
+
+
+  return __cuda_exp2f(b * __log2f(a));
+
+}
+
+static float fdividef(float a, float b)
+{
+
+
+
+
+
+  return __internal_accurate_fdividef(a, b);
+
+}
+
+static int __clz(int a)
 {
   return (a)?(158-(__float_as_int(__uint2float_rz((unsigned int)a))>>23)):32;
 }
 
-static __inline__ __attribute__((always_inline)) int __clzll(long long int a)
+static int __clzll(long long int a)
 {
   int ahi = ((int)((unsigned long long)a >> 32));
   int alo = ((int)((unsigned long long)a & 0xffffffffULL));
@@ -2817,7 +2755,7 @@ static __inline__ __attribute__((always_inline)) int __clzll(long long int a)
   return res;
 }
 
-static __inline__ __attribute__((always_inline)) int __popc(unsigned int a)
+static int __popc(unsigned int a)
 {
   a = a - ((a >> 1) & 0x55555555);
   a = (a & 0x33333333) + ((a >> 2) & 0x33333333);
@@ -2826,7 +2764,7 @@ static __inline__ __attribute__((always_inline)) int __popc(unsigned int a)
   return a;
 }
 
-static __inline__ __attribute__((always_inline)) int __popcll(unsigned long long int a)
+static int __popcll(unsigned long long int a)
 {
   unsigned int ahi = ((unsigned int)(a >> 32));
   unsigned int alo = ((unsigned int)(a & 0xffffffffULL));
@@ -2840,21 +2778,17 @@ static __inline__ __attribute__((always_inline)) int __popcll(unsigned long long
   return alo;
 }
 
-static __inline__ __attribute__((always_inline)) unsigned int __brev(unsigned int a)
+static unsigned int __brev(unsigned int a)
 {
-
-  unsigned int t;
-  a = (a << 15) | (a >> 17);
-  t = (a ^ (a >> 10)) & 0x003f801f;
-  a = (t + (t << 10)) ^ a;
-  t = (a ^ (a >> 4)) & 0x0e038421;
-  a = (t + (t << 4)) ^ a;
-  t = (a ^ (a >> 2)) & 0x22488842;
-  a = (t + (t << 2)) ^ a;
+  a = ((a >> 1) & 0x55555555) + ((a & 0x55555555) << 1);
+  a = ((a >> 2) & 0x33333333) + ((a & 0x33333333) << 2);
+  a = ((a >> 4) & 0x0F0F0F0F) + ((a & 0x0F0F0F0F) << 4);
+  a = ((a >> 8) & 0x00FF00FF) + ((a & 0x00FF00FF) << 8);
+  a = ( a >> 16 ) + ( a << 16);
   return a;
 }
 
-static __inline__ __attribute__((always_inline)) unsigned long long int __brevll(unsigned long long int a)
+static unsigned long long int __brevll(unsigned long long int a)
 {
   unsigned int hi = (unsigned int)(a >> 32);
   unsigned int lo = (unsigned int)(a & 0xffffffffULL);
@@ -2864,43 +2798,66 @@ static __inline__ __attribute__((always_inline)) unsigned long long int __brevll
   return ((unsigned long long int)t << 32) + (unsigned long long int)lo;
 }
 
-static __inline__ __attribute__((always_inline)) unsigned int __byte_perm(unsigned int a, unsigned int b, unsigned int slct)
+static int __ffs(int a)
 {
-  unsigned int i0 = (slct >> 0) & 0x7;
-  unsigned int i1 = (slct >> 4) & 0x7;
-  unsigned int i2 = (slct >> 8) & 0x7;
-  unsigned int i3 = (slct >> 12) & 0x7;
-
-  return (((((i0 < 4) ? (a >> (i0*8)) : (b >> ((i0-4)*8))) & 0xff) << 0) +
-          ((((i1 < 4) ? (a >> (i1*8)) : (b >> ((i1-4)*8))) & 0xff) << 8) +
-          ((((i2 < 4) ? (a >> (i2*8)) : (b >> ((i2-4)*8))) & 0xff) << 16) +
-          ((((i3 < 4) ? (a >> (i3*8)) : (b >> ((i3-4)*8))) & 0xff) << 24));
+  return 32 - __clz (a & -a);
 }
 
-
-
-static __inline__ __attribute__((always_inline)) int __ffs(int a)
+static int __ffsll(long long int a)
 {
-  return 32 - __clz(a & -a);
+  return 64 - __clzll (a & -a);
 }
-
-static __inline__ __attribute__((always_inline)) int __ffsll(long long int a)
+# 4590 "/usr/local/cuda/bin/../include/device_functions.h" 3
+static double fdivide(double a, double b)
 {
-  return 64 - __clzll(a & -a);
+  return (double)fdividef((float)a, (float)b);
 }
-# 2596 "/usr/local/cuda/bin/../include/device_functions.h" 3
+# 4667 "/usr/local/cuda/bin/../include/device_functions.h" 3
 # 1 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h" 1 3
-# 2597 "/usr/local/cuda/bin/../include/device_functions.h" 2 3
+# 4668 "/usr/local/cuda/bin/../include/device_functions.h" 2 3
 # 1 "/usr/local/cuda/bin/../include/sm_12_atomic_functions.h" 1 3
-# 2598 "/usr/local/cuda/bin/../include/device_functions.h" 2 3
+# 4669 "/usr/local/cuda/bin/../include/device_functions.h" 2 3
 # 1 "/usr/local/cuda/bin/../include/sm_13_double_functions.h" 1 3
-# 263 "/usr/local/cuda/bin/../include/sm_13_double_functions.h" 3
-static __inline__ __attribute__((always_inline)) double __internal_fma_kernel(double x, double y, double z, enum cudaRoundMode rndMode)
-{
-  struct __cudart_UintUint {
+# 600 "/usr/local/cuda/bin/../include/sm_13_double_functions.h" 3
+# 1 "/usr/local/cuda/bin/../include/common_types.h" 1 3
+# 37 "/usr/local/cuda/bin/../include/common_types.h" 3
+union __cudart_FloatUintCvt {
+    float f;
+    unsigned int i;
+};
+
+union __cudart_FloatIntCvt {
+    float f;
+    int i;
+};
+
+union __cudart_DoubleUlonglongCvt {
+    double d;
+    unsigned long long int i;
+};
+
+union __cudart_DoubleLonglongCvt {
+    double d;
+    long long int i;
+};
+
+union __cudart_DoubleInthiloCvt {
+    double d;
+    signed int i[2];
+};
+
+struct __cudart_UintUint {
     unsigned int lo;
     unsigned int hi;
-  } xx, yy, zz, ww;
+};
+# 601 "/usr/local/cuda/bin/../include/sm_13_double_functions.h" 2 3
+
+static double __internal_fma_kernel(double x, double y, double z, enum cudaRoundMode rndMode)
+{
+
+
+
+  struct __cudart_UintUint xx, yy, zz, ww;
   unsigned int s, t, u, prod0, prod1, prod2, prod3, expo_x, expo_y, expo_z;
 
   xx.hi = __double2hiint(x);
@@ -2941,7 +2898,7 @@ static __inline__ __attribute__((always_inline)) double __internal_fma_kernel(do
       xx.hi |= 0x00080000;
       return __hiloint2double(xx.hi, xx.lo);
     }
-# 321 "/usr/local/cuda/bin/../include/sm_13_double_functions.h" 3
+# 660 "/usr/local/cuda/bin/../include/sm_13_double_functions.h" 3
     if (((((xx.hi << 1) | xx.lo) == 0) &&
          (((yy.hi << 1) | (yy.lo != 0)) == 0xffe00000)) ||
         ((((yy.hi << 1) | yy.lo) == 0) &&
@@ -3339,119 +3296,68 @@ static __inline__ __attribute__((always_inline)) double __internal_fma_kernel(do
   return __hiloint2double(xx.hi, xx.lo);
 }
 
-static __inline__ __attribute__((always_inline)) double __fma_rn(double x, double y, double z)
+static double __fma_rn(double x, double y, double z)
 {
   return __internal_fma_kernel(x, y, z, cudaRoundNearest);
 }
 
-static __inline__ __attribute__((always_inline)) double __fma_rd(double x, double y, double z)
+static double __fma_rd(double x, double y, double z)
 {
   return __internal_fma_kernel(x, y, z, cudaRoundMinInf);
 }
 
-static __inline__ __attribute__((always_inline)) double __fma_ru(double x, double y, double z)
+static double __fma_ru(double x, double y, double z)
 {
   return __internal_fma_kernel(x, y, z, cudaRoundPosInf);
 }
 
-static __inline__ __attribute__((always_inline)) double __fma_rz(double x, double y, double z)
+static double __fma_rz(double x, double y, double z)
 {
   return __internal_fma_kernel(x, y, z, cudaRoundZero);
 }
 
-static __inline__ __attribute__((always_inline)) double __dadd_rz(double a, double b)
+static double __dadd_rz(double a, double b)
 {
   return __fma_rz(a, 1.0, b);
 }
 
-static __inline__ __attribute__((always_inline)) double __dadd_ru(double a, double b)
+static double __dadd_ru(double a, double b)
 {
   return __fma_ru(a, 1.0, b);
 }
 
-static __inline__ __attribute__((always_inline)) double __dadd_rd(double a, double b)
+static double __dadd_rd(double a, double b)
 {
   return __fma_rd(a, 1.0, b);
 }
 
-static __inline__ __attribute__((always_inline)) double __dmul_rz(double a, double b)
+static double __dmul_rz(double a, double b)
 {
   return __fma_rz(a, b, __hiloint2double(0x80000000, 0x00000000));
 }
 
-static __inline__ __attribute__((always_inline)) double __dmul_ru(double a, double b)
+static double __dmul_ru(double a, double b)
 {
   return __fma_ru(a, b, __hiloint2double(0x80000000, 0x00000000));
 }
 
-static __inline__ __attribute__((always_inline)) double __dmul_rd(double a, double b)
+static double __dmul_rd(double a, double b)
 {
   return __fma_rd(a, b, 0.0);
 }
 
-static __inline__ __attribute__((always_inline)) double __dadd_rn(double a, double b)
+static double __dadd_rn(double a, double b)
 {
   return __fma_rn(a, 1.0, b);
 }
 
-static __inline__ __attribute__((always_inline)) double __dmul_rn(double a, double b)
+static double __dmul_rn(double a, double b)
 {
   return __fma_rn(a, b, __hiloint2double(0x80000000, 0x00000000));
 }
-# 2599 "/usr/local/cuda/bin/../include/device_functions.h" 2 3
-# 1 "/usr/local/cuda/bin/../include/sm_20_atomic_functions.h" 1 3
-# 2600 "/usr/local/cuda/bin/../include/device_functions.h" 2 3
-# 1 "/usr/local/cuda/bin/../include/sm_20_intrinsics.h" 1 3
-# 2601 "/usr/local/cuda/bin/../include/device_functions.h" 2 3
-# 1 "/usr/local/cuda/bin/../include/surface_functions.h" 1 3
-# 1368 "/usr/local/cuda/bin/../include/surface_functions.h" 3
-extern uchar1 __surf1Dreadc1(const void*, int, enum cudaSurfaceBoundaryMode);
-extern uchar2 __surf1Dreadc2(const void*, int, enum cudaSurfaceBoundaryMode);
-extern uchar4 __surf1Dreadc4(const void*, int, enum cudaSurfaceBoundaryMode);
-extern ushort1 __surf1Dreads1(const void*, int, enum cudaSurfaceBoundaryMode);
-extern ushort2 __surf1Dreads2(const void*, int, enum cudaSurfaceBoundaryMode);
-extern ushort4 __surf1Dreads4(const void*, int, enum cudaSurfaceBoundaryMode);
-extern uint1 __surf1Dreadu1(const void*, int, enum cudaSurfaceBoundaryMode);
-extern uint2 __surf1Dreadu2(const void*, int, enum cudaSurfaceBoundaryMode);
-extern uint4 __surf1Dreadu4(const void*, int, enum cudaSurfaceBoundaryMode);
-extern ulonglong1 __surf1Dreadl1(const void*, int, enum cudaSurfaceBoundaryMode);
-extern ulonglong2 __surf1Dreadl2(const void*, int, enum cudaSurfaceBoundaryMode);
-extern uchar1 __surf2Dreadc1(const void*, int, int, enum cudaSurfaceBoundaryMode);
-extern uchar2 __surf2Dreadc2(const void*, int, int, enum cudaSurfaceBoundaryMode);
-extern uchar4 __surf2Dreadc4(const void*, int, int, enum cudaSurfaceBoundaryMode);
-extern ushort1 __surf2Dreads1(const void*, int, int, enum cudaSurfaceBoundaryMode);
-extern ushort2 __surf2Dreads2(const void*, int, int, enum cudaSurfaceBoundaryMode);
-extern ushort4 __surf2Dreads4(const void*, int, int, enum cudaSurfaceBoundaryMode);
-extern uint1 __surf2Dreadu1(const void*, int, int, enum cudaSurfaceBoundaryMode);
-extern uint2 __surf2Dreadu2(const void*, int, int, enum cudaSurfaceBoundaryMode);
-extern uint4 __surf2Dreadu4(const void*, int, int, enum cudaSurfaceBoundaryMode);
-extern ulonglong1 __surf2Dreadl1(const void*, int, int, enum cudaSurfaceBoundaryMode);
-extern ulonglong2 __surf2Dreadl2(const void*, int, int, enum cudaSurfaceBoundaryMode);
-extern void __surf1Dwritec1( uchar1, const void*, int, enum cudaSurfaceBoundaryMode);
-extern void __surf1Dwritec2( uchar2, const void*, int, enum cudaSurfaceBoundaryMode);
-extern void __surf1Dwritec4( uchar4, const void*, int, enum cudaSurfaceBoundaryMode);
-extern void __surf1Dwrites1( ushort1, const void*, int, enum cudaSurfaceBoundaryMode);
-extern void __surf1Dwrites2( ushort2, const void*, int, enum cudaSurfaceBoundaryMode);
-extern void __surf1Dwrites4( ushort4, const void*, int, enum cudaSurfaceBoundaryMode);
-extern void __surf1Dwriteu1( uint1, const void*, int, enum cudaSurfaceBoundaryMode);
-extern void __surf1Dwriteu2( uint2, const void*, int, enum cudaSurfaceBoundaryMode);
-extern void __surf1Dwriteu4( uint4, const void*, int, enum cudaSurfaceBoundaryMode);
-extern void __surf1Dwritel1(ulonglong1, const void*, int, enum cudaSurfaceBoundaryMode);
-extern void __surf1Dwritel2(ulonglong2, const void*, int, enum cudaSurfaceBoundaryMode);
-extern void __surf2Dwritec1( uchar1, const void*, int, int, enum cudaSurfaceBoundaryMode);
-extern void __surf2Dwritec2( uchar2, const void*, int, int, enum cudaSurfaceBoundaryMode);
-extern void __surf2Dwritec4( uchar4, const void*, int, int, enum cudaSurfaceBoundaryMode);
-extern void __surf2Dwrites1( ushort1, const void*, int, int, enum cudaSurfaceBoundaryMode);
-extern void __surf2Dwrites2( ushort2, const void*, int, int, enum cudaSurfaceBoundaryMode);
-extern void __surf2Dwrites4( ushort4, const void*, int, int, enum cudaSurfaceBoundaryMode);
-extern void __surf2Dwriteu1( uint1, const void*, int, int, enum cudaSurfaceBoundaryMode);
-extern void __surf2Dwriteu2( uint2, const void*, int, int, enum cudaSurfaceBoundaryMode);
-extern void __surf2Dwriteu4( uint4, const void*, int, int, enum cudaSurfaceBoundaryMode);
-extern void __surf2Dwritel1(ulonglong1, const void*, int, int, enum cudaSurfaceBoundaryMode);
-extern void __surf2Dwritel2(ulonglong2, const void*, int, int, enum cudaSurfaceBoundaryMode);
-# 2602 "/usr/local/cuda/bin/../include/device_functions.h" 2 3
+# 4670 "/usr/local/cuda/bin/../include/device_functions.h" 2 3
 # 1 "/usr/local/cuda/bin/../include/texture_fetch_functions.h" 1 3
-# 1878 "/usr/local/cuda/bin/../include/texture_fetch_functions.h" 3
+# 1882 "/usr/local/cuda/bin/../include/texture_fetch_functions.h" 3
 extern uint4 __utexfetchi1D(const void*, int4);
 extern int4 __itexfetchi1D(const void*, int4);
 extern float4 __ftexfetchi1D(const void*, int4);
@@ -3464,42 +3370,11 @@ extern float4 __ftexfetch2D(const void*, float4);
 extern uint4 __utexfetch3D(const void*, float4);
 extern int4 __itexfetch3D(const void*, float4);
 extern float4 __ftexfetch3D(const void*, float4);
-# 2603 "/usr/local/cuda/bin/../include/device_functions.h" 2 3
-# 956 "/usr/local/cuda/bin/../include/math_functions.h" 2 3
-# 965 "/usr/local/cuda/bin/../include/math_functions.h" 3
-int __cuda_error_not_implememted(void);
-# 994 "/usr/local/cuda/bin/../include/math_functions.h" 3
-static __inline__ __attribute__((always_inline)) float rintf(float a)
-{
-  return __builtin_roundf(a);
-}
-
-static __inline__ __attribute__((always_inline)) long int lrintf(float a)
-{
-
-  return (long int)__float2ll_rn(a);
+# 4671 "/usr/local/cuda/bin/../include/device_functions.h" 2 3
+# 997 "/usr/local/cuda/bin/../include/math_functions.h" 2 3
 
 
-
-}
-
-static __inline__ __attribute__((always_inline)) long long int llrintf(float a)
-{
-  return __float2ll_rn(a);
-}
-
-static __inline__ __attribute__((always_inline)) float nearbyintf(float a)
-{
-  return __builtin_roundf(a);
-}
-
-
-
-
-
-
-
-static __inline__ __attribute__((always_inline)) int __signbitf(float a)
+static int __cuda___signbitf(float a)
 {
   return (int)((unsigned int)__float_as_int(a) >> 31);
 }
@@ -3507,28 +3382,158 @@ static __inline__ __attribute__((always_inline)) int __signbitf(float a)
 
 
 
-static __inline__ __attribute__((always_inline)) float copysignf(float a, float b)
+static float __cuda_copysignf(float a, float b)
 {
   return __int_as_float((__float_as_int(b) & 0x80000000) |
                         (__float_as_int(a) & ~0x80000000));
 }
-
-static __inline__ __attribute__((always_inline)) int __finitef(float a)
+# 1235 "/usr/local/cuda/bin/../include/math_functions.h" 3
+static long int __cuda_labs(long int a)
 {
-  return fabsf(a) < __int_as_float(0x7f800000);
-}
-# 1052 "/usr/local/cuda/bin/../include/math_functions.h" 3
-static __inline__ __attribute__((always_inline)) int __isinff(float a)
-{
-  return fabsf(a) == __int_as_float(0x7f800000);
+  return labs(a);
 }
 
-static __inline__ __attribute__((always_inline)) int __isnanf(float a)
+static float __cuda_ceilf(float a)
 {
-  return !(fabsf(a) <= __int_as_float(0x7f800000));
+  return ceilf(a);
 }
 
-static __inline__ __attribute__((always_inline)) float nextafterf(float a, float b)
+static float __cuda_floorf(float a)
+{
+  return floorf(a);
+}
+
+static float __cuda_sqrtf(float a)
+{
+  return sqrtf(a);
+}
+
+static float __cuda_rsqrtf(float a)
+{
+  return rsqrtf(a);
+}
+
+static float __cuda_truncf(float a)
+{
+  return truncf(a);
+}
+
+static int __cuda_max(int a, int b)
+{
+  return max(a, b);
+}
+
+static int __cuda_min(int a, int b)
+{
+  return min(a, b);
+}
+
+static unsigned int __cuda_umax(unsigned int a, unsigned int b)
+{
+  return umax(a, b);
+}
+
+static unsigned int __cuda_umin(unsigned int a, unsigned int b)
+{
+  return umin(a, b);
+}
+
+static long long int __cuda_llmax(long long int a, long long int b)
+{
+  return llmax(a, b);
+}
+
+static long long int __cuda_llmin(long long int a, long long int b)
+{
+  return llmin(a, b);
+}
+
+static unsigned long long int __cuda_ullmax(unsigned long long int a, unsigned long long int b)
+{
+  return ullmax(a, b);
+}
+
+static unsigned long long int __cuda_ullmin(unsigned long long int a, unsigned long long int b)
+{
+  return ullmin(a, b);
+}
+
+static long long int __cuda_llrintf(float a)
+{
+
+
+
+  return __float2ll_rn(a);
+
+}
+
+static long int __cuda_lrintf(float a)
+{
+
+
+
+
+
+
+  return (long int)__float2int_rn(a);
+
+
+}
+
+static float __cuda_nearbyintf(float a)
+{
+
+
+
+  return roundf(a);
+
+
+
+}
+
+static float __cuda_fmaxf(float a, float b)
+{
+
+
+
+  return fmaxf(a, b);
+
+
+
+}
+
+static float __cuda_fminf(float a, float b)
+{
+
+
+
+  return fminf(a, b);
+
+
+
+}
+
+
+
+
+
+
+static int __cuda___finitef(float a)
+{
+  return __cuda_fabsf(a) < __int_as_float(0x7f800000);
+}
+# 1379 "/usr/local/cuda/bin/../include/math_functions.h" 3
+static int __cuda___isinff(float a)
+{
+  return __cuda_fabsf(a) == __int_as_float(0x7f800000);
+}
+
+static int __cuda___isnanf(float a)
+{
+  return !(__cuda_fabsf(a) <= __int_as_float(0x7f800000));
+}
+
+static float __cuda_nextafterf(float a, float b)
 {
   unsigned int ia;
   unsigned int ib;
@@ -3538,11 +3543,11 @@ static __inline__ __attribute__((always_inline)) float nextafterf(float a, float
   if ((ia << 1) < 0x01000000) ia &= 0x80000000;
   if ((ib << 1) < 0x01000000) ib &= 0x80000000;
 
-  if (__isnanf(a) || __isnanf(b)) return a + b;
+  if (__cuda___isnanf(a) || __cuda___isnanf(b)) return a + b;
   if (__int_as_float (ia | ib) == 0.0f) return __int_as_float(ib);
 
   if (__int_as_float(ia) == 0.0f) {
-    return __int_as_float (0x00800000 | (__float_as_int(b) & 0x80000000));
+    return __cuda_copysignf(1.175494351e-38f, b);
   }
 
 
@@ -3555,88 +3560,20 @@ static __inline__ __attribute__((always_inline)) float nextafterf(float a, float
   if ((a > b) && (a > 0.0f)) ia--;
   a = __int_as_float(ia);
 
-  if (a == 0.0f) {
+  if (__cuda_fabsf(a) < 1.175494351e-38f) {
     a = __int_as_float(ia & 0x80000000);
   }
 
   return a;
 }
 
-static __inline__ __attribute__((always_inline)) unsigned long long int __internal_nan_kernel(const char *s)
+static float __cuda_nanf(const char *tagp)
 {
-  unsigned long long i = 0;
-  int c;
-  int ovfl = 0;
-  int invld = 0;
-  if (s && (*s == '0')) {
-    s++;
-    if ((*s == 'x') || (*s == 'X')) {
-      s++;
-      while (*s == '0') s++;
-      while (*s) {
-        if (i > 0x0fffffffffffffffULL) {
-          ovfl = 1;
-        }
-        c = (((*s) >= 'A') && ((*s) <= 'F')) ? (*s + 'a' - 'A') : (*s);
-        if ((c >= 'a') && (c <= 'f')) {
-          c = c - 'a' + 10;
-          i = i * 16 + c;
-        } else if ((c >= '0') && (c <= '9')) {
-          c = c - '0';
-          i = i * 16 + c;
-        } else {
-          invld = 1;
-        }
-        s++;
-      }
-    } else {
-      while (*s == '0') s++;
-      while (*s) {
-        if (i > 0x1fffffffffffffffULL) {
-          ovfl = 1;
-        }
-        c = *s;
-        if ((c >= '0') && (c <= '7')) {
-          c = c - '0';
-          i = i * 8 + c;
-        } else {
-          invld = 1;
-        }
-        s++;
-      }
-    }
-  } else if (s) {
-    while (*s) {
-      c = *s;
-      if ((i > 1844674407370955161ULL) ||
-          ((i == 1844674407370955161ULL) && (c > '5'))) {
-        ovfl = 1;
-      }
-      if ((c >= '0') && (c <= '9')) {
-        c = c - '0';
-        i = i * 10 + c;
-      } else {
-        invld = 1;
-      }
-      s++;
-    }
-  }
-  if (ovfl) {
-    i = ~0ULL;
-  }
-  if (invld) {
-    i = 0ULL;
-  }
-  i = (i & 0x000fffffffffffffULL) | 0x7ff8000000000000ULL;
-  return i;
-}
 
-static __inline__ __attribute__((always_inline)) float nanf(const char *tagp)
-{
   return __int_as_float(0x7fffffff);
 }
 
-static __inline__ __attribute__((always_inline)) float __internal_fmad(float a, float b, float c)
+static float __internal_fmad(float a, float b, float c)
 {
 
 
@@ -3646,7 +3583,7 @@ static __inline__ __attribute__((always_inline)) float __internal_fmad(float a, 
 }
 
 
-static __inline__ __attribute__((always_inline)) float __internal_atanhf_kernel(float a_1, float a_2)
+static float __internal_atanhf_kernel(float a_1, float a_2)
 {
   float a, a2, t;
 
@@ -3664,7 +3601,7 @@ static __inline__ __attribute__((always_inline)) float __internal_atanhf_kernel(
 
 
 
-static __inline__ __attribute__((always_inline)) float __internal_atanf_kernel(float a)
+static float __internal_atanf_kernel(float a)
 {
   float t4, t0, t1;
 
@@ -3683,7 +3620,7 @@ static __inline__ __attribute__((always_inline)) float __internal_atanf_kernel(f
 }
 
 
-static __inline__ __attribute__((always_inline)) float __internal_tan_kernel(float a)
+static float __internal_tan_kernel(float a)
 {
   float a2, s, t;
 
@@ -3697,7 +3634,7 @@ static __inline__ __attribute__((always_inline)) float __internal_tan_kernel(flo
   return t;
 }
 
-static __inline__ __attribute__((always_inline)) float __internal_accurate_logf(float a)
+static float __internal_accurate_logf(float a)
 {
   float t;
   float z;
@@ -3707,7 +3644,7 @@ static __inline__ __attribute__((always_inline)) float __internal_accurate_logf(
 
   if ((a > 0.0f) && (a < __int_as_float(0x7f800000))) {
     int e = -127;
-# 1250 "/usr/local/cuda/bin/../include/math_functions.h" 3
+# 1509 "/usr/local/cuda/bin/../include/math_functions.h" 3
     m = __int_as_float((ia & 0x807fffff) | 0x3f800000);
     e += ((unsigned)ia >> 23);
     if (m > 1.414213562f) {
@@ -3727,7 +3664,7 @@ static __inline__ __attribute__((always_inline)) float __internal_accurate_logf(
   }
 }
 
-static __inline__ __attribute__((always_inline)) float2 __internal_log_ep(float a)
+static float2 __internal_log_ep(float a)
 {
   float2 res;
   int expo;
@@ -3735,9 +3672,13 @@ static __inline__ __attribute__((always_inline)) float2 __internal_log_ep(float 
   float log_hi, log_lo;
   float t_hi, t_lo;
   float f, g, u, v, q;
+
+
+
   float r, s, e;
+
   expo = (__float_as_int(a) >> 23) & 0xff;
-# 1287 "/usr/local/cuda/bin/../include/math_functions.h" 3
+# 1550 "/usr/local/cuda/bin/../include/math_functions.h" 3
   expo -= 127;
   m = __int_as_float((__float_as_int(a) & 0x807fffff) | 0x3f800000);
   if (m > 1.414213562f) {
@@ -3792,7 +3733,7 @@ static __inline__ __attribute__((always_inline)) float2 __internal_log_ep(float 
   return res;
 }
 
-static __inline__ __attribute__((always_inline)) float __internal_accurate_log2f(float a)
+static float __internal_accurate_log2f(float a)
 {
   return 1.442695041f * __internal_accurate_logf(a);
 }
@@ -3800,11 +3741,14 @@ static __inline__ __attribute__((always_inline)) float __internal_accurate_log2f
 
 
 
-static __inline__ __attribute__((always_inline)) float2 __internal_dsmul (float2 x, float2 y)
+static float2 __internal_dsmul (float2 x, float2 y)
 {
     float2 z;
 
+
+
     float up, vp, u1, u2, v1, v2, mh, ml;
+
     up = x.y * 4097.0f;
     u1 = (x.y - up) + up;
     u2 = x.y - u1;
@@ -3816,12 +3760,11 @@ static __inline__ __attribute__((always_inline)) float2 __internal_dsmul (float2
     ml = (__fmul_rn(x.y,y.x) + __fmul_rn(x.x,y.y)) + ml;
     z.y = up = mh + ml;
     z.x = (mh - up) + ml;
-# 1375 "/usr/local/cuda/bin/../include/math_functions.h" 3
     return z;
 }
 
 
-static __attribute__((constant)) unsigned int __cudart_i2opi_f [] = {
+static __attribute__((__constant__)) unsigned int __cudart_i2opi_f [] = {
   0x3c439041,
   0xdb629599,
   0xf534ddc0,
@@ -3831,11 +3774,11 @@ static __attribute__((constant)) unsigned int __cudart_i2opi_f [] = {
 };
 
 
-static __inline__ __attribute__((always_inline)) float __internal_trig_reduction_kernel(float a, int *quadrant)
+static float __internal_trig_reduction_kernel(float a, int *quadrant)
 {
   float j;
   int q;
-  if (fabsf(a) > 48039.0f) {
+  if (__cuda_fabsf(a) > 48039.0f) {
 
     unsigned int ia = __float_as_int(a);
     unsigned int s = ia & 0x80000000;
@@ -3849,7 +3792,9 @@ static __inline__ __attribute__((always_inline)) float __internal_trig_reduction
 
     idx = 4 - (e >> 5);
     hi = 0;
+
 #pragma unroll 1
+
     for (q = 0; q < 6; q++) {
       plo = __cudart_i2opi_f[q] * ia;
       phi = __umulhi (__cudart_i2opi_f[q], ia);
@@ -3917,20 +3862,20 @@ static __inline__ __attribute__((always_inline)) float __internal_trig_reduction
   *quadrant = q;
   return a;
 }
-# 1485 "/usr/local/cuda/bin/../include/math_functions.h" 3
-static __inline__ __attribute__((always_inline)) float __internal_expf_kernel(float a, float scale)
+# 1743 "/usr/local/cuda/bin/../include/math_functions.h" 3
+static float __internal_expf_kernel(float a, float scale)
 {
   float j, z;
 
-  j = truncf(a * 1.442695041f);
+  j = __cuda_truncf(a * 1.442695041f);
   z = __internal_fmad (j, -0.6931457519f, a);
   z = __internal_fmad (j, -1.4286067653e-6f, z);
   z = z * 1.442695041f;
-  z = exp2f(z) * exp2f(j + scale);
+  z = __cuda_exp2f(z) * __cuda_exp2f(j + scale);
   return z;
 }
 
-static __inline__ __attribute__((always_inline)) float __internal_accurate_expf(float a)
+static float __internal_accurate_expf(float a)
 {
   float z;
 
@@ -3940,21 +3885,21 @@ static __inline__ __attribute__((always_inline)) float __internal_accurate_expf(
   return z;
 }
 
-static __inline__ __attribute__((always_inline)) float __internal_accurate_exp10f(float a)
+static float __internal_accurate_exp10f(float a)
 {
   float j, z;
 
-  j = truncf(a * 3.321928094f);
+  j = __cuda_truncf(a * 3.321928094f);
   z = __internal_fmad (j, -3.0102920532226563e-001f, a);
   z = __internal_fmad (j, -7.9034171557301747e-007f, z);
   z = z * 3.321928094f;
-  z = exp2f(z) * exp2f(j);
+  z = __cuda_exp2f(z) * __cuda_exp2f(j);
   if (a < -46.0f) z = 0.0f;
   if (a > 46.0f) z = __int_as_float(0x7f800000);
   return z;
 }
 
-static __inline__ __attribute__((always_inline)) float __internal_lgammaf_pos(float a)
+static float __internal_lgammaf_pos(float a)
 {
   float sum;
   float s, t;
@@ -3967,7 +3912,7 @@ static __inline__ __attribute__((always_inline)) float __internal_lgammaf_pos(fl
 
 
 
-      s = __fdividef (1.0f, a);
+      s = 1.0f / a;
       t = s * s;
       sum = 0.77783067e-3f;
       sum = __internal_fmad (sum, t, -0.2777655457e-2f);
@@ -4039,7 +3984,7 @@ static __inline__ __attribute__((always_inline)) float __internal_lgammaf_pos(fl
 }
 
 
-static __inline__ __attribute__((always_inline)) float __internal_sin_kernel(float x)
+static float __internal_sin_kernel(float x)
 {
   float x2, z;
 
@@ -4053,7 +3998,7 @@ static __inline__ __attribute__((always_inline)) float __internal_sin_kernel(flo
 }
 
 
-static __inline__ __attribute__((always_inline)) float __internal_cos_kernel(float x)
+static float __internal_cos_kernel(float x)
 {
   float x2, z;
 
@@ -4066,12 +4011,12 @@ static __inline__ __attribute__((always_inline)) float __internal_cos_kernel(flo
   return z;
 }
 
-static __inline__ __attribute__((always_inline)) float __internal_accurate_sinf(float a)
+static float __internal_accurate_sinf(float a)
 {
   float z;
   int i;
 
-  if ((__isinff(a)) || (a == 0.0f)) {
+  if ((__cuda___isinff(a)) || (a == 0.0f)) {
     return __fmul_rn (a, 0.0f);
   }
   z = __internal_trig_reduction_kernel(a, &i);
@@ -4093,8 +4038,19 @@ static __inline__ __attribute__((always_inline)) float __internal_accurate_sinf(
 
 
 
-static __inline__ __attribute__((always_inline)) float sinf(float a)
+static float __cuda_rintf(float a)
 {
+
+
+
+  return __cuda_nearbyintf(a);
+
+}
+
+static float __cuda_sinf(float a)
+{
+
+
 
 
 
@@ -4102,40 +4058,17 @@ static __inline__ __attribute__((always_inline)) float sinf(float a)
 
 }
 
-static __inline__ __attribute__((always_inline)) float sinpif(float a)
+static float __cuda_cosf(float a)
 {
-  float z;
-  int i;
 
-  if ((__isinff(a)) || (a == 0.0f)) {
-    return __fmul_rn (a, 0.0f);
-  }
-  if (a == floorf(a)) {
-    return __int_as_float(__float_as_int(a) & 0x80000000);
-  }
-  i = (int)rintf (a * 2.0f);
-  z = __internal_fmad ((float)i, -0.5f, a);
-  z = z * 3.141592654f;
-  if (i & 1) {
-    z = __internal_cos_kernel(z);
-  } else {
-    z = __internal_sin_kernel(z);
-  }
-  if (i & 2) {
-    z = -z;
-  }
-  return z;
-}
 
-static __inline__ __attribute__((always_inline)) float cosf(float a)
-{
 
 
 
   float z;
   int i;
 
-  if (__isinff(a)) {
+  if (__cuda___isinff(a)) {
     return __fadd_rn (a, -a);
   }
   z = __internal_trig_reduction_kernel(a, &i);
@@ -4153,15 +4086,17 @@ static __inline__ __attribute__((always_inline)) float cosf(float a)
 
 }
 
-static __inline__ __attribute__((always_inline)) float tanf(float a)
+static float __cuda_tanf(float a)
 {
+
+
 
 
 
   float z;
   int i;
 
-  if (__isinff(a)) {
+  if (__cuda___isinff(a)) {
     return __fadd_rn (a, -a);
   }
   z = __internal_trig_reduction_kernel(a, &i);
@@ -4174,8 +4109,10 @@ static __inline__ __attribute__((always_inline)) float tanf(float a)
 
 }
 
-static __inline__ __attribute__((always_inline)) float log2f(float a)
+static float __cuda_log2f(float a)
 {
+
+
 
 
 
@@ -4183,8 +4120,10 @@ static __inline__ __attribute__((always_inline)) float log2f(float a)
 
 }
 
-static __inline__ __attribute__((always_inline)) float expf(float a)
+static float __cuda_expf(float a)
 {
+
+
 
 
 
@@ -4192,8 +4131,10 @@ static __inline__ __attribute__((always_inline)) float expf(float a)
 
 }
 
-static __inline__ __attribute__((always_inline)) float exp10f(float a)
+static float __cuda_exp10f(float a)
 {
+
+
 
 
 
@@ -4201,11 +4142,11 @@ static __inline__ __attribute__((always_inline)) float exp10f(float a)
 
 }
 
-static __inline__ __attribute__((always_inline)) float coshf(float a)
+static float __cuda_coshf(float a)
 {
   float z;
 
-  a = fabsf(a);
+  a = __cuda_fabsf(a);
   z = __internal_expf_kernel(a, -2.0f);
   z = __internal_fmad (2.0f, z, __fdividef (0.125f, z));
   if (a >= 90.0f) {
@@ -4214,97 +4155,98 @@ static __inline__ __attribute__((always_inline)) float coshf(float a)
   return z;
 }
 
-static __inline__ __attribute__((always_inline)) float sinhf(float a)
+static float __cuda_sinhf(float a)
 {
   float s, z;
 
   s = a;
-  a = fabsf(a);
-  if (a >= 1.0f) {
-    z = __internal_expf_kernel(a, -2.0f);
-    z = __internal_fmad (2.0f, z, -__fdividef (0.125f, z));
-    if (a >= 90.0f) {
-      z = __int_as_float(0x7f800000);
-    }
-    z = __int_as_float(__float_as_int(z) | (__float_as_int(s) & 0x80000000));
-  } else {
-    float a2 = s * s;
+  a = __cuda_fabsf(a);
+  if (a < 1.0f) {
+    float a2 = a * a;
 
     z = 2.816951222e-6f;
     z = __internal_fmad (z, a2, 1.983615978e-4f);
     z = __internal_fmad (z, a2, 8.333350058e-3f);
     z = __internal_fmad (z, a2, 1.666666650e-1f);
     z = z * a2;
-    z = __internal_fmad (z, s, s);
+    z = __internal_fmad (z, a, a);
+  } else {
+    z = __internal_expf_kernel(a, -2.0f);
+    z = __internal_fmad (2.0f, z, -__fdividef (0.125f, z));
+    if (a >= 90.0f) {
+      z = __int_as_float(0x7f800000);
+    }
   }
-  return z;
+  return __cuda_copysignf(z, s);
 }
 
-static __inline__ __attribute__((always_inline)) float tanhf(float a)
+static float __cuda_tanhf(float a)
 {
   float s, t;
 
-  t = fabsf(a);
-  if (t >= 0.55f) {
-    s = 1.0f - __fdividef(2.0f,(__internal_expf_kernel(2.0f * t, 0.0f)+1.0f));
-    if (t >= 88.0f) {
-      s = 1.0f;
-    }
-    s = __int_as_float(__float_as_int(s) | (__float_as_int(a) & 0x80000000));
-  } else {
-    float z2;
-    z2 = a * a;
+  t = __cuda_fabsf(a);
+  if (t < 0.55f) {
+    float z, z2;
+    z = t;
+    z2 = z * z;
     t = 1.643758066599993e-2f;
     t = __internal_fmad (t, z2, -5.267181327760551e-2f);
     t = __internal_fmad (t, z2, 1.332072505223051e-1f);
     t = __internal_fmad (t, z2, -3.333294663641083e-1f);
     t = t * z2;
-    s = __internal_fmad (t, a, a);
-    if (a == 0.0f) {
-      s = a + a;
+    s = __internal_fmad (t, z, z);
+  } else {
+    s = 1.0f - __fdividef(2.0f,(__internal_expf_kernel(2.0f * t, 0.0f)+1.0f));
+    if (t >= 88.0f) {
+      s = 1.0f;
     }
   }
-  return s;
+  return __cuda_copysignf(s, a);
 }
 
-static __inline__ __attribute__((always_inline)) float atan2f(float a, float b)
+static float __cuda_atan2f(float a, float b)
 {
-  float t0, t1, fa, fb;
 
-  fb = fabsf(b);
-  fa = fabsf(a);
-  if ((fa == 0.0f) && (fb == 0.0f)) {
-    t0 = (__float_as_int(b) < 0) ? 3.141592654f : 0.0f;
-    t0 = __int_as_float(__float_as_int(t0) | (__float_as_int(a) & 0x80000000));
+
+
+  float t0, t1, t3, fa, fb;
+
+
+
+  fb = __cuda_fabsf(b);
+  fa = __cuda_fabsf(a);
+
+  if (fa == 0.0f && fb == 0.0f) {
+    t3 = __cuda___signbitf(b) ? 3.141592654f : 0;
   } else if ((fa == __int_as_float(0x7f800000)) && (fb == __int_as_float(0x7f800000))) {
-    t0 = (__float_as_int(b) < 0) ? 2.356194490f : 0.785398163f;
-    t0 = __int_as_float(__float_as_int(t0) | (__float_as_int(a) & 0x80000000));
+    t3 = __cuda___signbitf(b) ? 2.356194490f : 0.785398163f;
   } else {
 
-
-    t0 = fminf(fa, fb);
-    t1 = fmaxf(fa, fb);
-    t0 = t0 / t1;
-    t0 = __internal_atanf_kernel(t0);
-
-    if (fa > fb) t0 = 1.570796327f - t0;
-    if (b < 0.0f) t0 = 3.141592654f - t0;
-    t0 = __int_as_float(__float_as_int(t0) | (__float_as_int(a) & 0x80000000));
-    t1 = a + b;
-    if (!(t1 <= __int_as_float(0x7f800000))) {
-
-        t0 = t1;
+    if (fb < fa) {
+      t0 = fa;
+      t1 = fb;
+    } else {
+      t0 = fb;
+      t1 = fa;
     }
+    t3 = __internal_accurate_fdividef(t1, t0);
+    t3 = __internal_atanf_kernel(t3);
+
+    if (fa > fb) t3 = 1.570796327f - t3;
+    if (b < 0.0f) t3 = 3.141592654f - t3;
   }
-  return t0;
+  t3 = __cuda_copysignf(t3, a);
+
+  return t3;
+
 }
 
-static __inline__ __attribute__((always_inline)) float atanf(float a)
+static float __cuda_atanf(float a)
 {
   float t0, t1;
 
 
-  t0 = fabsf(a);
+  t0 = __cuda_fabsf(a);
   t1 = t0;
   if (t0 > 1.0f) {
     t1 = 1.0f / t1;
@@ -4315,66 +4257,64 @@ static __inline__ __attribute__((always_inline)) float atanf(float a)
   if (t0 > 1.0f) {
     t1 = 1.570796327f - t1;
   }
-  if (t0 <= __int_as_float(0x7f800000)) {
-    t1 = __int_as_float(__float_as_int(t1) | (__float_as_int(a) & 0x80000000));
-  }
-  return t1;
+  return __cuda_copysignf(t1, a);
 }
 
 
-static __inline__ __attribute__((always_inline)) float __internal_asinf_kernel(float a)
+static float __internal_asinf_kernel(float a)
 {
-  float a2, t;
-  a2 = a * a;
-  t = 5.175137819e-002f;
-  t = __internal_fmad (t, a2, 1.816697683e-002f);
-  t = __internal_fmad (t, a2, 4.675685871e-002f);
-  t = __internal_fmad (t, a2, 7.484657646e-002f);
-  t = __internal_fmad (t, a2, 1.666701424e-001f);
-  t = t * a2;
-  a = __internal_fmad (t, a, a);
+  float t2, t3, t4;
+
+  t2 = a * a;
+  t3 = -0.501162291f;
+  t3 = __internal_fmad (t3, t2, 0.915201485f);
+  t3 = t3 * t2;
+  t3 = t3 * a;
+  t4 = t2 - 5.478654385f;
+  t4 = __internal_fmad (t4, t2, 5.491230488f);
+  t4 = 1.0f / t4;
+  a = __internal_fmad (t3, t4, a);
   return a;
 }
 
-static __inline__ __attribute__((always_inline)) float asinf(float a)
+static float __cuda_asinf(float a)
 {
   float t0, t1, t2;
 
-  t0 = fabsf(a);
+  t0 = __cuda_fabsf(a);
   t2 = 1.0f - t0;
   t2 = 0.5f * t2;
-  t2 = sqrtf(t2);
-  t1 = t0 > 0.57f ? t2 : t0;
+  t2 = __cuda_sqrtf(t2);
+  t1 = t0 > 0.575f ? t2 : t0;
   t1 = __internal_asinf_kernel(t1);
   t2 = __internal_fmad (-2.0f, t1, 1.570796327f);
-  if (t0 > 0.57f) {
+  if (t0 > 0.575f) {
     t1 = t2;
   }
-  if (t1 <= __int_as_float(0x7f800000)) {
-    t1 = __int_as_float(__float_as_int(t1) | (__float_as_int(a) & 0x80000000));
-  }
-  return t1;
+  return __cuda_copysignf(t1, a);
 }
 
-static __inline__ __attribute__((always_inline)) float acosf(float a)
+static float __cuda_acosf(float a)
 {
   float t0, t1, t2;
 
-  t0 = fabsf(a);
+  t0 = __cuda_fabsf(a);
   t2 = 1.0f - t0;
   t2 = 0.5f * t2;
-  t2 = sqrtf(t2);
-  t1 = t0 > 0.57f ? t2 : t0;
+  t2 = __cuda_sqrtf(t2);
+  t1 = t0 > 0.575f ? t2 : t0;
   t1 = __internal_asinf_kernel(t1);
-  t1 = t0 > 0.57f ? 2.0f * t1 : 1.570796327f - t1;
-  if (__float_as_int(a) < 0) {
+  t1 = t0 > 0.575f ? 2.0f * t1 : 1.570796327f - t1;
+  if (__cuda___signbitf(a)) {
     t1 = 3.141592654f - t1;
   }
   return t1;
 }
 
-static __inline__ __attribute__((always_inline)) float logf(float a)
+static float __cuda_logf(float a)
 {
+
+
 
 
 
@@ -4382,8 +4322,10 @@ static __inline__ __attribute__((always_inline)) float logf(float a)
 
 }
 
-static __inline__ __attribute__((always_inline)) float log10f(float a)
+static float __cuda_log10f(float a)
 {
+
+
 
 
 
@@ -4391,9 +4333,16 @@ static __inline__ __attribute__((always_inline)) float log10f(float a)
 
 }
 
-static __inline__ __attribute__((always_inline)) float log1pf(float a)
+static float __cuda_log1pf(float a)
 {
+
+
+
   float t;
+
+
+
+
   if (a >= -0.394f && a <= 0.65f) {
 
     t = a + 2.0f;
@@ -4404,64 +4353,72 @@ static __inline__ __attribute__((always_inline)) float log1pf(float a)
     t = __internal_accurate_logf (1.0f + a);
   }
   return t;
+
 }
 
-static __inline__ __attribute__((always_inline)) float acoshf(float a)
+static float __cuda_acoshf(float a)
 {
+
+
+
   float t;
 
   t = a - 1.0f;
-  if (fabsf(t) > 8388608.0f) {
+  if (__cuda_fabsf(t) > 8388608.0f) {
 
     return 0.693147181f + __internal_accurate_logf(a);
   } else {
-    t = t + sqrtf(__fadd_rn(__fmul_rz(a, t), t));
-    return log1pf(t);
+    t = t + __cuda_sqrtf(__internal_fmad (a, t, t));
+    return __cuda_log1pf(t);
   }
+
 }
 
-static __inline__ __attribute__((always_inline)) float asinhf(float a)
+static float __cuda_asinhf(float a)
 {
+
+
+
   float fa, oofa, t;
 
-  fa = fabsf(a);
+  fa = __cuda_fabsf(a);
   if (fa > 8.507059173e37f) {
     t = 0.693147181f + __logf(fa);
   } else {
     oofa = 1.0f / fa;
-    t =fa+__fdividef (fa,(oofa+sqrtf(__internal_fmad(oofa,oofa,1.0f))));
-    t = log1pf(t);
+    t =fa+__fdividef (fa,(oofa+__cuda_sqrtf(__internal_fmad(oofa,oofa,1.0f))));
+    t = __cuda_log1pf(t);
   }
-  if (fa <= __int_as_float(0x7f800000)) {
-    t = __int_as_float(__float_as_int(t) | (__float_as_int(a) & 0x80000000));
-  }
-  return t;
+  return __cuda_copysignf(t, a);
+
 }
 
-static __inline__ __attribute__((always_inline)) float atanhf(float a)
+static float __cuda_atanhf(float a)
 {
+
+
+
   float fa, t;
 
-  fa = fabsf(a);
+  fa = __cuda_fabsf(a);
   t = __fdividef ((2.0f * fa), (1.0f - fa));
-  t = 0.5f * log1pf(t);
-  if (fabsf(t) <= __int_as_float(0x7f800000)) {
-    t = __int_as_float(__float_as_int(t) | (__float_as_int(a) & 0x80000000));
-  }
-  return t;
+  t = 0.5f * __cuda_log1pf(t);
+  return __cuda_copysignf(t, a);
+
 }
 
-static __inline__ __attribute__((always_inline)) float expm1f(float a)
+static float __cuda_expm1f(float a)
 {
   float t, z, j, u;
 
-  t = rintf (a * 1.442695041f);
-
-  if (fabsf(a) < 0.41f) {
-    t = 0.0f;
-  }
+  t = __cuda_rintf (a * 1.442695041f);
   z = __internal_fmad (-t, 0.6931457519f, a);
   z = __internal_fmad (-t, 1.4286067653e-6f, z);
+
+  if (__cuda_fabsf(a) < 0.41f) {
+    z = a;
+    t = 0.0f;
+  }
 
   j = t;
   if (t == 128.0f) j = j - 1.0f;
@@ -4473,83 +4430,87 @@ static __inline__ __attribute__((always_inline)) float expm1f(float a)
   u = __internal_fmad (u, z, 4.99999940395997040E-001f);
   u = u * z;
   u = __internal_fmad (u, z, z);
+  if (a == 0.0f) u = a;
 
-  z = exp2f (j);
-  u = __internal_fmad (u, z, z - 1.0f);
+  z = __cuda_exp2f (j);
+  a = z - 1.0f;
+  if (a != 0.0f) u = __internal_fmad (u, z, a);
   if (t == 128.0f) u = u + u;
 
   if (j > 128.0f) u = __int_as_float(0x7f800000);
   if (j < -25.0f) u = -1.0f;
-
-  if (a == 0.0f) {
-    u = __int_as_float(__float_as_int(a) & 0x80000000);
-  }
   return u;
 }
 
-static __inline__ __attribute__((always_inline)) float hypotf(float a, float b)
+static float __cuda_hypotf(float a, float b)
 {
-  float v, w, s, t, fa, fb;
 
-  fa = fabsf(a);
-  fb = fabsf(b);
-  v = s = fmaxf(fa, fb);
-  w = t = fminf(fa, fb);
-  if (v > 8.507059173e37f) {
-    s = s * 0.25f;
-    t = t * 0.25f;
+
+
+  float v, w, t;
+
+  a = __cuda_fabsf(a);
+  b = __cuda_fabsf(b);
+
+  if (a > b) {
+    v = a;
+    w = b;
+  } else {
+    v = b;
+    w = a;
   }
-  t = __fdividef(t, s);
+  t = __internal_accurate_fdividef(w, v);
   t = __internal_fmad (t, t, 1.0f);
-  t = v * sqrtf(t);
+  t = v * __cuda_sqrtf(t);
   if (v == 0.0f) {
     t = v + w;
   }
-  if ((!(fa <= __int_as_float(0x7f800000))) || (!(fb <= __int_as_float(0x7f800000)))) {
-    t = a + b;
-  }
-  if (v == __int_as_float(0x7f800000)) {
-    t = v + w;
+  if ((v == __int_as_float(0x7f800000)) || (w == __int_as_float(0x7f800000))) {
+    t = __int_as_float(0x7f800000);
   }
   return t;
+
 }
 
-static __inline__ __attribute__((always_inline)) float cbrtf(float a)
+static float __cuda_cbrtf(float a)
 {
+
+
+
   float s, t;
 
-  s = fabsf(a);
-  t = exp2f(0.333333333f * __log2f(s));
-  t = t - (t - (__fdividef (s, t * t))) * 0.333333333f;
-  if (__float_as_int(a) < 0) {
+  s = __cuda_fabsf(a);
+  if ((a == 0.0f) || (s == __int_as_float(0x7f800000))) {
+    return a + a;
+  }
+  t = __cuda_exp2f(0.333333333f * __log2f(s));
+  t = t-(t-(__fdividef(s,(t*t))))*0.333333333f;
+
+  if (__cuda___signbitf(a)) {
     t = -t;
   }
-  s = a + a;
-  if (s == a) t = s;
+
+
+
   return t;
+
 }
 
-static __inline__ __attribute__((always_inline)) float rcbrtf(float a)
-{
-  float s, t;
-
-  s = fabsf(a);
-  t = exp2f(-0.333333333f * __log2f(s));
-  t = __internal_fmad(__internal_fmad(t*t, -s*t, 1.0f), 0.333333333f*t, t);
-  if (__float_as_int(a) < 0) {
-    t = -t;
-  }
-  s = a + a;
-  if (s == a) t = __fdividef (1.0f, a);
-  return t;
-}
-
-static __inline__ __attribute__((always_inline)) float erff(float a)
+static float __cuda_erff(float a)
 {
   float t, r, q;
 
-  t = fabsf(a);
-  if (t >= 1.0f) {
+  t = __cuda_fabsf(a);
+  if (t < 1.0f) {
+    t = t * t;
+    r = -5.58510127926029810E-004f;
+    r = __internal_fmad (r, t, 4.90688891415893070E-003f);
+    r = __internal_fmad (r, t, -2.67027980930150640E-002f);
+    r = __internal_fmad (r, t, 1.12799056505903940E-001f);
+    r = __internal_fmad (r, t, -3.76122956138427440E-001f);
+    r = __internal_fmad (r, t, 1.12837911712623450E+000f);
+    a = a * r;
+  } else if (t <= __int_as_float(0x7f800000)) {
 
 
 
@@ -4567,121 +4528,137 @@ static __inline__ __attribute__((always_inline)) float erff(float a)
       r = 1.0f;
     }
     a = __int_as_float (__float_as_int(r) | (__float_as_int(a) & 0x80000000));
-  } else {
-    t = a * a;
-    r = -5.58510127926029810E-004f;
-    r = __internal_fmad (r, t, 4.90688891415893070E-003f);
-    r = __internal_fmad (r, t, -2.67027980930150640E-002f);
-    r = __internal_fmad (r, t, 1.12799056505903940E-001f);
-    r = __internal_fmad (r, t, -3.76122956138427440E-001f);
-    r = __internal_fmad (r, t, 1.12837911712623450E+000f);
-    a = a * r;
   }
   return a;
 }
-# 2164 "/usr/local/cuda/bin/../include/math_functions.h" 3
-static __inline__ __attribute__((always_inline)) float erfinvf(float a)
-{
-  float s, t, r;
 
-  s = 1.0f + a;
-  t = 1.0f - a;
-  s = s * t;
-  t = - __log2f (s);
-  if (t > 8.2f) {
-    t = rsqrtf (t);
-    r = -5.8991436871681446E-001f;
-    r = __internal_fmad (r, t, -6.6300422537735360E-001f);
-    r = __internal_fmad (r, t, 1.5970110948817704E+000f);
-    r = __internal_fmad (r, t, -6.7521557026467416E-001f);
-    r = __internal_fmad (r, t, -9.5224791160399669E-002f);
-    r = __internal_fmad (r, t, 8.3535343797791939E-001f);
-    t = 1.0f / t;
-    t = r * t;
+static float __cuda_erfinvf (float a)
+{
+  float fa, t;
+
+  fa = fabsf(a);
+  if (fa >= 1.0f) {
+    t = __cuda_rsqrtf (__int_as_float (0xffc00000));
+    if (fa == 1.0f) {
+      t = a * __int_as_float(0x7f800000);
+    }
+  } else if (fa > 0.9375f) {
+
+
+
+
+    float p, q;
+
+    t = __cuda_log1pf(-fa);
+    t = __cuda_rsqrtf(-t);
+    p = -1.64441567910e-1f;
+    p = __internal_fmad (p, t, 6.80544246825e-1f);
+    p = __internal_fmad (p, t, -1.12808139162e+0f);
+    p = __internal_fmad (p, t, 6.90969348887e-1f);
+    p = __internal_fmad (p, t, 1.38271964963e+0f);
+    p = __internal_fmad (p, t, 1.55047000312e-1f);
+    q = t + 1.38522814199e+0f;
+    q = __internal_fmad (q, t, 1.55024849822e-1f);
+    q = q * t;
+    t = __fdividef (p, q);
     if (a < 0.0f) t = -t;
-    return t;
+  } else if (fa > 0.75f) {
+
+
+
+
+    float p, q;
+
+    t = __internal_fmad (a, a, -0.87890625f);
+    p = -7.1986748896e+0f;
+    p = __internal_fmad (p, t, +1.3411974175e+1f);
+    p = __internal_fmad (p, t, -5.1381573203e+0f);
+    p = __internal_fmad (p, t, 4.9633374831e-1f);
+    q = t -1.1436535838e+1f;
+    q = __internal_fmad (q, t, 1.3568885572e+1f);
+    q = __internal_fmad (q, t, -4.1747509256e+0f);
+    q = __internal_fmad (q, t, 3.5327242323e-1f);
+    p = __fdividef (p, q);
+    t = a * p;
   } else {
-    r = -2.5172707606685652E-010f;
-    r = __internal_fmad (r, t, 9.4274289432374619E-009f);
-    r = __internal_fmad (r, t, -1.2054753059594516E-007f);
-    r = __internal_fmad (r, t, 2.1697004698667657E-007f);
-    r = __internal_fmad (r, t, 8.0621488510822390E-006f);
-    r = __internal_fmad (r, t, -3.1675491789646913E-005f);
-    r = __internal_fmad (r, t, -7.7436312951712784E-004f);
-    r = __internal_fmad (r, t, 5.5465877941375773E-003f);
-    r = __internal_fmad (r, t, 1.6082022430967846E-001f);
-    r = __internal_fmad (r, t, 8.8622690039402130E-001f);
-    return r * a;
+    float a2;
+
+    a2 = a * a;
+    t = 6.1046168794766742E-001f;
+    t = __internal_fmad (t, a2, -8.9504882462753121E-001f);
+    t = __internal_fmad (t, a2, 7.0224162369928511E-001f);
+    t = __internal_fmad (t, a2, -1.9993784895823222E-001f);
+    t = __internal_fmad (t, a2, 1.1920613463949599E-001f);
+    t = __internal_fmad (t, a2, 8.0131492246997685E-002f);
+    t = __internal_fmad (t, a2, 1.2793154958377403E-001f);
+    t = __internal_fmad (t, a2, 2.3200529172828793E-001f);
+    t = __internal_fmad (t, a2, 8.8622695604694379E-001f);
+    t = t * a;
   }
+  return t;
 }
 
-static __inline__ __attribute__((always_inline)) float erfcf(float a)
+static float __cuda_erfcf(float a)
 {
+
+
+
   if (a <= 0.813f) {
-    return 1.0f - erff(a);
+    return 1.0f - __cuda_erff(a);
+  } else if (a > 10.055f) {
+    return 0.0f;
   } else {
     float p;
     float q;
     float h;
     float l;
-    float t;
-# 2219 "/usr/local/cuda/bin/../include/math_functions.h" 3
-    t = __fdividef(1.0f, a);
 
-    p = - 9.9910025099425892E-001f;
-    p = __internal_fmad (p, t, - 2.6108451215634448E-001f);
-    p = __internal_fmad (p, t, + 1.2460347155371844E-001f);
-    p = __internal_fmad (p, t, + 1.3243909814778765E-001f);
-    p = __internal_fmad (p, t, + 3.3477599162629441E-002f);
-    q = t + 2.2542670016875404E+000f;
-    q = __internal_fmad (q, t, + 2.1514433559696009E+000f);
-    q = __internal_fmad (q, t, + 1.0284106806050302E+000f);
-    q = __internal_fmad (q, t, + 2.6094298761636442E-001f);
-    q = __internal_fmad (q, t, - 3.9951461024063317E-006f);
 
-    p = __fdividef(p, q);
-    p = p * t;
 
+
+    p = 1.9997798317768276E-006f;
+    p = __internal_fmad (p, a, 5.6410849770777538E-001f);
+    p = __internal_fmad (p, a, 2.4579440583231387E+000f);
+    p = __internal_fmad (p, a, 4.9763988947448308E+000f);
+    p = __internal_fmad (p, a, 4.5767235962336885E+000f);
+    q = a + 4.3540863476555538E+000f;
+    q = __internal_fmad (q, a, 9.3453217404616584E+000f);
+    q = __internal_fmad (q, a, 1.0132282183545772E+001f);
+    q = __internal_fmad (q, a, 4.5781789912165518E+000f);
+
+    h = 1.0f / q;
+    q = __internal_fmad (-q * h, h, 2.0f * h);
+    p = p * q;
 
     h = __int_as_float(__float_as_int(a) & 0xfffff000);
-    l = a - h;
-    q = -h * h;
+    l = __fadd_rn (a, -h);
+    q = __fmul_rn (-h, h);
     q = __internal_expf_kernel(q, 0.0f);
-    h = a + h;
-    l = l * h;
-    h = __internal_expf_kernel(-l, -1.0f);
+    a = a + h;
+    l = l * a;
+    h = __internal_expf_kernel(-l, 0.0f);
     q = q * h;
-
-
-
-
-
-
-    p = __internal_fmad (p, q, q);
-    p = p * t;
-    if (a > 10.055f) {
-      p = 0.0f;
-    }
+    p = p * q;
     return p;
   }
 }
 
-static __inline__ __attribute__((always_inline)) float erfcinvf(float a)
+static float __cuda_erfcinvf (float a)
 {
   float t;
   if (a <= 0.0f) {
-    t = rsqrtf (__int_as_float (0xffc00000));
+    t = __int_as_float(0x7fffffff);
     if (a == 0.0f) {
       t = (1.0f - a) * __int_as_float(0x7f800000);
     }
   }
   else if (a >= 0.0625f) {
-    t = erfinvf (1.0f - a);
+    t = __cuda_erfinvf (1.0f - a);
   }
   else {
     float p, q;
-    t = __internal_accurate_logf(a);
-    t = rsqrtf(-t);
+    t = __cuda_logf(a);
+    t = __cuda_rsqrtf(-t);
     p = -1.64441567910e-1f;
     p = __internal_fmad (p, t, 6.80544246825e-1f);
     p = __internal_fmad (p, t, -1.12808139162e+0f);
@@ -4696,18 +4673,18 @@ static __inline__ __attribute__((always_inline)) float erfcinvf(float a)
   return t;
 }
 
-static __inline__ __attribute__((always_inline)) float lgammaf(float a)
+static float __cuda_lgammaf(float a)
 {
   float t;
   float i;
   int quot;
-  t = __internal_lgammaf_pos(fabsf(a));
+  t = __internal_lgammaf_pos(__cuda_fabsf(a));
   if (a >= 0.0f) return t;
-  a = fabsf(a);
-  i = floorf(a);
+  a = __cuda_fabsf(a);
+  i = __cuda_floorf(a);
   if (a == i) return __int_as_float(0x7f800000);
   if (a < 1e-19f) return -__internal_accurate_logf(a);
-  i = rintf (2.0f * a);
+  i = __cuda_rintf (2.0f * a);
   quot = (int)i;
   i = __internal_fmad (-i, 0.5f, a);
   i = i * 3.141592654f;
@@ -4716,38 +4693,49 @@ static __inline__ __attribute__((always_inline)) float lgammaf(float a)
   } else {
     i = __internal_sin_kernel(i);
   }
-  i = fabsf(i);
+  i = __cuda_fabsf(i);
   t = 1.144729886f - __internal_accurate_logf(i * a) - t;
   return t;
 }
 
-static __inline__ __attribute__((always_inline)) float ldexpf(float a, int b)
+static float __cuda_ldexpf(float a, int b)
 {
-  float fa = fabsf(a);
+
+
+
+  float fa = __cuda_fabsf(a);
 
   if ((fa == 0.0f) || (fa == __int_as_float(0x7f800000)) || (b == 0)) {
     if (!(fa > 0.0f)) a = a + a;
     return a;
-  } else if (abs(b) < 126) {
-    return a * exp2f((float)b);
-  } else if (abs(b) < 252) {
+  } else if (__cuda_abs(b) < 126) {
+    return a * __cuda_exp2f((float)b);
+  } else if (__cuda_abs(b) < 252) {
     int bhalf = b / 2;
-    return a * exp2f((float)bhalf) * exp2f((float)(b - bhalf));
+    return a * __cuda_exp2f((float)bhalf) * __cuda_exp2f((float)(b - bhalf));
   } else {
     int bquarter = b / 4;
-    float t = exp2f((float)bquarter);
-    return a * t * t * t * exp2f((float)(b - 3 * bquarter));
+    float t = __cuda_exp2f((float)bquarter);
+    return a * t * t * t * __cuda_exp2f((float)(b - 3 * bquarter));
   }
+
 }
 
-static __inline__ __attribute__((always_inline)) float scalbnf(float a, int b)
+static float __cuda_scalbnf(float a, int b)
 {
 
-  return ldexpf(a, b);
+
+
+
+  return __cuda_ldexpf(a, b);
+
 }
 
-static __inline__ __attribute__((always_inline)) float scalblnf(float a, long int b)
+static float __cuda_scalblnf(float a, long int b)
 {
+
+
+
   int t;
   if (b > 2147483647L) {
     t = 2147483647;
@@ -4756,12 +4744,13 @@ static __inline__ __attribute__((always_inline)) float scalblnf(float a, long in
   } else {
     t = (int)b;
   }
-  return scalbnf(a, t);
+  return __cuda_scalbnf(a, t);
+
 }
 
-static __inline__ __attribute__((always_inline)) float frexpf(float a, int *b)
+static float __cuda_frexpf(float a, int *b)
 {
-  float fa = fabsf(a);
+  float fa = __cuda_fabsf(a);
   unsigned int expo;
   unsigned int denorm;
 
@@ -4783,37 +4772,44 @@ static __inline__ __attribute__((always_inline)) float frexpf(float a, int *b)
   return a;
 }
 
-static __inline__ __attribute__((always_inline)) float modff(float a, float *b)
+static float __cuda_modff(float a, float *b)
 {
+
+
+
   float t;
-  if (__finitef(a)) {
-    t = truncf(a);
+  if (__cuda___finitef(a)) {
+    t = __cuda_truncf(a);
     *b = t;
     t = a - t;
-    t = __int_as_float(__float_as_int(t) | (__float_as_int(a) & 0x80000000));
-    return t;
-  } else if (__isinff(a)) {
+    return __cuda_copysignf(t, a);
+  } else if (__cuda___isinff(a)) {
+    t = 0.0f;
     *b = a;
-    return __int_as_float(__float_as_int(a) & 0x80000000);
+    return __cuda_copysignf(t, a);
   } else {
-    *b = a + a;
-    return a + a;
+    *b = a;
+    return a;
   }
+
 }
 
-static __inline__ __attribute__((always_inline)) float fmodf(float a, float b)
+static float __cuda_fmodf(float a, float b)
 {
+
+
+
   float orig_a = a;
   float orig_b = b;
-  a = fabsf(a);
-  b = fabsf(b);
+  a = __cuda_fabsf(a);
+  b = __cuda_fabsf(b);
   if (!((a <= __int_as_float(0x7f800000)) && (b <= __int_as_float(0x7f800000)))) {
     return orig_a + orig_b;
   }
   if ((a == __int_as_float(0x7f800000)) || (b == 0.0f)) {
-    return rsqrtf (__int_as_float (0xffc00000));
+    return __cuda_rsqrtf (__int_as_float (0xffc00000));
   } else if (a >= b) {
-# 2418 "/usr/local/cuda/bin/../include/math_functions.h" 3
+# 2701 "/usr/local/cuda/bin/../include/math_functions.h" 3
     float scaled_b = __int_as_float ((__float_as_int(b) & 0x007fffff) |
                                      (__float_as_int(a) & 0x7f800000));
     if (scaled_b > a) {
@@ -4826,15 +4822,15 @@ static __inline__ __attribute__((always_inline)) float fmodf(float a, float b)
       }
       scaled_b *= 0.5f;
     }
-    return __int_as_float (__float_as_int(a) |
-                           (__float_as_int(orig_a) & 0x80000000));
+    return __cuda_copysignf(a, orig_a);
   } else {
     if (!(a > 0.0f)) orig_a = orig_a + orig_a;
     return orig_a;
   }
+
 }
 
-static __inline__ __attribute__((always_inline)) float remainderf(float a, float b)
+static float __cuda_remainderf(float a, float b)
 {
 
   float twoa = 0.0f;
@@ -4842,15 +4838,15 @@ static __inline__ __attribute__((always_inline)) float remainderf(float a, float
   float orig_a = a;
   float orig_b = b;
 
-  a = fabsf(a);
-  b = fabsf(b);
+  a = __cuda_fabsf(a);
+  b = __cuda_fabsf(b);
   if (!((a <= __int_as_float(0x7f800000)) && (b <= __int_as_float(0x7f800000)))) {
     return orig_a + orig_b;
   }
   if ((a == __int_as_float(0x7f800000)) || (b == 0.0f)) {
-    return rsqrtf (__int_as_float (0xffc00000));
+    return __cuda_rsqrtf (__int_as_float (0xffc00000));
   } else if (a >= b) {
-# 2465 "/usr/local/cuda/bin/../include/math_functions.h" 3
+# 2748 "/usr/local/cuda/bin/../include/math_functions.h" 3
     float scaled_b = __int_as_float ((__float_as_int(b) & 0x007fffff) |
                                      (__float_as_int(a) & 0x7f800000));
     if (scaled_b > a) {
@@ -4871,7 +4867,7 @@ static __inline__ __attribute__((always_inline)) float remainderf(float a, float
       scaled_b *= 0.5f;
     }
   }
-# 2493 "/usr/local/cuda/bin/../include/math_functions.h" 3
+# 2776 "/usr/local/cuda/bin/../include/math_functions.h" 3
   if (a >= 1.175494351e-38f) {
     twoa = 2.0f * a;
     if ((twoa > b) || ((twoa == b) && quot0)) {
@@ -4891,7 +4887,7 @@ static __inline__ __attribute__((always_inline)) float remainderf(float a, float
   return a;
 }
 
-static __inline__ __attribute__((always_inline)) float remquof(float a, float b, int* quo)
+static float __cuda_remquof(float a, float b, int* quo)
 {
   float twoa = 0.0f;
   unsigned int quot = 0;
@@ -4900,18 +4896,18 @@ static __inline__ __attribute__((always_inline)) float remquof(float a, float b,
   float orig_b = b;
 
 
-  sign = 0 - ((__float_as_int(a) ^ __float_as_int(b)) < 0);
-  a = fabsf(a);
-  b = fabsf(b);
+  sign = 0 - (__cuda___signbitf(a) != __cuda___signbitf(b));
+  a = __cuda_fabsf(a);
+  b = __cuda_fabsf(b);
   if (!((a <= __int_as_float(0x7f800000)) && (b <= __int_as_float(0x7f800000)))) {
     *quo = quot;
     return orig_a + orig_b;
   }
   if ((a == __int_as_float(0x7f800000)) || (b == 0.0f)) {
     *quo = quot;
-    return rsqrtf (__int_as_float (0xffc00000));
+    return __cuda_rsqrtf (__int_as_float (0xffc00000));
   } else if (a >= b) {
-# 2544 "/usr/local/cuda/bin/../include/math_functions.h" 3
+# 2827 "/usr/local/cuda/bin/../include/math_functions.h" 3
     float scaled_b = __int_as_float ((__float_as_int(b) & 0x007fffff) |
                                      (__float_as_int(a) & 0x7f800000));
     if (scaled_b > a) {
@@ -4941,20 +4937,20 @@ static __inline__ __attribute__((always_inline)) float remquof(float a, float b,
       scaled_b *= 0.5f;
     }
   }
-# 2582 "/usr/local/cuda/bin/../include/math_functions.h" 3
+# 2865 "/usr/local/cuda/bin/../include/math_functions.h" 3
   if (a >= 1.175494351e-38f) {
     twoa = 2.0f * a;
     if ((twoa > b) || ((twoa == b) && (quot & 1))) {
       quot++;
       a -= b;
-      a = __int_as_float(__float_as_int(a) | 0x80000000);
+      a = __cuda_copysignf (a, -1.0f);
     }
   } else {
 
     if ((twoa > b) || ((twoa == b) && (quot & 1))) {
       quot++;
       a = 0.5f * (twoa - 2.0f * b);
-      a = __int_as_float(__float_as_int(a) | 0x80000000);
+      a = __cuda_copysignf (a, -1.0f);
     }
   }
 
@@ -4967,21 +4963,25 @@ static __inline__ __attribute__((always_inline)) float remquof(float a, float b,
   return a;
 }
 
-static __inline__ __attribute__((always_inline)) float fmaf(float a, float b, float c)
+static float __cuda_fmaf(float a, float b, float c)
 {
   return __fmaf_rn(a, b, c);
 }
 
-static __inline__ __attribute__((always_inline)) float __internal_accurate_powf(float a, float b)
+static float __internal_accurate_powf(float a, float b)
 {
   float2 loga, prod;
+
+
+
   float t;
+
 
 
   loga = __internal_log_ep(a);
 
 
-  if (fabsf(b) > 1.0e34f) b *= 1.220703125e-4f;
+  if (__cuda_fabsf(b) > 1.0e34f) b *= 1.220703125e-4f;
   prod.y = b;
   prod.x = 0.0f;
   prod = __internal_dsmul (prod, loga);
@@ -4993,7 +4993,7 @@ static __inline__ __attribute__((always_inline)) float __internal_accurate_powf(
   }
 
 
-  t = __internal_accurate_expf(prod.y);
+  t = __cuda_expf(prod.y);
 
   if (t != __int_as_float(0x7f800000)) {
 
@@ -5004,27 +5004,26 @@ static __inline__ __attribute__((always_inline)) float __internal_accurate_powf(
   return t;
 }
 
-static __inline__ __attribute__((always_inline)) float powif(float a, int b)
+static float __cuda_powif(float a, int b)
 {
-  unsigned int e = abs(b);
+  unsigned int e = __cuda_abs(b);
   float r = 1.0f;
 
   while (1) {
     if ((e & 1) != 0) {
-      r = __fmul_rn (r, a);
+      r = r * a;
     }
     e = e >> 1;
     if (e == 0) {
-      r = (b < 0) ? 1.0f / r : r;
-      return r;
+      return b < 0 ? 1.0f / r : r;
     }
-    a = __fmul_rn (a, a);
+    a = a * a;
   }
 }
 
-static __inline__ __attribute__((always_inline)) double powi(double a, int b)
+static double __cuda_powi(double a, int b)
 {
-  unsigned int e = abs(b);
+  unsigned int e = __cuda_abs(b);
   double r = 1.0;
 
   while (1) {
@@ -5039,8 +5038,10 @@ static __inline__ __attribute__((always_inline)) double powi(double a, int b)
   }
 }
 
-static __inline__ __attribute__((always_inline)) float powf(float a, float b)
+static float __cuda_powf(float a, float b)
 {
+
+
 
 
 
@@ -5049,29 +5050,29 @@ static __inline__ __attribute__((always_inline)) float powf(float a, float b)
   if (a == 1.0f || b == 0.0f) {
     return 1.0f;
   }
-  if (__isnanf(a) || __isnanf(b)) {
+  if (__cuda___isnanf(a) || __cuda___isnanf(b)) {
     return a + b;
   }
   if (a == __int_as_float(0x7f800000)) {
-    return (__float_as_int(b) < 0) ? 0.0f : __int_as_float(0x7f800000);
+    return __cuda___signbitf(b) ? 0.0f : __int_as_float(0x7f800000);
   }
-  if (__isinff(b)) {
+  if (__cuda___isinff(b)) {
     if (a == -1.0f) {
       return 1.0f;
     }
-    t = (fabsf(a) > 1.0f) ? __int_as_float(0x7f800000) : 0.0f;
+    t = (__cuda_fabsf(a) > 1.0f) ? __int_as_float(0x7f800000) : 0.0f;
     if (b < 0.0f) {
       t = 1.0f / t;
     }
-    return t + t;
+    return t;
   }
-  bIsOddInteger = fabsf(b - (2.0f * truncf(0.5f * b))) == 1.0f;
+  bIsOddInteger = (b - (2.0f * floorf(0.5f * b))) == 1.0f;
   if (a == 0.0f) {
     t = bIsOddInteger ? a : 0.0f;
     if (b < 0.0f) {
       t = 1.0f / t;
     }
-    return t + t;
+    return t;
   }
   if (a == -__int_as_float(0x7f800000)) {
     t = - ((b < 0.0f) ? (1.0f / a) : a);
@@ -5080,10 +5081,10 @@ static __inline__ __attribute__((always_inline)) float powf(float a, float b)
     }
     return t;
   }
-  if ((a < 0.0f) && (b != truncf(b))) {
-    return rsqrtf(__int_as_float(0xffc00000));
+  if ((a < 0.0f) && (b != __cuda_truncf(b))) {
+    return __cuda_rsqrtf(__int_as_float(0xffc00000));
   }
-  t = fabsf(a);
+  t = __cuda_fabsf(a);
   t = __internal_accurate_powf(t, b);
   if ((a < 0.0f) && bIsOddInteger) {
     t = __int_as_float(__float_as_int(t) ^ 0x80000000);
@@ -5093,7 +5094,7 @@ static __inline__ __attribute__((always_inline)) float powf(float a, float b)
 }
 
 
-static __inline__ __attribute__((always_inline)) float __internal_tgammaf_kernel(float a)
+static float __internal_tgammaf_kernel(float a)
 {
   float t;
   t = -1.05767296987211380E-003f;
@@ -5112,7 +5113,7 @@ static __inline__ __attribute__((always_inline)) float __internal_tgammaf_kernel
 
 
 
-static __inline__ __attribute__((always_inline)) float tgammaf(float a)
+static float __cuda_tgammaf(float a)
 {
   float s, xx, x=a;
   if (x >= 0.0f) {
@@ -5141,8 +5142,11 @@ static __inline__ __attribute__((always_inline)) float tgammaf(float a)
     }
     return s;
   } else {
-    if (x == floorf(x)) {
-      x = rsqrtf (__int_as_float (0xffc00000));
+    if (x == __cuda_floorf(x)) {
+      x = __int_as_float(0x7fffffff);
+
+
+
     }
     if (x < -41.1f) x = -41.1f;
     xx = x;
@@ -5174,17 +5178,21 @@ static __inline__ __attribute__((always_inline)) float tgammaf(float a)
   }
 }
 
-static __inline__ __attribute__((always_inline)) float roundf(float a)
+static float __cuda_roundf(float a)
 {
-  float fa = fabsf(a);
-  float u = __int_as_float (0x3f000000 | (__float_as_int(a) & 0x80000000));
-  u = truncf (a + u);
+
+
+
+  float fa = __cuda_fabsf(a);
+  float u = __cuda_copysignf (0.5f, a);
+  u = __cuda_truncf (a + u);
   if (fa > 8388608.0f) u = a;
-  if (fa < 0.5f) u = truncf (a);
+  if (fa < 0.5f) u = __cuda_truncf (a);
   return u;
+
 }
 
-static __inline__ __attribute__((always_inline)) long long int __internal_llroundf_kernel(float a)
+static long long int __internal_llroundf_kernel(float a)
 {
   unsigned long long int res, t = 0LL;
   int shift;
@@ -5209,21 +5217,24 @@ static __inline__ __attribute__((always_inline)) long long int __internal_llroun
   return (long long int)res;
 }
 
-static __inline__ __attribute__((always_inline)) long long int llroundf(float a)
+static long long int __cuda_llroundf(float a)
 {
+
+
+
   return __internal_llroundf_kernel(a);
+
 }
 
-static __inline__ __attribute__((always_inline)) long int lroundf(float a)
+static long int __cuda_lroundf(float a)
 {
-
-  return (long int)llroundf(a);
-
+# 3166 "/usr/local/cuda/bin/../include/math_functions.h" 3
+  return (long int)(__cuda_roundf(a));
 
 
 }
 
-static __inline__ __attribute__((always_inline)) float fdimf(float a, float b)
+static float __cuda_fdimf(float a, float b)
 {
   float t;
   t = a - b;
@@ -5233,20 +5244,26 @@ static __inline__ __attribute__((always_inline)) float fdimf(float a, float b)
   return t;
 }
 
-static __inline__ __attribute__((always_inline)) int ilogbf(float a)
+static int __cuda_ilogbf(float a)
 {
   unsigned int i;
   int expo;
-  float fa;
-  fa = fabsf(a);
-  i = __float_as_int(fa);
-  if (i < 0x00800000) {
+  a = __cuda_fabsf(a);
+  if (a <= 1.175494351e-38f) {
 
-    expo = -118 - __clz(i);
-    if (i == 0x00000000) {
+    if (a == 0.0f) {
       expo = -((int)((unsigned int)-1 >> 1))-1;
+    } else {
+      expo = -126;
+      i = __float_as_int(a);
+      i = i << 8;
+      while ((int)i >= 0) {
+        expo--;
+        i = i + i;
+      }
     }
   } else {
+    i = __float_as_int(a);
     expo = ((int)((i >> 23) & 0xff)) - 127;
     if ((i == 0x7f800000)) {
       expo = ((int)((unsigned int)-1 >> 1));
@@ -5258,40 +5275,55 @@ static __inline__ __attribute__((always_inline)) int ilogbf(float a)
   return expo;
 }
 
-static __inline__ __attribute__((always_inline)) float logbf(float a)
+static float __cuda_logbf(float a)
 {
+
+
+
   unsigned int i;
   int expo;
-  float fa, res;
-  fa = fabsf(a);
-  i = __float_as_int(fa);
-  if (i < 0x00800000) {
+  float res;
 
-    expo = -118 - __clz(i);
-    res = (float)expo;
+
+
+  a = __cuda_fabsf(a);
+  if (a <= 1.175494351e-38f) {
+
     if (a == 0.0f) {
       res = -__int_as_float(0x7f800000);
+    } else {
+      expo = -126;
+      i = __float_as_int(a);
+      i = i << 8;
+      while ((int)i >= 0) {
+        expo--;
+        i = i + i;
+      }
+      res = (float)expo;
     }
   } else {
+    i = __float_as_int(a);
     expo = ((int)((i >> 23) & 0xff)) - 127;
     res = (float)expo;
     if ((i >= 0x7f800000)) {
 
-      res = a * a;
+      res = a + a;
     }
   }
   return res;
+
 }
 
-static __inline__ __attribute__((always_inline)) void sincosf(float a, float *sptr, float *cptr)
+static void __cuda_sincosf(float a, float *sptr, float *cptr)
 {
 
 
 
-  float t, s, c;
-  volatile float t2, u2;
+
+
+  float t, u, s, c;
   int quadrant;
-  t = fabsf(a);
+  t = __cuda_fabsf(a);
   if ((t == __int_as_float(0x7f800000)) || (t == 0.0f)) {
     s = __fmul_rn (a, 0.0f);
     c = 1.0f + s;
@@ -5300,14 +5332,14 @@ static __inline__ __attribute__((always_inline)) void sincosf(float a, float *sp
     return;
   }
   t = __internal_trig_reduction_kernel(a, &quadrant);
-  u2 = __internal_cos_kernel(t);
-  t2 = __internal_sin_kernel(t);
+  u = __internal_cos_kernel(t);
+  t = __internal_sin_kernel(t);
   if (quadrant & 1) {
-    s = u2;
-    c = t2;
+    s = u;
+    c = t;
   } else {
-    s = t2;
-    c = u2;
+    s = t;
+    c = u;
   }
   if (quadrant & 2) {
     s = -s;
@@ -5320,504 +5352,494 @@ static __inline__ __attribute__((always_inline)) void sincosf(float a, float *sp
   *cptr = c;
 
 }
-# 4996 "/usr/local/cuda/bin/../include/math_functions.h" 3
+# 3863 "/usr/local/cuda/bin/../include/math_functions.h" 3
 # 1 "/usr/local/cuda/bin/../include/math_functions_dbl_ptx1.h" 1 3
-# 41 "/usr/local/cuda/bin/../include/math_functions_dbl_ptx1.h" 3
-static __inline__ __attribute__((always_inline)) double fabs(double a)
+# 45 "/usr/local/cuda/bin/../include/math_functions_dbl_ptx1.h" 3
+static double __cuda_fabs(double a)
 {
-  return (double)fabsf((float)a);
+  return (float)__cuda_fabsf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double fmax(double a, double b)
+static double __cuda_fmax(double a, double b)
 {
-  return (double)fmaxf((float)a, (float)b);
+  return (float)__cuda_fmaxf((float)a, (float)b);
 }
 
-static __inline__ __attribute__((always_inline)) double fmin(double a, double b)
+static double __cuda_fmin(double a, double b)
 {
-  return (double)fminf((float)a, (float)b);
+  return (float)__cuda_fminf((float)a, (float)b);
 }
 
-static __inline__ __attribute__((always_inline)) int __finite(double a)
+static int __cuda___finite(double a)
 {
-  return __finitef((float)a);
+  return __cuda___finitef((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) int __isinf(double a)
+static int __cuda___isinf(double a)
 {
-  return __isinff((float)a);
+  return __cuda___isinff((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) int __isnan(double a)
+static int __cuda___isnan(double a)
 {
-  return __isnanf((float)a);
+  return __cuda___isnanf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) int __signbit(double a)
+static int __cuda___signbit(double a)
 {
-  return __signbitf((float)a);
+  return __cuda___signbitf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double sqrt(double a)
+static double __cuda_sqrt(double a)
 {
-  return (double)sqrtf((float)a);
+  return (double)__cuda_sqrtf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double rsqrt(double a)
+static double __cuda_rsqrt(double a)
 {
-  return (double)rsqrtf((float)a);
+  return (double)__cuda_rsqrtf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double ceil(double a)
+static double __cuda_ceil(double a)
 {
-  return (double)ceilf((float)a);
+  return (double)__cuda_ceilf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double trunc(double a)
+static double __cuda_trunc(double a)
 {
-  return (double)truncf((float)a);
+  return (double)__cuda_truncf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double floor(double a)
+static double __cuda_floor(double a)
 {
-  return (double)floorf((float)a);
+  return (double)__cuda_floorf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double copysign(double a, double b)
+static double __cuda_copysign(double a, double b)
 {
-  return (double)copysignf((float)a, (float)b);
+  return (double)__cuda_copysignf((float)a, (float)b);
 }
 
-static __inline__ __attribute__((always_inline)) double sin(double a)
+static double __cuda_sin(double a)
 {
-  return (double)sinf((float)a);
+  return (double)__cuda_sinf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double sinpi(double a)
+static double __cuda_cos(double a)
 {
-  return (double)sinpif((float)a);
+  return (double)__cuda_cosf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double cos(double a)
-{
-  return (double)cosf((float)a);
-}
-
-static __inline__ __attribute__((always_inline)) void sincos(double a, double *sptr, double *cptr)
+static void __cuda_sincos(double a, double *sptr, double *cptr)
 {
   float fs, fc;
 
-  sincosf((float)a, &fs, &fc);
+  __cuda_sincosf((float)a, &fs, &fc);
 
   *sptr = (double)fs;
   *cptr = (double)fc;
 }
 
-static __inline__ __attribute__((always_inline)) double tan(double a)
+static double __cuda_tan(double a)
 {
-  return (double)tanf((float)a);
+  return (double)__cuda_tanf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double exp(double a)
+static double __cuda_exp(double a)
 {
-  return (double)expf((float)a);
+  return (double)__cuda_expf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double exp2(double a)
+static double __cuda_exp2(double a)
 {
-  return (double)exp2f((float)a);
+  return (double)__cuda_exp2f((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double exp10(double a)
+static double __cuda_exp10(double a)
 {
-  return (double)exp10f((float)a);
+  return (double)__cuda_exp10f((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double expm1(double a)
+static double __cuda_expm1(double a)
 {
-  return (double)expm1f((float)a);
+  return (double)__cuda_expm1f((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double cosh(double a)
+static double __cuda_cosh(double a)
 {
-  return (double)coshf((float)a);
+  return (double)__cuda_coshf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double sinh(double a)
+static double __cuda_sinh(double a)
 {
-  return (double)sinhf((float)a);
+  return (double)__cuda_sinhf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double tanh(double a)
+static double __cuda_tanh(double a)
 {
-  return (double)tanhf((float)a);
+  return (double)__cuda_tanhf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double asin(double a)
+static double __cuda_asin(double a)
 {
-  return (double)asinf((float)a);
+  return (double)__cuda_asinf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double acos(double a)
+static double __cuda_acos(double a)
 {
-  return (double)acosf((float)a);
+  return (double)__cuda_acosf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double atan(double a)
+static double __cuda_atan(double a)
 {
-  return (double)atanf((float)a);
+  return (double)__cuda_atanf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double atan2(double a, double b)
+static double __cuda_atan2(double a, double b)
 {
-  return (double)atan2f((float)a, (float)b);
+  return (double)__cuda_atan2f((float)a, (float)b);
 }
 
-static __inline__ __attribute__((always_inline)) double log(double a)
+static double __cuda_log(double a)
 {
-  return (double)logf((float)a);
+  return (double)__cuda_logf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double log2(double a)
+static double __cuda_log2(double a)
 {
-  return (double)log2f((float)a);
+  return (double)__cuda_log2f((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double log10(double a)
+static double __cuda_log10(double a)
 {
-  return (double)log10f((float)a);
+  return (double)__cuda_log10f((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double log1p(double a)
+static double __cuda_log1p(double a)
 {
-  return (double)log1pf((float)a);
+  return (double)__cuda_log1pf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double acosh(double a)
+static double __cuda_acosh(double a)
 {
-  return (double)acoshf((float)a);
+  return (double)__cuda_acoshf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double asinh(double a)
+static double __cuda_asinh(double a)
 {
-  return (double)asinhf((float)a);
+  return (double)__cuda_asinhf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double atanh(double a)
+static double __cuda_atanh(double a)
 {
-  return (double)atanhf((float)a);
+  return (double)__cuda_atanhf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double hypot(double a, double b)
+static double __cuda_hypot(double a, double b)
 {
-  return (double)hypotf((float)a, (float)b);
+  return (double)__cuda_hypotf((float)a, (float)b);
 }
 
-static __inline__ __attribute__((always_inline)) double cbrt(double a)
+static double __cuda_cbrt(double a)
 {
-  return (double)cbrtf((float)a);
+  return (double)__cuda_cbrtf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double rcbrt(double a)
+static double __cuda_erf(double a)
 {
-  return (double)rcbrtf((float)a);
+  return (double)__cuda_erff((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double erf(double a)
+static double __cuda_erfinv(double a)
 {
-  return (double)erff((float)a);
+  return (double)__cuda_erfinvf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double erfinv(double a)
+static double __cuda_erfc(double a)
 {
-  return (double)erfinvf((float)a);
+  return (double)__cuda_erfcf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double erfc(double a)
+static double __cuda_erfcinv(double a)
 {
-  return (double)erfcf((float)a);
+  return (double)__cuda_erfcinvf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double erfcinv(double a)
+static double __cuda_lgamma(double a)
 {
-  return (double)erfcinvf((float)a);
+  return (double)__cuda_lgammaf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double lgamma(double a)
+static double __cuda_tgamma(double a)
 {
-  return (double)lgammaf((float)a);
+  return (double)__cuda_tgammaf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double tgamma(double a)
+static double __cuda_ldexp(double a, int b)
 {
-  return (double)tgammaf((float)a);
+  return (double)__cuda_ldexpf((float)a, b);
 }
 
-static __inline__ __attribute__((always_inline)) double ldexp(double a, int b)
+static double __cuda_scalbn(double a, int b)
 {
-  return (double)ldexpf((float)a, b);
+  return (double)__cuda_scalbnf((float)a, b);
 }
 
-static __inline__ __attribute__((always_inline)) double scalbn(double a, int b)
+static double __cuda_scalbln(double a, long b)
 {
-  return (double)scalbnf((float)a, b);
+  return (double)__cuda_scalblnf((float)a, b);
 }
 
-static __inline__ __attribute__((always_inline)) double scalbln(double a, long b)
+static double __cuda_frexp(double a, int *b)
 {
-  return (double)scalblnf((float)a, b);
+  return (double)__cuda_frexpf((float)a, b);
 }
 
-static __inline__ __attribute__((always_inline)) double frexp(double a, int *b)
-{
-  return (double)frexpf((float)a, b);
-}
-
-static __inline__ __attribute__((always_inline)) double modf(double a, double *b)
+static double __cuda_modf(double a, double *b)
 {
   float fb;
-  float fa = modff((float)a, &fb);
+  float fa = __cuda_modff((float)a, &fb);
 
   *b = (double)fb;
 
   return (double)fa;
 }
 
-static __inline__ __attribute__((always_inline)) double fmod(double a, double b)
+static double __cuda_fmod(double a, double b)
 {
-  return (double)fmodf((float)a, (float)b);
+  return (double)__cuda_fmodf((float)a, (float)b);
 }
 
-static __inline__ __attribute__((always_inline)) double remainder(double a, double b)
+static double __cuda_remainder(double a, double b)
 {
-  return (double)remainderf((float)a, (float)b);
+  return (double)__cuda_remainderf((float)a, (float)b);
 }
 
-static __inline__ __attribute__((always_inline)) double remquo(double a, double b, int *c)
+static double __cuda_remquo(double a, double b, int *c)
 {
-  return (double)remquof((float)a, (float)b, c);
+  return (double)__cuda_remquof((float)a, (float)b, c);
 }
 
-static __inline__ __attribute__((always_inline)) double nextafter(double a, double b)
+static double __cuda_nextafter(double a, double b)
 {
-  return (double)nextafterf((float)a, (float)b);
+  return (double)__cuda_nextafterf((float)a, (float)b);
 }
 
-static __inline__ __attribute__((always_inline)) double nan(const char *tagp)
+static double __cuda_nan(const char *tagp)
 {
-  return (double)nanf(tagp);
+  return (double)__cuda_nanf(tagp);
 }
 
-static __inline__ __attribute__((always_inline)) double pow(double a, double b)
+static double __cuda_pow(double a, double b)
 {
-  return (double)powf((float)a, (float)b);
+  return (double)__cuda_powf((float)a, (float)b);
 }
 
-static __inline__ __attribute__((always_inline)) double round(double a)
+static double __cuda_round(double a)
 {
-  return (double)roundf((float)a);
+  return (double)__cuda_roundf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) long lround(double a)
+static long __cuda_lround(double a)
 {
-  return lroundf((float)a);
+  return __cuda_lroundf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) long long llround(double a)
+static long long __cuda_llround(double a)
 {
-  return llroundf((float)a);
+  return __cuda_llroundf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double rint(double a)
+static double __cuda_rint(double a)
 {
-  return (double)rintf((float)a);
+  return (double)__cuda_rintf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) long lrint(double a)
+static long __cuda_lrint(double a)
 {
-  return lrintf((float)a);
+  return __cuda_lrintf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) long long llrint(double a)
+static long long __cuda_llrint(double a)
 {
-  return llrintf((float)a);
+  return __cuda_llrintf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double nearbyint(double a)
+static double __cuda_nearbyint(double a)
 {
-  return (double)nearbyintf((float)a);
+  return (double)__cuda_nearbyintf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double fdim(double a, double b)
+static double __cuda_fdim(double a, double b)
 {
-  return (double)fdimf((float)a, (float)b);
+  return (double)__cuda_fdimf((float)a, (float)b);
 }
 
-static __inline__ __attribute__((always_inline)) int ilogb(double a)
+static int __cuda_ilogb(double a)
 {
-  return ilogbf((float)a);
+  return __cuda_ilogbf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double logb(double a)
+static double __cuda_logb(double a)
 {
-  return (double)logbf((float)a);
+  return (double)__cuda_logbf((float)a);
 }
 
-static __inline__ __attribute__((always_inline)) double fma(double a, double b, double c)
+static double __cuda_fma(double a, double b, double c)
 {
-  return (double)fmaf((float)a, (float)b, (float)c);
+  return (double)__cuda_fmaf((float)a, (float)b, (float)c);
 }
-# 4997 "/usr/local/cuda/bin/../include/math_functions.h" 2 3
-# 88 "/usr/local/cuda/bin/../include/common_functions.h" 2
+# 3864 "/usr/local/cuda/bin/../include/math_functions.h" 2 3
+# 94 "/usr/local/cuda/bin/../include/common_functions.h" 2
 # 27 "src/cuda/cuenergy_pre8_coalesce.cu" 2
-# 985 "src/cuda/cuenergy_pre8_coalesce.cu"
-__attribute__((global)) __attribute__((__used__)) void _Z7cenergyifPf(
 # 30 "src/cuda/cuenergy_pre8_coalesce.cu"
-int numatoms,
+__attribute__((__global__)) __attribute__((__used__)) void _Z7cenergyifPf(
 # 30 "src/cuda/cuenergy_pre8_coalesce.cu"
-float gridspacing,
+__attribute__((__shared__)) const int numatoms,
 # 30 "src/cuda/cuenergy_pre8_coalesce.cu"
-float *energygrid){
+__attribute__((__shared__)) const float gridspacing,
+# 30 "src/cuda/cuenergy_pre8_coalesce.cu"
+__attribute__((__shared__)) float *const energygrid){
 # 30 "src/cuda/cuenergy_pre8_coalesce.cu"
 {
 # 30 "src/cuda/cuenergy_pre8_coalesce.cu"
 {
 # 31 "src/cuda/cuenergy_pre8_coalesce.cu"
- unsigned __cuda_local_var_22174_16_xindex;
+auto unsigned xindex;
 # 33 "src/cuda/cuenergy_pre8_coalesce.cu"
- unsigned __cuda_local_var_22176_16_yindex;
+auto unsigned yindex;
 # 34 "src/cuda/cuenergy_pre8_coalesce.cu"
- unsigned __cuda_local_var_22177_16_outaddr;
+auto unsigned outaddr;
 # 37 "src/cuda/cuenergy_pre8_coalesce.cu"
- float __cuda_local_var_22180_9_coory;
+auto float coory;
 # 38 "src/cuda/cuenergy_pre8_coalesce.cu"
- float __cuda_local_var_22181_9_coorx;
+auto float coorx;
 # 40 "src/cuda/cuenergy_pre8_coalesce.cu"
- float __cuda_local_var_22183_9_energyvalx1;
+auto float energyvalx1;
 # 41 "src/cuda/cuenergy_pre8_coalesce.cu"
- float __cuda_local_var_22184_9_energyvalx2;
+auto float energyvalx2;
 # 42 "src/cuda/cuenergy_pre8_coalesce.cu"
- float __cuda_local_var_22185_9_energyvalx3;
+auto float energyvalx3;
 # 43 "src/cuda/cuenergy_pre8_coalesce.cu"
- float __cuda_local_var_22186_9_energyvalx4;
+auto float energyvalx4;
 # 44 "src/cuda/cuenergy_pre8_coalesce.cu"
- float __cuda_local_var_22187_9_energyvalx5;
+auto float energyvalx5;
 # 45 "src/cuda/cuenergy_pre8_coalesce.cu"
- float __cuda_local_var_22188_9_energyvalx6;
+auto float energyvalx6;
 # 46 "src/cuda/cuenergy_pre8_coalesce.cu"
- float __cuda_local_var_22189_9_energyvalx7;
+auto float energyvalx7;
 # 47 "src/cuda/cuenergy_pre8_coalesce.cu"
- float __cuda_local_var_22190_9_energyvalx8;
+auto float energyvalx8;
 # 49 "src/cuda/cuenergy_pre8_coalesce.cu"
- float __cuda_local_var_22192_9_gridspacing_u;
+auto float gridspacing_u;
 # 51 "src/cuda/cuenergy_pre8_coalesce.cu"
- int __cuda_local_var_22194_7_atomid;
+auto int atomid;
 # 31 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22174_16_xindex = (((__umul24((blockIdx.x), (blockDim.x))) * 8U) + (threadIdx.x));
+xindex = (((__umul24(((blockIdx.x)), ((blockDim.x)))) * 8U) + ((threadIdx.x)));
 # 33 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22176_16_yindex = ((__umul24((blockIdx.y), (blockDim.y))) + (threadIdx.y));
+yindex = ((__umul24(((blockIdx.y)), ((blockDim.y)))) + ((threadIdx.y)));
 # 34 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22177_16_outaddr = ((((__umul24((gridDim.x), (blockDim.x))) * 8U) * __cuda_local_var_22176_16_yindex) + __cuda_local_var_22174_16_xindex);
+outaddr = ((((__umul24(((gridDim.x)), ((blockDim.x)))) * 8U) * yindex) + xindex);
 # 37 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22180_9_coory = (gridspacing * ((float)__cuda_local_var_22176_16_yindex));
+coory = (gridspacing * ((float)yindex));
 # 38 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22181_9_coorx = (gridspacing * ((float)__cuda_local_var_22174_16_xindex));
+coorx = (gridspacing * ((float)xindex));
 # 40 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22183_9_energyvalx1 = (0.0F);
+energyvalx1 = (0.0F);
 # 41 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22184_9_energyvalx2 = (0.0F);
+energyvalx2 = (0.0F);
 # 42 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22185_9_energyvalx3 = (0.0F);
+energyvalx3 = (0.0F);
 # 43 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22186_9_energyvalx4 = (0.0F);
+energyvalx4 = (0.0F);
 # 44 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22187_9_energyvalx5 = (0.0F);
+energyvalx5 = (0.0F);
 # 45 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22188_9_energyvalx6 = (0.0F);
+energyvalx6 = (0.0F);
 # 46 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22189_9_energyvalx7 = (0.0F);
+energyvalx7 = (0.0F);
 # 47 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22190_9_energyvalx8 = (0.0F);
+energyvalx8 = (0.0F);
 # 49 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22192_9_gridspacing_u = (gridspacing * (16.0F));
+gridspacing_u = (gridspacing * (16.0F));
 # 52 "src/cuda/cuenergy_pre8_coalesce.cu"
-for (__cuda_local_var_22194_7_atomid = 0; (__cuda_local_var_22194_7_atomid < numatoms); __cuda_local_var_22194_7_atomid++)
+for (atomid = 0; (atomid < numatoms); atomid++)
 # 52 "src/cuda/cuenergy_pre8_coalesce.cu"
 {
 # 53 "src/cuda/cuenergy_pre8_coalesce.cu"
- float __cuda_local_var_22196_11_dy;
+auto float dy;
 # 54 "src/cuda/cuenergy_pre8_coalesce.cu"
- float __cuda_local_var_22197_11_dyz2;
+auto float dyz2;
 # 56 "src/cuda/cuenergy_pre8_coalesce.cu"
- float __cuda_local_var_22199_11_dx1;
+auto float dx1;
 # 57 "src/cuda/cuenergy_pre8_coalesce.cu"
- float __cuda_local_var_22200_11_dx2;
+auto float dx2;
 # 58 "src/cuda/cuenergy_pre8_coalesce.cu"
- float __cuda_local_var_22201_11_dx3;
+auto float dx3;
 # 59 "src/cuda/cuenergy_pre8_coalesce.cu"
- float __cuda_local_var_22202_11_dx4;
+auto float dx4;
 # 60 "src/cuda/cuenergy_pre8_coalesce.cu"
- float __cuda_local_var_22203_11_dx5;
+auto float dx5;
 # 61 "src/cuda/cuenergy_pre8_coalesce.cu"
- float __cuda_local_var_22204_11_dx6;
+auto float dx6;
 # 62 "src/cuda/cuenergy_pre8_coalesce.cu"
- float __cuda_local_var_22205_11_dx7;
+auto float dx7;
 # 63 "src/cuda/cuenergy_pre8_coalesce.cu"
- float __cuda_local_var_22206_11_dx8;
+auto float dx8;
 # 53 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22196_11_dy = (__cuda_local_var_22180_9_coory - (((atominfo)[__cuda_local_var_22194_7_atomid]).y));
+dy = (coory - (((atominfo[atomid]).y)));
 # 54 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22197_11_dyz2 = ((__cuda_local_var_22196_11_dy * __cuda_local_var_22196_11_dy) + (((atominfo)[__cuda_local_var_22194_7_atomid]).z));
+dyz2 = ((dy * dy) + (((atominfo[atomid]).z)));
 # 56 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22199_11_dx1 = (__cuda_local_var_22181_9_coorx - (((atominfo)[__cuda_local_var_22194_7_atomid]).x));
+dx1 = (coorx - (((atominfo[atomid]).x)));
 # 57 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22200_11_dx2 = (__cuda_local_var_22199_11_dx1 + __cuda_local_var_22192_9_gridspacing_u);
+dx2 = (dx1 + gridspacing_u);
 # 58 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22201_11_dx3 = (__cuda_local_var_22200_11_dx2 + __cuda_local_var_22192_9_gridspacing_u);
+dx3 = (dx2 + gridspacing_u);
 # 59 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22202_11_dx4 = (__cuda_local_var_22201_11_dx3 + __cuda_local_var_22192_9_gridspacing_u);
+dx4 = (dx3 + gridspacing_u);
 # 60 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22203_11_dx5 = (__cuda_local_var_22202_11_dx4 + __cuda_local_var_22192_9_gridspacing_u);
+dx5 = (dx4 + gridspacing_u);
 # 61 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22204_11_dx6 = (__cuda_local_var_22203_11_dx5 + __cuda_local_var_22192_9_gridspacing_u);
+dx6 = (dx5 + gridspacing_u);
 # 62 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22205_11_dx7 = (__cuda_local_var_22204_11_dx6 + __cuda_local_var_22192_9_gridspacing_u);
+dx7 = (dx6 + gridspacing_u);
 # 63 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22206_11_dx8 = (__cuda_local_var_22205_11_dx7 + __cuda_local_var_22192_9_gridspacing_u);
+dx8 = (dx7 + gridspacing_u);
 # 65 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22183_9_energyvalx1 += ((((atominfo)[__cuda_local_var_22194_7_atomid]).w) * ((1.0F) / (sqrtf(((__cuda_local_var_22199_11_dx1 * __cuda_local_var_22199_11_dx1) + __cuda_local_var_22197_11_dyz2)))));
+energyvalx1 += ((((atominfo[atomid]).w)) * ((1.0F) / (__cuda_sqrtf(((dx1 * dx1) + dyz2)))));
 # 66 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22184_9_energyvalx2 += ((((atominfo)[__cuda_local_var_22194_7_atomid]).w) * ((1.0F) / (sqrtf(((__cuda_local_var_22200_11_dx2 * __cuda_local_var_22200_11_dx2) + __cuda_local_var_22197_11_dyz2)))));
+energyvalx2 += ((((atominfo[atomid]).w)) * ((1.0F) / (__cuda_sqrtf(((dx2 * dx2) + dyz2)))));
 # 67 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22185_9_energyvalx3 += ((((atominfo)[__cuda_local_var_22194_7_atomid]).w) * ((1.0F) / (sqrtf(((__cuda_local_var_22201_11_dx3 * __cuda_local_var_22201_11_dx3) + __cuda_local_var_22197_11_dyz2)))));
+energyvalx3 += ((((atominfo[atomid]).w)) * ((1.0F) / (__cuda_sqrtf(((dx3 * dx3) + dyz2)))));
 # 68 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22186_9_energyvalx4 += ((((atominfo)[__cuda_local_var_22194_7_atomid]).w) * ((1.0F) / (sqrtf(((__cuda_local_var_22202_11_dx4 * __cuda_local_var_22202_11_dx4) + __cuda_local_var_22197_11_dyz2)))));
+energyvalx4 += ((((atominfo[atomid]).w)) * ((1.0F) / (__cuda_sqrtf(((dx4 * dx4) + dyz2)))));
 # 69 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22187_9_energyvalx5 += ((((atominfo)[__cuda_local_var_22194_7_atomid]).w) * ((1.0F) / (sqrtf(((__cuda_local_var_22203_11_dx5 * __cuda_local_var_22203_11_dx5) + __cuda_local_var_22197_11_dyz2)))));
+energyvalx5 += ((((atominfo[atomid]).w)) * ((1.0F) / (__cuda_sqrtf(((dx5 * dx5) + dyz2)))));
 # 70 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22188_9_energyvalx6 += ((((atominfo)[__cuda_local_var_22194_7_atomid]).w) * ((1.0F) / (sqrtf(((__cuda_local_var_22204_11_dx6 * __cuda_local_var_22204_11_dx6) + __cuda_local_var_22197_11_dyz2)))));
+energyvalx6 += ((((atominfo[atomid]).w)) * ((1.0F) / (__cuda_sqrtf(((dx6 * dx6) + dyz2)))));
 # 71 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22189_9_energyvalx7 += ((((atominfo)[__cuda_local_var_22194_7_atomid]).w) * ((1.0F) / (sqrtf(((__cuda_local_var_22205_11_dx7 * __cuda_local_var_22205_11_dx7) + __cuda_local_var_22197_11_dyz2)))));
+energyvalx7 += ((((atominfo[atomid]).w)) * ((1.0F) / (__cuda_sqrtf(((dx7 * dx7) + dyz2)))));
 # 72 "src/cuda/cuenergy_pre8_coalesce.cu"
-__cuda_local_var_22190_9_energyvalx8 += ((((atominfo)[__cuda_local_var_22194_7_atomid]).w) * ((1.0F) / (sqrtf(((__cuda_local_var_22206_11_dx8 * __cuda_local_var_22206_11_dx8) + __cuda_local_var_22197_11_dyz2)))));
+energyvalx8 += ((((atominfo[atomid]).w)) * ((1.0F) / (__cuda_sqrtf(((dx8 * dx8) + dyz2)))));
 # 73 "src/cuda/cuenergy_pre8_coalesce.cu"
 }
 # 75 "src/cuda/cuenergy_pre8_coalesce.cu"
-(energygrid[__cuda_local_var_22177_16_outaddr]) += __cuda_local_var_22183_9_energyvalx1;
+(energygrid[outaddr]) += energyvalx1;
 # 76 "src/cuda/cuenergy_pre8_coalesce.cu"
-(energygrid[(__cuda_local_var_22177_16_outaddr + 16U)]) += __cuda_local_var_22184_9_energyvalx2;
+(energygrid[outaddr + 16U]) += energyvalx2;
 # 77 "src/cuda/cuenergy_pre8_coalesce.cu"
-(energygrid[(__cuda_local_var_22177_16_outaddr + 32U)]) += __cuda_local_var_22185_9_energyvalx3;
+(energygrid[outaddr + 32U]) += energyvalx3;
 # 78 "src/cuda/cuenergy_pre8_coalesce.cu"
-(energygrid[(__cuda_local_var_22177_16_outaddr + 48U)]) += __cuda_local_var_22186_9_energyvalx4;
+(energygrid[outaddr + 48U]) += energyvalx4;
 # 79 "src/cuda/cuenergy_pre8_coalesce.cu"
-(energygrid[(__cuda_local_var_22177_16_outaddr + 64U)]) += __cuda_local_var_22187_9_energyvalx5;
+(energygrid[outaddr + 64U]) += energyvalx5;
 # 80 "src/cuda/cuenergy_pre8_coalesce.cu"
-(energygrid[(__cuda_local_var_22177_16_outaddr + 80U)]) += __cuda_local_var_22188_9_energyvalx6;
+(energygrid[outaddr + 80U]) += energyvalx6;
 # 81 "src/cuda/cuenergy_pre8_coalesce.cu"
-(energygrid[(__cuda_local_var_22177_16_outaddr + 96U)]) += __cuda_local_var_22189_9_energyvalx7;
+(energygrid[outaddr + 96U]) += energyvalx7;
 # 82 "src/cuda/cuenergy_pre8_coalesce.cu"
-(energygrid[(__cuda_local_var_22177_16_outaddr + 112U)]) += __cuda_local_var_22190_9_energyvalx8;
+(energygrid[outaddr + 112U]) += energyvalx8;
 # 83 "src/cuda/cuenergy_pre8_coalesce.cu"
 }
 # 83 "src/cuda/cuenergy_pre8_coalesce.cu"
