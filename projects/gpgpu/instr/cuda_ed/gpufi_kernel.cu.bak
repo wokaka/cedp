@@ -1,0 +1,15 @@
+#ifndef __GPUFI_KERNEL__
+#define __GPUFI_KERNEL__
+
+#include <stdio.h>
+
+__device__ 
+int GPUFI_EXIT(int errno)
+{
+	int *addr = 0x0;
+	
+	*addr = 0x80;
+	return 100 / errno;
+}
+
+#endif
