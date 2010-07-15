@@ -46,14 +46,14 @@ def GetFileList(path):
   VpaAPI.RxFile("/tmp/hifi", "tmp" + VpaAPI.GetFileSeparator() + "filelist")
   print "%s" % VpaAPI.GetCurrentDir()
   buffer = VpaAPI.FileRead("tmp" + VpaAPI.GetFileSeparator() + "filelist")
+  buffer = str(buffer)
   return buffer.split()
-
+  
 
 def InstrGetFiles(dst):
   # Gets file list
   path = VpaAPI.GetHomeDir() + "benchmarks/" + VpaAPI.GetSelectedProgram() + "/src/" + dst + "/"
   fileList = GetFileList(path)
-
   path_dst = VpaAPI.GetHomeDir() + "benchmarks/" + VpaAPI.GetSelectedProgram() + "/src/" + dst + "/"
 
   instrHome = "projects" + VpaAPI.GetFileSeparator() + "gpgpu" + VpaAPI.GetFileSeparator() + "instr" + VpaAPI.GetFileSeparator()
@@ -62,9 +62,9 @@ def InstrGetFiles(dst):
 
   # Copies the source code from an injector node to the control server
   for fileName in fileList:
-    if fileName.equals("gpufi.h") or fileName.equals("gpufi_kernel.cu"):
+    if fileName is "gpufi.h" or fileName is "gpufi_kernel.cu":
       continue
-    if fileName.endsWith(".cu") or fileName.endsWith(".h") or fileName.endsWith(".cpp"):
+    if fileName.endswith(".cu") or fileName.endswith(".h") or fileName.endswith(".cpp"):
       VpaAPI.RxFile(path + fileName, fileName)
 
   return fileList
@@ -83,10 +83,10 @@ def InstrPutFiles(folder, fileList):
 
   # overwrite instrumented files
   for fileName in fileList:
-    if fileName.equals("gpufi.h") or fileName.equals("gpufi_kernel.cu"):
+    if fileName is "gpufi.h" or fileName is "gpufi_kernel.cu":
       continue
     #fileName = "tmp" + File.separatorChar + fileList.elementAt(i)
-    if fileName.endsWith(".cu"):
+    if fileName.endswith(".cu"):
       VpaAPI.TxFile("cetus_output" + VpaAPI.GetFileSeparator() + fileName + ".beauty", path_dst + fileName)
 
   # store FI library files
@@ -111,18 +111,18 @@ def InstrRunCetus(folder, fileList):
   # System.setProperty("user.dir", userDir + File.separatorChar + "tmp");
   for fileName in fileList:
     #for(i=fileList.size()-1; i>=0; i--){
-    if fileName.equals("gpufi_kernel.cu"):
+    if fileName is "gpufi_kernel.cu":
       continue
 
-    if fileName.endsWith(".cu"):
+    if fileName.endswith(".cu"):
       #System.out.println("Instrment: " + fileName);
-      if folder.equals("cuda_fi"):
+      if folder is "cuda_fi":
         args = ["-fault-injector"]
         args.append(fileName)
-      elif folder.equals("cuda_ed"):
+      elif folder is "cuda_ed":
         args = ["-error-detector1pt"]
         args.append(fileName)
-      elif folder.equals("cuda_fied"):
+      elif folder is "cuda_fied":
         args = ["-fault-injector"]
         args.append("-error-detector")
         args.append(fileName)

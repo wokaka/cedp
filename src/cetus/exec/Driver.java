@@ -121,7 +121,16 @@ public class Driver
       + "      =1 enable local range computation (default)\n"
       + "      =2 enable inter-procedural computation (experimental)");
     options.add(options.UTILITY, "preserve-KR-function",
-        "Preserves K&R-style function declaration"); 
+        "Preserves K&R-style function declaration");
+
+    options.add(options.TRANSFORM, "cuda-inj",
+        "Fault Injector Instrumentation for CUDA");
+    options.add(options.TRANSFORM, "fault-injector",
+        "Fault Injector Instrumentation for CUDA");
+    options.add(options.TRANSFORM, "error-detector",
+        "Error Detector Instrumentation for CUDA");
+    options.add(options.TRANSFORM, "error-detector1pt",
+        "Error Detector Instrumentation for CUDA");
     }
 
   /**
@@ -468,6 +477,20 @@ public class Driver
     {
     	TransformPass.run(new LoopProfiler(program));
     }
+
+    if (getOptionValue("fault-injector") != null) {
+      TransformPass.run(new FaultInjector(program));
+    }
+    if (getOptionValue("error-detector") != null) {
+      TransformPass.run(new ErrorDetector(program));
+    }
+    if (getOptionValue("error-detector1pt") != null) {
+      TransformPass.run(new ErrorDetector1Pt(program));
+    }
+    if (getOptionValue("cuda-inj") != null) {
+      TransformPass.run(new CudaFaultInjection(program));
+    }
+
   }
 
   /**

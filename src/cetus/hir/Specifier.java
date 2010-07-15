@@ -22,7 +22,9 @@ public class Specifier implements Printable
       "transient", "final", "abstract", "native",
       "threadsafe","synchronized","strictfp","boolean",
       "byte","_Bool","_Complex","_Imaginary", "enum", 
-      "@annotation", "package", "import", "[]"};
+      "@annotation", "package", "import", "[]",
+      "__global__", "__local__", "__shared__",
+      "__constant__", "__device__", "__host__"};
 
   public static final Specifier CHAR     = new Specifier(0);
   public static final Specifier WCHAR_T  = new Specifier(1);
@@ -90,6 +92,16 @@ public class Specifier implements Printable
   public static final Specifier IMPORT  = new Specifier(43);
 
   public static final Specifier ARRAY  = new Specifier(44);
+
+  /* John A. Stratton: February 2008
+   * The following are CUDA-specific keywords */
+
+  public static final Specifier GLOBAL 		= new Specifier(40);
+  public static final Specifier LOCAL 		= new Specifier(41);
+  public static final Specifier SHARED 		= new Specifier(42);
+  public static final Specifier CONSTANT	= new Specifier(43);
+  public static final Specifier DEVICE 		= new Specifier(44);
+  public static final Specifier HOST 		= new Specifier(45);
 
   /** Predefined integer value of each specifiers. */
   protected int value;
