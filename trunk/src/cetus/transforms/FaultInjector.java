@@ -395,7 +395,8 @@ public class FaultInjector extends TransformPass
         for (int i = 0; i < global_proc.size(); i++) {
             Procedure proc = global_proc.get(i);
             // Modify function declaration
-            Identifier gpu_para = new Identifier("struct _gpufi_data_ *gpufi_dev");
+            Symbol symbol = new Symbol("struct _gpufi_data_ *gpufi_dev");
+            Identifier gpu_para = new Identifier(symbol);
 
             // Store list of parameter before modifying
             List<Declaration> parameter_list = proc.getParameters();

@@ -1,4 +1,4 @@
-# 1 "src/cuda_fi_prerun/main.cu"
+# 1 "src/cuda/main.cu"
 # 233 "/usr/include/c++/4.3/i486-linux-gnu/bits/c++config.h" 3
 namespace std __attribute__((visibility("default"))) { 
 # 245 "/usr/include/c++/4.3/i486-linux-gnu/bits/c++config.h" 3
@@ -5549,84 +5549,6 @@ entry)
 { 
 return cudaFuncGetAttributes(attr, (const char *)entry); 
 } 
-# 14 "src/cuda_fi_prerun/gpufi.h"
-struct _gpufi_fault_ { 
-int kernel; 
-
-int instance; 
-int varid; 
-int call; 
-
-int mask_type; 
-
-
-unsigned mask; 
-int injected; 
-int disabled; 
-int mode; 
-}; 
-# 46 "src/cuda_fi_prerun/gpufi.h"
-struct _gpufi_profile_kernel_ { 
-char state; 
-int id; 
-int instance; 
-char name[32]; 
-}; 
-
-
-struct _gpufi_profile_variable_ { 
-int call_count; 
-int loop_id; 
-int type; 
-}; 
-
-struct _gpufi_profile_ { 
-
-_gpufi_profile_kernel_ kernel[10]; 
-_gpufi_profile_variable_ variable[10][512]; 
-
-
-char kernel_bitmap[10]; 
-int kernel_instance[10]; 
-
-char variable_bitmap[512]; 
-char variable_name[512][32]; 
-}; 
-
-int gpufi_profile_variable_count = 0; 
-int gpufi_profile_kernel_count = 0; 
-
-struct _gpufi_current_ { 
-int mode; 
-int kernel; 
-int instance; 
-int loop; 
-int loop_count; 
-int iteration; 
-
-int profile_index; 
-int profile_mode; 
-# 93
-int blid; 
-int thid; 
-}; 
-
-
-struct _gpufi_data_ { 
-_gpufi_fault_ fault; 
-
-
-
-_gpufi_fault_ debug; 
-_gpufi_current_ current; 
-_gpufi_profile_ profile; 
-}; 
-# 124 "src/cuda_fi_prerun/gpufi.h"
-extern int GPUFI_INIT(int, int); 
-extern int GPUFI_HALT(char *); 
-
-
-extern _gpufi_data_ gpufi_host; 
 # 45 "/usr/include/stdio.h" 3
 struct _IO_FILE; 
 
@@ -6149,110 +6071,7 @@ extern "C" { inline __attribute__((__gnu_inline__)) int ferror_unlocked(FILE *__
 { 
 return ((__stream->_flags) & 32) != 0; 
 } } 
-# 9 "src/cuda_fi_prerun/gpufi_kernel.cu"
-_gpufi_data_ gpufi_host = {{0}}; 
-__loc_sc__(__device__,,) _gpufi_data_ *__shadow_var(,gpufi_dev); 
-# 18
-int variable_count; 
-int kernel_count; 
-# 25
-int GPUFI_INIT(int kernel_cnt, int variable_cnt) 
-{ 
-auto FILE *fp; 
-auto char cmd[32]; 
-auto int i; 
-
-kernel_count = kernel_cnt + 1; 
-variable_count = variable_cnt; 
-
-memset(&gpufi_host, 0, sizeof(_gpufi_data_)); 
-
-fp = fopen("fi_cmd.txt", "rt"); 
-
-if (!(fp)) { 
-printf("file open error\n"); 
-system("pwd"); 
-return -1; 
-}  
-
-fscanf(fp, "%s", cmd); 
-printf("%s ", cmd); 
-if (!(strcmp(cmd, "profile"))) { 
-((gpufi_host.current).blid) = 0; 
-((gpufi_host.current).thid) = 0; 
-
-((gpufi_host.fault).mode) = 1; 
-((gpufi_host.current).profile_index) = (-1); 
-fscanf(fp, "%s", cmd); 
-printf("%s ", cmd); 
-if (!(strcmp(cmd, "none"))) { 
-((gpufi_host.current).profile_mode) = 0; 
-} else { 
-if (!(strcmp(cmd, "value"))) { 
-fscanf(fp, "%s", cmd); 
-printf("%s ", cmd); 
-if (!(strcmp(cmd, "loop"))) { 
-((gpufi_host.current).profile_mode) = 1; } else { 
-if (!(strcmp(cmd, "kernel"))) { 
-((gpufi_host.current).profile_mode) = 2; } else { 
-if (!(strcmp(cmd, "thread"))) { 
-((gpufi_host.current).profile_mode) = 3; 
-fscanf(fp, "%d", &((gpufi_host.current).blid)); 
-printf(" %d ", (gpufi_host.current).blid); 
-} else { 
-if (!(strcmp(cmd, "block"))) { 
-((gpufi_host.current).profile_mode) = 4; 
-}  }  }  }  
-}  }  
-printf(" (%d)\n", (gpufi_host.current).profile_mode); 
-}  
-
-fclose(fp); 
-
-return 0; 
-} 
-# 93 "src/cuda_fi_prerun/gpufi_kernel.cu"
-char *gpufi_type_name[6] = {((char *)("unknown")), ((char *)("int")), ((char *)("fp")), ((char *)("int_pt")), ((char *)("fp_pt")), ((char *)("unknown_pt"))}; 
-
-int GPUFI_HALT(char *fname) 
-{ 
-auto FILE *fp; 
-auto int i; auto int j; auto int k; auto int m; 
-
-if (((gpufi_host.fault).mode) == 1) { 
-
-
-fp = fopen(fname, "wt"); 
-if (!(fp)) { 
-printf("can\'t write to an output file, %s\n", fname); 
-return -1; 
-}  
-
-for (i = 0; i < 10; i++) { 
-if (((((gpufi_host.profile).kernel)[i]).state) == 1) { 
-fprintf(fp, "kernel\t%d\t%s\t%d\n", (((gpufi_host.profile).kernel)[i]).id, (((gpufi_host.profile).kernel)[i]).name, (((gpufi_host.profile).kernel)[i]).instance); } else { 
-
-
-
-
-break; }  
-
-for (j = 0; j < variable_count; j++) { 
-if ((((((gpufi_host.profile).variable)[i])[j]).call_count) != 0) { 
-fprintf(fp, "variable\t%d\t%s\t%d\t%d\t%s\t", j, (((gpufi_host.profile).variable_bitmap)[j]) ? (((gpufi_host.profile).variable_name)[j]) : (""), ((((gpufi_host.profile).variable)[i])[j]).call_count, ((((gpufi_host.profile).variable)[i])[j]).loop_id, (gpufi_type_name)[((((gpufi_host.profile).variable)[i])[j]).type]); 
-# 127
-fprintf(fp, "\n"); 
-}  
-}  
-fprintf(fp, "\n"); 
-}  
-
-fclose(fp); 
-}  
-
-return 0; 
-} 
-# 18 "src/cuda_fi_prerun/args.h"
+# 18 "src/cuda/args.h"
 typedef 
 # 11
 struct _options_ { 
@@ -7226,7 +7045,7 @@ extern "C" void encrypt(char *, int) throw();
 extern "C" void swab(const void *__restrict__, void *__restrict__, ssize_t) throw(); 
 # 1094
 extern "C" char *ctermid(char *) throw(); 
-# 12 "src/cuda_fi_prerun/parboil.h"
+# 12 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
 extern "C" { struct pb_Parameters { 
 char *outFile; 
 
@@ -7309,7 +7128,7 @@ extern "C" void pb_SwitchToTimer(pb_TimerSet *, pb_TimerID);
 
 
 extern "C" void pb_PrintTimerSet(pb_TimerSet *); 
-# 23 "src/cuda_fi_prerun/model.h"
+# 23 "src/cuda/model.h"
 typedef unsigned long hist_t; 
 
 struct spherical { 
@@ -7334,21 +7153,24 @@ extern "C" void __assert_fail(const char *, const char *, unsigned, const char *
 extern "C" void __assert_perror_fail(int, const char *, unsigned, const char *) throw() __attribute__((__noreturn__)); 
 # 84
 extern "C" void __assert(const char *, const char *, int) throw() __attribute__((__noreturn__)); 
-# 23 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+# 25 "src/cuda/scan_largearray_kernel.cu"
 float **g_scanBlockSums; 
 unsigned g_numEltsAllocated = (0); 
 unsigned g_numLevelsAllocated = (0); 
+
 __loc_sc__(__constant__,,) float __shadow_var(,dev_binb)[(20 + 1)]; 
+
 unsigned NUM_SETS; 
 unsigned NUM_ELEMENTS; 
-# 31 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+
+
 void initBinB(pb_TimerSet *timers) 
 { 
 auto float *binb = ((float *)malloc((20 + 1) * sizeof(float))); 
-auto int k; 
-for (k = 0; k < (20 + 1); k++) 
+for (int k = 0; k < (20 + 1); k++) 
 { 
 (binb[k]) = cos(((pow((10.0), log10((1.0)) + (k * (1.0)) / (5)) / (60.0)) * (3.141592653589793116)) / (180.0)); 
+
 }  
 pb_SwitchToTimer(timers, pb_TimerID_COPY); 
 cudaMemcpyToSymbol(__shadow_var(,dev_binb), binb, (20 + 1) * sizeof(float)); 
@@ -7356,634 +7178,357 @@ pb_SwitchToTimer(timers, pb_TimerID_COMPUTE);
 free(binb); 
 } 
 
-void gen_hists__entry(hist_t *histograms, float *all_x_data, float *all_y_data, float *all_z_data, int NUM_SETS, int NUM_ELEMENTS, _gpufi_data_ *gpufi_dev);
+
+void gen_hists__entry(hist_t *histograms, float *all_x_data, float *all_y_data, float *
+all_z_data, int NUM_SETS, int NUM_ELEMENTS);
 #if 0
  
-# 46
+# 52
 { 
-GPUFI_KERNEL(gpufi_dev, 0, 0, (char *)("gen_hists")); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 0, (char *)("histograms"), (int *)(&histograms), 5); 
-
-
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 1, (char *)("all_x_data"), (int *)(&all_x_data), 4); 
-
-
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 2, (char *)("all_y_data"), (int *)(&all_y_data), 4); 
-
-
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 3, (char *)("all_z_data"), (int *)(&all_z_data), 4); 
-
-
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 4, (char *)("NUM_SETS"), (int *)(&NUM_SETS), 1); 
-
-
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 5, (char *)("NUM_ELEMENTS"), (int *)(&NUM_ELEMENTS), 1); 
-
-
 auto unsigned bx = (blockIdx.x); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 6, (char *)("bx"), (int *)(&bx), 1); 
-
-
 auto unsigned tid = (threadIdx.x); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 7, (char *)("tid"), (int *)(&tid), 1); 
-
-
 auto bool do_self = (bx < (NUM_SETS + 1)); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 8, (char *)("do_self"), (int *)(&do_self), 0); 
-
 
 auto float *data_x; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 9, (char *)("data_x"), (int *)(&data_x), 4); 
-
-
 auto float *data_y; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 10, (char *)("data_y"), (int *)(&data_y), 4); 
-
-
 auto float *data_z; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 11, (char *)("data_z"), (int *)(&data_z), 4); 
-
-
 auto float *random_x; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 12, (char *)("random_x"), (int *)(&random_x), 4); 
-
-
 auto float *random_y; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 13, (char *)("random_y"), (int *)(&random_y), 4); 
-
-
 auto float *random_z; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 14, (char *)("random_z"), (int *)(&random_z), 4); 
-
 
 #if 0
 auto float 
-# 102
+# 64
 data_x_s[256]; 
 #endif
-# 103 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 15, (char *)("data_x_s"), (int *)(&data_x_s), 2); 
-
-
+# 65 "src/cuda/scan_largearray_kernel.cu"
 #if 0
 auto float 
-# 106
+# 65
 data_y_s[256]; 
 #endif
-# 107 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 16, (char *)("data_y_s"), (int *)(&data_y_s), 2); 
-
-
+# 66 "src/cuda/scan_largearray_kernel.cu"
 #if 0
 auto float 
-# 110
+# 66
 data_z_s[256]; 
 #endif
-# 111 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 17, (char *)("data_z_s"), (int *)(&data_z_s), 2); 
-
-
+# 69 "src/cuda/scan_largearray_kernel.cu"
 #if 0
 auto volatile unsigned 
-# 114
+# 69
 warp_hists[20][(8 * 16)]; 
 #endif
-# 115 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 18, (char *)("warp_hists"), (int *)(&warp_hists), 1); 
-# 120 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
-auto unsigned w; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 19, (char *)("w"), (int *)(&w), 1); 
-
-
-auto unsigned i; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 20, (char *)("i"), (int *)(&i), 1); 
-
-
-auto unsigned warp_index; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 21, (char *)("warp_index"), (int *)(&warp_index), 1); 
-
-
-auto unsigned bin_index; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 22, (char *)("bin_index"), (int *)(&bin_index), 1); 
-
-
-auto unsigned offset; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 23, (char *)("offset"), (int *)(&offset), 1); 
-
-
-auto unsigned bin_base; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 24, (char *)("bin_base"), (int *)(&bin_base), 1); 
-
-
-auto hist_t *hist_base; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 25, (char *)("hist_base"), (int *)(&hist_base), 5); 
-
-
-
-GPUFI_KERNEL_LOOP(gpufi_dev, 0); 
-
-
-for (w = (0); w < (20 * ((256 / 32) * 16)); w += (256)) 
+# 71 "src/cuda/scan_largearray_kernel.cu"
+for (unsigned w = (0); w < (20 * ((256 / 32) * 16)); w += (256)) 
 { 
-
-GPUFI_KERNEL_ITERATION(gpufi_dev); 
-
-
 if ((w + tid) < (20 * ((256 / 32) * 16))) 
 { 
 (((warp_hists)[(w + tid) / ((256 / 32) * 16)])[(w + tid) % ((256 / 32) * 16)]) = (0); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 28, (char *)("warp_hists[((w+tid)/((256/32)*16))][((w+tid)%((256/32)*16))]"), (int *)((warp_hists)[(w + tid) / ((256 / 32) * 16)] + (w + tid) % ((256 / 32) * 16)), 1); 
-
-
 }  
 }  
 
-GPUFI_KERNEL_LOOP(gpufi_dev, 1); 
 
-
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 27, (char *)("w"), (int *)(&w), 1); 
-# 175 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
 if (!do_self) 
 { 
 data_x = all_x_data; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 29, (char *)("data_x"), (int *)(&data_x), 4); 
-
-
 data_y = all_y_data; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 30, (char *)("data_y"), (int *)(&data_y), 4); 
-
-
 data_z = all_z_data; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 31, (char *)("data_z"), (int *)(&data_z), 4); 
-
-
 random_x = all_x_data + NUM_ELEMENTS * (bx - NUM_SETS); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 32, (char *)("random_x"), (int *)(&random_x), 4); 
-
-
 random_y = all_y_data + NUM_ELEMENTS * (bx - NUM_SETS); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 33, (char *)("random_y"), (int *)(&random_y), 4); 
-
-
 random_z = all_z_data + NUM_ELEMENTS * (bx - NUM_SETS); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 34, (char *)("random_z"), (int *)(&random_z), 4); 
-
-
 } else 
 
 { 
 random_x = all_x_data + NUM_ELEMENTS * bx; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 35, (char *)("random_x"), (int *)(&random_x), 4); 
-
-
 random_y = all_y_data + NUM_ELEMENTS * bx; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 36, (char *)("random_y"), (int *)(&random_y), 4); 
-
-
 random_z = all_z_data + NUM_ELEMENTS * bx; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 37, (char *)("random_z"), (int *)(&random_z), 4); 
-
 
 data_x = random_x; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 38, (char *)("data_x"), (int *)(&data_x), 4); 
-
-
 data_y = random_y; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 39, (char *)("data_y"), (int *)(&data_y), 4); 
-
-
 data_z = random_z; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 40, (char *)("data_z"), (int *)(&data_z), 4); 
-
-
 }  
-# 232 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
-GPUFI_KERNEL_LOOP(gpufi_dev, 0); 
 
 
-for (i = (0); i < NUM_ELEMENTS; i += (256)) 
+for (unsigned i = (0); i < NUM_ELEMENTS; i += (256)) 
 { 
-
-GPUFI_KERNEL_ITERATION(gpufi_dev); 
-# 245 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
-auto unsigned j; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 43, (char *)("j"), (int *)(&j), 1); 
 
 
 if ((tid + i) < NUM_ELEMENTS) 
 { 
-# 253 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
 ((data_x_s)[tid]) = data_x[tid + i]; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 44, (char *)("data_x_s[tid]"), (int *)(data_x_s + tid), 2); 
-
-
 ((data_y_s)[tid]) = data_y[tid + i]; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 45, (char *)("data_y_s[tid]"), (int *)(data_y_s + tid), 2); 
-
-
 ((data_z_s)[tid]) = data_z[tid + i]; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 46, (char *)("data_z_s[tid]"), (int *)(data_z_s + tid), 2); 
-
-
 }  
+
 __syncthreads(); 
-# 269 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
-for (j = do_self ? (i + (1)) : (0); j < NUM_ELEMENTS; j += (256)) 
+
+
+for (unsigned j = (do_self ? (i + (1)) : (0)); j < NUM_ELEMENTS; j += (256)) 
+
 { 
-# 273 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+
 auto float random_x_s; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 49, (char *)("random_x_s"), (int *)(&random_x_s), 2); 
-
-
 auto float random_y_s; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 50, (char *)("random_y_s"), (int *)(&random_y_s), 2); 
-
-
 auto float random_z_s; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 51, (char *)("random_z_s"), (int *)(&random_z_s), 2); 
-
-
-auto unsigned k; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 52, (char *)("k"), (int *)(&k), 1); 
-
 
 if ((tid + j) < NUM_ELEMENTS) 
 { 
 random_x_s = random_x[tid + j]; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 53, (char *)("random_x_s"), (int *)(&random_x_s), 2); 
-
-
 random_y_s = random_y[tid + j]; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 54, (char *)("random_y_s"), (int *)(&random_y_s), 2); 
-
-
 random_z_s = random_z[tid + j]; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 55, (char *)("random_z_s"), (int *)(&random_z_s), 2); 
-
-
 }  
-# 312 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
-for (k = (0); (k < (256)) && ((k + i) < NUM_ELEMENTS); k += (1)) 
+# 134
+for (unsigned k = (0); (k < (256)) && ((k + i) < NUM_ELEMENTS); k += (1)) 
+
+
 { 
-# 316 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+
 auto float distance = (((data_x_s)[k] * random_x_s + (data_y_s)[k] * random_y_s) + (data_z_s)[k] * random_z_s); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 58, (char *)("distance"), (int *)(&distance), 2); 
-# 322 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+
+
+
+
 auto unsigned bin_index; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 59, (char *)("bin_index"), (int *)(&bin_index), 1); 
-
-
 auto unsigned min = (0); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 60, (char *)("min"), (int *)(&min), 1); 
-
-
 auto unsigned max = (20); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 61, (char *)("max"), (int *)(&max), 1); 
-
-
 auto unsigned k2; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 62, (char *)("k2"), (int *)(&k2), 1); 
-
-
-auto unsigned warpnum; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 63, (char *)("warpnum"), (int *)(&warpnum), 1); 
-
 
 while (max > (min + (1))) 
 { 
 k2 = (min + max) / (2); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 64, (char *)("k2"), (int *)(&k2), 1); 
+if (distance >= ((__shadow_var(,dev_binb))[k2])) { 
+max = k2; } else { 
 
-
-if (distance >= ((__shadow_var(,dev_binb))[k2])) 
-{ 
-max = k2; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 65, (char *)("max"), (int *)(&max), 1); 
-
-
-} else 
-
-{ 
-min = k2; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 66, (char *)("min"), (int *)(&min), 1); 
-
-
+min = k2; }  
 }  
-}  
-warpnum = tid / (32 / 16); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 67, (char *)("warpnum"), (int *)(&warpnum), 1); 
 
-
+auto unsigned warpnum = (tid / (32 / 16)); 
 if ((((distance < ((__shadow_var(,dev_binb))[min])) && (distance >= ((__shadow_var(,dev_binb))[max]))) && ((!do_self) || ((tid + j) > (i + k)))) && ((tid + j) < NUM_ELEMENTS)) 
+
 { 
-auto unsigned long myVal; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 68, (char *)("myVal"), (int *)(&myVal), 0); 
-
-
 bin_index = max - (1); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 69, (char *)("bin_index"), (int *)(&bin_index), 1); 
-# 381 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+
+
+
+auto unsigned long myVal; 
 do 
 { 
-# 385 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+
 myVal = (((warp_hists)[bin_index])[warpnum]) & (134217727); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 70, (char *)("myVal"), (int *)(&myVal), 0); 
-# 391 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+
+
 myVal = ((tid & (31)) << 27) | (myVal + (1)); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 71, (char *)("myVal"), (int *)(&myVal), 0); 
-# 397 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+
+
 (((warp_hists)[bin_index])[warpnum]) = myVal; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 72, (char *)("warp_hists[bin_index][warpnum]"), (int *)((warp_hists)[bin_index] + warpnum), 1); 
-# 403 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
+
+
 } while ((((warp_hists)[bin_index])[warpnum]) != myVal); 
-
-
 }  
 __syncthreads(); 
 }  
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 57, (char *)("k"), (int *)(&k), 1); 
-
-
 }  
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 48, (char *)("j"), (int *)(&j), 1); 
-
-
 }  
 
-GPUFI_KERNEL_LOOP(gpufi_dev, 1); 
 
+auto unsigned warp_index = (tid & ((((256 / 32) * 16) >> 1) - 1)); 
+auto unsigned bin_index = (tid / (((256 / 32) * 16) >> 1)); 
+for (unsigned offset = (((256 / 32) * 16) >> 1); offset > (0); offset >>= 1) 
 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 42, (char *)("i"), (int *)(&i), 1); 
-# 426 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
-warp_index = tid & ((((256 / 32) * 16) >> 1) - 1); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 73, (char *)("warp_index"), (int *)(&warp_index), 1); 
-
-
-bin_index = tid / (((256 / 32) * 16) >> 1); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 74, (char *)("bin_index"), (int *)(&bin_index), 1); 
-
-
-
-GPUFI_KERNEL_LOOP(gpufi_dev, 0); 
-
-
-for (offset = (((256 / 32) * 16) >> 1); offset > (0); offset >>= 1) 
 { 
+for (unsigned bin_base = (0); bin_base < (20); bin_base += (256 / (((256 / 32) * 16) >> 1))) 
 
-GPUFI_KERNEL_ITERATION(gpufi_dev); 
-
-
-for (bin_base = (0); bin_base < (20); bin_base += (256 / (((256 / 32) * 16) >> 1))) 
 { 
 __syncthreads(); 
 if ((warp_index < offset) && ((bin_base + bin_index) < (20))) 
 { 
 auto unsigned long sum = (((warp_hists)[bin_base + bin_index])[warp_index] + ((warp_hists)[bin_base + bin_index])[warp_index + offset]); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 79, (char *)("sum"), (int *)(&sum), 0); 
+
 
 
 (((warp_hists)[bin_base + bin_index])[warp_index]) = sum; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 80, (char *)("warp_hists[(bin_base+bin_index)][warp_index]"), (int *)((warp_hists)[bin_base + bin_index] + warp_index), 1); 
-
-
 }  
 }  
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 78, (char *)("bin_base"), (int *)(&bin_base), 1); 
-
-
 }  
-
-GPUFI_KERNEL_LOOP(gpufi_dev, 1); 
-
-
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 76, (char *)("offset"), (int *)(&offset), 1); 
-
 
 __syncthreads(); 
-# 475 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
-hist_base = histograms + (20) * bx; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 81, (char *)("hist_base"), (int *)(&hist_base), 5); 
 
 
+
+auto hist_t *hist_base = (histograms + (20) * bx); 
 if (tid < (20)) 
 { 
 (hist_base[tid]) = (((warp_hists)[tid])[0]) & (134217727); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 82, (char *)("hist_base[tid]"), (int *)(hist_base + tid), 0); 
-
-
 }  
-GPUFI_KERNEL(gpufi_dev, 1, 0, (char *)("gen_hists")); 
 } 
 #endif
-# 489 "src/cuda_fi_prerun/scan_largearray_kernel.cu"
-void TPACF(hist_t *histograms, float *d_x_data, float *d_y_data, float *d_z_data) 
+# 218 "src/cuda/scan_largearray_kernel.cu"
+void TPACF(hist_t *histograms, float *d_x_data, float *d_y_data, float *
+d_z_data) 
 { 
-auto dim3 dimBlock; 
-auto dim3 dimGrid; 
-(dimBlock.x) = (256); 
-(dimGrid.x) = NUM_SETS * (2) + (1); 
+auto dim3 dimBlock(256); 
+auto dim3 dimGrid(NUM_SETS * (2) + (1)); 
 
-cudaMalloc((void **)(&__shadow_var(,gpufi_dev)), sizeof(_gpufi_data_)); 
-{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 497, cudaGetErrorString(err)); exit(-1); }  } 
-cudaMemcpy(__shadow_var(,gpufi_dev), &gpufi_host, sizeof(_gpufi_data_), cudaMemcpyHostToDevice); 
-{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 499, cudaGetErrorString(err)); exit(-1); }  } 
-
-
-cudaConfigureCall(dimGrid, dimBlock) ? ((void)0) : gen_hists__entry(histograms, d_x_data, d_y_data, d_z_data, NUM_SETS, NUM_ELEMENTS, __shadow_var(,gpufi_dev)); 
-
-cudaMemcpy(&gpufi_host, __shadow_var(,gpufi_dev), sizeof(_gpufi_data_), cudaMemcpyDeviceToHost); 
-{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 505, cudaGetErrorString(err)); exit(-1); }  } 
-cudaFree(__shadow_var(,gpufi_dev)); 
-{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 507, cudaGetErrorString(err)); exit(-1); }  } 
+cudaConfigureCall(dimGrid, dimBlock) ? ((void)0) : gen_hists__entry(histograms, d_x_data, d_y_data, d_z_data, NUM_SETS, NUM_ELEMENTS); 
 
 
 } 
-# 31 "src/cuda_fi_prerun/main.cu"
+# 22 "src/cuda/main.cu"
 extern unsigned NUM_SETS; 
 extern unsigned NUM_ELEMENTS; 
+
+
 int main(int argc, char **argv) 
 { 
 auto pb_TimerSet timers; 
 auto pb_Parameters *params; 
-auto options args; 
-auto int num_elements; 
-auto unsigned mem_size; 
-auto unsigned f_mem_size; 
-auto cartesian *h_all_data; 
-auto cartesian *working; 
-auto int i; auto int j; 
-auto float *h_x_data; 
-auto float *h_y_data; 
-auto float *h_z_data; 
-auto float *d_x_data; 
-auto float *d_y_data; 
-auto float *d_z_data; 
-auto hist_t *d_hists; 
-auto hist_t *new_hists; 
-auto hist_t *dd_hist; 
-auto hist_t *rr_hist; 
-auto hist_t *dr_hist; 
-auto int rr[20]; 
-auto int dr[20]; 
-auto int dd_t = 0; 
-auto int dr_t = 0; 
-auto int rr_t = 0; 
-auto FILE *outfile; 
+
 pb_InitializeTimerSet(&timers); 
-GPUFI_INIT(1, 83); 
-
-
 params = pb_ReadParameters(&argc, argv); 
+
+auto options args; 
 parse_args(argc, argv, &args); 
+
 pb_SwitchToTimer(&timers, pb_TimerID_COMPUTE); 
+
 NUM_ELEMENTS = args.npoints; 
 NUM_SETS = args.random_count; 
-num_elements = NUM_ELEMENTS; 
+auto int num_elements = (NUM_ELEMENTS); 
+
 printf("Min distance: %f arcmin\n", (1.0)); 
 printf("Max distance: %f arcmin\n", (10000.0)); 
 printf("Bins per dec: %i\n", 5); 
 printf("Total bins  : %i\n", 20); 
-# 77 "src/cuda_fi_prerun/main.cu"
-mem_size = (((1) + NUM_SETS) * num_elements) * sizeof(cartesian); 
-f_mem_size = (((1) + NUM_SETS) * num_elements) * sizeof(float); 
-# 81 "src/cuda_fi_prerun/main.cu"
+
+
+auto unsigned mem_size = ((((1) + NUM_SETS) * num_elements) * sizeof(cartesian)); 
+auto unsigned f_mem_size = ((((1) + NUM_SETS) * num_elements) * sizeof(float)); 
+
+
+auto cartesian *h_all_data; 
 h_all_data = (cartesian *)malloc(mem_size); 
-# 86 "src/cuda_fi_prerun/main.cu"
-working = h_all_data; 
-# 89 "src/cuda_fi_prerun/main.cu"
+
+
+
+auto cartesian *working = h_all_data; 
+
+
 pb_SwitchToTimer(&timers, pb_TimerID_IO); 
 readdatafile((params->inpFiles)[0], working, num_elements); 
 pb_SwitchToTimer(&timers, pb_TimerID_COMPUTE); 
+
 working += num_elements; 
-for (i = 0; i < NUM_SETS; i++) 
+for (int i = 0; i < NUM_SETS; i++) 
 { 
 pb_SwitchToTimer(&timers, pb_TimerID_IO); 
 readdatafile((params->inpFiles)[i + 1], working, num_elements); 
 pb_SwitchToTimer(&timers, pb_TimerID_COMPUTE); 
+
 working += num_elements; 
 }  
-# 102 "src/cuda_fi_prerun/main.cu"
-h_x_data = (float *)malloc((3) * f_mem_size); 
-h_y_data = h_x_data + NUM_ELEMENTS * (NUM_SETS + (1)); 
-h_z_data = h_y_data + NUM_ELEMENTS * (NUM_SETS + (1)); 
-for (i = 0; i < (NUM_SETS + (1)); ++i) 
+
+
+auto float *h_x_data = ((float *)malloc((3) * f_mem_size)); 
+auto float *h_y_data = (h_x_data + NUM_ELEMENTS * (NUM_SETS + (1))); 
+auto float *h_z_data = (h_y_data + NUM_ELEMENTS * (NUM_SETS + (1))); 
+for (int i = 0; i < (NUM_SETS + (1)); ++i) 
 { 
-for (j = 0; j < NUM_ELEMENTS; ++j) 
+for (int j = 0; j < NUM_ELEMENTS; ++j) 
 { 
 (h_x_data[i * NUM_ELEMENTS + j]) = (h_all_data[i * NUM_ELEMENTS + j]).x; 
 (h_y_data[i * NUM_ELEMENTS + j]) = (h_all_data[i * NUM_ELEMENTS + j]).y; 
 (h_z_data[i * NUM_ELEMENTS + j]) = (h_all_data[i * NUM_ELEMENTS + j]).z; 
 }  
 }  
-# 116 "src/cuda_fi_prerun/main.cu"
+
+
 free(h_all_data); 
 pb_SwitchToTimer(&timers, pb_TimerID_COPY); 
-# 120 "src/cuda_fi_prerun/main.cu"
+
+
+auto float *d_x_data; 
 cudaMalloc((void **)(&d_x_data), (3) * f_mem_size); 
-{ 
-auto cudaError_t err; 
-if ((err = cudaGetLastError()) != (cudaSuccess)) 
-{ 
-printf("CUDA error: %s, line %d\n", cudaGetErrorString(err), 117); 
-GPUFI_HALT((char *)("fi_profile.txt")); 
-return -1; 
-}  
-} 
-d_y_data = d_x_data + NUM_ELEMENTS * (NUM_SETS + (1)); 
-d_z_data = d_y_data + NUM_ELEMENTS * (NUM_SETS + (1)); 
-# 136 "src/cuda_fi_prerun/main.cu"
+{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { printf("CUDA error: %s, line %d\n", cudaGetErrorString(err), 96); return -1; }  } 
+auto float *d_y_data = (d_x_data + NUM_ELEMENTS * (NUM_SETS + (1))); 
+auto float *d_z_data = (d_y_data + NUM_ELEMENTS * (NUM_SETS + (1))); 
+
+
+
+auto hist_t *d_hists; 
 cudaMalloc((void **)(&d_hists), ((20) * (NUM_SETS * (2) + (1))) * sizeof(hist_t)); 
-{ 
-auto cudaError_t err; 
-if ((err = cudaGetLastError()) != (cudaSuccess)) 
-{ 
-printf("CUDA error: %s, line %d\n", cudaGetErrorString(err), 125); 
-GPUFI_HALT((char *)("fi_profile.txt")); 
-return -1; 
-}  
-} 
+{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { printf("CUDA error: %s, line %d\n", cudaGetErrorString(err), 104); return -1; }  } 
 pb_SwitchToTimer(&timers, pb_TimerID_COMPUTE); 
-# 149 "src/cuda_fi_prerun/main.cu"
-new_hists = (hist_t *)malloc(((20) * (NUM_SETS * (2) + (1))) * sizeof(hist_t)); 
-# 152 "src/cuda_fi_prerun/main.cu"
+
+
+auto hist_t *new_hists = ((hist_t *)malloc(((20) * (NUM_SETS * (2) + (1))) * sizeof(hist_t))); 
+
+
+
 initBinB(&timers); 
-{ 
-auto cudaError_t err; 
-if ((err = cudaGetLastError()) != (cudaSuccess)) 
-{ 
-printf("CUDA error: %s, line %d\n", cudaGetErrorString(err), 134); 
-GPUFI_HALT((char *)("fi_profile.txt")); 
-return -1; 
-}  
-} 
-# 164 "src/cuda_fi_prerun/main.cu"
+{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { printf("CUDA error: %s, line %d\n", cudaGetErrorString(err), 113); return -1; }  } 
+
+
 pb_SwitchToTimer(&timers, pb_TimerID_COPY); 
 cudaMemcpy(d_x_data, h_x_data, (3) * f_mem_size, cudaMemcpyHostToDevice); 
-{ 
-auto cudaError_t err; 
-if ((err = cudaGetLastError()) != (cudaSuccess)) 
-{ 
-printf("CUDA error: %s, line %d\n", cudaGetErrorString(err), 139); 
-GPUFI_HALT((char *)("fi_profile.txt")); 
-return -1; 
-}  
-} 
-if (params->synchronizeGpu) 
-{ 
-cudaThreadSynchronize(); 
-}  
+{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { printf("CUDA error: %s, line %d\n", cudaGetErrorString(err), 118); return -1; }  } 
+if (params->synchronizeGpu) { cudaThreadSynchronize(); }  
 pb_SwitchToTimer(&timers, pb_TimerID_GPU); 
+
 TPACF(d_hists, d_x_data, d_y_data, d_z_data); 
-if (params->synchronizeGpu) 
-{ 
-cudaThreadSynchronize(); 
-}  
+if (params->synchronizeGpu) { cudaThreadSynchronize(); }  
+
 pb_SwitchToTimer(&timers, pb_TimerID_COPY); 
 cudaMemcpy(new_hists, d_hists, ((20) * (NUM_SETS * (2) + (1))) * sizeof(hist_t), cudaMemcpyDeviceToHost); 
-{ 
-auto cudaError_t err; 
-if ((err = cudaGetLastError()) != (cudaSuccess)) 
-{ 
-printf("CUDA error: %s, line %d\n", cudaGetErrorString(err), 149); 
-GPUFI_HALT((char *)("fi_profile.txt")); 
-return -1; 
-}  
-} 
+
+{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { printf("CUDA error: %s, line %d\n", cudaGetErrorString(err), 128); return -1; }  } 
 pb_SwitchToTimer(&timers, pb_TimerID_COMPUTE); 
-# 201 "src/cuda_fi_prerun/main.cu"
-dd_hist = new_hists; 
-rr_hist = dd_hist + 20; 
-dr_hist = rr_hist + (20) * NUM_SETS; 
-# 206 "src/cuda_fi_prerun/main.cu"
-for (i = 0; i < 20; i++) 
+
+
+
+auto hist_t *dd_hist = new_hists; 
+auto hist_t *rr_hist = (dd_hist + 20); 
+auto hist_t *dr_hist = (rr_hist + (20) * NUM_SETS); 
+
+
+auto int rr[20]; 
+for (int i = 0; i < 20; i++) 
 { 
 ((rr)[i]) = 0; 
 }  
-for (i = 0; i < NUM_SETS; i++) 
+for (int i = 0; i < NUM_SETS; i++) 
 { 
-for (j = 0; j < 20; j++) 
+for (int j = 0; j < 20; j++) 
 { 
 ((rr)[j]) += rr_hist[i * 20 + j]; 
 }  
 }  
-for (i = 0; i < 20; i++) 
+auto int dr[20]; 
+for (int i = 0; i < 20; i++) 
 { 
 ((dr)[i]) = 0; 
 }  
-for (i = 0; i < NUM_SETS; i++) 
+for (int i = 0; i < NUM_SETS; i++) 
 { 
-for (j = 0; j < 20; j++) 
+for (int j = 0; j < 20; j++) 
 { 
 ((dr)[j]) += dr_hist[i * 20 + j]; 
 }  
 }  
+
+auto int dd_t = 0; 
+auto int dr_t = 0; 
+auto int rr_t = 0; 
+auto FILE *outfile; 
 if ((outfile = fopen(params->outFile, "w")) == (__null)) 
 { 
 fprintf(stderr, "Unable to open output file %s for writing, assuming stdout\n", params->outFile); 
+
 outfile = stdout; 
 }  
-# 235 "src/cuda_fi_prerun/main.cu"
-for (i = 0; i < 20; i++) 
+
+
+for (int i = 0; i < 20; i++) 
 { 
 auto float w = (((100.0) * dd_hist[i] - (dr)[i]) / (rr)[i] + (1.0)); 
 pb_SwitchToTimer(&timers, pb_TimerID_IO); 
@@ -7993,20 +7538,21 @@ dd_t += dd_hist[i];
 dr_t += (dr)[i]; 
 rr_t += (rr)[i]; 
 }  
-if (outfile != stdout) 
-{ 
-fclose(outfile); 
-}  
-# 251 "src/cuda_fi_prerun/main.cu"
+
+if (outfile != stdout) { 
+fclose(outfile); }  
+
+
 free(new_hists); 
 free(h_x_data); 
+
 pb_SwitchToTimer(&timers, pb_TimerID_COPY); 
 cudaFree(d_hists); 
 cudaFree(d_x_data); 
+
 pb_SwitchToTimer(&timers, pb_TimerID_NONE); 
 pb_PrintTimerSet(&timers); 
-pb_FreeParameters(params); 
-GPUFI_HALT((char *)("fi_profile.txt")); return 0; 
+pb_FreeParameters(params); return 0; 
 } 
 
 #include "main.cudafe1.stub.c"
