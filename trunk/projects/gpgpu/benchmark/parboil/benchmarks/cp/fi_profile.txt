@@ -1,6 +1,6 @@
 kernel	0	cenergy	0
-variable	0	numatoms	16	-1	int	
-variable	1	gridspacing	16	-1	fp	
+variable	0	numatoms	16	-1	sm_11	
+variable	1	gridspacing	1701733731	7956338	fp	
 variable	2	energygrid	16	-1	fp_pt	
 variable	3	xindex	16	-1	int	
 variable	4	yindex	16	-1	int	
@@ -18,23 +18,23 @@ variable	15	energyvalx8	16	-1	fp
 variable	16	gridspacing_u	16	-1	fp	
 variable	17	atomid	16	-1	int	
 variable	19	atomid	16	-1	int	
-variable	20	dy	64000	2	fp	
-variable	21	dyz2	64000	2	fp	
-variable	22	dx1	64000	2	fp	
-variable	23	dx2	64000	2	fp	
-variable	24	dx3	64000	2	fp	
-variable	25	dx4	64000	2	fp	
-variable	26	dx5	64000	2	fp	
-variable	27	dx6	64000	2	fp	
-variable	28	dx7	64000	2	fp	
-variable	29	dx8	64000	2	fp	
-variable	30	energyvalx1	64000	2	fp	
-variable	31	energyvalx2	64000	2	fp	
-variable	32	energyvalx3	64000	2	fp	
-variable	33	energyvalx4	64000	2	fp	
-variable	34	energyvalx5	64000	2	fp	
-variable	35	energyvalx6	64000	2	fp	
-variable	36	energyvalx7	64000	2	fp	
+variable	20	dy	64000	1	fp	
+variable	21	dyz2	64000	1	fp	
+variable	22	dx1	64000	1	fp	
+variable	23	dx2	64000	1	fp	
+variable	24	dx3	64000	1	fp	
+variable	25	dx4	64000	1	fp	
+variable	26	dx5	64000	1	fp	
+variable	27	dx6	64000	1	fp	
+variable	28	dx7	64000	1	fp	
+variable	29	dx8	64000	1	fp	
+variable	30	energyvalx1	64000	1	fp	
+variable	31	energyvalx2	64000	1	fp	
+variable	32	energyvalx3	64000	1	fp	
+variable	33	energyvalx4	64000	1	fp	
+variable	34	energyvalx5	64000	1	fp	
+variable	35	energyvalx6	64000	1	fp	
+variable	36	energyvalx7	64000	1	fp	
 variable	37	energyvalx8	64000	-1	fp	
 variable	38	energygrid[outaddr]	16	-1	fp	
 variable	39	energygrid[(outaddr+(1*16))]	16	-1	fp	
@@ -67,23 +67,72 @@ variable	15	energyvalx8	16	-1	fp
 variable	16	gridspacing_u	16	-1	fp	
 variable	17	atomid	16	-1	int	
 variable	19	atomid	16	-1	int	
-variable	20	dy	64000	5	fp	
-variable	21	dyz2	64000	5	fp	
-variable	22	dx1	64000	5	fp	
-variable	23	dx2	64000	5	fp	
-variable	24	dx3	64000	5	fp	
-variable	25	dx4	64000	5	fp	
-variable	26	dx5	64000	5	fp	
-variable	27	dx6	64000	5	fp	
-variable	28	dx7	64000	5	fp	
-variable	29	dx8	64000	5	fp	
-variable	30	energyvalx1	64000	5	fp	
-variable	31	energyvalx2	64000	5	fp	
-variable	32	energyvalx3	64000	5	fp	
-variable	33	energyvalx4	64000	5	fp	
-variable	34	energyvalx5	64000	5	fp	
-variable	35	energyvalx6	64000	5	fp	
-variable	36	energyvalx7	64000	5	fp	
+variable	20	dy	64000	4	fp	
+variable	21	dyz2	64000	4	fp	
+variable	22	dx1	64000	4	fp	
+variable	23	dx2	64000	4	fp	
+variable	24	dx3	64000	4	fp	
+variable	25	dx4	64000	4	fp	
+variable	26	dx5	64000	4	fp	
+variable	27	dx6	64000	4	fp	
+variable	28	dx7	64000	4	fp	
+variable	29	dx8	64000	4	fp	
+variable	30	energyvalx1	64000	4	fp	
+variable	31	energyvalx2	64000	4	fp	
+variable	32	energyvalx3	64000	4	fp	
+variable	33	energyvalx4	64000	4	fp	
+variable	34	energyvalx5	64000	4	fp	
+variable	35	energyvalx6	64000	4	fp	
+variable	36	energyvalx7	64000	4	fp	
+variable	37	energyvalx8	64000	4	fp	
+variable	38	energygrid[outaddr]	16	-1	fp	
+variable	39	energygrid[(outaddr+(1*16))]	16	-1	fp	
+variable	40	energygrid[(outaddr+(2*16))]	16	-1	fp	
+variable	41	energygrid[(outaddr+(3*16))]	16	-1	fp	
+variable	42	energygrid[(outaddr+(4*16))]	16	-1	fp	
+variable	43	energygrid[(outaddr+(5*16))]	16	-1	fp	
+variable	44	energygrid[(outaddr+(6*16))]	16	-1	fp	
+variable	45	energygrid[(outaddr+(7*16))]	16	-1	fp	
+
+kernel	0		0
+
+kernel	0	cenergy	4
+variable	0	numatoms	16	-1	int	
+variable	1	gridspacing	16	-1	fp	
+variable	2	energygrid	16	-1	fp_pt	
+variable	3	xindex	16	-1	int	
+variable	4	yindex	16	-1	int	
+variable	5	outaddr	16	-1	int	
+variable	6	coory	16	-1	fp	
+variable	7	coorx	16	-1	fp	
+variable	8	energyvalx1	16	-1	fp	
+variable	9	energyvalx2	16	-1	fp	
+variable	10	energyvalx3	16	-1	fp	
+variable	11	energyvalx4	16	-1	fp	
+variable	12	energyvalx5	16	-1	fp	
+variable	13	energyvalx6	16	-1	fp	
+variable	14	energyvalx7	16	-1	fp	
+variable	15	energyvalx8	16	-1	fp	
+variable	16	gridspacing_u	16	-1	fp	
+variable	17	atomid	16	-1	int	
+variable	19	atomid	16	-1	int	
+variable	20	dy	64000	6	fp	
+variable	21	dyz2	64000	6	fp	
+variable	22	dx1	64000	6	fp	
+variable	23	dx2	64000	6	fp	
+variable	24	dx3	64000	6	fp	
+variable	25	dx4	64000	6	fp	
+variable	26	dx5	64000	6	fp	
+variable	27	dx6	64000	6	fp	
+variable	28	dx7	64000	6	fp	
+variable	29	dx8	64000	6	fp	
+variable	30	energyvalx1	64000	6	fp	
+variable	31	energyvalx2	64000	6	fp	
+variable	32	energyvalx3	64000	6	fp	
+variable	33	energyvalx4	64000	6	fp	
+variable	34	energyvalx5	64000	6	fp	
+variable	35	energyvalx6	64000	6	fp	
+variable	36	energyvalx7	64000	6	fp	
 variable	37	energyvalx8	64000	-1	fp	
 variable	38	energygrid[outaddr]	16	-1	fp	
 variable	39	energygrid[(outaddr+(1*16))]	16	-1	fp	
@@ -96,9 +145,7 @@ variable	45	energygrid[(outaddr+(7*16))]	16	-1	fp
 
 kernel	0		0
 
-kernel	0	cenergy	0
-
-kernel	0	cenergy	5
+kernel	0	cenergy	6
 variable	0	numatoms	16	-1	int	
 variable	1	gridspacing	16	-1	fp	
 variable	2	energygrid	16	-1	fp_pt	
@@ -147,7 +194,7 @@ variable	45	energygrid[(outaddr+(7*16))]	16	-1	fp
 
 kernel	0		0
 
-kernel	0	cenergy	7
+kernel	0	cenergy	8
 variable	0	numatoms	16	-1	int	
 variable	1	gridspacing	16	-1	fp	
 variable	2	energygrid	16	-1	fp_pt	
@@ -167,24 +214,24 @@ variable	15	energyvalx8	16	-1	fp
 variable	16	gridspacing_u	16	-1	fp	
 variable	17	atomid	16	-1	int	
 variable	19	atomid	16	-1	int	
-variable	20	dy	64000	12	fp	
-variable	21	dyz2	64000	12	fp	
-variable	22	dx1	64000	12	fp	
-variable	23	dx2	64000	12	fp	
-variable	24	dx3	64000	12	fp	
-variable	25	dx4	64000	12	fp	
-variable	26	dx5	64000	12	fp	
-variable	27	dx6	64000	12	fp	
-variable	28	dx7	64000	12	fp	
-variable	29	dx8	64000	12	fp	
-variable	30	energyvalx1	64000	12	fp	
-variable	31	energyvalx2	64000	12	fp	
-variable	32	energyvalx3	64000	12	fp	
-variable	33	energyvalx4	64000	12	fp	
-variable	34	energyvalx5	64000	12	fp	
-variable	35	energyvalx6	64000	12	fp	
-variable	36	energyvalx7	64000	12	fp	
-variable	37	energyvalx8	64000	-1	fp	
+variable	20	dy	64000	13	fp	
+variable	21	dyz2	64000	13	fp	
+variable	22	dx1	64000	13	fp	
+variable	23	dx2	64000	13	fp	
+variable	24	dx3	64000	13	fp	
+variable	25	dx4	64000	13	fp	
+variable	26	dx5	64000	13	fp	
+variable	27	dx6	64000	13	fp	
+variable	28	dx7	64000	13	fp	
+variable	29	dx8	64000	13	fp	
+variable	30	energyvalx1	64000	13	fp	
+variable	31	energyvalx2	64000	13	fp	
+variable	32	energyvalx3	64000	13	fp	
+variable	33	energyvalx4	64000	13	fp	
+variable	34	energyvalx5	64000	13	fp	
+variable	35	energyvalx6	64000	13	fp	
+variable	36	energyvalx7	64000	13	fp	
+variable	37	energyvalx8	64000	13	fp	
 variable	38	energygrid[outaddr]	16	-1	fp	
 variable	39	energygrid[(outaddr+(1*16))]	16	-1	fp	
 variable	40	energygrid[(outaddr+(2*16))]	16	-1	fp	
@@ -195,51 +242,4 @@ variable	44	energygrid[(outaddr+(6*16))]	16	-1	fp
 variable	45	energygrid[(outaddr+(7*16))]	16	-1	fp	
 
 kernel	0		0
-
-kernel	0	cenergy	9
-variable	0	numatoms	16	-1	int	
-variable	1	gridspacing	16	-1	fp	
-variable	2	energygrid	16	-1	fp_pt	
-variable	3	xindex	16	-1	int	
-variable	4	yindex	16	-1	int	
-variable	5	outaddr	16	-1	int	
-variable	6	coory	16	-1	fp	
-variable	7	coorx	16	-1	fp	
-variable	8	energyvalx1	16	-1	fp	
-variable	9	energyvalx2	16	-1	fp	
-variable	10	energyvalx3	16	-1	fp	
-variable	11	energyvalx4	16	-1	fp	
-variable	12	energyvalx5	16	-1	fp	
-variable	13	energyvalx6	16	-1	fp	
-variable	14	energyvalx7	16	-1	fp	
-variable	15	energyvalx8	16	-1	fp	
-variable	16	gridspacing_u	16	-1	fp	
-variable	17	atomid	16	-1	int	
-variable	19	atomid	16	-1	int	
-variable	20	dy	64000	15	fp	
-variable	21	dyz2	64000	15	fp	
-variable	22	dx1	64000	15	fp	
-variable	23	dx2	64000	15	fp	
-variable	24	dx3	64000	15	fp	
-variable	25	dx4	64000	15	fp	
-variable	26	dx5	64000	15	fp	
-variable	27	dx6	64000	15	fp	
-variable	28	dx7	64000	15	fp	
-variable	29	dx8	64000	15	fp	
-variable	30	energyvalx1	64000	15	fp	
-variable	31	energyvalx2	64000	15	fp	
-variable	32	energyvalx3	64000	15	fp	
-variable	33	energyvalx4	64000	15	fp	
-variable	34	energyvalx5	64000	15	fp	
-variable	35	energyvalx6	64000	15	fp	
-variable	36	energyvalx7	64000	15	fp	
-variable	37	energyvalx8	64000	15	fp	
-variable	38	energygrid[outaddr]	16	-1	fp	
-variable	39	energygrid[(outaddr+(1*16))]	16	-1	fp	
-variable	40	energygrid[(outaddr+(2*16))]	16	-1	fp	
-variable	41	energygrid[(outaddr+(3*16))]	16	-1	fp	
-variable	42	energygrid[(outaddr+(4*16))]	16	-1	fp	
-variable	43	energygrid[(outaddr+(5*16))]	16	-1	fp	
-variable	44	energygrid[(outaddr+(6*16))]	16	-1	fp	
-variable	45	energygrid[(outaddr+(7*16))]	16	-1	fp	
 

@@ -1,150 +1,83 @@
-#ifndef __GPU_FI_H__
-#define __GPU_FI_H__
+//#ifndef __GPUFI_H__
+//#define __GPUFI_H__
 
-#define GPUFI_GLOBAL   			1		// define global variables
-#define GPUFI_FUNC_INIT 		1		// define GPUFI_INIT function
-#define GPUFI_FUNC_HALT 		1
-#define GPUFI_FUNC_LIB			1
-#define GPUFI_FUNC_KERNEL 	1
-#define GPUFI_FUNC_LOOP 		1
-#define GPUFI_FUNC_VARIABLE 1
+#include <vector_types.h>
 
-#define GPUFI_CHECK(gpufi,n1,n2) { if(n1 != n2) GPUFI_EXIT(gpufi,0);}
-
-struct _gpufi_fault_ {
-    int kernel;         // invocation index
-                        // if it is 0, it means 'ready to inject'
-    int instance;
-    int varid;
-    int call;
-
-    int mask_type;
-#define MASK_XOR    0    
-//    int mask_length;    // 4 Bytes
-    unsigned int mask;  
-    int injected;
-    int disabled;
-    int mode;
-};
-
-//__device__ extern int gpufi_mode;
-#define GPUFI_PROFILE 1
-#define GPUFI_FI 			0
-
-#if GPUFI_GLOBAL
-#define MAX_KERNEL		10
-#define MAX_VARIABLE	128
-#define MAX_NAME    	32
-#define GPUFI_TABLE_SIZE 81
-#else
-#define MAX_KERNEL		1
-#define MAX_VARIABLE	1
-#define MAX_NAME    	1
-#define GPUFI_TABLE_SIZE 1
+#ifndef GPU_CETUS
+#define GPU_CETUS
 #endif
 
-struct _gpufi_profile_kernel_ {
-    char state;
-    int id;
-    int instance;
-    char name[MAX_NAME];
-};
+/* CUDA Built-in Types */
+/*
+typedef struct {char x;} char1;
+typedef struct {unsigned char x;} uchar1;
+typedef struct {char x, y;} char2;
+typedef struct {unsigned char x, y;} uchar2;
+typedef struct {char x, y, z;} char3;
+typedef struct {unsigned char x, y, z;} uchar3;
+typedef struct {char x, y, z, w;} char4;
+typedef struct {unsigned char x, y, z, w;} uchar4;
 
+typedef struct {short x;} short1;
+typedef struct {unsigned short x;} ushort1;
+typedef struct {short x, y;} short2;
+typedef struct {unsigned short x, y;} ushort2;
+typedef struct {short x, y, z;} short3;
+typedef struct {unsigned short x, y, z;} ushort3;
+typedef struct {short x, y, z, w;} short4;
+typedef struct {unsigned short x, y, z, w;} ushort4;
 
-struct _gpufi_profile_variable_ {
-    int call_count;
-    int loop_id;
-    int type;
-};
+typedef struct {int x;} int1;
+typedef struct {unsigned int x;} uint1;
+typedef struct {int x, y;} int2;
+typedef struct {unsigned int x, y;} uint2;
+typedef struct {int x, y, z;} int3;
+typedef struct {unsigned int x, y, z;} uint3;
+typedef struct {int x, y, z, w;} int4;
+typedef struct {unsigned int x, y, z, w;} uint4;
 
-struct _gpufi_profile_ {
-    /* profiled data */
-    struct _gpufi_profile_kernel_ kernel[MAX_KERNEL];
-    struct _gpufi_profile_variable_ variable[MAX_KERNEL][MAX_VARIABLE];
+typedef struct {long x;} long1;
+typedef struct {unsigned long x;} ulong1;
+typedef struct {long x, y;} long2;
+typedef struct {unsigned long x, y;} ulong2;
+typedef struct {long x, y, z;} long3;
+typedef struct {unsigned long x, y, z;} ulong3;
+typedef struct {long x, y, z, w;} long4;
+typedef struct {unsigned long x, y, z, w;} ulong4;
 
-    /* in order to maintain current */
-    char kernel_bitmap[MAX_KERNEL];
-    int kernel_instance[MAX_KERNEL];
+typedef struct {float x;} float1;
+typedef struct {unsigned float x;} ufloat1;
+typedef struct {float x, y;} float2;
+typedef struct {unsigned float x, y;} ufloat2;
+typedef struct {float x, y, z;} float3;
+typedef struct {unsigned float x, y, z;} ufloat3;
+typedef struct {float x, y, z, w;} float4;
+typedef struct {unsigned float x, y, z, w;} ufloat4;
 
-    char variable_bitmap[MAX_VARIABLE];
-    char variable_name[MAX_VARIABLE][MAX_NAME];
-};
+typedef struct {double x;} double1;
+typedef struct {unsigned double x;} udouble1;
+typedef struct {double x, y;} double2;
+typedef struct {unsigned double x, y;} udouble2;
+typedef struct {double x, y, z;} double3;
+typedef struct {unsigned double x, y, z;} udouble3;
+typedef struct {double x, y, z, w;} double4;
+typedef struct {unsigned double x, y, z, w;} udouble4;
+*/
+#undef NULL
+typedef uint3 dim3;
+typedef struct kValues kValues;
+typedef struct cudaError_t cudaError_t;
 
-int gpufi_profile_variable_count = 0;
-int gpufi_profile_kernel_count = 0;
+/* PNS */
+typedef unsigned long uint32;
+#undef MERS_A
+#undef MERS_B
+#undef MERS_C
+//#undef MASK
 
-struct _gpufi_current_ {
-    int mode;
-    int kernel;
-    int instance;
-    int loop;
-    int loop_count;
-    int iteration;
+//typedef struct Atom Atom;
 
-    int profile_index;
-    int profile_mode;
-    
-#define PROFILE_MODE_NONE 0
-#define PROFILE_MODE_VALUE_LOOP 1
-#define PROFILE_MODE_VALUE_KERNEL 2
-#define PROFILE_MODE_VALUE_THREAD 3
-#define PROFILE_MODE_VALUE_BLOCK 4
-		
-    int blid;
-    int thid;
-};
-
-//__device__ extern struct _gpufi_current_ gpufi_current;
-struct _gpufi_data_ {
-  struct _gpufi_fault_ fault;
-#if DEBUG_INJECT_LOC
-  struct _gpufi_fault_ injected;
+#ifdef __device__
+#undef __device__
 #endif
-  struct _gpufi_fault_ debug;
-  struct _gpufi_current_ current;
-  struct _gpufi_profile_ profile;
-  int sdc;
-};
-
-#define GPUFI_DATATYPE_UNKNOWN 0
-#define GPUFI_DATATYPE_INTEGER 10
-#define GPUFI_DATATYPE_FLOAT 20
-#define GPUFI_DATATYPE_INTEGER_POINTER 30
-#define GPUFI_DATATYPE_FLOAT_POINTER 40
-#define GPUFI_DATATYPE_UNKNOWN_POINTER 50
-
-__device__ void GPUFI_KERNEL_DEC(struct _gpufi_data_ *, int *count);
-__device__ void GPUFI_KERNEL_SET(struct _gpufi_data_ *, int *count, int value);
-__device__ void GPUFI_KERNEL(struct _gpufi_data_ *, int begin, int type, char *);
-__device__ void GPUFI_KERNEL_LOOP(struct _gpufi_data_ *, int);
-__device__ void GPUFI_KERNEL_ITERATION(struct _gpufi_data_ *);
-__device__ void GPUFI_KERNEL_VARIABLE(struct _gpufi_data_ *, int varid, char *name, int *variable, int var_type);
-__device__ void GPUFI_KERNEL_VARIABLE_STREAM(struct _gpufi_data_ *gpufi_dev, int varid, char *name, int *variable, int length, int count);
-__device__ void GPUFI_DEBUG_LOC(struct _gpufi_data_ *gpufi_dev);
-__device__ int GPUFI_EXIT(struct _gpufi_data_ *gpufi_dev, int errno);
-int GPUFI_INIT(int, int);
-int GPUFI_HALT(char *fname);
-__device__ void CudaStrcpy(char *dst, char *src, int max);
-
-extern struct _gpufi_data_ gpufi_host;
-
-#define GPUFI_KERNEL_BEGIN 0
-#define GPUFI_KERNEL_END 1
-#define GPUFI_LOOP_BEGIN 0
-#define GPUFI_LOOP_END 1
-
-//extern __device__ struct _gpufi_data_ *gpufi_dev;
-
-#ifndef CUDA_ERRCK
-#define CUDA_ERRCK							\
-  {cudaError_t err;							\
-    if ((err = cudaGetLastError()) != cudaSuccess) {			\
-      fprintf(stderr, "CUDA error on line %d: %s\n", __LINE__, cudaGetErrorString(err)); \
-      exit(-1);								\
-    }									\
-  }
-#endif
-
-#include "gpufi_kernel.cu"
-
-#endif
+//#endif
