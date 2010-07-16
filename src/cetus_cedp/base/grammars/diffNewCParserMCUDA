@@ -1,0 +1,144 @@
+95a96,98
+> //John A. Stratton: September 2008
+> // Sometimes need to access the parameters to slightly change parser behavior.
+> import cetus.exec.*;
+594c597
+<         :       "extern" {type= Specifier.EXTERN; }
+---
+>         :       ( "extern" {type= Specifier.EXTERN; }
+596a600,605
+> 	|	"__global__" {type= Specifier.GLOBAL;}
+> 	|	"__device__" {type= Specifier.DEVICE;}
+> 	|	"__host__" {type= Specifier.HOST;}
+> 	)
+> 	//JAS added to handle gcc stuff, even if it's not passed through correctly 
+> 	(attributeDecl)* 
+604c613,619
+<         ;
+---
+> 	|	"__shared__"
+> 			{tqual = Specifier.SHARED;}
+> 	|	"__constant__"
+> 			{tqual = Specifier.CONSTANT;}
+> 	|	"__device__"
+> 			{tqual = Specifier.DEVICE;}
+> 	;
+633a649,651
+> 		/* John A. Stratton: February 2008
+> 		 * added support for widely used boolean type */
+> 	|	i:"bool" {types = new UserSpecifier(new Identifier(i.getText()));}
+656c674,675
+<         :       { isTypedefName ( LT(1).getText() ) }?
+---
+>         :       
+> 	        { isTypedefName ( LT(1).getText() ) }?
+967c986,987
+<         :       "__attribute"^ LPAREN LPAREN attributeList RPAREN RPAREN
+---
+> //JAS: edited to at least not fail when recognized, even if it's not input correctly
+>         :       LITERAL___attribute^ LPAREN LPAREN attributeList RPAREN RPAREN
+1594a1615
+> 				Statement statb = null;
+1618c1639
+<                 (       //this ambiguity is ok, declarationList and nestedFunctionDef end properly
+---
+> 		(       //this ambiguity is ok, declarationList and nestedFunctionDef end properly
+1624c1645
+<                     declarationList
+---
+>                     (declarationList)
+1626a1648
+> 		    | ( statb = statement {curr_cstmt.addStatement(statb);})
+1628c1650
+<                 ( statementList )?
+---
+>                 //( statementList )?
+2290a2313,2318
+> /**
+>  * John A. Stratton: February 2008
+>  * Allow CUDA kernel launches, but automatically convert to 
+>  * a normal function call with extra parameters.
+>  * For some special implementations, the dim3 structure needs to be unpacked.
+>  */
+2292a2321,2322
+> 					List args2=null;
+> 					List args3=null;
+2295a2326,2354
+> 		| (LKERNEL_LAUNCH^ args2=argExprList RKERNEL_LAUNCH)
+> 		   {
+> 		     args= new ArrayList();
+> 		     if(Driver.getOptionValue("Xpilot") == null) {
+> 		       args.add(args2.get(0));
+> 		       args.add(args2.get(1));
+> 		     }
+> 		     else{
+> 		       args.add(new AccessExpression(((Expression)args2.get(0)), 
+> 		       				AccessOperator.MEMBER_ACCESS,
+> 						new Identifier(new String("x"))));
+> 		       args.add(new AccessExpression(((Expression)args2.get(0)), 
+> 		       				AccessOperator.MEMBER_ACCESS,
+> 						new Identifier(new String("y"))));
+> 		       args.add(new AccessExpression(((Expression)args2.get(1)), 
+> 		       				AccessOperator.MEMBER_ACCESS,
+> 						new Identifier(new String("x"))));
+> 		       args.add(new AccessExpression(((Expression)args2.get(1)), 
+> 		       				AccessOperator.MEMBER_ACCESS,
+> 						new Identifier(new String("y"))));
+> 		       args.add(new AccessExpression(((Expression)args2.get(1)), 
+> 		       				AccessOperator.MEMBER_ACCESS,
+> 						new Identifier(new String("z"))));
+>                      }
+> 		   }
+> 		   (args3=functionCall)
+> 		{
+> 		  args.addAll(0,args3);
+> 		}
+2585a2645,2653
+> 				
+> 				//JAS: July 2008
+> 				//Having issues with preserving the signed/unsigned 
+> 				// properties of immediates.  Current IR printing 
+> 				// assumes all numbers are signed, and we need input from 
+> 				// the parser to correct that at all.  
+> 				// While we're at it, we may as well preserve the 
+> 				// input format for easier correlation.
+> 				
+2589c2657,2658
+<         		 	 	name= name.replaceAll("I"," ");
+---
+>         		 	 	name= name.replaceAll("I","");
+> 
+2592d2660
+< 
+2597c2665,2666
+<         		 		p=new IntegerLiteral(i2.intValue());
+---
+> 					//JAS, need to use the actual string here
+>         		 		p=new IntegerLiteral(name);
+2607c2676,2677
+<         		 		p=new IntegerLiteral(in.intValue());
+---
+> 					//JAS, again, want the output format to match
+>         		 		p=new IntegerLiteral(name);
+2616,2617c2686,2692
+<         		 		p=new FloatLiteral(d);
+<         		 		handled = true;
+---
+> 				  if(name.lastIndexOf("F") != -1) {
+> 				    p = new FloatLiteral(d, true);
+> 				  } else {
+> 				    p = new FloatLiteral(d, false);
+>         		          }
+> 				  handled = true;
+> 
+2848a2924,2925
+>     // JAS added line to handle gcc-specific stuff
+>     literals.put(new ANTLRHashString("__attribute", this), new Integer(LITERAL___attribute));
+3027a3105,3111
+> /**
+>  * John A. Stratton: February 2008
+>  * Added support for CUDA kernel invocation semantics
+>  */
+> LKERNEL_LAUNCH  : "<<<" ;
+> RKERNEL_LAUNCH  : ">>>" ;
+> 
