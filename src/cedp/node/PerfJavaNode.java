@@ -191,6 +191,9 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
     jScrollPane7 = new javax.swing.JScrollPane();
     srcArea = new javax.swing.JTextArea();
     jPanel13 = new javax.swing.JPanel();
+    jPanel4 = new javax.swing.JPanel();
+    jScrollPane10 = new javax.swing.JScrollPane();
+    fiTable = new javax.swing.JTable();
     jTabbedPane5 = new javax.swing.JTabbedPane();
     jPanel10 = new javax.swing.JPanel();
     jScrollPane6 = new javax.swing.JScrollPane();
@@ -405,7 +408,7 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
     );
     jPanel12Layout.setVerticalGroup(
       jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+      .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
     );
 
     jTabbedPane4.addTab("Source", jPanel12);
@@ -418,10 +421,39 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
     );
     jPanel13Layout.setVerticalGroup(
       jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 267, Short.MAX_VALUE)
+      .addGap(0, 294, Short.MAX_VALUE)
     );
 
     jTabbedPane4.addTab("Http", jPanel13);
+
+    fiTable.setModel(new javax.swing.table.DefaultTableModel(
+      new Object [][] {
+
+      },
+      new String [] {
+        "ID", "Fault", "Failure", "Type"
+      }
+    ));
+    jScrollPane10.setViewportView(fiTable);
+
+    javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+    jPanel4.setLayout(jPanel4Layout);
+    jPanel4Layout.setHorizontalGroup(
+      jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(jPanel4Layout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
+        .addContainerGap())
+    );
+    jPanel4Layout.setVerticalGroup(
+      jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(jPanel4Layout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(157, Short.MAX_VALUE))
+    );
+
+    jTabbedPane4.addTab("FI Campaign", jPanel4);
 
     jSplitPane5.setLeftComponent(jTabbedPane4);
 
@@ -1148,7 +1180,7 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
         int instance = -1;
         fiIndex = 0;
 
-        fiTable.removeAll();
+        fiTable.removeAll()
         try{
             BufferedWriter fout = new BufferedWriter(new FileWriter("fi_cmd.txt"));
             BufferedReader fin = new BufferedReader(new FileReader("fi_profile.txt"));
@@ -1353,6 +1385,11 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
             e.printStackTrace();
         }
         */
+    }
+
+    public JTable GetFITable()
+    {
+      return fiTable;
     }
     
     public void lostOwnership(Clipboard clipboard, Transferable contents) {
@@ -1735,6 +1772,7 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
   private javax.swing.JTextArea consoleArea;
   private javax.swing.JTextArea currDir;
   private javax.swing.JButton execButton;
+  private javax.swing.JTable fiTable;
   private javax.swing.JTextField fileFilterField;
   private javax.swing.JTable fileTable;
   private javax.swing.JTextField homeField;
@@ -1761,10 +1799,12 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
   private javax.swing.JPanel jPanel13;
   private javax.swing.JPanel jPanel2;
   private javax.swing.JPanel jPanel3;
+  private javax.swing.JPanel jPanel4;
   private javax.swing.JPanel jPanel5;
   private javax.swing.JPanel jPanel6;
   private javax.swing.JPanel jPanel8;
   private javax.swing.JScrollPane jScrollPane1;
+  private javax.swing.JScrollPane jScrollPane10;
   private javax.swing.JScrollPane jScrollPane2;
   private javax.swing.JScrollPane jScrollPane3;
   private javax.swing.JScrollPane jScrollPane4;
