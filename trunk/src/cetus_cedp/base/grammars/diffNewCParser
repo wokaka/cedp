@@ -1,0 +1,313 @@
+125,126c125,126
+<         Hashtable typetable = null;
+<         ArrayList currproc = new ArrayList();
+---
+>         HashMap typetable = null;
+>         LinkedList currproc = new LinkedList();
+129c129
+<         Hashtable func_decl_list = new Hashtable();
+---
+>         HashMap func_decl_list = new HashMap();
+142c142
+< 		public Vector getPragma(int a){
+---
+> 		public LinkedList getPragma(int a){
+147c147
+<                 	Vector v  = null;
+---
+>                 	LinkedList v  = null;
+151c151
+<         				Annotation anote = null;
+---
+>         				PreAnnotation anote = null;
+154c154
+<         			 	anote = new Annotation(p.str);
+---
+>         			 	anote = new PreAnnotation(p.str);
+156c156
+<         					anote.setPrintMethod(Annotation.print_raw_method);
+---
+>         					anote.setPrintMethod(PreAnnotation.print_raw_method);
+158c158
+<         					anote.setPrintMethod(Annotation.print_raw_method);
+---
+>         					anote.setPrintMethod(PreAnnotation.print_raw_method);
+173c173
+< 		typetable = new Hashtable();
+---
+> 		typetable = new HashMap();
+181c181
+< 			typetable = (Hashtable)(typestack.peek());
+---
+> 			typetable = (HashMap)(typestack.peek());
+207c207
+<           	d = ((Hashtable)(typestack.get(n))).get(name);
+---
+>           	d = ((HashMap)(typestack.get(n))).get(name);
+348c348
+< 			typetable = new Hashtable();
+---
+> 			typetable = new HashMap();
+378c378
+< 						Annotation anote = new Annotation(pre_dir.getText());
+---
+> 						PreAnnotation anote = new PreAnnotation(pre_dir.getText());
+380c380
+< 						anote.setPrintMethod(Annotation.print_raw_method);
+---
+> 						anote.setPrintMethod(PreAnnotation.print_raw_method);
+466c466
+<         		{decl = new VariableDeclaration(new ArrayList(),idlist); }
+---
+>         		{decl = new VariableDeclaration(new LinkedList(),idlist); }
+550c550
+<                 { decls = new ArrayList();
+---
+>                 { decls = new LinkedList();
+711a712
+> 										// Added "named_" to prevent illegal identifiers.
+714c715
+<                 		name = getLexer().originalSource +"_"+ ((CToken)l1).getTokenNumber();
+---
+>                 		name = "named_"+getLexer().originalSource +"_"+ ((CToken)l1).getTokenNumber();
+805c806
+<                		sqlist=new ArrayList();
+---
+>                		sqlist=new LinkedList();
+827c828
+< 					sdlist = new ArrayList();
+---
+> 					sdlist = new LinkedList();
+855c856,869
+<                 ( COLON expr1=constExpr )?
+---
+>                 //( COLON expr1=constExpr )?
+> 								/*
+> 								 * bit-field recognition
+>                  */
+> 								( COLON expr1=expr )?
+> 								{
+> 									if ( sdecl != null && expr1 != null ) {
+> 										expr1 = cetus.analysis.NormalExpression.simplify(expr1);
+> 										if ( expr1 instanceof IntegerLiteral )
+> 											sdecl.addTrailingSpecifier(new BitfieldSpecifier(expr1));
+> 										else
+> 											; // need to throw parse error
+> 									}
+> 								}
+927c941
+<          	elist = new ArrayList();
+---
+>          	elist = new LinkedList();
+967,968c981,985
+<         :       "__attribute"^ LPAREN LPAREN attributeList RPAREN RPAREN
+<                 | "asm"^ LPAREN stringConst RPAREN
+---
+>         :       "__attribute"^ 
+> 		LPAREN LPAREN attributeList RPAREN RPAREN
+> 		(attributeDecl)*
+>         |	"__asm"^
+> 		LPAREN stringConst RPAREN
+972c989,994
+<         :       attribute ( options{warnWhenFollowAmbig=false;}: COMMA attribute)*  ( COMMA )?
+---
+>         :       attribute
+> 		( options{warnWhenFollowAmbig=false;}:
+> 		
+> 		COMMA attribute
+> 		)*
+> 	//	( COMMA )?
+976,978c998,1024
+<         :       ( ~(LPAREN | RPAREN | COMMA)
+<                 |  LPAREN attributeList RPAREN
+<                 )*
+---
+>         :       (
+> 		// Word
+> 		(
+> 		ID
+> 		//| declSpecifiers
+> 		| storageClassSpecifier
+> 		| typeQualifier
+> 		)
+> 		(
+> 		LPAREN 
+> 			(
+> 			ID
+> 			//|
+> 			//assignExpr
+> 			| //epsilon
+> 			)
+> 		
+> 			(
+> 			//(COMMA assignExpr)*
+> 			expr
+> 			|
+> 			) //epsilon
+> 		RPAREN
+> 		)?
+> 		//~(LPAREN | RPAREN | COMMA)
+>                 //|  LPAREN attributeList RPAREN
+>                 )?
+987c1033
+< 					dlist = new ArrayList();
+---
+> 					dlist = new LinkedList();
+1040c1086
+<          	bp = new ArrayList(1);
+---
+>          	bp = new LinkedList();
+1081c1127
+<          	ilist = new ArrayList();
+---
+>          	ilist = new LinkedList();
+1133c1179
+< lcurlyInitializer returns [List ilist] {ilist = new ArrayList();}
+---
+> lcurlyInitializer returns [List ilist] {ilist = new LinkedList();}
+1141c1187
+< 		{Object init = null; ilist = new ArrayList();}
+---
+> 		{Object init = null; ilist = new LinkedList();}
+1167c1213
+< 				List llist = new ArrayList(1);
+---
+> 				List llist = new LinkedList();
+1177c1223
+<                 		bp = new ArrayList();
+---
+>                 		bp = new LinkedList();
+1200a1247,1248
+> 			// Attribute Specifier List Possible
+> 			(attributeDecl)?
+1236c1284
+<                 		tlist = new ArrayList();
+---
+>                 		tlist = new LinkedList();
+1257c1305
+< 							tlist = new ArrayList();
+---
+> 							tlist = new LinkedList();
+1305c1353
+<         	plist = new ArrayList();
+---
+>         	plist = new LinkedList();
+1324c1372
+<         	ptlist = new ArrayList();
+---
+>         	ptlist = new LinkedList();
+1404c1452
+<                 		dspec = new ArrayList();
+---
+>                 		dspec = new LinkedList();
+1491c1539
+< 	                		if(tobject instanceof Annotation)
+---
+> 	                		if(tobject instanceof PreAnnotation)
+1538c1586
+<          	dspec = new ArrayList();
+---
+>          	dspec = new LinkedList();
+1555c1603
+< 			{Declaration decl=null;ArrayList tlist = new ArrayList();}
+---
+> 			{Declaration decl=null;LinkedList tlist = new LinkedList();}
+1875a1924,1925
+> 			// Attribute Specifier List Possible
+> 			(attributeDecl)?
+1987c2037
+< {ret_expr = null; Expression expr1=null,expr2=null; List elist = new ArrayList();
+---
+> {ret_expr = null; Expression expr1=null,expr2=null; List elist = new LinkedList();
+2265c2315
+<                 		ArrayList alist = new ArrayList();
+---
+>                 		LinkedList alist = new LinkedList();
+2347c2397
+< 				List llist = new ArrayList(1);
+---
+> 				List llist = new LinkedList();
+2376c2426
+<                     	plist = new ArrayList();
+---
+>                     	plist = new LinkedList();
+2405c2455
+<                     	plist = new ArrayList();
+---
+>                     	plist = new LinkedList();
+2433c2483
+< 							tlist = new ArrayList();
+---
+> 							tlist = new LinkedList();
+2510,2511c2560,2561
+<         |        // Not ready to handle these attributes
+<         		"__alignof"^
+---
+>         |        // Handles __alignof__ operator
+>         		"__alignof__"^
+2514c2564
+<                 // 	{ret_expr = new UnaryExpression(LITERAL___alignof,tname); }
+---
+>                  	{ret_expr = new AlignofExpression(tname); }
+2516c2566
+<                 //	{ret_expr = new UnaryExpression(LITERAL___alignof,expr1); }
+---
+>                 	{ret_expr = new AlignofExpression(expr1); }
+2517a2568,2588
+> 	|	// Handles the builtin GCC function __builtin_va_arg
+> 		// as an intrinsic function (operator)
+> 		"__builtin_va_arg"
+> 		( ( LPAREN
+> 		  ( expr1 = unaryExpr )
+> 		    COMMA
+> 		  ( tname = typeName )
+> 		    RPAREN )
+> 		  	{ret_expr = new VaArgExpression(expr1, tname);}
+> 		)
+> 	|	// Handles the builtin GCC function __builtin_offsetof
+> 		// as an intrinsic function (operator)
+> 		"__builtin_offsetof"
+> 		(
+> 		( LPAREN
+> 		( tname = typeName )
+> 		  COMMA
+> 		( expr1 = unaryExpr )
+> 		  RPAREN )
+> 			{ret_expr = new OffsetofExpression(tname, expr1);}
+> 		)
+2535c2606
+<         :       "asm"^ ("volatile")?
+---
+>         :       "__asm"^ ("volatile")?
+2589c2660
+<         		 	 	name= name.replaceAll("I"," ");
+---
+>         		 	 	//name= name.replaceAll("I"," ");
+2607c2678,2679
+<         		 		p=new IntegerLiteral(in.intValue());
+---
+>         		 		//p=new IntegerLiteral(in.intValue());
+>         		 		p=new IntegerLiteral(in.longValue());
+2714a2787
+> 				/*
+2717a2791,2792
+> 				*/
+> 				p = new StatementExpression(cstmt);
+2733c2808
+< 				eList=new ArrayList();
+---
+> 				eList=new LinkedList();
+2844,2847c2919,2922
+<     literals.put(new ANTLRHashString("__alignof__", this), new Integer(LITERAL___alignof));
+< 	literals.put(new ANTLRHashString("__ALIGNOF__", this), new Integer(LITERAL___alignof));
+<     literals.put(new ANTLRHashString("__asm", this), new Integer(LITERAL_asm));
+<     literals.put(new ANTLRHashString("__asm__", this), new Integer(LITERAL_asm));
+---
+>     literals.put(new ANTLRHashString("__alignof__", this), new Integer(LITERAL___alignof__));
+>     literals.put(new ANTLRHashString("__ALIGNOF__", this), new Integer(LITERAL___alignof__));
+>     literals.put(new ANTLRHashString("__asm", this), new Integer(LITERAL___asm));
+>     literals.put(new ANTLRHashString("__asm__", this), new Integer(LITERAL___asm));
+2863a2939,2941
+>     // GCC Builtin function
+>     literals.put(new ANTLRHashString("__builtin_va_arg", this), new Integer(LITERAL___builtin_va_arg));
+>     literals.put(new ANTLRHashString("__builtin_offsetof", this), new Integer(LITERAL___builtin_offsetof));
