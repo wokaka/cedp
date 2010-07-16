@@ -6,17 +6,16 @@
 package vpa.runtime;
 
 import cedp.node.PerfJavaNode;
+import cedp.util.UtilTable;
 import cedp.util.extlib.JcraftWrapper;
-import cedp.util.UtilFile;
 import cedp.util.extlib.AStyleWrapper;
-import cedp.util.extlib.CetusWrapper;
 import cetus.exec.Driver;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.Vector;
+import java.io.IOException;
 import javax.swing.JTable;
 
 /**
@@ -138,6 +137,46 @@ public class VpaAPI {
     public static void Beautifier(String src, String dst)
     {
       AStyleWrapper.Buautifier(src, dst);
+    }
+
+    private static BufferedWriter cmdFile;
+    private static int cmdIndex;
+    
+    public static void SetFaultCommand(String fname, boolean begin)
+    {
+      if(begin){
+        node.GetFITable().removeAll();
+        cmdIndex = 0;
+        try{
+          cmdFile = new BufferedWriter(new FileWriter(fname));
+        } catch(IOException e){
+          e.printStackTrace();
+        }
+      }
+      else{
+        try{
+          cmdFile.close();
+        } catch(IOException e){
+          e.printStackTrace();
+        }
+      }
+    }
+
+    public static void AddFaultCommand(String cmd)
+    {
+      try{
+        cmdFile.write(cmd + "\n");
+      } catch(Exception e){
+        e.printStackTrace();
+      }
+
+      Object obj[] = new Object[3];
+
+      obj[0] = (Object) (String)("" + cmdIndex++);
+      obj[1] = (Object) (String)(cmd);
+      obj[2] = (Object) (String)("");
+
+      UtilTable.AddToTable(node.GetFITable(), obj, false);
     }
 
     public static String GetFileSeparator()
