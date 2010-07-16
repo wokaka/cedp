@@ -11,7 +11,7 @@
   <program name='tpacf' data='default'></program>
 </benchmark>
 <script>
-#import os
+import os
 import string
 
 
@@ -137,7 +137,83 @@ def InstrRunCetus(folder, fileList):
       VpaAPI.RunCetus(args)
       
       VpaAPI.Beautifier(fileName,fileName + ".beauty")
-      VpaAPI.Buautifier("cetus_output" + VpaAPI.GetFileSeparator() + fileName, "cetus_output" + VpaAPI.GetFileSeparator() + fileName + ".beauty")
+      VpaAPI.Beautifier("cetus_output" + VpaAPI.GetFileSeparator() + fileName, "cetus_output" + VpaAPI.GetFileSeparator() + fileName + ".beauty")
+
+
+def Generate(folder):
+  VpaAPI.RxFile(VpaAPI.GetHomeDir() + "benchmarks/" + VpaAPI.GetSelectedProgram() + "/fi_profile.txt", "fi_profile.txt")
+
+  kern_id = -1
+  kern_name = ""
+  instance = -1
+  
+  VpaAPI.SetFaultCommand("fi_cmd.txt", True)
+
+  infile = open("fi_profile.txt", "r")
+  line = infile.readline()
+  while line:
+    tokens = line.split()
+    if len(tokens) > 0:
+    	print "%s %s\n" % (str(len(tokens)), tokens[0])
+    if len(tokens) == 4:
+      if tokens[0] is "kernel":
+        kern_id = int(tokens[1])
+        kern_name = tokens[2]
+        instance = int(tokens[3])
+        print "fi " + str(kern_id) + " " + instance + " " + str(kern_name)
+    elif len(tokens) == 6:
+      if tokens[0] is "variable":
+        var_id = int(tokens[1])
+        var_name = tokens[2]
+        call = int(tokens[3])
+        loop_id = int(tokens[4]);
+        var_type = tokens[5];
+
+        VpaAPI.AddFaultCommand("fi " + str(kern_id) + " " + str(instance) + " " + str(var_id) + " " + str(call-1) + " 0x80000000 " + var_type + " " + var_name + "\n")
+        VpaAPI.AddFaultCommand("fi " + str(kern_id) + " " + str(instance) + " " + str(var_id) + " " + str(call-1) + " 0x40000000 " + var_type + " " + var_name + "\n")
+        VpaAPI.AddFaultCommand("fi " + str(kern_id) + " " + str(instance) + " " + str(var_id) + " " + str(call-1) + " 0x08000000 " + var_type + " " + var_name + "\n")
+        VpaAPI.AddFaultCommand("fi " + str(kern_id) + " " + str(instance) + " " + str(var_id) + " " + str(call-1) + " 0x00800000 " + var_type + " " + var_name + "\n")
+        VpaAPI.AddFaultCommand("fi " + str(kern_id) + " " + str(instance) + " " + str(var_id) + " " + str(call-1) + " 0x00400000 " + var_type + " " + var_name + "\n")
+        VpaAPI.AddFaultCommand("fi " + str(kern_id) + " " + str(instance) + " " + str(var_id) + " " + str(call-1) + " 0x00001000 " + var_type + " " + var_name + "\n")
+        VpaAPI.AddFaultCommand("fi " + str(kern_id) + " " + str(instance) + " " + str(var_id) + " " + str(call-1) + " 0x00000001 " + var_type + " " + var_name + "\n")
+    line = infile.readline()
+  infile.close()
+  VpaAPI.SetFaultCommand("fi_cmd.txt", False)
+
+
+def ReadCmds():
+  VpaAPI.SetFaultCommand("fi_cmd.txt", True)
+  fin = VpaAPI.GetCampaignText()
+  i = 0
+  while fin.length() > i:
+    str = ""
+    while True:
+      if i >= fin.length():
+        break
+      buf = fin.substring(i, i+1)
+      i += 1
+      if buf is "\n":
+        break
+      str += buf
+    print "READ CMDS: %s\n" % str
+
+    tokens = str.split()
+    print "" + str
+    print "" + str(len(tokens))
+    if len(tokens) == 10:
+      if tokens[0] is "fi":
+        kern_id = int(tokens[1])
+        instance = int(tokens[2])
+        var_id = int(tokens[3])
+        call = int(tokens[4])
+        mask = tokens[5]
+        blk = int(tokens[6])
+        thread = int(tokens[7])
+        var_type = tokens[8]
+        var_name = tokens[9]
+
+        VpaAPI.AddFaultCommand("fi " + str(kern_id) + " " + str(instance) + " " + str(var_id) + " " + str(call) + " " + mask + " " + str(blk) + " " + str(thread) + " " + var_type + " " + var_name + "\n")
+  VpaAPI.SetFaultCommand("fi_cmd.txt", False)
 
 
 </script>

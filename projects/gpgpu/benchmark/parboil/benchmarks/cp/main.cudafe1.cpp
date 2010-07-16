@@ -1,4 +1,4 @@
-# 1 "src/cuda/main.cu"
+# 1 "src/cuda_fi_prerun/main.cu"
 # 233 "/usr/include/c++/4.3/i486-linux-gnu/bits/c++config.h" 3
 namespace std __attribute__((visibility("default"))) { 
 # 245 "/usr/include/c++/4.3/i486-linux-gnu/bits/c++config.h" 3
@@ -5549,6 +5549,709 @@ entry)
 { 
 return cudaFuncGetAttributes(attr, (const char *)entry); 
 } 
+# 14 "src/cuda_fi_prerun/gpufi.h"
+struct _gpufi_fault_ { 
+int kernel; 
+
+int instance; 
+int varid; 
+int call; 
+
+int mask_type; 
+
+
+unsigned mask; 
+int injected; 
+int disabled; 
+int mode; 
+}; 
+# 46 "src/cuda_fi_prerun/gpufi.h"
+struct _gpufi_profile_kernel_ { 
+char state; 
+int id; 
+int instance; 
+char name[32]; 
+}; 
+
+
+struct _gpufi_profile_variable_ { 
+int call_count; 
+int loop_id; 
+int type; 
+}; 
+
+struct _gpufi_profile_ { 
+
+_gpufi_profile_kernel_ kernel[10]; 
+_gpufi_profile_variable_ variable[10][512]; 
+
+
+char kernel_bitmap[10]; 
+int kernel_instance[10]; 
+
+char variable_bitmap[512]; 
+char variable_name[512][32]; 
+}; 
+
+int gpufi_profile_variable_count = 0; 
+int gpufi_profile_kernel_count = 0; 
+
+struct _gpufi_current_ { 
+int mode; 
+int kernel; 
+int instance; 
+int loop; 
+int loop_count; 
+int iteration; 
+
+int profile_index; 
+int profile_mode; 
+# 93
+int blid; 
+int thid; 
+}; 
+
+
+struct _gpufi_data_ { 
+_gpufi_fault_ fault; 
+
+
+
+_gpufi_fault_ debug; 
+_gpufi_current_ current; 
+_gpufi_profile_ profile; 
+}; 
+# 124 "src/cuda_fi_prerun/gpufi.h"
+extern int GPUFI_INIT(int, int); 
+extern int GPUFI_HALT(char *); 
+
+
+extern _gpufi_data_ gpufi_host; 
+# 45 "/usr/include/stdio.h" 3
+struct _IO_FILE; 
+
+
+
+extern "C" { typedef _IO_FILE FILE; }
+# 65 "/usr/include/stdio.h" 3
+extern "C" { typedef _IO_FILE __FILE; }
+# 90 "/usr/include/wchar.h" 3
+extern "C" { typedef 
+# 79
+struct __mbstate_t { 
+int __count; 
+
+union { 
+
+unsigned __wch; 
+
+
+
+char __wchb[4]; 
+} __value; 
+} __mbstate_t; }
+# 26 "/usr/include/_G_config.h" 3
+extern "C" { typedef 
+# 23
+struct _G_fpos_t { 
+__off_t __pos; 
+__mbstate_t __state; 
+} _G_fpos_t; }
+
+
+
+
+extern "C" { typedef 
+# 28
+struct _G_fpos64_t { 
+__off64_t __pos; 
+__mbstate_t __state; 
+} _G_fpos64_t; }
+# 53 "/usr/include/_G_config.h" 3
+extern "C" { typedef short _G_int16_t; }
+extern "C" { typedef int _G_int32_t; }
+extern "C" { typedef unsigned short _G_uint16_t; }
+extern "C" { typedef unsigned _G_uint32_t; }
+# 43 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stdarg.h" 3
+extern "C" { typedef __builtin_va_list __gnuc_va_list; }
+# 170 "/usr/include/libio.h" 3
+struct _IO_jump_t; struct _IO_FILE; 
+# 180
+extern "C" { typedef void _IO_lock_t; }
+# 186
+extern "C" { struct _IO_marker { 
+_IO_marker *_next; 
+_IO_FILE *_sbuf; 
+
+
+
+int _pos; 
+# 203 "/usr/include/libio.h" 3
+}; }
+
+
+enum __codecvt_result { 
+
+__codecvt_ok, 
+__codecvt_partial, 
+__codecvt_error, 
+__codecvt_noconv
+}; 
+# 271 "/usr/include/libio.h" 3
+extern "C" { struct _IO_FILE { 
+int _flags; 
+
+
+
+
+char *_IO_read_ptr; 
+char *_IO_read_end; 
+char *_IO_read_base; 
+char *_IO_write_base; 
+char *_IO_write_ptr; 
+char *_IO_write_end; 
+char *_IO_buf_base; 
+char *_IO_buf_end; 
+
+char *_IO_save_base; 
+char *_IO_backup_base; 
+char *_IO_save_end; 
+
+_IO_marker *_markers; 
+
+_IO_FILE *_chain; 
+
+int _fileno; 
+
+
+
+int _flags2; 
+
+__off_t _old_offset; 
+
+
+
+unsigned short _cur_column; 
+signed char _vtable_offset; 
+char _shortbuf[1]; 
+
+
+
+_IO_lock_t *_lock; 
+# 319 "/usr/include/libio.h" 3
+__off64_t _offset; 
+# 328 "/usr/include/libio.h" 3
+void *__pad1; 
+void *__pad2; 
+void *__pad3; 
+void *__pad4; 
+size_t __pad5; 
+
+int _mode; 
+
+char _unused2[((((15) * sizeof(int)) - ((4) * sizeof(void *))) - sizeof(size_t))]; 
+
+}; }
+# 344
+struct _IO_FILE_plus; 
+
+extern "C" { extern _IO_FILE_plus _IO_2_1_stdin_; } 
+extern "C" { extern _IO_FILE_plus _IO_2_1_stdout_; } 
+extern "C" { extern _IO_FILE_plus _IO_2_1_stderr_; } 
+# 364 "/usr/include/libio.h" 3
+extern "C" { typedef __ssize_t __io_read_fn(void *, char *, size_t); }
+# 372
+extern "C" { typedef __ssize_t __io_write_fn(void *, const char *, size_t); }
+# 381
+extern "C" { typedef int __io_seek_fn(void *, __off64_t *, int); }
+
+
+extern "C" { typedef int __io_close_fn(void *); }
+
+
+
+
+extern "C" { typedef __io_read_fn cookie_read_function_t; }
+extern "C" { typedef __io_write_fn cookie_write_function_t; }
+extern "C" { typedef __io_seek_fn cookie_seek_function_t; }
+extern "C" { typedef __io_close_fn cookie_close_function_t; }
+# 401
+extern "C" { typedef 
+# 396
+struct _IO_cookie_io_functions_t { 
+__io_read_fn *read; 
+__io_write_fn *write; 
+__io_seek_fn *seek; 
+__io_close_fn *close; 
+} _IO_cookie_io_functions_t; }
+extern "C" { typedef _IO_cookie_io_functions_t cookie_io_functions_t; }
+
+struct _IO_cookie_file; 
+
+
+extern "C" void _IO_cookie_init(_IO_cookie_file *, int, void *, _IO_cookie_io_functions_t); 
+# 416
+extern "C" int __underflow(_IO_FILE *); 
+extern "C" int __uflow(_IO_FILE *); 
+extern "C" int __overflow(_IO_FILE *, int); 
+# 458 "/usr/include/libio.h" 3
+extern "C" int _IO_getc(_IO_FILE *); 
+extern "C" int _IO_putc(int, _IO_FILE *); 
+extern "C" int _IO_feof(_IO_FILE *) throw(); 
+extern "C" int _IO_ferror(_IO_FILE *) throw(); 
+
+extern "C" int _IO_peekc_locked(_IO_FILE *); 
+# 469
+extern "C" void _IO_flockfile(_IO_FILE *) throw(); 
+extern "C" void _IO_funlockfile(_IO_FILE *) throw(); 
+extern "C" int _IO_ftrylockfile(_IO_FILE *) throw(); 
+# 488 "/usr/include/libio.h" 3
+extern "C" int _IO_vfscanf(_IO_FILE *__restrict__, const char *__restrict__, __gnuc_va_list, int *__restrict__); 
+
+extern "C" int _IO_vfprintf(_IO_FILE *__restrict__, const char *__restrict__, __gnuc_va_list); 
+
+extern "C" __ssize_t _IO_padn(_IO_FILE *, int, __ssize_t); 
+extern "C" size_t _IO_sgetn(_IO_FILE *, void *, size_t); 
+
+extern "C" __off64_t _IO_seekoff(_IO_FILE *, __off64_t, int, int); 
+extern "C" __off64_t _IO_seekpos(_IO_FILE *, __off64_t, int); 
+
+extern "C" void _IO_free_backup_area(_IO_FILE *) throw(); 
+# 80 "/usr/include/stdio.h" 3
+extern "C" { typedef __gnuc_va_list va_list; }
+# 91
+extern "C" { typedef _G_fpos_t fpos_t; }
+# 97
+extern "C" { typedef _G_fpos64_t fpos64_t; }
+# 145 "/usr/include/stdio.h" 3
+extern "C" { extern _IO_FILE *stdin; } 
+extern "C" { extern _IO_FILE *stdout; } 
+extern "C" { extern _IO_FILE *stderr; } 
+# 155
+extern "C" int remove(const char *) throw(); 
+
+extern "C" int rename(const char *, const char *) throw(); 
+
+
+
+
+extern "C" int renameat(int, const char *, int, const char *) throw(); 
+# 172
+extern "C" FILE *tmpfile(); 
+# 182 "/usr/include/stdio.h" 3
+extern "C" FILE *tmpfile64(); 
+
+
+
+extern "C" char *tmpnam(char *) throw(); 
+# 192
+extern "C" char *tmpnam_r(char *) throw(); 
+# 204
+extern "C" char *tempnam(const char *, const char *) throw() __attribute__((__malloc__)); 
+# 214
+extern "C" int fclose(FILE *); 
+
+
+
+
+extern "C" int fflush(FILE *); 
+# 229
+extern "C" int fflush_unlocked(FILE *); 
+# 239
+extern "C" int fcloseall(); 
+# 249
+extern "C" FILE *fopen(const char *__restrict__, const char *__restrict__); 
+# 255
+extern "C" FILE *freopen(const char *__restrict__, const char *__restrict__, FILE *__restrict__); 
+# 274 "/usr/include/stdio.h" 3
+extern "C" FILE *fopen64(const char *__restrict__, const char *__restrict__); 
+
+extern "C" FILE *freopen64(const char *__restrict__, const char *__restrict__, FILE *__restrict__); 
+# 283
+extern "C" FILE *fdopen(int, const char *) throw(); 
+# 289
+extern "C" FILE *fopencookie(void *__restrict__, const char *__restrict__, _IO_cookie_io_functions_t) throw(); 
+
+
+
+
+extern "C" FILE *fmemopen(void *, size_t, const char *) throw(); 
+# 300
+extern "C" FILE *open_memstream(char **, size_t *) throw(); 
+# 307
+extern "C" void setbuf(FILE *__restrict__, char *__restrict__) throw(); 
+
+
+
+extern "C" int setvbuf(FILE *__restrict__, char *__restrict__, int, size_t) throw(); 
+# 318
+extern "C" void setbuffer(FILE *__restrict__, char *__restrict__, size_t) throw(); 
+
+
+
+extern "C" void setlinebuf(FILE *) throw(); 
+# 331
+extern "C" int fprintf(FILE *__restrict__, const char *__restrict__, ...); 
+# 337
+extern "C" int printf(const char *__restrict__, ...); 
+
+extern "C" int sprintf(char *__restrict__, const char *__restrict__, ...) throw(); 
+# 346
+extern "C" int vfprintf(FILE *__restrict__, const char *__restrict__, __gnuc_va_list); 
+# 352
+extern "C" { extern inline int vprintf(const char *__restrict__, __gnuc_va_list) __attribute__((__gnu_inline__)); } 
+
+extern "C" int vsprintf(char *__restrict__, const char *__restrict__, __gnuc_va_list) throw(); 
+# 361
+extern "C" int snprintf(char *__restrict__, size_t, const char *__restrict__, ...) throw(); 
+
+
+
+extern "C" int vsnprintf(char *__restrict__, size_t, const char *__restrict__, __gnuc_va_list) throw(); 
+# 374
+extern "C" int vasprintf(char **__restrict__, const char *__restrict__, __gnuc_va_list) throw(); 
+
+
+extern "C" int __asprintf(char **__restrict__, const char *__restrict__, ...) throw(); 
+
+
+extern "C" int asprintf(char **__restrict__, const char *__restrict__, ...) throw(); 
+# 390
+extern "C" int vdprintf(int, const char *__restrict__, __gnuc_va_list); 
+
+
+extern "C" int dprintf(int, const char *__restrict__, ...); 
+# 403
+extern "C" int fscanf(FILE *__restrict__, const char *__restrict__, ...); 
+# 409
+extern "C" int scanf(const char *__restrict__, ...); 
+
+extern "C" int sscanf(const char *__restrict__, const char *__restrict__, ...) throw(); 
+# 449 "/usr/include/stdio.h" 3
+extern "C" int vfscanf(FILE *__restrict__, const char *__restrict__, __gnuc_va_list); 
+# 457
+extern "C" int vscanf(const char *__restrict__, __gnuc_va_list); 
+
+
+
+extern "C" int vsscanf(const char *__restrict__, const char *__restrict__, __gnuc_va_list) throw(); 
+# 509 "/usr/include/stdio.h" 3
+extern "C" int fgetc(FILE *); 
+extern "C" int getc(FILE *); 
+# 516
+extern "C" { extern inline int getchar() __attribute__((__gnu_inline__)); } 
+# 528
+extern "C" { extern inline int getc_unlocked(FILE *) __attribute__((__gnu_inline__)); } 
+extern "C" { extern inline int getchar_unlocked() __attribute__((__gnu_inline__)); } 
+# 539
+extern "C" { extern inline int fgetc_unlocked(FILE *) __attribute__((__gnu_inline__)); } 
+# 551
+extern "C" int fputc(int, FILE *); 
+extern "C" int putc(int, FILE *); 
+# 558
+extern "C" { extern inline int putchar(int) __attribute__((__gnu_inline__)); } 
+# 572
+extern "C" { extern inline int fputc_unlocked(int, FILE *) __attribute__((__gnu_inline__)); } 
+# 580
+extern "C" { extern inline int putc_unlocked(int, FILE *) __attribute__((__gnu_inline__)); } 
+extern "C" { extern inline int putchar_unlocked(int) __attribute__((__gnu_inline__)); } 
+# 588
+extern "C" int getw(FILE *); 
+
+
+extern "C" int putw(int, FILE *); 
+# 600
+extern "C" char *fgets(char *__restrict__, int, FILE *__restrict__); 
+# 608
+extern "C" char *gets(char *); 
+# 618
+extern "C" char *fgets_unlocked(char *__restrict__, int, FILE *__restrict__); 
+# 634
+extern "C" __ssize_t __getdelim(char **__restrict__, size_t *__restrict__, int, FILE *__restrict__); 
+
+
+extern "C" __ssize_t getdelim(char **__restrict__, size_t *__restrict__, int, FILE *__restrict__); 
+# 647
+extern "C" { extern inline __ssize_t getline(char **__restrict__, size_t *__restrict__, FILE *__restrict__) __attribute__((__gnu_inline__)); } 
+# 658
+extern "C" int fputs(const char *__restrict__, FILE *__restrict__); 
+# 664
+extern "C" int puts(const char *); 
+# 671
+extern "C" int ungetc(int, FILE *); 
+# 678
+extern "C" size_t fread(void *__restrict__, size_t, size_t, FILE *__restrict__); 
+# 684
+extern "C" size_t fwrite(const void *__restrict__, size_t, size_t, FILE *__restrict__); 
+# 695
+extern "C" int fputs_unlocked(const char *__restrict__, FILE *__restrict__); 
+# 706
+extern "C" size_t fread_unlocked(void *__restrict__, size_t, size_t, FILE *__restrict__); 
+
+extern "C" size_t fwrite_unlocked(const void *__restrict__, size_t, size_t, FILE *__restrict__); 
+# 718
+extern "C" int fseek(FILE *, long, int); 
+
+
+
+
+extern "C" long ftell(FILE *); 
+
+
+
+
+extern "C" void rewind(FILE *); 
+# 742
+extern "C" int fseeko(FILE *, __off_t, int); 
+
+
+
+
+extern "C" __off_t ftello(FILE *); 
+# 767 "/usr/include/stdio.h" 3
+extern "C" int fgetpos(FILE *__restrict__, fpos_t *__restrict__); 
+
+
+
+
+extern "C" int fsetpos(FILE *, const fpos_t *); 
+# 787 "/usr/include/stdio.h" 3
+extern "C" int fseeko64(FILE *, __off64_t, int); 
+extern "C" __off64_t ftello64(FILE *); 
+extern "C" int fgetpos64(FILE *__restrict__, fpos64_t *__restrict__); 
+extern "C" int fsetpos64(FILE *, const fpos64_t *); 
+
+
+
+
+extern "C" void clearerr(FILE *) throw(); 
+
+extern "C" int feof(FILE *) throw(); 
+
+extern "C" int ferror(FILE *) throw(); 
+
+
+
+
+extern "C" void clearerr_unlocked(FILE *) throw(); 
+extern "C" { extern inline int feof_unlocked(FILE *) throw() __attribute__((__gnu_inline__)); } 
+extern "C" { extern inline int ferror_unlocked(FILE *) throw() __attribute__((__gnu_inline__)); } 
+# 815
+extern "C" void perror(const char *); 
+# 27 "/usr/include/bits/sys_errlist.h" 3
+extern "C" { extern int sys_nerr; } 
+extern "C" { extern const char *const sys_errlist[]; } 
+
+
+extern "C" { extern int _sys_nerr; } 
+extern "C" { extern const char *const _sys_errlist[]; } 
+# 827 "/usr/include/stdio.h" 3
+extern "C" int fileno(FILE *) throw(); 
+
+
+
+
+extern "C" int fileno_unlocked(FILE *) throw(); 
+# 842
+extern "C" FILE *popen(const char *, const char *); 
+# 848
+extern "C" int pclose(FILE *); 
+# 854
+extern "C" char *ctermid(char *) throw(); 
+# 860
+extern "C" char *cuserid(char *); 
+
+
+
+
+struct obstack; 
+
+
+extern "C" int obstack_printf(obstack *__restrict__, const char *__restrict__, ...) throw(); 
+
+
+extern "C" int obstack_vprintf(obstack *__restrict__, const char *__restrict__, __gnuc_va_list) throw(); 
+# 882
+extern "C" void flockfile(FILE *) throw(); 
+
+
+
+extern "C" int ftrylockfile(FILE *) throw(); 
+
+
+extern "C" void funlockfile(FILE *) throw(); 
+# 37 "/usr/include/bits/stdio.h" 3
+extern "C" { inline __attribute__((__gnu_inline__)) int vprintf(const char *__restrict__ __fmt, __gnuc_va_list __arg) 
+{ 
+return vfprintf(stdout, __fmt, __arg); 
+} } 
+
+
+
+
+extern "C" { inline __attribute__((__gnu_inline__)) int getchar() 
+{ 
+return _IO_getc(stdin); 
+} } 
+# 54
+extern "C" { inline __attribute__((__gnu_inline__)) int fgetc_unlocked(FILE *__fp) 
+{ 
+return (__builtin_expect((__fp->_IO_read_ptr) >= (__fp->_IO_read_end), 0)) ? __uflow(__fp) : (*((unsigned char *)((__fp->_IO_read_ptr)++))); 
+} } 
+# 64
+extern "C" { inline __attribute__((__gnu_inline__)) int getc_unlocked(FILE *__fp) 
+{ 
+return (__builtin_expect((__fp->_IO_read_ptr) >= (__fp->_IO_read_end), 0)) ? __uflow(__fp) : (*((unsigned char *)((__fp->_IO_read_ptr)++))); 
+} } 
+
+
+
+extern "C" { inline __attribute__((__gnu_inline__)) int getchar_unlocked() 
+{ 
+return (__builtin_expect((stdin->_IO_read_ptr) >= (stdin->_IO_read_end), 0)) ? __uflow(stdin) : (*((unsigned char *)((stdin->_IO_read_ptr)++))); 
+} } 
+# 80
+extern "C" { inline __attribute__((__gnu_inline__)) int putchar(int __c) 
+{ 
+return _IO_putc(__c, stdout); 
+} } 
+# 89
+extern "C" { inline __attribute__((__gnu_inline__)) int fputc_unlocked(int __c, FILE *__stream) 
+{ 
+return (__builtin_expect((__stream->_IO_write_ptr) >= (__stream->_IO_write_end), 0)) ? __overflow(__stream, (unsigned char)__c) : ((unsigned char)((*((__stream->_IO_write_ptr)++)) = __c)); 
+} } 
+# 99
+extern "C" { inline __attribute__((__gnu_inline__)) int putc_unlocked(int __c, FILE *__stream) 
+{ 
+return (__builtin_expect((__stream->_IO_write_ptr) >= (__stream->_IO_write_end), 0)) ? __overflow(__stream, (unsigned char)__c) : ((unsigned char)((*((__stream->_IO_write_ptr)++)) = __c)); 
+} } 
+
+
+
+extern "C" { inline __attribute__((__gnu_inline__)) int putchar_unlocked(int __c) 
+{ 
+return (__builtin_expect((stdout->_IO_write_ptr) >= (stdout->_IO_write_end), 0)) ? __overflow(stdout, (unsigned char)__c) : ((unsigned char)((*((stdout->_IO_write_ptr)++)) = __c)); 
+} } 
+# 116
+extern "C" { inline __attribute__((__gnu_inline__)) __ssize_t getline(char **__lineptr, size_t *__n, FILE *__stream) 
+{ 
+return __getdelim(__lineptr, __n, '\n', __stream); 
+} } 
+# 126
+extern "C" { inline __attribute__((__gnu_inline__)) int feof_unlocked(FILE *__stream) throw() 
+{ 
+return ((__stream->_flags) & 16) != 0; 
+} } 
+
+
+
+extern "C" { inline __attribute__((__gnu_inline__)) int ferror_unlocked(FILE *__stream) throw() 
+{ 
+return ((__stream->_flags) & 32) != 0; 
+} } 
+# 9 "src/cuda_fi_prerun/gpufi_kernel.cu"
+_gpufi_data_ gpufi_host = {{0}}; 
+__loc_sc__(__device__,,) _gpufi_data_ *__shadow_var(,gpufi_dev); 
+# 18
+int variable_count; 
+int kernel_count; 
+# 25
+int GPUFI_INIT(int kernel_cnt, int variable_cnt) 
+{ 
+auto FILE *fp; 
+auto char cmd[32]; 
+auto int i; 
+
+kernel_count = kernel_cnt + 1; 
+variable_count = variable_cnt; 
+
+memset(&gpufi_host, 0, sizeof(_gpufi_data_)); 
+
+fp = fopen("fi_cmd.txt", "rt"); 
+
+if (!(fp)) { 
+printf("file open error\n"); 
+system("pwd"); 
+return -1; 
+}  
+
+fscanf(fp, "%s", cmd); 
+printf("%s ", cmd); 
+if (!(strcmp(cmd, "profile"))) { 
+((gpufi_host.current).blid) = 0; 
+((gpufi_host.current).thid) = 0; 
+
+((gpufi_host.fault).mode) = 1; 
+((gpufi_host.current).profile_index) = (-1); 
+fscanf(fp, "%s", cmd); 
+printf("%s ", cmd); 
+if (!(strcmp(cmd, "none"))) { 
+((gpufi_host.current).profile_mode) = 0; 
+} else { 
+if (!(strcmp(cmd, "value"))) { 
+fscanf(fp, "%s", cmd); 
+printf("%s ", cmd); 
+if (!(strcmp(cmd, "loop"))) { 
+((gpufi_host.current).profile_mode) = 1; } else { 
+if (!(strcmp(cmd, "kernel"))) { 
+((gpufi_host.current).profile_mode) = 2; } else { 
+if (!(strcmp(cmd, "thread"))) { 
+((gpufi_host.current).profile_mode) = 3; 
+fscanf(fp, "%d", &((gpufi_host.current).blid)); 
+printf(" %d ", (gpufi_host.current).blid); 
+} else { 
+if (!(strcmp(cmd, "block"))) { 
+((gpufi_host.current).profile_mode) = 4; 
+}  }  }  }  
+}  }  
+printf(" (%d)\n", (gpufi_host.current).profile_mode); 
+}  
+
+fclose(fp); 
+
+return 0; 
+} 
+# 93 "src/cuda_fi_prerun/gpufi_kernel.cu"
+char *gpufi_type_name[6] = {((char *)("unknown")), ((char *)("int")), ((char *)("fp")), ((char *)("int_pt")), ((char *)("fp_pt")), ((char *)("unknown_pt"))}; 
+
+int GPUFI_HALT(char *fname) 
+{ 
+auto FILE *fp; 
+auto int i; auto int j; auto int k; auto int m; 
+
+if (((gpufi_host.fault).mode) == 1) { 
+
+
+fp = fopen(fname, "wt"); 
+if (!(fp)) { 
+printf("can\'t write to an output file, %s\n", fname); 
+return -1; 
+}  
+
+for (i = 0; i < 10; i++) { 
+if (((((gpufi_host.profile).kernel)[i]).state) == 1) { 
+fprintf(fp, "kernel\t%d\t%s\t%d\n", (((gpufi_host.profile).kernel)[i]).id, (((gpufi_host.profile).kernel)[i]).name, (((gpufi_host.profile).kernel)[i]).instance); } else { 
+
+
+
+
+break; }  
+
+for (j = 0; j < variable_count; j++) { 
+if ((((((gpufi_host.profile).variable)[i])[j]).call_count) != 0) { 
+fprintf(fp, "variable\t%d\t%s\t%d\t%d\t%s\t", j, (((gpufi_host.profile).variable_bitmap)[j]) ? (((gpufi_host.profile).variable_name)[j]) : (""), ((((gpufi_host.profile).variable)[i])[j]).call_count, ((((gpufi_host.profile).variable)[i])[j]).loop_id, (gpufi_type_name)[((((gpufi_host.profile).variable)[i])[j]).type]); 
+# 127
+fprintf(fp, "\n"); 
+}  
+}  
+fprintf(fp, "\n"); 
+}  
+
+fclose(fp); 
+}  
+
+return 0; 
+} 
 # 238 "/usr/include/unistd.h" 3
 extern "C" { typedef __intptr_t intptr_t; }
 # 245
@@ -6509,7 +7212,7 @@ extern "C" void encrypt(char *, int) throw();
 extern "C" void swab(const void *__restrict__, void *__restrict__, ssize_t) throw(); 
 # 1094
 extern "C" char *ctermid(char *) throw(); 
-# 12 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 12 "src/cuda_fi_prerun/parboil.h"
 extern "C" { struct pb_Parameters { 
 char *outFile; 
 
@@ -6592,581 +7295,285 @@ extern "C" void pb_SwitchToTimer(pb_TimerSet *, pb_TimerID);
 
 
 extern "C" void pb_PrintTimerSet(pb_TimerSet *); 
-# 45 "/usr/include/stdio.h" 3
-struct _IO_FILE; 
-
-
-
-extern "C" { typedef _IO_FILE FILE; }
-# 65 "/usr/include/stdio.h" 3
-extern "C" { typedef _IO_FILE __FILE; }
-# 90 "/usr/include/wchar.h" 3
-extern "C" { typedef 
-# 79
-struct __mbstate_t { 
-int __count; 
-
-union { 
-
-unsigned __wch; 
-
-
-
-char __wchb[4]; 
-} __value; 
-} __mbstate_t; }
-# 26 "/usr/include/_G_config.h" 3
-extern "C" { typedef 
-# 23
-struct _G_fpos_t { 
-__off_t __pos; 
-__mbstate_t __state; 
-} _G_fpos_t; }
-
-
-
-
-extern "C" { typedef 
-# 28
-struct _G_fpos64_t { 
-__off64_t __pos; 
-__mbstate_t __state; 
-} _G_fpos64_t; }
-# 53 "/usr/include/_G_config.h" 3
-extern "C" { typedef short _G_int16_t; }
-extern "C" { typedef int _G_int32_t; }
-extern "C" { typedef unsigned short _G_uint16_t; }
-extern "C" { typedef unsigned _G_uint32_t; }
-# 43 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stdarg.h" 3
-extern "C" { typedef __builtin_va_list __gnuc_va_list; }
-# 170 "/usr/include/libio.h" 3
-struct _IO_jump_t; struct _IO_FILE; 
-# 180
-extern "C" { typedef void _IO_lock_t; }
-# 186
-extern "C" { struct _IO_marker { 
-_IO_marker *_next; 
-_IO_FILE *_sbuf; 
-
-
-
-int _pos; 
-# 203 "/usr/include/libio.h" 3
-}; }
-
-
-enum __codecvt_result { 
-
-__codecvt_ok, 
-__codecvt_partial, 
-__codecvt_error, 
-__codecvt_noconv
-}; 
-# 271 "/usr/include/libio.h" 3
-extern "C" { struct _IO_FILE { 
-int _flags; 
-
-
-
-
-char *_IO_read_ptr; 
-char *_IO_read_end; 
-char *_IO_read_base; 
-char *_IO_write_base; 
-char *_IO_write_ptr; 
-char *_IO_write_end; 
-char *_IO_buf_base; 
-char *_IO_buf_end; 
-
-char *_IO_save_base; 
-char *_IO_backup_base; 
-char *_IO_save_end; 
-
-_IO_marker *_markers; 
-
-_IO_FILE *_chain; 
-
-int _fileno; 
-
-
-
-int _flags2; 
-
-__off_t _old_offset; 
-
-
-
-unsigned short _cur_column; 
-signed char _vtable_offset; 
-char _shortbuf[1]; 
-
-
-
-_IO_lock_t *_lock; 
-# 319 "/usr/include/libio.h" 3
-__off64_t _offset; 
-# 328 "/usr/include/libio.h" 3
-void *__pad1; 
-void *__pad2; 
-void *__pad3; 
-void *__pad4; 
-size_t __pad5; 
-
-int _mode; 
-
-char _unused2[((((15) * sizeof(int)) - ((4) * sizeof(void *))) - sizeof(size_t))]; 
-
-}; }
-# 344
-struct _IO_FILE_plus; 
-
-extern "C" { extern _IO_FILE_plus _IO_2_1_stdin_; } 
-extern "C" { extern _IO_FILE_plus _IO_2_1_stdout_; } 
-extern "C" { extern _IO_FILE_plus _IO_2_1_stderr_; } 
-# 364 "/usr/include/libio.h" 3
-extern "C" { typedef __ssize_t __io_read_fn(void *, char *, size_t); }
-# 372
-extern "C" { typedef __ssize_t __io_write_fn(void *, const char *, size_t); }
-# 381
-extern "C" { typedef int __io_seek_fn(void *, __off64_t *, int); }
-
-
-extern "C" { typedef int __io_close_fn(void *); }
-
-
-
-
-extern "C" { typedef __io_read_fn cookie_read_function_t; }
-extern "C" { typedef __io_write_fn cookie_write_function_t; }
-extern "C" { typedef __io_seek_fn cookie_seek_function_t; }
-extern "C" { typedef __io_close_fn cookie_close_function_t; }
-# 401
-extern "C" { typedef 
-# 396
-struct _IO_cookie_io_functions_t { 
-__io_read_fn *read; 
-__io_write_fn *write; 
-__io_seek_fn *seek; 
-__io_close_fn *close; 
-} _IO_cookie_io_functions_t; }
-extern "C" { typedef _IO_cookie_io_functions_t cookie_io_functions_t; }
-
-struct _IO_cookie_file; 
-
-
-extern "C" void _IO_cookie_init(_IO_cookie_file *, int, void *, _IO_cookie_io_functions_t); 
-# 416
-extern "C" int __underflow(_IO_FILE *); 
-extern "C" int __uflow(_IO_FILE *); 
-extern "C" int __overflow(_IO_FILE *, int); 
-# 458 "/usr/include/libio.h" 3
-extern "C" int _IO_getc(_IO_FILE *); 
-extern "C" int _IO_putc(int, _IO_FILE *); 
-extern "C" int _IO_feof(_IO_FILE *) throw(); 
-extern "C" int _IO_ferror(_IO_FILE *) throw(); 
-
-extern "C" int _IO_peekc_locked(_IO_FILE *); 
-# 469
-extern "C" void _IO_flockfile(_IO_FILE *) throw(); 
-extern "C" void _IO_funlockfile(_IO_FILE *) throw(); 
-extern "C" int _IO_ftrylockfile(_IO_FILE *) throw(); 
-# 488 "/usr/include/libio.h" 3
-extern "C" int _IO_vfscanf(_IO_FILE *__restrict__, const char *__restrict__, __gnuc_va_list, int *__restrict__); 
-
-extern "C" int _IO_vfprintf(_IO_FILE *__restrict__, const char *__restrict__, __gnuc_va_list); 
-
-extern "C" __ssize_t _IO_padn(_IO_FILE *, int, __ssize_t); 
-extern "C" size_t _IO_sgetn(_IO_FILE *, void *, size_t); 
-
-extern "C" __off64_t _IO_seekoff(_IO_FILE *, __off64_t, int, int); 
-extern "C" __off64_t _IO_seekpos(_IO_FILE *, __off64_t, int); 
-
-extern "C" void _IO_free_backup_area(_IO_FILE *) throw(); 
-# 80 "/usr/include/stdio.h" 3
-extern "C" { typedef __gnuc_va_list va_list; }
-# 91
-extern "C" { typedef _G_fpos_t fpos_t; }
-# 97
-extern "C" { typedef _G_fpos64_t fpos64_t; }
-# 145 "/usr/include/stdio.h" 3
-extern "C" { extern _IO_FILE *stdin; } 
-extern "C" { extern _IO_FILE *stdout; } 
-extern "C" { extern _IO_FILE *stderr; } 
-# 155
-extern "C" int remove(const char *) throw(); 
-
-extern "C" int rename(const char *, const char *) throw(); 
-
-
-
-
-extern "C" int renameat(int, const char *, int, const char *) throw(); 
-# 172
-extern "C" FILE *tmpfile(); 
-# 182 "/usr/include/stdio.h" 3
-extern "C" FILE *tmpfile64(); 
-
-
-
-extern "C" char *tmpnam(char *) throw(); 
-# 192
-extern "C" char *tmpnam_r(char *) throw(); 
-# 204
-extern "C" char *tempnam(const char *, const char *) throw() __attribute__((__malloc__)); 
-# 214
-extern "C" int fclose(FILE *); 
-
-
-
-
-extern "C" int fflush(FILE *); 
-# 229
-extern "C" int fflush_unlocked(FILE *); 
-# 239
-extern "C" int fcloseall(); 
-# 249
-extern "C" FILE *fopen(const char *__restrict__, const char *__restrict__); 
-# 255
-extern "C" FILE *freopen(const char *__restrict__, const char *__restrict__, FILE *__restrict__); 
-# 274 "/usr/include/stdio.h" 3
-extern "C" FILE *fopen64(const char *__restrict__, const char *__restrict__); 
-
-extern "C" FILE *freopen64(const char *__restrict__, const char *__restrict__, FILE *__restrict__); 
-# 283
-extern "C" FILE *fdopen(int, const char *) throw(); 
-# 289
-extern "C" FILE *fopencookie(void *__restrict__, const char *__restrict__, _IO_cookie_io_functions_t) throw(); 
-
-
-
-
-extern "C" FILE *fmemopen(void *, size_t, const char *) throw(); 
-# 300
-extern "C" FILE *open_memstream(char **, size_t *) throw(); 
-# 307
-extern "C" void setbuf(FILE *__restrict__, char *__restrict__) throw(); 
-
-
-
-extern "C" int setvbuf(FILE *__restrict__, char *__restrict__, int, size_t) throw(); 
-# 318
-extern "C" void setbuffer(FILE *__restrict__, char *__restrict__, size_t) throw(); 
-
-
-
-extern "C" void setlinebuf(FILE *) throw(); 
-# 331
-extern "C" int fprintf(FILE *__restrict__, const char *__restrict__, ...); 
-# 337
-extern "C" int printf(const char *__restrict__, ...); 
-
-extern "C" int sprintf(char *__restrict__, const char *__restrict__, ...) throw(); 
-# 346
-extern "C" int vfprintf(FILE *__restrict__, const char *__restrict__, __gnuc_va_list); 
-# 352
-extern "C" { extern inline int vprintf(const char *__restrict__, __gnuc_va_list) __attribute__((__gnu_inline__)); } 
-
-extern "C" int vsprintf(char *__restrict__, const char *__restrict__, __gnuc_va_list) throw(); 
-# 361
-extern "C" int snprintf(char *__restrict__, size_t, const char *__restrict__, ...) throw(); 
-
-
-
-extern "C" int vsnprintf(char *__restrict__, size_t, const char *__restrict__, __gnuc_va_list) throw(); 
-# 374
-extern "C" int vasprintf(char **__restrict__, const char *__restrict__, __gnuc_va_list) throw(); 
-
-
-extern "C" int __asprintf(char **__restrict__, const char *__restrict__, ...) throw(); 
-
-
-extern "C" int asprintf(char **__restrict__, const char *__restrict__, ...) throw(); 
-# 390
-extern "C" int vdprintf(int, const char *__restrict__, __gnuc_va_list); 
-
-
-extern "C" int dprintf(int, const char *__restrict__, ...); 
-# 403
-extern "C" int fscanf(FILE *__restrict__, const char *__restrict__, ...); 
-# 409
-extern "C" int scanf(const char *__restrict__, ...); 
-
-extern "C" int sscanf(const char *__restrict__, const char *__restrict__, ...) throw(); 
-# 449 "/usr/include/stdio.h" 3
-extern "C" int vfscanf(FILE *__restrict__, const char *__restrict__, __gnuc_va_list); 
-# 457
-extern "C" int vscanf(const char *__restrict__, __gnuc_va_list); 
-
-
-
-extern "C" int vsscanf(const char *__restrict__, const char *__restrict__, __gnuc_va_list) throw(); 
-# 509 "/usr/include/stdio.h" 3
-extern "C" int fgetc(FILE *); 
-extern "C" int getc(FILE *); 
-# 516
-extern "C" { extern inline int getchar() __attribute__((__gnu_inline__)); } 
-# 528
-extern "C" { extern inline int getc_unlocked(FILE *) __attribute__((__gnu_inline__)); } 
-extern "C" { extern inline int getchar_unlocked() __attribute__((__gnu_inline__)); } 
-# 539
-extern "C" { extern inline int fgetc_unlocked(FILE *) __attribute__((__gnu_inline__)); } 
-# 551
-extern "C" int fputc(int, FILE *); 
-extern "C" int putc(int, FILE *); 
-# 558
-extern "C" { extern inline int putchar(int) __attribute__((__gnu_inline__)); } 
-# 572
-extern "C" { extern inline int fputc_unlocked(int, FILE *) __attribute__((__gnu_inline__)); } 
-# 580
-extern "C" { extern inline int putc_unlocked(int, FILE *) __attribute__((__gnu_inline__)); } 
-extern "C" { extern inline int putchar_unlocked(int) __attribute__((__gnu_inline__)); } 
-# 588
-extern "C" int getw(FILE *); 
-
-
-extern "C" int putw(int, FILE *); 
-# 600
-extern "C" char *fgets(char *__restrict__, int, FILE *__restrict__); 
-# 608
-extern "C" char *gets(char *); 
-# 618
-extern "C" char *fgets_unlocked(char *__restrict__, int, FILE *__restrict__); 
-# 634
-extern "C" __ssize_t __getdelim(char **__restrict__, size_t *__restrict__, int, FILE *__restrict__); 
-
-
-extern "C" __ssize_t getdelim(char **__restrict__, size_t *__restrict__, int, FILE *__restrict__); 
-# 647
-extern "C" { extern inline __ssize_t getline(char **__restrict__, size_t *__restrict__, FILE *__restrict__) __attribute__((__gnu_inline__)); } 
-# 658
-extern "C" int fputs(const char *__restrict__, FILE *__restrict__); 
-# 664
-extern "C" int puts(const char *); 
-# 671
-extern "C" int ungetc(int, FILE *); 
-# 678
-extern "C" size_t fread(void *__restrict__, size_t, size_t, FILE *__restrict__); 
-# 684
-extern "C" size_t fwrite(const void *__restrict__, size_t, size_t, FILE *__restrict__); 
-# 695
-extern "C" int fputs_unlocked(const char *__restrict__, FILE *__restrict__); 
-# 706
-extern "C" size_t fread_unlocked(void *__restrict__, size_t, size_t, FILE *__restrict__); 
-
-extern "C" size_t fwrite_unlocked(const void *__restrict__, size_t, size_t, FILE *__restrict__); 
-# 718
-extern "C" int fseek(FILE *, long, int); 
-
-
-
-
-extern "C" long ftell(FILE *); 
-
-
-
-
-extern "C" void rewind(FILE *); 
-# 742
-extern "C" int fseeko(FILE *, __off_t, int); 
-
-
-
-
-extern "C" __off_t ftello(FILE *); 
-# 767 "/usr/include/stdio.h" 3
-extern "C" int fgetpos(FILE *__restrict__, fpos_t *__restrict__); 
-
-
-
-
-extern "C" int fsetpos(FILE *, const fpos_t *); 
-# 787 "/usr/include/stdio.h" 3
-extern "C" int fseeko64(FILE *, __off64_t, int); 
-extern "C" __off64_t ftello64(FILE *); 
-extern "C" int fgetpos64(FILE *__restrict__, fpos64_t *__restrict__); 
-extern "C" int fsetpos64(FILE *, const fpos64_t *); 
-
-
-
-
-extern "C" void clearerr(FILE *) throw(); 
-
-extern "C" int feof(FILE *) throw(); 
-
-extern "C" int ferror(FILE *) throw(); 
-
-
-
-
-extern "C" void clearerr_unlocked(FILE *) throw(); 
-extern "C" { extern inline int feof_unlocked(FILE *) throw() __attribute__((__gnu_inline__)); } 
-extern "C" { extern inline int ferror_unlocked(FILE *) throw() __attribute__((__gnu_inline__)); } 
-# 815
-extern "C" void perror(const char *); 
-# 27 "/usr/include/bits/sys_errlist.h" 3
-extern "C" { extern int sys_nerr; } 
-extern "C" { extern const char *const sys_errlist[]; } 
-
-
-extern "C" { extern int _sys_nerr; } 
-extern "C" { extern const char *const _sys_errlist[]; } 
-# 827 "/usr/include/stdio.h" 3
-extern "C" int fileno(FILE *) throw(); 
-
-
-
-
-extern "C" int fileno_unlocked(FILE *) throw(); 
-# 842
-extern "C" FILE *popen(const char *, const char *); 
-# 848
-extern "C" int pclose(FILE *); 
-# 854
-extern "C" char *ctermid(char *) throw(); 
-# 860
-extern "C" char *cuserid(char *); 
-
-
-
-
-struct obstack; 
-
-
-extern "C" int obstack_printf(obstack *__restrict__, const char *__restrict__, ...) throw(); 
-
-
-extern "C" int obstack_vprintf(obstack *__restrict__, const char *__restrict__, __gnuc_va_list) throw(); 
-# 882
-extern "C" void flockfile(FILE *) throw(); 
-
-
-
-extern "C" int ftrylockfile(FILE *) throw(); 
-
-
-extern "C" void funlockfile(FILE *) throw(); 
-# 37 "/usr/include/bits/stdio.h" 3
-extern "C" { inline __attribute__((__gnu_inline__)) int vprintf(const char *__restrict__ __fmt, __gnuc_va_list __arg) 
-{ 
-return vfprintf(stdout, __fmt, __arg); 
-} } 
-
-
-
-
-extern "C" { inline __attribute__((__gnu_inline__)) int getchar() 
-{ 
-return _IO_getc(stdin); 
-} } 
-# 54
-extern "C" { inline __attribute__((__gnu_inline__)) int fgetc_unlocked(FILE *__fp) 
-{ 
-return (__builtin_expect((__fp->_IO_read_ptr) >= (__fp->_IO_read_end), 0)) ? __uflow(__fp) : (*((unsigned char *)((__fp->_IO_read_ptr)++))); 
-} } 
-# 64
-extern "C" { inline __attribute__((__gnu_inline__)) int getc_unlocked(FILE *__fp) 
-{ 
-return (__builtin_expect((__fp->_IO_read_ptr) >= (__fp->_IO_read_end), 0)) ? __uflow(__fp) : (*((unsigned char *)((__fp->_IO_read_ptr)++))); 
-} } 
-
-
-
-extern "C" { inline __attribute__((__gnu_inline__)) int getchar_unlocked() 
-{ 
-return (__builtin_expect((stdin->_IO_read_ptr) >= (stdin->_IO_read_end), 0)) ? __uflow(stdin) : (*((unsigned char *)((stdin->_IO_read_ptr)++))); 
-} } 
-# 80
-extern "C" { inline __attribute__((__gnu_inline__)) int putchar(int __c) 
-{ 
-return _IO_putc(__c, stdout); 
-} } 
-# 89
-extern "C" { inline __attribute__((__gnu_inline__)) int fputc_unlocked(int __c, FILE *__stream) 
-{ 
-return (__builtin_expect((__stream->_IO_write_ptr) >= (__stream->_IO_write_end), 0)) ? __overflow(__stream, (unsigned char)__c) : ((unsigned char)((*((__stream->_IO_write_ptr)++)) = __c)); 
-} } 
-# 99
-extern "C" { inline __attribute__((__gnu_inline__)) int putc_unlocked(int __c, FILE *__stream) 
-{ 
-return (__builtin_expect((__stream->_IO_write_ptr) >= (__stream->_IO_write_end), 0)) ? __overflow(__stream, (unsigned char)__c) : ((unsigned char)((*((__stream->_IO_write_ptr)++)) = __c)); 
-} } 
-
-
-
-extern "C" { inline __attribute__((__gnu_inline__)) int putchar_unlocked(int __c) 
-{ 
-return (__builtin_expect((stdout->_IO_write_ptr) >= (stdout->_IO_write_end), 0)) ? __overflow(stdout, (unsigned char)__c) : ((unsigned char)((*((stdout->_IO_write_ptr)++)) = __c)); 
-} } 
-# 116
-extern "C" { inline __attribute__((__gnu_inline__)) __ssize_t getline(char **__lineptr, size_t *__n, FILE *__stream) 
-{ 
-return __getdelim(__lineptr, __n, '\n', __stream); 
-} } 
-# 126
-extern "C" { inline __attribute__((__gnu_inline__)) int feof_unlocked(FILE *__stream) throw() 
-{ 
-return ((__stream->_flags) & 16) != 0; 
-} } 
-
-
-
-extern "C" { inline __attribute__((__gnu_inline__)) int ferror_unlocked(FILE *__stream) throw() 
-{ 
-return ((__stream->_flags) & 32) != 0; 
-} } 
-# 38 "src/cuda/cuenergy.h"
-extern void cenergy__entry(int, float, float *); 
-
-
-
+# 44 "src/cuda_fi_prerun/cuenergy.h"
 extern int copyatomstoconstbuf(float *, int, float); 
-# 27 "src/cuda/main.cu"
-static int initatoms(float **atombuf, int count, dim3 volsize, float gridspacing) { 
+# 44 "src/cuda_fi_prerun/cuenergy.h"
+extern int copyatomstoconstbuf(float *, int, float); 
+# 29 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu"
+__loc_sc__(__constant__,,) float4 __shadow_var(,atominfo)[4000]; 
+# 34 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu"
+void cenergy__entry(int numatoms, float gridspacing, float *energygrid, _gpufi_data_ *gpufi_dev);
+#if 0
+ 
+# 35
+{ 
+GPUFI_KERNEL(gpufi_dev, 0, 0, (char *)("cenergy")); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 0, (char *)("numatoms"), (int *)(&numatoms), 1); 
+
+
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 1, (char *)("gridspacing"), (int *)(&gridspacing), 2); 
+
+
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 2, (char *)("energygrid"), (int *)(&energygrid), 4); 
+
+
+auto unsigned xindex = (__umul24(blockIdx.x, blockDim.x) * (8) + threadIdx.x); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 3, (char *)("xindex"), (int *)(&xindex), 1); 
+
+
+auto unsigned yindex = (__umul24(blockIdx.y, blockDim.y) + threadIdx.y); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 4, (char *)("yindex"), (int *)(&yindex), 1); 
+
+
+auto unsigned outaddr = ((__umul24(gridDim.x, blockDim.x) * (8)) * yindex + xindex); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 5, (char *)("outaddr"), (int *)(&outaddr), 1); 
+
+
+auto float coory = (gridspacing * yindex); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 6, (char *)("coory"), (int *)(&coory), 2); 
+
+
+auto float coorx = (gridspacing * xindex); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 7, (char *)("coorx"), (int *)(&coorx), 2); 
+
+
+auto float energyvalx1 = ((0.0)); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 8, (char *)("energyvalx1"), (int *)(&energyvalx1), 2); 
+
+
+auto float energyvalx2 = ((0.0)); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 9, (char *)("energyvalx2"), (int *)(&energyvalx2), 2); 
+
+
+auto float energyvalx3 = ((0.0)); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 10, (char *)("energyvalx3"), (int *)(&energyvalx3), 2); 
+
+
+auto float energyvalx4 = ((0.0)); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 11, (char *)("energyvalx4"), (int *)(&energyvalx4), 2); 
+
+
+auto float energyvalx5 = ((0.0)); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 12, (char *)("energyvalx5"), (int *)(&energyvalx5), 2); 
+
+
+auto float energyvalx6 = ((0.0)); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 13, (char *)("energyvalx6"), (int *)(&energyvalx6), 2); 
+
+
+auto float energyvalx7 = ((0.0)); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 14, (char *)("energyvalx7"), (int *)(&energyvalx7), 2); 
+
+
+auto float energyvalx8 = ((0.0)); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 15, (char *)("energyvalx8"), (int *)(&energyvalx8), 2); 
+
+
+auto float gridspacing_u = (gridspacing * (16)); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 16, (char *)("gridspacing_u"), (int *)(&gridspacing_u), 2); 
+
+
+auto int atomid; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 17, (char *)("atomid"), (int *)(&atomid), 1); 
+
+
+
+GPUFI_KERNEL_LOOP(gpufi_dev, 0); 
+
+
+for (atomid = 0; atomid < numatoms; atomid++) 
+{ 
+
+GPUFI_KERNEL_ITERATION(gpufi_dev); 
+
+
+auto float dy = (coory - ((__shadow_var(,atominfo))[atomid]).y); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 20, (char *)("dy"), (int *)(&dy), 2); 
+
+
+auto float dyz2 = (dy * dy + ((__shadow_var(,atominfo))[atomid]).z); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 21, (char *)("dyz2"), (int *)(&dyz2), 2); 
+
+
+auto float dx1 = (coorx - ((__shadow_var(,atominfo))[atomid]).x); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 22, (char *)("dx1"), (int *)(&dx1), 2); 
+
+
+auto float dx2 = (dx1 + gridspacing_u); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 23, (char *)("dx2"), (int *)(&dx2), 2); 
+
+
+auto float dx3 = (dx2 + gridspacing_u); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 24, (char *)("dx3"), (int *)(&dx3), 2); 
+
+
+auto float dx4 = (dx3 + gridspacing_u); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 25, (char *)("dx4"), (int *)(&dx4), 2); 
+
+
+auto float dx5 = (dx4 + gridspacing_u); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 26, (char *)("dx5"), (int *)(&dx5), 2); 
+
+
+auto float dx6 = (dx5 + gridspacing_u); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 27, (char *)("dx6"), (int *)(&dx6), 2); 
+
+
+auto float dx7 = (dx6 + gridspacing_u); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 28, (char *)("dx7"), (int *)(&dx7), 2); 
+
+
+auto float dx8 = (dx7 + gridspacing_u); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 29, (char *)("dx8"), (int *)(&dx8), 2); 
+
+
+energyvalx1 += ((__shadow_var(,atominfo))[atomid]).w * ((1.0) / sqrtf(dx1 * dx1 + dyz2)); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 30, (char *)("energyvalx1"), (int *)(&energyvalx1), 2); 
+
+
+energyvalx2 += ((__shadow_var(,atominfo))[atomid]).w * ((1.0) / sqrtf(dx2 * dx2 + dyz2)); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 31, (char *)("energyvalx2"), (int *)(&energyvalx2), 2); 
+
+
+energyvalx3 += ((__shadow_var(,atominfo))[atomid]).w * ((1.0) / sqrtf(dx3 * dx3 + dyz2)); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 32, (char *)("energyvalx3"), (int *)(&energyvalx3), 2); 
+
+
+energyvalx4 += ((__shadow_var(,atominfo))[atomid]).w * ((1.0) / sqrtf(dx4 * dx4 + dyz2)); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 33, (char *)("energyvalx4"), (int *)(&energyvalx4), 2); 
+
+
+energyvalx5 += ((__shadow_var(,atominfo))[atomid]).w * ((1.0) / sqrtf(dx5 * dx5 + dyz2)); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 34, (char *)("energyvalx5"), (int *)(&energyvalx5), 2); 
+
+
+energyvalx6 += ((__shadow_var(,atominfo))[atomid]).w * ((1.0) / sqrtf(dx6 * dx6 + dyz2)); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 35, (char *)("energyvalx6"), (int *)(&energyvalx6), 2); 
+
+
+energyvalx7 += ((__shadow_var(,atominfo))[atomid]).w * ((1.0) / sqrtf(dx7 * dx7 + dyz2)); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 36, (char *)("energyvalx7"), (int *)(&energyvalx7), 2); 
+
+
+energyvalx8 += ((__shadow_var(,atominfo))[atomid]).w * ((1.0) / sqrtf(dx8 * dx8 + dyz2)); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 37, (char *)("energyvalx8"), (int *)(&energyvalx8), 2); 
+
+
+}  
+
+GPUFI_KERNEL_LOOP(gpufi_dev, 1); 
+
+
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 19, (char *)("atomid"), (int *)(&atomid), 1); 
+
+
+(energygrid[outaddr]) += energyvalx1; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 38, (char *)("energygrid[outaddr]"), (int *)(energygrid + outaddr), 2); 
+
+
+(energygrid[outaddr + (1 * 16)]) += energyvalx2; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 39, (char *)("energygrid[(outaddr+(1*16))]"), (int *)(energygrid + (outaddr + (1 * 16))), 2); 
+
+
+(energygrid[outaddr + (2 * 16)]) += energyvalx3; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 40, (char *)("energygrid[(outaddr+(2*16))]"), (int *)(energygrid + (outaddr + (2 * 16))), 2); 
+
+
+(energygrid[outaddr + (3 * 16)]) += energyvalx4; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 41, (char *)("energygrid[(outaddr+(3*16))]"), (int *)(energygrid + (outaddr + (3 * 16))), 2); 
+
+
+(energygrid[outaddr + (4 * 16)]) += energyvalx5; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 42, (char *)("energygrid[(outaddr+(4*16))]"), (int *)(energygrid + (outaddr + (4 * 16))), 2); 
+
+
+(energygrid[outaddr + (5 * 16)]) += energyvalx6; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 43, (char *)("energygrid[(outaddr+(5*16))]"), (int *)(energygrid + (outaddr + (5 * 16))), 2); 
+
+
+(energygrid[outaddr + (6 * 16)]) += energyvalx7; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 44, (char *)("energygrid[(outaddr+(6*16))]"), (int *)(energygrid + (outaddr + (6 * 16))), 2); 
+
+
+(energygrid[outaddr + (7 * 16)]) += energyvalx8; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 45, (char *)("energygrid[(outaddr+(7*16))]"), (int *)(energygrid + (outaddr + (7 * 16))), 2); 
+
+
+GPUFI_KERNEL(gpufi_dev, 1, 0, (char *)("cenergy")); 
+} 
+#endif
+# 235 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu"
+int copyatomstoconstbuf(float *atoms, int count, float zplane) 
+{ 
+auto float atompre[(4 * 4000)]; 
+auto int i; 
+if (count > 4000) 
+{ 
+printf("Atom count exceeds constant buffer storage capacity\n"); 
+return -1; 
+}  
+for (i = 0; i < (count * 4); i += 4) 
+{ 
+auto float dz; 
+((atompre)[i]) = atoms[i]; 
+((atompre)[i + 1]) = atoms[i + 1]; 
+dz = zplane - atoms[i + 2]; 
+((atompre)[i + 2]) = dz * dz; 
+((atompre)[i + 3]) = atoms[i + 3]; 
+}  
+cudaMemcpyToSymbol(__shadow_var(,atominfo), atompre, (count * 4) * sizeof(float), 0); 
+if (1) 
+{ 
+; 
+}  
+# 260 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu"
+return 0; 
+} 
+# 42 "src/cuda_fi_prerun/main.cu"
+static int initatoms(float **atombuf, int count, dim3 volsize, float gridspacing) 
+{ 
 auto dim3 size; 
 auto int i; 
 auto float *atoms; 
-
 srand(54321); 
-
+# 50 "src/cuda_fi_prerun/main.cu"
 atoms = (float *)malloc((count * 4) * sizeof(float)); 
 (*atombuf) = atoms; 
-
-
+# 54 "src/cuda_fi_prerun/main.cu"
 (size.x) = gridspacing * volsize.x; 
 (size.y) = gridspacing * volsize.y; 
 (size.z) = gridspacing * volsize.z; 
-
-for (i = 0; i < count; i++) { 
+for (i = 0; i < count; i++) 
+{ 
 auto int addr = (i * 4); 
 (atoms[addr]) = (rand() / ((float)2147483647)) * size.x; 
 (atoms[addr + 1]) = (rand() / ((float)2147483647)) * size.y; 
 (atoms[addr + 2]) = (rand() / ((float)2147483647)) * size.z; 
 (atoms[addr + 3]) = (rand() / ((float)2147483647)) * (2.0) - (1.0); 
+# 66 "src/cuda_fi_prerun/main.cu"
 }  
-
 return 0; 
 } 
-# 57
+# 75 "src/cuda_fi_prerun/main.cu"
 static int writeenergy(char *filename, float *energy, dim3 volsize) 
 { 
 auto FILE *outfile; 
 auto int x; auto int y; 
-
 outfile = fopen(filename, "w"); 
-if (outfile == (__null)) { 
+if (outfile == (__null)) 
+{ 
 fputs("Cannot open output file\n", stderr); 
 return -1; 
 }  
 
-
 fprintf(outfile, "%d %d %d %d\n", volsize.x, volsize.y, volsize.z, 40000); 
-
 
 { 
 auto double sum = (0.0); 
-
-for (y = 0; y < (volsize.y); y++) { 
-for (x = 0; x < (volsize.x); x++) { 
+for (y = 0; y < (volsize.y); y++) 
+{ 
+for (x = 0; x < (volsize.x); x++) 
+{ 
 auto double t = (energy[y * volsize.x + x]); 
 t = fmax(-(20.0), fmin((20.0), t)); 
 sum += t; 
@@ -7175,137 +7582,169 @@ sum += t;
 fprintf(outfile, "%.4g\n", sum); 
 } 
 
-
-for (y = 0; y < 17; y++) { 
-for (x = 0; x < (volsize.x); x++) { 
+for (y = 0; y < 17; y++) 
+{ 
+for (x = 0; x < (volsize.x); x++) 
+{ 
 auto int addr = (y * volsize.x + x); 
 fprintf(outfile, "%.4g ", energy[addr]); 
 }  
 fprintf(outfile, "\n"); 
 }  
-
 fclose(outfile); 
-
 return 0; 
 } 
 
-int main(int argc, char **argv) { 
+int main(int argc, char **argv) 
+{ 
 auto pb_TimerSet timers; 
 auto pb_Parameters *parameters; 
-
 auto float *energy = (__null); 
+# 122 "src/cuda_fi_prerun/main.cu"
+GPUFI_INIT(1, 46); 
+
+
 auto float *atoms = (__null); 
 auto dim3 volsize; auto dim3 Gsz; auto dim3 Bsz; 
-
-
-
-
+# 131 "src/cuda_fi_prerun/main.cu"
 auto int atomcount = 40000; 
-
-
+# 134 "src/cuda_fi_prerun/main.cu"
 auto const float gridspacing = ((0.1000000000000000056)); 
-
-
+# 137 "src/cuda_fi_prerun/main.cu"
 auto int volmemsz; 
-
 printf("CUDA accelerated coulombic potential microbenchmark\n"); 
 printf("Original version by John E. Stone <johns@ks.uiuc.edu>\n"); 
 printf("This version maintained by Chris Rodrigues\n"); 
-
 parameters = pb_ReadParameters(&argc, argv); 
-if (!(parameters)) { 
-return -1; }  
-
-if ((parameters->inpFiles)[0]) { 
-fputs("No input files expected\n", stderr); 
+if (!(parameters)) 
+{ 
+GPUFI_HALT((char *)("fi_profile.txt")); 
 return -1; 
 }  
-
+if ((parameters->inpFiles)[0]) 
+{ 
+fputs("No input files expected\n", stderr); 
+GPUFI_HALT((char *)("fi_profile.txt")); 
+return -1; 
+}  
 pb_InitializeTimerSet(&timers); 
 pb_SwitchToTimer(&timers, pb_TimerID_COMPUTE); 
-
-
+# 157 "src/cuda_fi_prerun/main.cu"
 (volsize.x) = (512); 
 (volsize.y) = (512); 
 (volsize.z) = (1); 
-
-
+# 162 "src/cuda_fi_prerun/main.cu"
 (Bsz.x) = (16); 
+# 165 "src/cuda_fi_prerun/main.cu"
 (Bsz.y) = (8); 
 (Bsz.z) = (1); 
 (Gsz.x) = volsize.x / (Bsz.x * (8)); 
+# 170 "src/cuda_fi_prerun/main.cu"
 (Gsz.y) = volsize.y / Bsz.y; 
 (Gsz.z) = volsize.z / Bsz.z; 
-# 153
-if (initatoms(&atoms, atomcount, volsize, gridspacing)) { 
-return -1; }  
-
-
+# 174 "src/cuda_fi_prerun/main.cu"
+if (initatoms(&atoms, atomcount, volsize, gridspacing)) 
+{ 
+GPUFI_HALT((char *)("fi_profile.txt")); 
+return -1; 
+}  
+# 181 "src/cuda_fi_prerun/main.cu"
 volmemsz = ((sizeof(float) * volsize.x) * volsize.y) * volsize.z; 
-
-
+# 184 "src/cuda_fi_prerun/main.cu"
 { 
 auto float *d_output = (__null); 
+# 188 "src/cuda_fi_prerun/main.cu"
 auto int iterations = 0; 
 auto int atomstart; 
-
 pb_SwitchToTimer(&timers, pb_TimerID_COPY); 
 cudaMalloc((void **)(&d_output), volmemsz); 
-{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { printf("CUDA error: %s, line %d\n", cudaGetErrorString(err), 167); return -1; }  } 
+if (1) 
+{ 
+; 
+}  
+# 198 "src/cuda_fi_prerun/main.cu"
 cudaMemset(d_output, 0, volmemsz); 
-{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { printf("CUDA error: %s, line %d\n", cudaGetErrorString(err), 169); return -1; }  } 
+if (1) 
+{ 
+; 
+}  
+# 205 "src/cuda_fi_prerun/main.cu"
 pb_SwitchToTimer(&timers, pb_TimerID_COMPUTE); 
-
-for (atomstart = 0; atomstart < atomcount; atomstart += 4000) { 
+for (atomstart = 0; atomstart < atomcount; atomstart += 4000) 
+{ 
 auto int atomsremaining = (atomcount - atomstart); 
 auto int runatoms = ((atomsremaining > 4000) ? 4000 : atomsremaining); 
 iterations++; 
-
-
+# 213 "src/cuda_fi_prerun/main.cu"
 pb_SwitchToTimer(&timers, pb_TimerID_COPY); 
-if (copyatomstoconstbuf(atoms + 4 * atomstart, runatoms, (0) * gridspacing)) { 
-return -1; }  
-
-if (parameters->synchronizeGpu) { cudaThreadSynchronize(); }  
-pb_SwitchToTimer(&timers, pb_TimerID_GPU); 
-
-
-cudaConfigureCall(Gsz, Bsz, 0) ? ((void)0) : cenergy__entry(runatoms, (0.1000000000000000056), d_output); 
-{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { printf("CUDA error: %s, line %d\n", cudaGetErrorString(err), 187); return -1; }  } 
-
-if (parameters->synchronizeGpu) { cudaThreadSynchronize(); }  
-pb_SwitchToTimer(&timers, pb_TimerID_COMPUTE); 
-
-
+if (copyatomstoconstbuf(atoms + 4 * atomstart, runatoms, (0) * gridspacing)) 
+{ 
+GPUFI_HALT((char *)("fi_profile.txt")); 
+return -1; 
 }  
-# 199
+if (parameters->synchronizeGpu) 
+{ 
+cudaThreadSynchronize(); 
+}  
+pb_SwitchToTimer(&timers, pb_TimerID_GPU); 
+# 227 "src/cuda_fi_prerun/main.cu"
+cudaMalloc((void **)(&__shadow_var(,gpufi_dev)), sizeof(_gpufi_data_)); 
+{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 228, cudaGetErrorString(err)); exit(-1); }  } 
+cudaMemcpy(__shadow_var(,gpufi_dev), &gpufi_host, sizeof(_gpufi_data_), cudaMemcpyHostToDevice); 
+{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 230, cudaGetErrorString(err)); exit(-1); }  } 
+
+
+cudaConfigureCall(Gsz, Bsz, 0) ? ((void)0) : cenergy__entry(runatoms, (0.1000000000000000056), d_output, __shadow_var(,gpufi_dev)); 
+
+cudaMemcpy(&gpufi_host, __shadow_var(,gpufi_dev), sizeof(_gpufi_data_), cudaMemcpyDeviceToHost); 
+{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 236, cudaGetErrorString(err)); exit(-1); }  } 
+cudaFree(__shadow_var(,gpufi_dev)); 
+{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 238, cudaGetErrorString(err)); exit(-1); }  } 
+
+
+if (1) 
+{ 
+; 
+}  
+# 247 "src/cuda_fi_prerun/main.cu"
+if (parameters->synchronizeGpu) 
+{ 
+cudaThreadSynchronize(); 
+}  
+pb_SwitchToTimer(&timers, pb_TimerID_COMPUTE); 
+# 254 "src/cuda_fi_prerun/main.cu"
+}  
+# 257 "src/cuda_fi_prerun/main.cu"
 energy = (float *)malloc(volmemsz); 
 pb_SwitchToTimer(&timers, pb_TimerID_COPY); 
 cudaMemcpy(energy, d_output, volmemsz, cudaMemcpyDeviceToHost); 
-{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { printf("CUDA error: %s, line %d\n", cudaGetErrorString(err), 202); return -1; }  } 
-
+if (1) 
+{ 
+; 
+}  
+# 266 "src/cuda_fi_prerun/main.cu"
 cudaFree(d_output); 
-
 pb_SwitchToTimer(&timers, pb_TimerID_COMPUTE); 
 } 
 
-
-if (parameters->outFile) { 
+if (parameters->outFile) 
+{ 
 pb_SwitchToTimer(&timers, pb_TimerID_IO); 
-if (writeenergy(parameters->outFile, energy, volsize) == (-1)) { 
-return -1; }  
+if (writeenergy(parameters->outFile, energy, volsize) == (-1)) 
+{ 
+GPUFI_HALT((char *)("fi_profile.txt")); 
+return -1; 
+}  
 pb_SwitchToTimer(&timers, pb_TimerID_COMPUTE); 
 }  
-
 free(atoms); 
 free(energy); 
-
 pb_SwitchToTimer(&timers, pb_TimerID_NONE); 
-
 pb_PrintTimerSet(&timers); 
 pb_FreeParameters(parameters); 
-
+GPUFI_HALT((char *)("fi_profile.txt")); 
 return 0; 
+GPUFI_HALT((char *)("fi_profile.txt")); 
 } 
 
 #include "main.cudafe1.stub.c"

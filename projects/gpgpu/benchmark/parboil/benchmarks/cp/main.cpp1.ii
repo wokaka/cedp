@@ -1,4 +1,4 @@
-# 1 "src/cuda/main.cu"
+# 1 "src/cuda_fi_prerun/main.cu"
 # 1 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/benchmarks/cp//"
 # 1 "<built-in>"
 # 1 "<command-line>"
@@ -13591,6 +13591,204 @@ static __inline__ __attribute__((__device__)) float uint2float(unsigned int a, e
  * include, in the user documentation and internal comments to the code,
  * the above Disclaimer and U.S. Government End Users Notice.
  */
+# 43 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*******************************************************************************
+*                                                                              *
+*                                                                              *
+*                                                                              *
+*******************************************************************************/
+
+# 1 "/usr/local/cuda/bin/../include/host_defines.h" 1
+/*
+ * Copyright 1993-2009 NVIDIA Corporation.  All rights reserved.
+ *
+ * NOTICE TO USER:   
+ *
+ * This source code is subject to NVIDIA ownership rights under U.S. and 
+ * international Copyright laws.  Users and possessors of this source code 
+ * are hereby granted a nonexclusive, royalty-free license to use this code 
+ * in individual and commercial software.
+ *
+ * NVIDIA MAKES NO REPRESENTATION ABOUT THE SUITABILITY OF THIS SOURCE 
+ * CODE FOR ANY PURPOSE.  IT IS PROVIDED "AS IS" WITHOUT EXPRESS OR 
+ * IMPLIED WARRANTY OF ANY KIND.  NVIDIA DISCLAIMS ALL WARRANTIES WITH 
+ * REGARD TO THIS SOURCE CODE, INCLUDING ALL IMPLIED WARRANTIES OF 
+ * MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE.
+ * IN NO EVENT SHALL NVIDIA BE LIABLE FOR ANY SPECIAL, INDIRECT, INCIDENTAL, 
+ * OR CONSEQUENTIAL DAMAGES, OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS 
+ * OF USE, DATA OR PROFITS,  WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE 
+ * OR OTHER TORTIOUS ACTION,  ARISING OUT OF OR IN CONNECTION WITH THE USE 
+ * OR PERFORMANCE OF THIS SOURCE CODE.  
+ *
+ * U.S. Government End Users.   This source code is a "commercial item" as 
+ * that term is defined at  48 C.F.R. 2.101 (OCT 1995), consisting  of 
+ * "commercial computer  software"  and "commercial computer software 
+ * documentation" as such terms are  used in 48 C.F.R. 12.212 (SEPT 1995) 
+ * and is provided to the U.S. Government only as a commercial end item.  
+ * Consistent with 48 C.F.R.12.212 and 48 C.F.R. 227.7202-1 through 
+ * 227.7202-4 (JUNE 1995), all U.S. Government End Users acquire the 
+ * source code with only those rights set forth herein. 
+ *
+ * Any use of this source code in individual and commercial software must 
+ * include, in the user documentation and internal comments to the code,
+ * the above Disclaimer and U.S. Government End Users Notice.
+ */
+# 50 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h" 2
+
+extern "C"
+{
+
+/*DEVICE_BUILTIN*/
+extern __attribute__((__device__)) int __iAtomicAdd(int *address, int val);
+/*DEVICE_BUILTIN*/
+extern __attribute__((__device__)) unsigned int __uAtomicAdd(unsigned int *address, unsigned int val);
+/*DEVICE_BUILTIN*/
+extern __attribute__((__device__)) int __iAtomicExch(int *address, int val);
+/*DEVICE_BUILTIN*/
+extern __attribute__((__device__)) unsigned int __uAtomicExch(unsigned int *address, unsigned int val);
+/*DEVICE_BUILTIN*/
+extern __attribute__((__device__)) float __fAtomicExch(float *address, float val);
+/*DEVICE_BUILTIN*/
+extern __attribute__((__device__)) int __iAtomicMin(int *address, int val);
+/*DEVICE_BUILTIN*/
+extern __attribute__((__device__)) unsigned int __uAtomicMin(unsigned int *address, unsigned int val);
+/*DEVICE_BUILTIN*/
+extern __attribute__((__device__)) int __iAtomicMax(int *address, int val);
+/*DEVICE_BUILTIN*/
+extern __attribute__((__device__)) unsigned int __uAtomicMax(unsigned int *address, unsigned int val);
+/*DEVICE_BUILTIN*/
+extern __attribute__((__device__)) unsigned int __uAtomicInc(unsigned int *address, unsigned int val);
+/*DEVICE_BUILTIN*/
+extern __attribute__((__device__)) unsigned int __uAtomicDec(unsigned int *address, unsigned int val);
+/*DEVICE_BUILTIN*/
+extern __attribute__((__device__)) int __iAtomicAnd(int *address, int val);
+/*DEVICE_BUILTIN*/
+extern __attribute__((__device__)) unsigned int __uAtomicAnd(unsigned int *address, unsigned int val);
+/*DEVICE_BUILTIN*/
+extern __attribute__((__device__)) int __iAtomicOr(int *address, int val);
+/*DEVICE_BUILTIN*/
+extern __attribute__((__device__)) unsigned int __uAtomicOr(unsigned int *address, unsigned int val);
+/*DEVICE_BUILTIN*/
+extern __attribute__((__device__)) int __iAtomicXor(int *address, int val);
+/*DEVICE_BUILTIN*/
+extern __attribute__((__device__)) unsigned int __uAtomicXor(unsigned int *address, unsigned int val);
+/*DEVICE_BUILTIN*/
+extern __attribute__((__device__)) int __iAtomicCAS(int *address, int compare, int val);
+/*DEVICE_BUILTIN*/
+extern __attribute__((__device__)) unsigned int __uAtomicCAS(unsigned int *address, unsigned int compare, unsigned int val);
+
+}
+
+/*******************************************************************************
+*                                                                              *
+*                                                                              *
+*                                                                              *
+*******************************************************************************/
+
+static __inline__ __attribute__((__device__)) int atomicAdd(int *address, int val)
+{
+  return __iAtomicAdd(address, val);
+}
+
+static __inline__ __attribute__((__device__)) unsigned int atomicAdd(unsigned int *address, unsigned int val)
+{
+  return __uAtomicAdd(address, val);
+}
+
+static __inline__ __attribute__((__device__)) int atomicSub(int *address, int val)
+{
+  return __iAtomicAdd(address, (unsigned int)-(int)val);
+}
+
+static __inline__ __attribute__((__device__)) unsigned int atomicSub(unsigned int *address, unsigned int val)
+{
+  return __uAtomicAdd(address, (unsigned int)-(int)val);
+}
+
+static __inline__ __attribute__((__device__)) int atomicExch(int *address, int val)
+{
+  return __iAtomicExch(address, val);
+}
+
+static __inline__ __attribute__((__device__)) unsigned int atomicExch(unsigned int *address, unsigned int val)
+{
+  return __uAtomicExch(address, val);
+}
+
+static __inline__ __attribute__((__device__)) float atomicExch(float *address, float val)
+{
+  return __fAtomicExch(address, val);
+}
+
+static __inline__ __attribute__((__device__)) int atomicMin(int *address, int val)
+{
+  return __iAtomicMin(address, val);
+}
+
+static __inline__ __attribute__((__device__)) unsigned int atomicMin(unsigned int *address, unsigned int val)
+{
+  return __uAtomicMin(address, val);
+}
+
+static __inline__ __attribute__((__device__)) int atomicMax(int *address, int val)
+{
+  return __iAtomicMax(address, val);
+}
+
+static __inline__ __attribute__((__device__)) unsigned int atomicMax(unsigned int *address, unsigned int val)
+{
+  return __uAtomicMax(address, val);
+}
+
+static __inline__ __attribute__((__device__)) unsigned int atomicInc(unsigned int *address, unsigned int val)
+{
+  return __uAtomicInc(address, val);
+}
+
+static __inline__ __attribute__((__device__)) unsigned int atomicDec(unsigned int *address, unsigned int val)
+{
+  return __uAtomicDec(address, val);
+}
+
+static __inline__ __attribute__((__device__)) int atomicAnd(int *address, int val)
+{
+  return __iAtomicAnd(address, val);
+}
+
+static __inline__ __attribute__((__device__)) unsigned int atomicAnd(unsigned int *address, unsigned int val)
+{
+  return __uAtomicAnd(address, val);
+}
+
+static __inline__ __attribute__((__device__)) int atomicOr(int *address, int val)
+{
+  return __iAtomicOr(address, val);
+}
+
+static __inline__ __attribute__((__device__)) unsigned int atomicOr(unsigned int *address, unsigned int val)
+{
+  return __uAtomicOr(address, val);
+}
+
+static __inline__ __attribute__((__device__)) int atomicXor(int *address, int val)
+{
+  return __iAtomicXor(address, val);
+}
+
+static __inline__ __attribute__((__device__)) unsigned int atomicXor(unsigned int *address, unsigned int val)
+{
+  return __uAtomicXor(address, val);
+}
+
+static __inline__ __attribute__((__device__)) int atomicCAS(int *address, int compare, int val)
+{
+  return __iAtomicCAS(address, compare, val);
+}
+
+static __inline__ __attribute__((__device__)) unsigned int atomicCAS(unsigned int *address, unsigned int compare, unsigned int val)
+{
+  return __uAtomicCAS(address, compare, val);
+}
 # 4668 "/usr/local/cuda/bin/../include/device_functions.h" 2
 # 1 "/usr/local/cuda/bin/../include/sm_12_atomic_functions.h" 1
 /*
@@ -16506,24 +16704,2040 @@ __inline__ __attribute__((__host__)) cudaError_t cudaFuncGetAttributes(
   return cudaFuncGetAttributes(attr, (const char*)entry);
 }
 # 1 "<command-line>" 2
-# 1 "src/cuda/main.cu"
-/***************************************************************************
- *cr
- *cr            (C) Copyright 2007 The Board of Trustees of the
- *cr                        University of Illinois
- *cr                         All Rights Reserved
- *cr
- ***************************************************************************/
+# 1 "src/cuda_fi_prerun/main.cu"
+/* Instrumented by FaultInjector */
+# 1 "src/cuda_fi_prerun/gpufi.h" 1
+# 14 "src/cuda_fi_prerun/gpufi.h"
+struct _gpufi_fault_ {
+    int kernel; // invocation index
+                        // if it is 0, it means 'ready to inject'
+    int instance;
+    int varid;
+    int call;
+
+    int mask_type;
+
+//    int mask_length;    // 4 Bytes
+    unsigned int mask;
+    int injected;
+    int disabled;
+    int mode;
+};
+
+//__device__ extern int gpufi_mode;
+# 46 "src/cuda_fi_prerun/gpufi.h"
+struct _gpufi_profile_kernel_ {
+    char state;
+    int id;
+    int instance;
+    char name[32];
+};
+
+
+struct _gpufi_profile_variable_ {
+    int call_count;
+    int loop_id;
+    int type;
+};
+
+struct _gpufi_profile_ {
+    /* profiled data */
+    struct _gpufi_profile_kernel_ kernel[10];
+    struct _gpufi_profile_variable_ variable[10][512];
+
+    /* in order to maintain current */
+    char kernel_bitmap[10];
+    int kernel_instance[10];
+
+    char variable_bitmap[512];
+    char variable_name[512][32];
+};
+
+int gpufi_profile_variable_count = 0;
+int gpufi_profile_kernel_count = 0;
+
+struct _gpufi_current_ {
+    int mode;
+    int kernel;
+    int instance;
+    int loop;
+    int loop_count;
+    int iteration;
+
+    int profile_index;
+    int profile_mode;
+
+
+
+
+
+
+
+    int blid;
+    int thid;
+};
+
+//__device__ extern struct _gpufi_current_ gpufi_current;
+struct _gpufi_data_ {
+  struct _gpufi_fault_ fault;
+
+
+
+  struct _gpufi_fault_ debug;
+  struct _gpufi_current_ current;
+  struct _gpufi_profile_ profile;
+};
+# 115 "src/cuda_fi_prerun/gpufi.h"
+__attribute__((__device__)) void GPUFI_KERNEL_DEC(struct _gpufi_data_ *, int *count);
+__attribute__((__device__)) void GPUFI_KERNEL_SET(struct _gpufi_data_ *, int *count, int value);
+__attribute__((__device__)) void GPUFI_KERNEL(struct _gpufi_data_ *, int begin, int type, char *);
+__attribute__((__device__)) void GPUFI_KERNEL_LOOP(struct _gpufi_data_ *, int);
+__attribute__((__device__)) void GPUFI_KERNEL_ITERATION(struct _gpufi_data_ *);
+__attribute__((__device__)) void GPUFI_KERNEL_VARIABLE(struct _gpufi_data_ *, int varid, char *name, int *variable, int var_type);
+__attribute__((__device__)) void GPUFI_KERNEL_VARIABLE_STREAM(struct _gpufi_data_ *gpufi_dev, int varid, char *name, int *variable, int length, int count);
+__attribute__((__device__)) void GPUFI_DEBUG_LOC(struct _gpufi_data_ *gpufi_dev);
+__attribute__((__device__)) int GPUFI_EXIT(int errno);
+int GPUFI_INIT(int, int);
+int GPUFI_HALT(char *fname);
+__attribute__((__device__)) void CudaStrcpy(char *dst, char *src, int max);
+
+extern struct _gpufi_data_ gpufi_host;
+
+
+
+
+
+
+//extern __device__ struct _gpufi_data_ *gpufi_dev;
+# 147 "src/cuda_fi_prerun/gpufi.h"
+# 1 "src/cuda_fi_prerun/gpufi_kernel.cu" 1
+
+
+
+# 1 "/usr/include/stdio.h" 1 3 4
+/* Define ISO C stdio on top of C++ iostreams.
+   Copyright (C) 1991, 1994-2007, 2008 Free Software Foundation, Inc.
+   This file is part of the GNU C Library.
+
+   The GNU C Library is free software; you can redistribute it and/or
+   modify it under the terms of the GNU Lesser General Public
+   License as published by the Free Software Foundation; either
+   version 2.1 of the License, or (at your option) any later version.
+
+   The GNU C Library is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   Lesser General Public License for more details.
+
+   You should have received a copy of the GNU Lesser General Public
+   License along with the GNU C Library; if not, write to the Free
+   Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+   02111-1307 USA.  */
+
 /*
- * CUDA accelerated coulombic potential grid test code
- *   John E. Stone <johns@ks.uiuc.edu>
- *   http://www.ks.uiuc.edu/~johns/
- *
- * Coulombic potential grid calculation microbenchmark based on the time
- * consuming portions of the 'cionize' ion placement tool.
+ *	ISO C99 Standard: 7.19 Input/output	<stdio.h>
  */
 
-# 1 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h" 1
+
+
+
+
+# 1 "/usr/include/features.h" 1 3 4
+/* Copyright (C) 1991,1992,1993,1995-2006,2007 Free Software Foundation, Inc.
+   This file is part of the GNU C Library.
+
+   The GNU C Library is free software; you can redistribute it and/or
+   modify it under the terms of the GNU Lesser General Public
+   License as published by the Free Software Foundation; either
+   version 2.1 of the License, or (at your option) any later version.
+
+   The GNU C Library is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   Lesser General Public License for more details.
+
+   You should have received a copy of the GNU Lesser General Public
+   License along with the GNU C Library; if not, write to the Free
+   Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+   02111-1307 USA.  */
+# 29 "/usr/include/stdio.h" 2 3 4
+
+extern "C" {
+
+
+
+# 1 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 1 3 4
+/* Copyright (C) 1989, 1997, 1998, 1999, 2000, 2002, 2004
+   Free Software Foundation, Inc.
+
+This file is part of GCC.
+
+GCC is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2, or (at your option)
+any later version.
+
+GCC is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GCC; see the file COPYING.  If not, write to
+the Free Software Foundation, 51 Franklin Street, Fifth Floor,
+Boston, MA 02110-1301, USA.  */
+
+/* As a special exception, if you include this header file into source
+   files compiled by GCC, this header file does not by itself cause
+   the resulting executable to be covered by the GNU General Public
+   License.  This exception does not however invalidate any other
+   reasons why the executable file might be covered by the GNU General
+   Public License.  */
+
+/*
+ * ISO C Standard:  7.17  Common definitions  <stddef.h>
+ */
+
+
+
+
+
+
+/* Any one of these symbols __need_* means that GNU libc
+   wants us just to define one data type.  So don't define
+   the symbols that indicate this file's entire job has been done.  */
+# 52 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
+/* This avoids lossage on SunOS but only if stdtypes.h comes first.
+   There's no way to win with the other order!  Sun lossage.  */
+
+/* On 4.3bsd-net2, make sure ansi.h is included, so we have
+   one less case to deal with in the following.  */
+
+
+
+/* On FreeBSD 5, machine/ansi.h does not exist anymore... */
+
+
+
+
+/* In 4.3bsd-net2, machine/ansi.h defines these symbols, which are
+   defined if the corresponding type is *not* defined.
+   FreeBSD-2.1 defines _MACHINE_ANSI_H_ instead of _ANSI_H_ */
+# 97 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
+/* Sequent's header files use _PTRDIFF_T_ in some conflicting way.
+   Just ignore it.  */
+
+
+
+
+/* On VxWorks, <type/vxTypesBase.h> may have defined macros like
+   _TYPE_size_t which will typedef size_t.  fixincludes patched the
+   vxTypesBase.h so that this macro is only defined if _GCC_SIZE_T is
+   not defined, and so that defining this macro defines _GCC_SIZE_T.
+   If we find that the macros are still defined at this point, we must
+   invoke them so that the type is defined as expected.  */
+# 122 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
+/* In case nobody has defined these types, but we aren't running under
+   GCC 2.00, make sure that __PTRDIFF_TYPE__, __SIZE_TYPE__, and
+   __WCHAR_TYPE__ have reasonable values.  This can happen if the
+   parts of GCC is compiled by an older compiler, that actually
+   include gstddef.h, such as collect2.  */
+
+/* Signed type of difference of two pointers.  */
+
+/* Define this type if we are doing the whole job,
+   or if we want this type in particular.  */
+# 162 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
+/* If this symbol has done its job, get rid of it.  */
+
+
+
+
+/* Unsigned type of `sizeof' something.  */
+
+/* Define this type if we are doing the whole job,
+   or if we want this type in particular.  */
+# 240 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
+/* Wide character type.
+   Locale-writers should change this as necessary to
+   be big enough to hold unique values not between 0 and 127,
+   and not (wchar_t) -1, for each defined multibyte character.  */
+
+/* Define this type if we are doing the whole job,
+   or if we want this type in particular.  */
+# 360 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
+/*  In 4.3bsd-net2, leave these undefined to indicate that size_t, etc.
+    are already defined.  */
+/*  BSD/OS 3.1 and FreeBSD [23].x require the MACHINE_ANSI_H check here.  */
+# 395 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
+/* A null pointer constant.  */
+# 413 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
+/* Offset of member MEMBER in a struct of type TYPE. */
+# 35 "/usr/include/stdio.h" 2 3 4
+
+# 1 "/usr/include/bits/types.h" 1 3 4
+/* bits/types.h -- definitions of __*_t types underlying *_t types.
+   Copyright (C) 2002, 2003, 2004, 2005, 2007 Free Software Foundation, Inc.
+   This file is part of the GNU C Library.
+
+   The GNU C Library is free software; you can redistribute it and/or
+   modify it under the terms of the GNU Lesser General Public
+   License as published by the Free Software Foundation; either
+   version 2.1 of the License, or (at your option) any later version.
+
+   The GNU C Library is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   Lesser General Public License for more details.
+
+   You should have received a copy of the GNU Lesser General Public
+   License along with the GNU C Library; if not, write to the Free
+   Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+   02111-1307 USA.  */
+
+/*
+ * Never include this file directly; use <sys/types.h> instead.
+ */
+# 37 "/usr/include/stdio.h" 2 3 4
+
+
+
+
+
+
+
+/* Define outside of namespace so the C++ is happy.  */
+struct _IO_FILE;
+
+
+/* The opaque type of streams.  This is the definition used elsewhere.  */
+typedef struct _IO_FILE FILE;
+
+
+
+
+
+# 64 "/usr/include/stdio.h" 3 4
+/* The opaque type of streams.  This is the definition used elsewhere.  */
+typedef struct _IO_FILE __FILE;
+# 75 "/usr/include/stdio.h" 3 4
+# 1 "/usr/include/libio.h" 1 3 4
+/* Copyright (C) 1991-1995,1997-2006,2007 Free Software Foundation, Inc.
+   This file is part of the GNU C Library.
+   Written by Per Bothner <bothner@cygnus.com>.
+
+   The GNU C Library is free software; you can redistribute it and/or
+   modify it under the terms of the GNU Lesser General Public
+   License as published by the Free Software Foundation; either
+   version 2.1 of the License, or (at your option) any later version.
+
+   The GNU C Library is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   Lesser General Public License for more details.
+
+   You should have received a copy of the GNU Lesser General Public
+   License along with the GNU C Library; if not, write to the Free
+   Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+   02111-1307 USA.
+
+   As a special exception, if you link the code in this file with
+   files compiled with a GNU compiler to produce an executable,
+   that does not cause the resulting executable to be covered by
+   the GNU Lesser General Public License.  This exception does not
+   however invalidate any other reasons why the executable file
+   might be covered by the GNU Lesser General Public License.
+   This exception applies to code released by its copyright holders
+   in files containing the exception.  */
+
+
+
+
+# 1 "/usr/include/_G_config.h" 1 3 4
+/* This file is needed by libio to define various configuration parameters.
+   These are always the same in the GNU C library.  */
+
+
+
+
+/* Define types for libio in terms of the standard internal type names.  */
+
+# 1 "/usr/include/bits/types.h" 1 3 4
+/* bits/types.h -- definitions of __*_t types underlying *_t types.
+   Copyright (C) 2002, 2003, 2004, 2005, 2007 Free Software Foundation, Inc.
+   This file is part of the GNU C Library.
+
+   The GNU C Library is free software; you can redistribute it and/or
+   modify it under the terms of the GNU Lesser General Public
+   License as published by the Free Software Foundation; either
+   version 2.1 of the License, or (at your option) any later version.
+
+   The GNU C Library is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   Lesser General Public License for more details.
+
+   You should have received a copy of the GNU Lesser General Public
+   License along with the GNU C Library; if not, write to the Free
+   Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+   02111-1307 USA.  */
+
+/*
+ * Never include this file directly; use <sys/types.h> instead.
+ */
+# 10 "/usr/include/_G_config.h" 2 3 4
+
+
+
+
+
+# 1 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 1 3 4
+/* Copyright (C) 1989, 1997, 1998, 1999, 2000, 2002, 2004
+   Free Software Foundation, Inc.
+
+This file is part of GCC.
+
+GCC is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2, or (at your option)
+any later version.
+
+GCC is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GCC; see the file COPYING.  If not, write to
+the Free Software Foundation, 51 Franklin Street, Fifth Floor,
+Boston, MA 02110-1301, USA.  */
+
+/* As a special exception, if you include this header file into source
+   files compiled by GCC, this header file does not by itself cause
+   the resulting executable to be covered by the GNU General Public
+   License.  This exception does not however invalidate any other
+   reasons why the executable file might be covered by the GNU General
+   Public License.  */
+
+/*
+ * ISO C Standard:  7.17  Common definitions  <stddef.h>
+ */
+
+
+
+
+
+
+/* Any one of these symbols __need_* means that GNU libc
+   wants us just to define one data type.  So don't define
+   the symbols that indicate this file's entire job has been done.  */
+# 52 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
+/* This avoids lossage on SunOS but only if stdtypes.h comes first.
+   There's no way to win with the other order!  Sun lossage.  */
+
+/* On 4.3bsd-net2, make sure ansi.h is included, so we have
+   one less case to deal with in the following.  */
+
+
+
+/* On FreeBSD 5, machine/ansi.h does not exist anymore... */
+
+
+
+
+/* In 4.3bsd-net2, machine/ansi.h defines these symbols, which are
+   defined if the corresponding type is *not* defined.
+   FreeBSD-2.1 defines _MACHINE_ANSI_H_ instead of _ANSI_H_ */
+# 97 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
+/* Sequent's header files use _PTRDIFF_T_ in some conflicting way.
+   Just ignore it.  */
+
+
+
+
+/* On VxWorks, <type/vxTypesBase.h> may have defined macros like
+   _TYPE_size_t which will typedef size_t.  fixincludes patched the
+   vxTypesBase.h so that this macro is only defined if _GCC_SIZE_T is
+   not defined, and so that defining this macro defines _GCC_SIZE_T.
+   If we find that the macros are still defined at this point, we must
+   invoke them so that the type is defined as expected.  */
+# 122 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
+/* In case nobody has defined these types, but we aren't running under
+   GCC 2.00, make sure that __PTRDIFF_TYPE__, __SIZE_TYPE__, and
+   __WCHAR_TYPE__ have reasonable values.  This can happen if the
+   parts of GCC is compiled by an older compiler, that actually
+   include gstddef.h, such as collect2.  */
+
+/* Signed type of difference of two pointers.  */
+
+/* Define this type if we are doing the whole job,
+   or if we want this type in particular.  */
+# 162 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
+/* If this symbol has done its job, get rid of it.  */
+
+
+
+
+/* Unsigned type of `sizeof' something.  */
+
+/* Define this type if we are doing the whole job,
+   or if we want this type in particular.  */
+# 240 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
+/* Wide character type.
+   Locale-writers should change this as necessary to
+   be big enough to hold unique values not between 0 and 127,
+   and not (wchar_t) -1, for each defined multibyte character.  */
+
+/* Define this type if we are doing the whole job,
+   or if we want this type in particular.  */
+# 360 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
+/*  In 4.3bsd-net2, leave these undefined to indicate that size_t, etc.
+    are already defined.  */
+/*  BSD/OS 3.1 and FreeBSD [23].x require the MACHINE_ANSI_H check here.  */
+# 395 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
+/* A null pointer constant.  */
+# 413 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
+/* Offset of member MEMBER in a struct of type TYPE. */
+# 16 "/usr/include/_G_config.h" 2 3 4
+
+
+
+
+# 1 "/usr/include/wchar.h" 1 3 4
+/* Copyright (C) 1995-2004,2005,2006,2007 Free Software Foundation, Inc.
+   This file is part of the GNU C Library.
+
+   The GNU C Library is free software; you can redistribute it and/or
+   modify it under the terms of the GNU Lesser General Public
+   License as published by the Free Software Foundation; either
+   version 2.1 of the License, or (at your option) any later version.
+
+   The GNU C Library is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   Lesser General Public License for more details.
+
+   You should have received a copy of the GNU Lesser General Public
+   License along with the GNU C Library; if not, write to the Free
+   Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+   02111-1307 USA.  */
+
+/*
+ *      ISO C99 Standard: 7.24
+ *	Extended multibyte and wide character utilities	<wchar.h>
+ */
+# 77 "/usr/include/wchar.h" 3 4
+/* Conversion state information.  */
+typedef struct
+{
+  int __count;
+  union
+  {
+
+    unsigned int __wch;
+
+
+
+    char __wchb[4];
+  } __value; /* Value so far.  */
+} __mbstate_t;
+
+
+
+
+/* The rest of the file is only used if used if __need_mbstate_t is not
+   defined.  */
+# 842 "/usr/include/wchar.h" 3 4
+/* Undefined all __need_* constants in case we are included to get those
+   constants but the whole file was already read.  */
+# 21 "/usr/include/_G_config.h" 2 3 4
+
+typedef struct
+{
+  __off_t __pos;
+  __mbstate_t __state;
+} _G_fpos_t;
+typedef struct
+{
+  __off64_t __pos;
+  __mbstate_t __state;
+} _G_fpos64_t;
+# 53 "/usr/include/_G_config.h" 3 4
+typedef int _G_int16_t __attribute__ ((__mode__ (__HI__)));
+typedef int _G_int32_t __attribute__ ((__mode__ (__SI__)));
+typedef unsigned int _G_uint16_t __attribute__ ((__mode__ (__HI__)));
+typedef unsigned int _G_uint32_t __attribute__ ((__mode__ (__SI__)));
+
+
+
+
+/* These library features are always available in the GNU C library.  */
+# 82 "/usr/include/_G_config.h" 3 4
+/* This is defined by <bits/stat.h> if `st_blksize' exists.  */
+
+
+
+
+/* These are the vtbl details for ELF.  */
+# 33 "/usr/include/libio.h" 2 3 4
+/* ALL of these should be defined in _G_config.h */
+# 51 "/usr/include/libio.h" 3 4
+/* This define avoids name pollution if we're using GNU stdarg.h */
+
+# 1 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stdarg.h" 1 3 4
+/* Copyright (C) 1989, 1997, 1998, 1999, 2000 Free Software Foundation, Inc.
+
+This file is part of GCC.
+
+GCC is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2, or (at your option)
+any later version.
+
+GCC is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GCC; see the file COPYING.  If not, write to
+the Free Software Foundation, 51 Franklin Street, Fifth Floor,
+Boston, MA 02110-1301, USA.  */
+
+/* As a special exception, if you include this header file into source
+   files compiled by GCC, this header file does not by itself cause
+   the resulting executable to be covered by the GNU General Public
+   License.  This exception does not however invalidate any other
+   reasons why the executable file might be covered by the GNU General
+   Public License.  */
+
+/*
+ * ISO C Standard:  7.15  Variable arguments  <stdarg.h>
+ */
+# 39 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stdarg.h" 3 4
+/* Define __gnuc_va_list.  */
+
+
+
+typedef __builtin_va_list __gnuc_va_list;
+
+
+/* Define the standard macros for the user,
+   if this invocation was from the user program.  */
+# 54 "/usr/include/libio.h" 2 3 4
+# 74 "/usr/include/libio.h" 3 4
+/* For backward compatibility */
+# 114 "/usr/include/libio.h" 3 4
+/* Magic numbers and bits for the _flags field.
+   The magic numbers use the high-order bits of _flags;
+   the remaining bits are available for variable flags.
+   Note: The magic numbers must all be negative if stdio
+   emulation is desired. */
+# 150 "/usr/include/libio.h" 3 4
+/* These are "formatting flags" matching the iostream fmtflags enum values. */
+# 170 "/usr/include/libio.h" 3 4
+struct _IO_jump_t; struct _IO_FILE;
+
+/* Handle lock.  */
+
+
+
+
+
+
+
+typedef void _IO_lock_t;
+
+
+
+/* A streammarker remembers a position in a buffer. */
+
+struct _IO_marker {
+  struct _IO_marker *_next;
+  struct _IO_FILE *_sbuf;
+  /* If _pos >= 0
+ it points to _buf->Gbase()+_pos. FIXME comment */
+  /* if _pos < 0, it points to _buf->eBptr()+_pos. FIXME comment */
+  int _pos;
+# 203 "/usr/include/libio.h" 3 4
+};
+
+/* This is the structure from the libstdc++ codecvt class.  */
+enum __codecvt_result
+{
+  __codecvt_ok,
+  __codecvt_partial,
+  __codecvt_error,
+  __codecvt_noconv
+};
+# 271 "/usr/include/libio.h" 3 4
+struct _IO_FILE {
+  int _flags; /* High-order word is _IO_MAGIC; rest is flags. */
+
+
+  /* The following pointers correspond to the C++ streambuf protocol. */
+  /* Note:  Tk uses the _IO_read_ptr and _IO_read_end fields directly. */
+  char* _IO_read_ptr; /* Current read pointer */
+  char* _IO_read_end; /* End of get area. */
+  char* _IO_read_base; /* Start of putback+get area. */
+  char* _IO_write_base; /* Start of put area. */
+  char* _IO_write_ptr; /* Current put pointer. */
+  char* _IO_write_end; /* End of put area. */
+  char* _IO_buf_base; /* Start of reserve area. */
+  char* _IO_buf_end; /* End of reserve area. */
+  /* The following fields are used to support backing up and undo. */
+  char *_IO_save_base; /* Pointer to start of non-current get area. */
+  char *_IO_backup_base; /* Pointer to first valid character of backup area */
+  char *_IO_save_end; /* Pointer to end of non-current get area. */
+
+  struct _IO_marker *_markers;
+
+  struct _IO_FILE *_chain;
+
+  int _fileno;
+
+
+
+  int _flags2;
+
+  __off_t _old_offset; /* This used to be _offset but it's too small.  */
+
+
+  /* 1+column number of pbase(); 0 is unknown. */
+  unsigned short _cur_column;
+  signed char _vtable_offset;
+  char _shortbuf[1];
+
+  /*  char* _save_gptr;  char* _save_egptr; */
+
+  _IO_lock_t *_lock;
+# 319 "/usr/include/libio.h" 3 4
+  __off64_t _offset;
+# 328 "/usr/include/libio.h" 3 4
+  void *__pad1;
+  void *__pad2;
+  void *__pad3;
+  void *__pad4;
+  size_t __pad5;
+
+  int _mode;
+  /* Make sure we don't get into trouble again.  */
+  char _unused2[15 * sizeof (int) - 4 * sizeof (void *) - sizeof (size_t)];
+
+};
+
+
+
+
+
+struct _IO_FILE_plus;
+
+extern struct _IO_FILE_plus _IO_2_1_stdin_;
+extern struct _IO_FILE_plus _IO_2_1_stdout_;
+extern struct _IO_FILE_plus _IO_2_1_stderr_;
+# 360 "/usr/include/libio.h" 3 4
+/* Functions to do I/O and file management for a stream.  */
+
+/* Read NBYTES bytes from COOKIE into a buffer pointed to by BUF.
+   Return number of bytes read.  */
+typedef __ssize_t __io_read_fn (void *__cookie, char *__buf, size_t __nbytes);
+
+/* Write N bytes pointed to by BUF to COOKIE.  Write all N bytes
+   unless there is an error.  Return number of bytes written, or -1 if
+   there is an error without writing anything.  If the file has been
+   opened for append (__mode.__append set), then set the file pointer
+   to the end of the file and then do the write; if not, just write at
+   the current file pointer.  */
+typedef __ssize_t __io_write_fn (void *__cookie, __const char *__buf,
+     size_t __n);
+
+/* Move COOKIE's file position to *POS bytes from the
+   beginning of the file (if W is SEEK_SET),
+   the current position (if W is SEEK_CUR),
+   or the end of the file (if W is SEEK_END).
+   Set *POS to the new file position.
+   Returns zero if successful, nonzero if not.  */
+typedef int __io_seek_fn (void *__cookie, __off64_t *__pos, int __w);
+
+/* Close COOKIE.  */
+typedef int __io_close_fn (void *__cookie);
+
+
+
+/* User-visible names for the above.  */
+typedef __io_read_fn cookie_read_function_t;
+typedef __io_write_fn cookie_write_function_t;
+typedef __io_seek_fn cookie_seek_function_t;
+typedef __io_close_fn cookie_close_function_t;
+
+/* The structure with the cookie function pointers.  */
+typedef struct
+{
+  __io_read_fn *read; /* Read bytes.  */
+  __io_write_fn *write; /* Write bytes.  */
+  __io_seek_fn *seek; /* Seek/tell file position.  */
+  __io_close_fn *close; /* Close file.  */
+} _IO_cookie_io_functions_t;
+typedef _IO_cookie_io_functions_t cookie_io_functions_t;
+
+struct _IO_cookie_file;
+
+/* Initialize one of those.  */
+extern void _IO_cookie_init (struct _IO_cookie_file *__cfile, int __read_write,
+        void *__cookie, _IO_cookie_io_functions_t __fns);
+
+
+
+
+extern "C" {
+
+
+extern int __underflow (_IO_FILE *);
+extern int __uflow (_IO_FILE *);
+extern int __overflow (_IO_FILE *, int);
+# 458 "/usr/include/libio.h" 3 4
+extern int _IO_getc (_IO_FILE *__fp);
+extern int _IO_putc (int __c, _IO_FILE *__fp);
+extern int _IO_feof (_IO_FILE *__fp) throw ();
+extern int _IO_ferror (_IO_FILE *__fp) throw ();
+
+extern int _IO_peekc_locked (_IO_FILE *__fp);
+
+/* This one is for Emacs. */
+
+
+
+extern void _IO_flockfile (_IO_FILE *) throw ();
+extern void _IO_funlockfile (_IO_FILE *) throw ();
+extern int _IO_ftrylockfile (_IO_FILE *) throw ();
+# 488 "/usr/include/libio.h" 3 4
+extern int _IO_vfscanf (_IO_FILE * __restrict, const char * __restrict,
+   __gnuc_va_list, int *__restrict);
+extern int _IO_vfprintf (_IO_FILE *__restrict, const char *__restrict,
+    __gnuc_va_list);
+extern __ssize_t _IO_padn (_IO_FILE *, int, __ssize_t);
+extern size_t _IO_sgetn (_IO_FILE *, void *, size_t);
+
+extern __off64_t _IO_seekoff (_IO_FILE *, __off64_t, int, int);
+extern __off64_t _IO_seekpos (_IO_FILE *, __off64_t, int);
+
+extern void _IO_free_backup_area (_IO_FILE *) throw ();
+# 550 "/usr/include/libio.h" 3 4
+}
+# 76 "/usr/include/stdio.h" 2 3 4
+
+
+
+
+typedef __gnuc_va_list va_list;
+
+
+
+
+
+
+
+/* The type of the second argument to `fgetpos' and `fsetpos'.  */
+
+
+typedef _G_fpos_t fpos_t;
+
+
+
+
+
+typedef _G_fpos64_t fpos64_t;
+
+
+/* The possibilities for the third argument to `setvbuf'.  */
+
+
+
+
+
+/* Default buffer size.  */
+
+
+
+
+
+/* End of file character.
+   Some things throughout the library rely on this being -1.  */
+
+
+
+
+
+/* The possibilities for the third argument to `fseek'.
+   These values should not be changed.  */
+
+
+
+
+
+
+/* Default path prefix for `tempnam' and `tmpnam'.  */
+
+
+
+
+/* Get the values:
+   L_tmpnam	How long an array of chars must be to be passed to `tmpnam'.
+   TMP_MAX	The minimum number of unique filenames generated by tmpnam
+   		(and tempnam when it uses tmpnam's name space),
+		or tempnam (the two are separate).
+   L_ctermid	How long an array to pass to `ctermid'.
+   L_cuserid	How long an array to pass to `cuserid'.
+   FOPEN_MAX	Minimum number of files that can be open at once.
+   FILENAME_MAX	Maximum length of a filename.  */
+# 1 "/usr/include/bits/stdio_lim.h" 1 3 4
+/* Copyright (C) 1994, 1997, 1998, 1999 Free Software Foundation, Inc.
+   This file is part of the GNU C Library.
+
+   The GNU C Library is free software; you can redistribute it and/or
+   modify it under the terms of the GNU Lesser General Public
+   License as published by the Free Software Foundation; either
+   version 2.1 of the License, or (at your option) any later version.
+
+   The GNU C Library is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   Lesser General Public License for more details.
+
+   You should have received a copy of the GNU Lesser General Public
+   License along with the GNU C Library; if not, write to the Free
+   Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+   02111-1307 USA.  */
+# 142 "/usr/include/stdio.h" 2 3 4
+
+
+/* Standard streams.  */
+extern struct _IO_FILE *stdin; /* Standard input stream.  */
+extern struct _IO_FILE *stdout; /* Standard output stream.  */
+extern struct _IO_FILE *stderr; /* Standard error output stream.  */
+/* C89/C99 say they're macros.  Make them happy.  */
+
+
+
+
+
+/* Remove file FILENAME.  */
+extern int remove (__const char *__filename) throw ();
+/* Rename file OLD to NEW.  */
+extern int rename (__const char *__old, __const char *__new) throw ();
+
+
+
+/* Rename file OLD relative to OLDFD to NEW relative to NEWFD.  */
+extern int renameat (int __oldfd, __const char *__old, int __newfd,
+       __const char *__new) throw ();
+
+
+
+/* Create a temporary file and open it read/write.
+
+   This function is a possible cancellation points and therefore not
+   marked with __THROW.  */
+
+extern FILE *tmpfile (void) ;
+# 182 "/usr/include/stdio.h" 3 4
+extern FILE *tmpfile64 (void) ;
+
+
+/* Generate a temporary filename.  */
+extern char *tmpnam (char *__s) throw () ;
+
+
+
+/* This is the reentrant variant of `tmpnam'.  The only difference is
+   that it does not allow S to be NULL.  */
+extern char *tmpnam_r (char *__s) throw () ;
+
+
+
+
+/* Generate a unique temporary filename using up to five characters of PFX
+   if it is not NULL.  The directory to put this file in is searched for
+   as follows: First the environment variable "TMPDIR" is checked.
+   If it contains the name of a writable directory, that directory is used.
+   If not and if DIR is not NULL, that value is checked.  If that fails,
+   P_tmpdir is tried and finally "/tmp".  The storage for the filename
+   is allocated by `malloc'.  */
+extern char *tempnam (__const char *__dir, __const char *__pfx)
+     throw () __attribute__ ((__malloc__)) ;
+
+
+
+
+/* Close STREAM.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern int fclose (FILE *__stream);
+/* Flush STREAM, or all streams if STREAM is NULL.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern int fflush (FILE *__stream);
+
+
+
+/* Faster versions when locking is not required.
+
+   This function is not part of POSIX and therefore no official
+   cancellation point.  But due to similarity with an POSIX interface
+   or due to the implementation it is a cancellation point and
+   therefore not marked with __THROW.  */
+extern int fflush_unlocked (FILE *__stream);
+
+
+
+/* Close all streams.
+
+   This function is not part of POSIX and therefore no official
+   cancellation point.  But due to similarity with an POSIX interface
+   or due to the implementation it is a cancellation point and
+   therefore not marked with __THROW.  */
+extern int fcloseall (void);
+
+
+
+
+
+/* Open a file and create a new stream for it.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern FILE *fopen (__const char *__restrict __filename,
+      __const char *__restrict __modes) ;
+/* Open a file, replacing an existing stream with it.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern FILE *freopen (__const char *__restrict __filename,
+        __const char *__restrict __modes,
+        FILE *__restrict __stream) ;
+# 272 "/usr/include/stdio.h" 3 4
+
+
+extern FILE *fopen64 (__const char *__restrict __filename,
+        __const char *__restrict __modes) ;
+extern FILE *freopen64 (__const char *__restrict __filename,
+   __const char *__restrict __modes,
+   FILE *__restrict __stream) ;
+
+
+
+/* Create a new stream that refers to an existing system file descriptor.  */
+extern FILE *fdopen (int __fd, __const char *__modes) throw () ;
+
+
+
+/* Create a new stream that refers to the given magic cookie,
+   and uses the given functions for input and output.  */
+extern FILE *fopencookie (void *__restrict __magic_cookie,
+     __const char *__restrict __modes,
+     _IO_cookie_io_functions_t __io_funcs) throw () ;
+
+/* Create a new stream that refers to a memory buffer.  */
+extern FILE *fmemopen (void *__s, size_t __len, __const char *__modes)
+  throw () ;
+
+/* Open a stream that writes into a malloc'd buffer that is expanded as
+   necessary.  *BUFLOC and *SIZELOC are updated with the buffer's location
+   and the number of characters written on fflush or fclose.  */
+extern FILE *open_memstream (char **__bufloc, size_t *__sizeloc) throw () ;
+
+
+
+
+/* If BUF is NULL, make STREAM unbuffered.
+   Else make it use buffer BUF, of size BUFSIZ.  */
+extern void setbuf (FILE *__restrict __stream, char *__restrict __buf) throw ();
+/* Make STREAM use buffering mode MODE.
+   If BUF is not NULL, use N bytes of it for buffering;
+   else allocate an internal buffer N bytes long.  */
+extern int setvbuf (FILE *__restrict __stream, char *__restrict __buf,
+      int __modes, size_t __n) throw ();
+
+
+
+/* If BUF is NULL, make STREAM unbuffered.
+   Else make it use SIZE bytes of BUF for buffering.  */
+extern void setbuffer (FILE *__restrict __stream, char *__restrict __buf,
+         size_t __size) throw ();
+
+/* Make STREAM line-buffered.  */
+extern void setlinebuf (FILE *__stream) throw ();
+
+
+
+
+/* Write formatted output to STREAM.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern int fprintf (FILE *__restrict __stream,
+      __const char *__restrict __format, ...);
+/* Write formatted output to stdout.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern int printf (__const char *__restrict __format, ...);
+/* Write formatted output to S.  */
+extern int sprintf (char *__restrict __s,
+      __const char *__restrict __format, ...) throw ();
+
+/* Write formatted output to S from argument list ARG.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern int vfprintf (FILE *__restrict __s, __const char *__restrict __format,
+       __gnuc_va_list __arg);
+/* Write formatted output to stdout from argument list ARG.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern int vprintf (__const char *__restrict __format, __gnuc_va_list __arg);
+/* Write formatted output to S from argument list ARG.  */
+extern int vsprintf (char *__restrict __s, __const char *__restrict __format,
+       __gnuc_va_list __arg) throw ();
+
+
+
+
+/* Maximum chars of output to write in MAXLEN.  */
+extern int snprintf (char *__restrict __s, size_t __maxlen,
+       __const char *__restrict __format, ...)
+     throw () __attribute__ ((__format__ (__printf__, 3, 4)));
+
+extern int vsnprintf (char *__restrict __s, size_t __maxlen,
+        __const char *__restrict __format, __gnuc_va_list __arg)
+     throw () __attribute__ ((__format__ (__printf__, 3, 0)));
+
+
+
+
+/* Write formatted output to a string dynamically allocated with `malloc'.
+   Store the address of the string in *PTR.  */
+extern int vasprintf (char **__restrict __ptr, __const char *__restrict __f,
+        __gnuc_va_list __arg)
+     throw () __attribute__ ((__format__ (__printf__, 2, 0))) ;
+extern int __asprintf (char **__restrict __ptr,
+         __const char *__restrict __fmt, ...)
+     throw () __attribute__ ((__format__ (__printf__, 2, 3))) ;
+extern int asprintf (char **__restrict __ptr,
+       __const char *__restrict __fmt, ...)
+     throw () __attribute__ ((__format__ (__printf__, 2, 3))) ;
+
+/* Write formatted output to a file descriptor.
+
+   These functions are not part of POSIX and therefore no official
+   cancellation point.  But due to similarity with an POSIX interface
+   or due to the implementation they are cancellation points and
+   therefore not marked with __THROW.  */
+extern int vdprintf (int __fd, __const char *__restrict __fmt,
+       __gnuc_va_list __arg)
+     __attribute__ ((__format__ (__printf__, 2, 0)));
+extern int dprintf (int __fd, __const char *__restrict __fmt, ...)
+     __attribute__ ((__format__ (__printf__, 2, 3)));
+
+
+
+
+/* Read formatted input from STREAM.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern int fscanf (FILE *__restrict __stream,
+     __const char *__restrict __format, ...) ;
+/* Read formatted input from stdin.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern int scanf (__const char *__restrict __format, ...) ;
+/* Read formatted input from S.  */
+extern int sscanf (__const char *__restrict __s,
+     __const char *__restrict __format, ...) throw ();
+# 441 "/usr/include/stdio.h" 3 4
+
+
+
+
+/* Read formatted input from S into argument list ARG.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern int vfscanf (FILE *__restrict __s, __const char *__restrict __format,
+      __gnuc_va_list __arg)
+     __attribute__ ((__format__ (__scanf__, 2, 0))) ;
+
+/* Read formatted input from stdin into argument list ARG.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern int vscanf (__const char *__restrict __format, __gnuc_va_list __arg)
+     __attribute__ ((__format__ (__scanf__, 1, 0))) ;
+
+/* Read formatted input from S into argument list ARG.  */
+extern int vsscanf (__const char *__restrict __s,
+      __const char *__restrict __format, __gnuc_va_list __arg)
+     throw () __attribute__ ((__format__ (__scanf__, 2, 0)));
+# 500 "/usr/include/stdio.h" 3 4
+
+
+
+
+
+/* Read a character from STREAM.
+
+   These functions are possible cancellation points and therefore not
+   marked with __THROW.  */
+extern int fgetc (FILE *__stream);
+extern int getc (FILE *__stream);
+
+/* Read a character from stdin.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern int getchar (void);
+
+
+/* The C standard explicitly says this is a macro, so we always do the
+   optimization for it.  */
+
+
+
+/* These are defined in POSIX.1:1996.
+
+   These functions are possible cancellation points and therefore not
+   marked with __THROW.  */
+extern int getc_unlocked (FILE *__stream);
+extern int getchar_unlocked (void);
+
+
+
+/* Faster version when locking is not necessary.
+
+   This function is not part of POSIX and therefore no official
+   cancellation point.  But due to similarity with an POSIX interface
+   or due to the implementation it is a cancellation point and
+   therefore not marked with __THROW.  */
+extern int fgetc_unlocked (FILE *__stream);
+
+
+
+
+/* Write a character to STREAM.
+
+   These functions are possible cancellation points and therefore not
+   marked with __THROW.
+
+   These functions is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern int fputc (int __c, FILE *__stream);
+extern int putc (int __c, FILE *__stream);
+
+/* Write a character to stdout.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern int putchar (int __c);
+
+
+/* The C standard explicitly says this can be a macro,
+   so we always do the optimization for it.  */
+
+
+
+/* Faster version when locking is not necessary.
+
+   This function is not part of POSIX and therefore no official
+   cancellation point.  But due to similarity with an POSIX interface
+   or due to the implementation it is a cancellation point and
+   therefore not marked with __THROW.  */
+extern int fputc_unlocked (int __c, FILE *__stream);
+
+
+
+/* These are defined in POSIX.1:1996.
+
+   These functions are possible cancellation points and therefore not
+   marked with __THROW.  */
+extern int putc_unlocked (int __c, FILE *__stream);
+extern int putchar_unlocked (int __c);
+
+
+
+
+
+/* Get a word (int) from STREAM.  */
+extern int getw (FILE *__stream);
+
+/* Write a word (int) to STREAM.  */
+extern int putw (int __w, FILE *__stream);
+
+
+
+
+/* Get a newline-terminated string of finite length from STREAM.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern char *fgets (char *__restrict __s, int __n, FILE *__restrict __stream)
+     ;
+
+/* Get a newline-terminated string from stdin, removing the newline.
+   DO NOT USE THIS FUNCTION!!  There is no limit on how much it will read.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern char *gets (char *__s) ;
+
+
+
+/* This function does the same as `fgets' but does not lock the stream.
+
+   This function is not part of POSIX and therefore no official
+   cancellation point.  But due to similarity with an POSIX interface
+   or due to the implementation it is a cancellation point and
+   therefore not marked with __THROW.  */
+extern char *fgets_unlocked (char *__restrict __s, int __n,
+        FILE *__restrict __stream) ;
+
+
+
+
+/* Read up to (and including) a DELIMITER from STREAM into *LINEPTR
+   (and null-terminate it). *LINEPTR is a pointer returned from malloc (or
+   NULL), pointing to *N characters of space.  It is realloc'd as
+   necessary.  Returns the number of characters read (not including the
+   null terminator), or -1 on error or EOF.
+
+   These functions are not part of POSIX and therefore no official
+   cancellation point.  But due to similarity with an POSIX interface
+   or due to the implementation they are cancellation points and
+   therefore not marked with __THROW.  */
+extern __ssize_t __getdelim (char **__restrict __lineptr,
+          size_t *__restrict __n, int __delimiter,
+          FILE *__restrict __stream) ;
+extern __ssize_t getdelim (char **__restrict __lineptr,
+        size_t *__restrict __n, int __delimiter,
+        FILE *__restrict __stream) ;
+
+/* Like `getdelim', but reads up to a newline.
+
+   This function is not part of POSIX and therefore no official
+   cancellation point.  But due to similarity with an POSIX interface
+   or due to the implementation it is a cancellation point and
+   therefore not marked with __THROW.  */
+extern __ssize_t getline (char **__restrict __lineptr,
+       size_t *__restrict __n,
+       FILE *__restrict __stream) ;
+
+
+
+
+/* Write a string to STREAM.
+
+   This function is a possible cancellation points and therefore not
+   marked with __THROW.  */
+extern int fputs (__const char *__restrict __s, FILE *__restrict __stream);
+
+/* Write a string, followed by a newline, to stdout.
+
+   This function is a possible cancellation points and therefore not
+   marked with __THROW.  */
+extern int puts (__const char *__s);
+
+
+/* Push a character back onto the input buffer of STREAM.
+
+   This function is a possible cancellation points and therefore not
+   marked with __THROW.  */
+extern int ungetc (int __c, FILE *__stream);
+
+
+/* Read chunks of generic data from STREAM.
+
+   This function is a possible cancellation points and therefore not
+   marked with __THROW.  */
+extern size_t fread (void *__restrict __ptr, size_t __size,
+       size_t __n, FILE *__restrict __stream) ;
+/* Write chunks of generic data to STREAM.
+
+   This function is a possible cancellation points and therefore not
+   marked with __THROW.  */
+extern size_t fwrite (__const void *__restrict __ptr, size_t __size,
+        size_t __n, FILE *__restrict __s) ;
+
+
+
+/* This function does the same as `fputs' but does not lock the stream.
+
+   This function is not part of POSIX and therefore no official
+   cancellation point.  But due to similarity with an POSIX interface
+   or due to the implementation it is a cancellation point and
+   therefore not marked with __THROW.  */
+extern int fputs_unlocked (__const char *__restrict __s,
+      FILE *__restrict __stream);
+
+
+
+/* Faster versions when locking is not necessary.
+
+   These functions are not part of POSIX and therefore no official
+   cancellation point.  But due to similarity with an POSIX interface
+   or due to the implementation they are cancellation points and
+   therefore not marked with __THROW.  */
+extern size_t fread_unlocked (void *__restrict __ptr, size_t __size,
+         size_t __n, FILE *__restrict __stream) ;
+extern size_t fwrite_unlocked (__const void *__restrict __ptr, size_t __size,
+          size_t __n, FILE *__restrict __stream) ;
+
+
+
+
+/* Seek to a certain position on STREAM.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern int fseek (FILE *__stream, long int __off, int __whence);
+/* Return the current position of STREAM.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern long int ftell (FILE *__stream) ;
+/* Rewind to the beginning of STREAM.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern void rewind (FILE *__stream);
+
+
+/* The Single Unix Specification, Version 2, specifies an alternative,
+   more adequate interface for the two functions above which deal with
+   file offset.  `long int' is not the right type.  These definitions
+   are originally defined in the Large File Support API.  */
+
+
+
+/* Seek to a certain position on STREAM.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern int fseeko (FILE *__stream, __off_t __off, int __whence);
+/* Return the current position of STREAM.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern __off_t ftello (FILE *__stream) ;
+# 761 "/usr/include/stdio.h" 3 4
+
+
+/* Get STREAM's position.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern int fgetpos (FILE *__restrict __stream, fpos_t *__restrict __pos);
+/* Set STREAM's position.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern int fsetpos (FILE *__stream, __const fpos_t *__pos);
+# 784 "/usr/include/stdio.h" 3 4
+
+
+
+extern int fseeko64 (FILE *__stream, __off64_t __off, int __whence);
+extern __off64_t ftello64 (FILE *__stream) ;
+extern int fgetpos64 (FILE *__restrict __stream, fpos64_t *__restrict __pos);
+extern int fsetpos64 (FILE *__stream, __const fpos64_t *__pos);
+
+
+
+/* Clear the error and EOF indicators for STREAM.  */
+extern void clearerr (FILE *__stream) throw ();
+/* Return the EOF indicator for STREAM.  */
+extern int feof (FILE *__stream) throw () ;
+/* Return the error indicator for STREAM.  */
+extern int ferror (FILE *__stream) throw () ;
+
+
+
+/* Faster versions when locking is not required.  */
+extern void clearerr_unlocked (FILE *__stream) throw ();
+extern int feof_unlocked (FILE *__stream) throw () ;
+extern int ferror_unlocked (FILE *__stream) throw () ;
+
+
+
+
+/* Print a message describing the meaning of the value of errno.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern void perror (__const char *__s);
+
+
+/* Provide the declarations for `sys_errlist' and `sys_nerr' if they
+   are available on this system.  Even if available, these variables
+   should not be used directly.  The `strerror' function provides
+   all the necessary functionality.  */
+# 1 "/usr/include/bits/sys_errlist.h" 1 3 4
+/* Declare sys_errlist and sys_nerr, or don't.  Compatibility (do) version.
+   Copyright (C) 2002 Free Software Foundation, Inc.
+   This file is part of the GNU C Library.
+
+   The GNU C Library is free software; you can redistribute it and/or
+   modify it under the terms of the GNU Lesser General Public
+   License as published by the Free Software Foundation; either
+   version 2.1 of the License, or (at your option) any later version.
+
+   The GNU C Library is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   Lesser General Public License for more details.
+
+   You should have received a copy of the GNU Lesser General Public
+   License along with the GNU C Library; if not, write to the Free
+   Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+   02111-1307 USA.  */
+
+
+
+
+
+/* sys_errlist and sys_nerr are deprecated.  Use strerror instead.  */
+
+
+extern int sys_nerr;
+extern __const char *__const sys_errlist[];
+
+
+extern int _sys_nerr;
+extern __const char *__const _sys_errlist[];
+# 823 "/usr/include/stdio.h" 2 3 4
+
+
+
+/* Return the system file descriptor for STREAM.  */
+extern int fileno (FILE *__stream) throw () ;
+
+
+
+/* Faster version when locking is not required.  */
+extern int fileno_unlocked (FILE *__stream) throw () ;
+
+
+
+
+
+/* Create a new stream connected to a pipe running the given command.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern FILE *popen (__const char *__command, __const char *__modes) ;
+
+/* Close a stream opened by popen and return the status of its child.
+
+   This function is a possible cancellation point and therefore not
+   marked with __THROW.  */
+extern int pclose (FILE *__stream);
+
+
+
+
+/* Return the name of the controlling terminal.  */
+extern char *ctermid (char *__s) throw ();
+
+
+
+
+/* Return the name of the current user.  */
+extern char *cuserid (char *__s);
+
+
+
+
+struct obstack; /* See <obstack.h>.  */
+
+/* Write formatted output to an obstack.  */
+extern int obstack_printf (struct obstack *__restrict __obstack,
+      __const char *__restrict __format, ...)
+     throw () __attribute__ ((__format__ (__printf__, 2, 3)));
+extern int obstack_vprintf (struct obstack *__restrict __obstack,
+       __const char *__restrict __format,
+       __gnuc_va_list __args)
+     throw () __attribute__ ((__format__ (__printf__, 2, 0)));
+
+
+
+
+/* These are defined in POSIX.1:1996.  */
+
+/* Acquire ownership of STREAM.  */
+extern void flockfile (FILE *__stream) throw ();
+
+/* Try to acquire ownership of STREAM but do not block if it is not
+   possible.  */
+extern int ftrylockfile (FILE *__stream) throw () ;
+
+/* Relinquish the ownership granted for STREAM.  */
+extern void funlockfile (FILE *__stream) throw ();
+# 900 "/usr/include/stdio.h" 3 4
+/* If we are compiling with optimizing read this file.  It contains
+   several optimizing inline functions and macros.  */
+
+# 1 "/usr/include/bits/stdio.h" 1 3 4
+/* Optimizing macros and inline functions for stdio functions.
+   Copyright (C) 1998, 2000, 2001, 2004, 2007 Free Software Foundation, Inc.
+   This file is part of the GNU C Library.
+
+   The GNU C Library is free software; you can redistribute it and/or
+   modify it under the terms of the GNU Lesser General Public
+   License as published by the Free Software Foundation; either
+   version 2.1 of the License, or (at your option) any later version.
+
+   The GNU C Library is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   Lesser General Public License for more details.
+
+   You should have received a copy of the GNU Lesser General Public
+   License along with the GNU C Library; if not, write to the Free
+   Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+   02111-1307 USA.  */
+# 32 "/usr/include/bits/stdio.h" 3 4
+/* For -D_FORTIFY_SOURCE{,=2} bits/stdio2.h will define a different
+   inline.  */
+
+/* Write formatted output to stdout from argument list ARG.  */
+extern __inline __attribute__ ((__gnu_inline__)) int
+vprintf (__const char *__restrict __fmt, __gnuc_va_list __arg)
+{
+  return vfprintf (stdout, __fmt, __arg);
+}
+
+
+/* Read a character from stdin.  */
+extern __inline __attribute__ ((__gnu_inline__)) int
+getchar (void)
+{
+  return _IO_getc (stdin);
+}
+
+
+
+/* Faster version when locking is not necessary.  */
+extern __inline __attribute__ ((__gnu_inline__)) int
+fgetc_unlocked (FILE *__fp)
+{
+  return (__builtin_expect (((__fp)->_IO_read_ptr >= (__fp)->_IO_read_end), 0) ? __uflow (__fp) : *(unsigned char *) (__fp)->_IO_read_ptr++);
+}
+
+
+
+
+/* This is defined in POSIX.1:1996.  */
+extern __inline __attribute__ ((__gnu_inline__)) int
+getc_unlocked (FILE *__fp)
+{
+  return (__builtin_expect (((__fp)->_IO_read_ptr >= (__fp)->_IO_read_end), 0) ? __uflow (__fp) : *(unsigned char *) (__fp)->_IO_read_ptr++);
+}
+
+/* This is defined in POSIX.1:1996.  */
+extern __inline __attribute__ ((__gnu_inline__)) int
+getchar_unlocked (void)
+{
+  return (__builtin_expect (((stdin)->_IO_read_ptr >= (stdin)->_IO_read_end), 0) ? __uflow (stdin) : *(unsigned char *) (stdin)->_IO_read_ptr++);
+}
+
+
+
+/* Write a character to stdout.  */
+extern __inline __attribute__ ((__gnu_inline__)) int
+putchar (int __c)
+{
+  return _IO_putc (__c, stdout);
+}
+
+
+
+/* Faster version when locking is not necessary.  */
+extern __inline __attribute__ ((__gnu_inline__)) int
+fputc_unlocked (int __c, FILE *__stream)
+{
+  return (__builtin_expect (((__stream)->_IO_write_ptr >= (__stream)->_IO_write_end), 0) ? __overflow (__stream, (unsigned char) (__c)) : (unsigned char) (*(__stream)->_IO_write_ptr++ = (__c)));
+}
+
+
+
+
+/* This is defined in POSIX.1:1996.  */
+extern __inline __attribute__ ((__gnu_inline__)) int
+putc_unlocked (int __c, FILE *__stream)
+{
+  return (__builtin_expect (((__stream)->_IO_write_ptr >= (__stream)->_IO_write_end), 0) ? __overflow (__stream, (unsigned char) (__c)) : (unsigned char) (*(__stream)->_IO_write_ptr++ = (__c)));
+}
+
+/* This is defined in POSIX.1:1996.  */
+extern __inline __attribute__ ((__gnu_inline__)) int
+putchar_unlocked (int __c)
+{
+  return (__builtin_expect (((stdout)->_IO_write_ptr >= (stdout)->_IO_write_end), 0) ? __overflow (stdout, (unsigned char) (__c)) : (unsigned char) (*(stdout)->_IO_write_ptr++ = (__c)));
+}
+
+
+
+
+/* Like `getdelim', but reads up to a newline.  */
+extern __inline __attribute__ ((__gnu_inline__)) __ssize_t
+getline (char **__lineptr, size_t *__n, FILE *__stream)
+{
+  return __getdelim (__lineptr, __n, '\n', __stream);
+}
+
+
+
+
+/* Faster versions when locking is not required.  */
+extern __inline __attribute__ ((__gnu_inline__)) int
+feof_unlocked (FILE *__stream) throw ()
+{
+  return (((__stream)->_flags & 0x10) != 0);
+}
+
+/* Faster versions when locking is not required.  */
+extern __inline __attribute__ ((__gnu_inline__)) int
+ferror_unlocked (FILE *__stream) throw ()
+{
+  return (((__stream)->_flags & 0x20) != 0);
+}
+# 190 "/usr/include/bits/stdio.h" 3 4
+/* Define helper macro.  */
+# 904 "/usr/include/stdio.h" 2 3 4
+# 912 "/usr/include/stdio.h" 3 4
+}
+# 5 "src/cuda_fi_prerun/gpufi_kernel.cu" 2
+
+
+
+
+struct _gpufi_data_ gpufi_host = {0, };
+__attribute__((__device__)) struct _gpufi_data_ *gpufi_dev;
+
+
+
+////////////////////////////////////////////////////
+// CPU PART
+////////////////////////////////////////////////////
+
+int variable_count;
+int kernel_count;
+
+/*
+ * @about   Fetch a fault injection command (including fault type and time)
+ *          from a file, namely fi_cmd.txt
+ */
+int GPUFI_INIT(int kernel_cnt, int variable_cnt)
+{
+    FILE *fp;
+    char cmd[32];
+  int i;
+
+    kernel_count = kernel_cnt + 1;
+    variable_count = variable_cnt;
+
+    memset(&gpufi_host, 0, sizeof(struct _gpufi_data_));
+
+    fp = fopen("fi_cmd.txt", "rt");
+
+    if(!fp){
+        printf("file open error\n");
+        system("pwd");
+        return -1;
+    }
+
+    fscanf(fp, "%s", cmd);
+    printf("%s ", cmd);
+    if(!strcmp(cmd, "profile")){
+        gpufi_host.current.blid = 0;
+        gpufi_host.current.thid = 0;
+
+        gpufi_host.fault.mode = 1;
+        gpufi_host.current.profile_index = -1;
+        fscanf(fp, "%s", cmd);
+       printf("%s ", cmd);
+        if(!strcmp(cmd, "none")){
+         gpufi_host.current.profile_mode = 0;
+       }
+        else if(!strcmp(cmd, "value")){
+         fscanf(fp, "%s", cmd);
+         printf("%s ", cmd);
+     if(!strcmp(cmd, "loop"))
+          gpufi_host.current.profile_mode = 1;
+         else if(!strcmp(cmd, "kernel"))
+          gpufi_host.current.profile_mode = 2;
+         else if(!strcmp(cmd, "thread")){
+          gpufi_host.current.profile_mode = 3;
+          fscanf(fp, "%d", &gpufi_host.current.blid);
+         printf(" %d ", gpufi_host.current.blid);
+         }
+         else if(!strcmp(cmd, "block")){
+          gpufi_host.current.profile_mode = 4;
+        }
+       }
+       printf(" (%d)\n", gpufi_host.current.profile_mode);
+    }
+
+    fclose(fp);
+
+    return 0;
+}
+# 93 "src/cuda_fi_prerun/gpufi_kernel.cu"
+char *gpufi_type_name[6] = {"unknown", "int", "fp", "int_pt", "fp_pt", "unknown_pt"};
+
+int GPUFI_HALT(char *fname)
+{
+    FILE *fp;
+    int i, j, k, m;
+
+    if(gpufi_host.fault.mode == 1){
+        //char    cmd[32];
+
+        fp = fopen(fname, "wt");
+        if(!fp){
+           printf("can't write to an output file, %s\n", fname);
+            return -1;
+        }
+
+        for(i=0; i<10; i++){
+            if(gpufi_host.profile.kernel[i].state == 1)
+                fprintf(fp, "kernel\t%d\t%s\t%d\n",
+                        gpufi_host.profile.kernel[i].id,
+                        gpufi_host.profile.kernel[i].name,
+                        gpufi_host.profile.kernel[i].instance);
+            else
+                break;
+
+            for(j=0; j<variable_count; j++){
+                if(gpufi_host.profile.variable[i][j].call_count != 0){
+                  fprintf(fp, "variable\t%d\t%s\t%d\t%d\t%s\t",
+                          j,
+                    gpufi_host.profile.variable_bitmap[j]?gpufi_host.profile.variable_name[j]:"",
+                          gpufi_host.profile.variable[i][j].call_count,
+                          gpufi_host.profile.variable[i][j].loop_id,
+                          gpufi_type_name[gpufi_host.profile.variable[i][j].type]);
+
+              fprintf(fp, "\n");
+        }
+            }
+            fprintf(fp, "\n");
+        }
+
+        fclose(fp);
+    }
+
+    return 0;
+}
+# 152 "src/cuda_fi_prerun/gpufi_kernel.cu"
+////////////////////////////////////////////////////
+// DEVICE PART
+////////////////////////////////////////////////////
+
+
+
+__attribute__((__device__))
+void GPUFI_KERNEL_DEC(int *count)
+{
+    if(*count != 0)
+        *count--;
+    // else
+    /* be ready to inject fault when GPUFI_KERNEL_INJECT is called */
+}
+
+__attribute__((__device__))
+void GPUFI_KERNEL_SET(int *count, int value)
+{
+    *count = value;
+}
+
+/*
+ * @about   Event generated when a GPU kernel is executed
+ */
+__attribute__((__device__))
+void CudaStrcpy(char *dst, char *src, int max)
+{
+    int i;
+
+    for(i=0; src[i]!=0 && i<max-1; i++)
+        dst[i] = src[i];
+    dst[i] = 0;
+}
+
+__attribute__((__device__))
+int GPUFI_STRCMP(char *src, char *dst)
+{
+ int i;
+
+ for(i=0; src[i] && dst[i]; i++){
+  if(src[i] != dst[i])
+   return 1;
+ }
+
+ if(src[i] == dst[i])
+  return 0;
+
+ return 1;
+}
+
+__attribute__((__device__))
+void GPUFI_DEBUG_LOC(struct _gpufi_data_ *gpufi_dev)
+{
+# 217 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+
+__attribute__((__device__))
+int GPUFI_EXIT(int errno)
+{
+ int *addr = 0x0;
+
+ *addr = 0x80;
+ return 100 / errno;
+}
+# 260 "src/cuda_fi_prerun/gpufi_kernel.cu"
+__attribute__((__device__))
+void GPUFI_KERNEL(struct _gpufi_data_ *gpufi_dev, int begin, int type, char *name)
+{
+    if(blockIdx.x != gpufi_dev->current.blid || threadIdx.x != gpufi_dev->current.thid)
+        return;
+
+    if(gpufi_dev->fault.mode == 1){
+        if(begin == 0){
+            /* 1: update current */
+
+            if(gpufi_dev->profile.kernel_bitmap[type] == 0)
+                gpufi_dev->profile.kernel_bitmap[type] = 1; /* kernel */
+            gpufi_dev->profile.kernel_instance[type]++; /* instance */
+
+            /* update current */
+            gpufi_dev->current.kernel = type;
+            gpufi_dev->current.instance = gpufi_dev->profile.kernel_instance[type] - 1;
+            gpufi_dev->current.loop = -1;
+
+            /* 2: profiling */
+            gpufi_dev->current.profile_index++;
+
+      if(gpufi_dev->current.profile_index < 10){
+             gpufi_dev->profile.kernel[gpufi_dev->current.profile_index].state = 1;
+             gpufi_dev->profile.kernel[gpufi_dev->current.profile_index].id = gpufi_dev->current.kernel;
+             CudaStrcpy(gpufi_dev->profile.kernel[gpufi_dev->current.profile_index].name, name, 32);
+             gpufi_dev->profile.kernel[gpufi_dev->current.profile_index].instance = gpufi_dev->current.instance;
+       }
+        }
+    }
+}
+# 306 "src/cuda_fi_prerun/gpufi_kernel.cu"
+__attribute__((__device__))
+void GPUFI_KERNEL_LOOP(struct _gpufi_data_ *gpufi_dev, int begin)
+{
+    if(blockIdx.x != gpufi_dev->current.blid || threadIdx.x != gpufi_dev->current.thid)
+        return;
+
+    if(gpufi_dev->fault.mode == 1){
+        if(begin == 0){
+            //gpufi_dev->profile.loop[gpufi_dev->current.kernel][gpufi_dev->current.instance]++;
+            gpufi_dev->current.loop = gpufi_dev->current.loop_count;// = gpufi_dev->profile.loop[gpufi_dev->current.kernel][gpufi_dev->current.instance] - 1;
+            gpufi_dev->current.iteration = -1;
+            gpufi_dev->current.loop_count++;
+        }
+        else{
+            //gpufi_dev->profile.loop[gpufi_dev->current.kernel][gpufi_dev->current.instance]++;
+            gpufi_dev->current.loop = -1;
+        }
+    }
+}
+
+__attribute__((__device__))
+void GPUFI_KERNEL_ITERATION(struct _gpufi_data_ *gpufi_dev)
+{
+    if(blockIdx.x != gpufi_dev->current.blid || threadIdx.x != gpufi_dev->current.thid)
+        return;
+
+    if(gpufi_dev->fault.mode == 1){
+//        gpufi_dev->profile.iteration[gpufi_dev->current.kernel][gpufi_dev->current.instance][gpufi_dev->current.loop]++;
+        gpufi_dev->current.iteration++;
+    }
+}
+# 355 "src/cuda_fi_prerun/gpufi_kernel.cu"
+__attribute__((__device__))
+void GPUFI_KERNEL_VARIABLE(struct _gpufi_data_ *gpufi_dev, int varid, char *name, int *variable, int var_type)
+{
+    int i;
+    if(blockIdx.x != gpufi_dev->current.blid || threadIdx.x != gpufi_dev->current.thid)
+        return;
+
+    if(gpufi_dev->fault.mode == 1){
+      if(gpufi_dev->current.profile_index < 10 && varid < 512){
+          atomicAdd(&gpufi_dev->profile.variable[gpufi_dev->current.profile_index][varid].call_count, 1);
+          if(gpufi_dev->profile.variable_bitmap[varid] == 0){
+           gpufi_dev->profile.variable_bitmap[varid] = 1;
+           CudaStrcpy(gpufi_dev->profile.variable_name[varid], name, 32);
+          }
+          gpufi_dev->profile.variable[gpufi_dev->current.profile_index][varid].loop_id = gpufi_dev->current.loop;
+          gpufi_dev->profile.variable[gpufi_dev->current.profile_index][varid].type = var_type;
+       }
+    }
+}
+
+__attribute__((__device__))
+void GPUFI_KERNEL_VARIABLE_STREAM(struct _gpufi_data_ *gpufi_dev, int varid, char *name, int *variable, int length, int count)
+{
+# 388 "src/cuda_fi_prerun/gpufi_kernel.cu"
+}
+# 148 "src/cuda_fi_prerun/gpufi.h" 2
+# 3 "src/cuda_fi_prerun/main.cu" 2
+
+/*
+
+**************************************************************************
+
+ *cr
+
+ *cr            (C) Copyright 2007 The Board of Trustees of the
+
+ *cr                        University of Illinois
+
+ *cr                         All Rights Reserved
+
+ *cr
+
+ **************************************************************************
+
+*/
+# 13 "src/cuda_fi_prerun/main.cu"
+/*
+
+ 
+
+ * CUDA accelerated coulombic potential grid test code
+
+ *   John E. Stone <johns@ks.uiuc.edu>
+
+ *   http:www.ks.uiuc.edu/~johns/
+
+ *
+
+ * Coulombic potential grid calculation microbenchmark based on the time
+
+ * consuming portions of the 'cionize' ion placement tool.
+
+ 
+
+*/
+# 25 "src/cuda_fi_prerun/main.cu"
+# 1 "src/cuda_fi_prerun/parboil.h" 1
 /*
  * (c) 2007 The Board of Trustees of the University of Illinois.
  */
@@ -18608,7 +20822,7 @@ extern char *ctermid (char *__s) throw ();
 
 
 }
-# 10 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h" 2
+# 10 "src/cuda_fi_prerun/parboil.h" 2
 
 /* Command line parameters for benchmarks */
 struct pb_Parameters {
@@ -18731,7 +20945,8 @@ pb_PrintTimerSet(struct pb_TimerSet *timers);
 
 
 }
-# 18 "src/cuda/main.cu" 2
+# 26 "src/cuda_fi_prerun/main.cu" 2
+
 # 1 "/usr/include/stdio.h" 1 3 4
 /* Define ISO C stdio on top of C++ iostreams.
    Copyright (C) 1991, 1994-2007, 2008 Free Software Foundation, Inc.
@@ -18755,1589 +20970,8 @@ pb_PrintTimerSet(struct pb_TimerSet *timers);
 /*
  *	ISO C99 Standard: 7.19 Input/output	<stdio.h>
  */
+# 28 "src/cuda_fi_prerun/main.cu" 2
 
-
-
-
-
-# 1 "/usr/include/features.h" 1 3 4
-/* Copyright (C) 1991,1992,1993,1995-2006,2007 Free Software Foundation, Inc.
-   This file is part of the GNU C Library.
-
-   The GNU C Library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Lesser General Public
-   License as published by the Free Software Foundation; either
-   version 2.1 of the License, or (at your option) any later version.
-
-   The GNU C Library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Lesser General Public License for more details.
-
-   You should have received a copy of the GNU Lesser General Public
-   License along with the GNU C Library; if not, write to the Free
-   Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
-   02111-1307 USA.  */
-# 29 "/usr/include/stdio.h" 2 3 4
-
-extern "C" {
-
-
-
-# 1 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 1 3 4
-/* Copyright (C) 1989, 1997, 1998, 1999, 2000, 2002, 2004
-   Free Software Foundation, Inc.
-
-This file is part of GCC.
-
-GCC is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2, or (at your option)
-any later version.
-
-GCC is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with GCC; see the file COPYING.  If not, write to
-the Free Software Foundation, 51 Franklin Street, Fifth Floor,
-Boston, MA 02110-1301, USA.  */
-
-/* As a special exception, if you include this header file into source
-   files compiled by GCC, this header file does not by itself cause
-   the resulting executable to be covered by the GNU General Public
-   License.  This exception does not however invalidate any other
-   reasons why the executable file might be covered by the GNU General
-   Public License.  */
-
-/*
- * ISO C Standard:  7.17  Common definitions  <stddef.h>
- */
-
-
-
-
-
-
-/* Any one of these symbols __need_* means that GNU libc
-   wants us just to define one data type.  So don't define
-   the symbols that indicate this file's entire job has been done.  */
-# 52 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
-/* This avoids lossage on SunOS but only if stdtypes.h comes first.
-   There's no way to win with the other order!  Sun lossage.  */
-
-/* On 4.3bsd-net2, make sure ansi.h is included, so we have
-   one less case to deal with in the following.  */
-
-
-
-/* On FreeBSD 5, machine/ansi.h does not exist anymore... */
-
-
-
-
-/* In 4.3bsd-net2, machine/ansi.h defines these symbols, which are
-   defined if the corresponding type is *not* defined.
-   FreeBSD-2.1 defines _MACHINE_ANSI_H_ instead of _ANSI_H_ */
-# 97 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
-/* Sequent's header files use _PTRDIFF_T_ in some conflicting way.
-   Just ignore it.  */
-
-
-
-
-/* On VxWorks, <type/vxTypesBase.h> may have defined macros like
-   _TYPE_size_t which will typedef size_t.  fixincludes patched the
-   vxTypesBase.h so that this macro is only defined if _GCC_SIZE_T is
-   not defined, and so that defining this macro defines _GCC_SIZE_T.
-   If we find that the macros are still defined at this point, we must
-   invoke them so that the type is defined as expected.  */
-# 122 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
-/* In case nobody has defined these types, but we aren't running under
-   GCC 2.00, make sure that __PTRDIFF_TYPE__, __SIZE_TYPE__, and
-   __WCHAR_TYPE__ have reasonable values.  This can happen if the
-   parts of GCC is compiled by an older compiler, that actually
-   include gstddef.h, such as collect2.  */
-
-/* Signed type of difference of two pointers.  */
-
-/* Define this type if we are doing the whole job,
-   or if we want this type in particular.  */
-# 162 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
-/* If this symbol has done its job, get rid of it.  */
-
-
-
-
-/* Unsigned type of `sizeof' something.  */
-
-/* Define this type if we are doing the whole job,
-   or if we want this type in particular.  */
-# 240 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
-/* Wide character type.
-   Locale-writers should change this as necessary to
-   be big enough to hold unique values not between 0 and 127,
-   and not (wchar_t) -1, for each defined multibyte character.  */
-
-/* Define this type if we are doing the whole job,
-   or if we want this type in particular.  */
-# 360 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
-/*  In 4.3bsd-net2, leave these undefined to indicate that size_t, etc.
-    are already defined.  */
-/*  BSD/OS 3.1 and FreeBSD [23].x require the MACHINE_ANSI_H check here.  */
-# 395 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
-/* A null pointer constant.  */
-# 413 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
-/* Offset of member MEMBER in a struct of type TYPE. */
-# 35 "/usr/include/stdio.h" 2 3 4
-
-# 1 "/usr/include/bits/types.h" 1 3 4
-/* bits/types.h -- definitions of __*_t types underlying *_t types.
-   Copyright (C) 2002, 2003, 2004, 2005, 2007 Free Software Foundation, Inc.
-   This file is part of the GNU C Library.
-
-   The GNU C Library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Lesser General Public
-   License as published by the Free Software Foundation; either
-   version 2.1 of the License, or (at your option) any later version.
-
-   The GNU C Library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Lesser General Public License for more details.
-
-   You should have received a copy of the GNU Lesser General Public
-   License along with the GNU C Library; if not, write to the Free
-   Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
-   02111-1307 USA.  */
-
-/*
- * Never include this file directly; use <sys/types.h> instead.
- */
-# 37 "/usr/include/stdio.h" 2 3 4
-
-
-
-
-
-
-
-/* Define outside of namespace so the C++ is happy.  */
-struct _IO_FILE;
-
-
-/* The opaque type of streams.  This is the definition used elsewhere.  */
-typedef struct _IO_FILE FILE;
-
-
-
-
-
-# 64 "/usr/include/stdio.h" 3 4
-/* The opaque type of streams.  This is the definition used elsewhere.  */
-typedef struct _IO_FILE __FILE;
-# 75 "/usr/include/stdio.h" 3 4
-# 1 "/usr/include/libio.h" 1 3 4
-/* Copyright (C) 1991-1995,1997-2006,2007 Free Software Foundation, Inc.
-   This file is part of the GNU C Library.
-   Written by Per Bothner <bothner@cygnus.com>.
-
-   The GNU C Library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Lesser General Public
-   License as published by the Free Software Foundation; either
-   version 2.1 of the License, or (at your option) any later version.
-
-   The GNU C Library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Lesser General Public License for more details.
-
-   You should have received a copy of the GNU Lesser General Public
-   License along with the GNU C Library; if not, write to the Free
-   Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
-   02111-1307 USA.
-
-   As a special exception, if you link the code in this file with
-   files compiled with a GNU compiler to produce an executable,
-   that does not cause the resulting executable to be covered by
-   the GNU Lesser General Public License.  This exception does not
-   however invalidate any other reasons why the executable file
-   might be covered by the GNU Lesser General Public License.
-   This exception applies to code released by its copyright holders
-   in files containing the exception.  */
-
-
-
-
-# 1 "/usr/include/_G_config.h" 1 3 4
-/* This file is needed by libio to define various configuration parameters.
-   These are always the same in the GNU C library.  */
-
-
-
-
-/* Define types for libio in terms of the standard internal type names.  */
-
-# 1 "/usr/include/bits/types.h" 1 3 4
-/* bits/types.h -- definitions of __*_t types underlying *_t types.
-   Copyright (C) 2002, 2003, 2004, 2005, 2007 Free Software Foundation, Inc.
-   This file is part of the GNU C Library.
-
-   The GNU C Library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Lesser General Public
-   License as published by the Free Software Foundation; either
-   version 2.1 of the License, or (at your option) any later version.
-
-   The GNU C Library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Lesser General Public License for more details.
-
-   You should have received a copy of the GNU Lesser General Public
-   License along with the GNU C Library; if not, write to the Free
-   Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
-   02111-1307 USA.  */
-
-/*
- * Never include this file directly; use <sys/types.h> instead.
- */
-# 10 "/usr/include/_G_config.h" 2 3 4
-
-
-
-
-
-# 1 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 1 3 4
-/* Copyright (C) 1989, 1997, 1998, 1999, 2000, 2002, 2004
-   Free Software Foundation, Inc.
-
-This file is part of GCC.
-
-GCC is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2, or (at your option)
-any later version.
-
-GCC is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with GCC; see the file COPYING.  If not, write to
-the Free Software Foundation, 51 Franklin Street, Fifth Floor,
-Boston, MA 02110-1301, USA.  */
-
-/* As a special exception, if you include this header file into source
-   files compiled by GCC, this header file does not by itself cause
-   the resulting executable to be covered by the GNU General Public
-   License.  This exception does not however invalidate any other
-   reasons why the executable file might be covered by the GNU General
-   Public License.  */
-
-/*
- * ISO C Standard:  7.17  Common definitions  <stddef.h>
- */
-
-
-
-
-
-
-/* Any one of these symbols __need_* means that GNU libc
-   wants us just to define one data type.  So don't define
-   the symbols that indicate this file's entire job has been done.  */
-# 52 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
-/* This avoids lossage on SunOS but only if stdtypes.h comes first.
-   There's no way to win with the other order!  Sun lossage.  */
-
-/* On 4.3bsd-net2, make sure ansi.h is included, so we have
-   one less case to deal with in the following.  */
-
-
-
-/* On FreeBSD 5, machine/ansi.h does not exist anymore... */
-
-
-
-
-/* In 4.3bsd-net2, machine/ansi.h defines these symbols, which are
-   defined if the corresponding type is *not* defined.
-   FreeBSD-2.1 defines _MACHINE_ANSI_H_ instead of _ANSI_H_ */
-# 97 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
-/* Sequent's header files use _PTRDIFF_T_ in some conflicting way.
-   Just ignore it.  */
-
-
-
-
-/* On VxWorks, <type/vxTypesBase.h> may have defined macros like
-   _TYPE_size_t which will typedef size_t.  fixincludes patched the
-   vxTypesBase.h so that this macro is only defined if _GCC_SIZE_T is
-   not defined, and so that defining this macro defines _GCC_SIZE_T.
-   If we find that the macros are still defined at this point, we must
-   invoke them so that the type is defined as expected.  */
-# 122 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
-/* In case nobody has defined these types, but we aren't running under
-   GCC 2.00, make sure that __PTRDIFF_TYPE__, __SIZE_TYPE__, and
-   __WCHAR_TYPE__ have reasonable values.  This can happen if the
-   parts of GCC is compiled by an older compiler, that actually
-   include gstddef.h, such as collect2.  */
-
-/* Signed type of difference of two pointers.  */
-
-/* Define this type if we are doing the whole job,
-   or if we want this type in particular.  */
-# 162 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
-/* If this symbol has done its job, get rid of it.  */
-
-
-
-
-/* Unsigned type of `sizeof' something.  */
-
-/* Define this type if we are doing the whole job,
-   or if we want this type in particular.  */
-# 240 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
-/* Wide character type.
-   Locale-writers should change this as necessary to
-   be big enough to hold unique values not between 0 and 127,
-   and not (wchar_t) -1, for each defined multibyte character.  */
-
-/* Define this type if we are doing the whole job,
-   or if we want this type in particular.  */
-# 360 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
-/*  In 4.3bsd-net2, leave these undefined to indicate that size_t, etc.
-    are already defined.  */
-/*  BSD/OS 3.1 and FreeBSD [23].x require the MACHINE_ANSI_H check here.  */
-# 395 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
-/* A null pointer constant.  */
-# 413 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stddef.h" 3 4
-/* Offset of member MEMBER in a struct of type TYPE. */
-# 16 "/usr/include/_G_config.h" 2 3 4
-
-
-
-
-# 1 "/usr/include/wchar.h" 1 3 4
-/* Copyright (C) 1995-2004,2005,2006,2007 Free Software Foundation, Inc.
-   This file is part of the GNU C Library.
-
-   The GNU C Library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Lesser General Public
-   License as published by the Free Software Foundation; either
-   version 2.1 of the License, or (at your option) any later version.
-
-   The GNU C Library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Lesser General Public License for more details.
-
-   You should have received a copy of the GNU Lesser General Public
-   License along with the GNU C Library; if not, write to the Free
-   Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
-   02111-1307 USA.  */
-
-/*
- *      ISO C99 Standard: 7.24
- *	Extended multibyte and wide character utilities	<wchar.h>
- */
-# 77 "/usr/include/wchar.h" 3 4
-/* Conversion state information.  */
-typedef struct
-{
-  int __count;
-  union
-  {
-
-    unsigned int __wch;
-
-
-
-    char __wchb[4];
-  } __value; /* Value so far.  */
-} __mbstate_t;
-
-
-
-
-/* The rest of the file is only used if used if __need_mbstate_t is not
-   defined.  */
-# 842 "/usr/include/wchar.h" 3 4
-/* Undefined all __need_* constants in case we are included to get those
-   constants but the whole file was already read.  */
-# 21 "/usr/include/_G_config.h" 2 3 4
-
-typedef struct
-{
-  __off_t __pos;
-  __mbstate_t __state;
-} _G_fpos_t;
-typedef struct
-{
-  __off64_t __pos;
-  __mbstate_t __state;
-} _G_fpos64_t;
-# 53 "/usr/include/_G_config.h" 3 4
-typedef int _G_int16_t __attribute__ ((__mode__ (__HI__)));
-typedef int _G_int32_t __attribute__ ((__mode__ (__SI__)));
-typedef unsigned int _G_uint16_t __attribute__ ((__mode__ (__HI__)));
-typedef unsigned int _G_uint32_t __attribute__ ((__mode__ (__SI__)));
-
-
-
-
-/* These library features are always available in the GNU C library.  */
-# 82 "/usr/include/_G_config.h" 3 4
-/* This is defined by <bits/stat.h> if `st_blksize' exists.  */
-
-
-
-
-/* These are the vtbl details for ELF.  */
-# 33 "/usr/include/libio.h" 2 3 4
-/* ALL of these should be defined in _G_config.h */
-# 51 "/usr/include/libio.h" 3 4
-/* This define avoids name pollution if we're using GNU stdarg.h */
-
-# 1 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stdarg.h" 1 3 4
-/* Copyright (C) 1989, 1997, 1998, 1999, 2000 Free Software Foundation, Inc.
-
-This file is part of GCC.
-
-GCC is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2, or (at your option)
-any later version.
-
-GCC is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with GCC; see the file COPYING.  If not, write to
-the Free Software Foundation, 51 Franklin Street, Fifth Floor,
-Boston, MA 02110-1301, USA.  */
-
-/* As a special exception, if you include this header file into source
-   files compiled by GCC, this header file does not by itself cause
-   the resulting executable to be covered by the GNU General Public
-   License.  This exception does not however invalidate any other
-   reasons why the executable file might be covered by the GNU General
-   Public License.  */
-
-/*
- * ISO C Standard:  7.15  Variable arguments  <stdarg.h>
- */
-# 39 "/usr/lib/gcc/i486-linux-gnu/4.3.2/include/stdarg.h" 3 4
-/* Define __gnuc_va_list.  */
-
-
-
-typedef __builtin_va_list __gnuc_va_list;
-
-
-/* Define the standard macros for the user,
-   if this invocation was from the user program.  */
-# 54 "/usr/include/libio.h" 2 3 4
-# 74 "/usr/include/libio.h" 3 4
-/* For backward compatibility */
-# 114 "/usr/include/libio.h" 3 4
-/* Magic numbers and bits for the _flags field.
-   The magic numbers use the high-order bits of _flags;
-   the remaining bits are available for variable flags.
-   Note: The magic numbers must all be negative if stdio
-   emulation is desired. */
-# 150 "/usr/include/libio.h" 3 4
-/* These are "formatting flags" matching the iostream fmtflags enum values. */
-# 170 "/usr/include/libio.h" 3 4
-struct _IO_jump_t; struct _IO_FILE;
-
-/* Handle lock.  */
-
-
-
-
-
-
-
-typedef void _IO_lock_t;
-
-
-
-/* A streammarker remembers a position in a buffer. */
-
-struct _IO_marker {
-  struct _IO_marker *_next;
-  struct _IO_FILE *_sbuf;
-  /* If _pos >= 0
- it points to _buf->Gbase()+_pos. FIXME comment */
-  /* if _pos < 0, it points to _buf->eBptr()+_pos. FIXME comment */
-  int _pos;
-# 203 "/usr/include/libio.h" 3 4
-};
-
-/* This is the structure from the libstdc++ codecvt class.  */
-enum __codecvt_result
-{
-  __codecvt_ok,
-  __codecvt_partial,
-  __codecvt_error,
-  __codecvt_noconv
-};
-# 271 "/usr/include/libio.h" 3 4
-struct _IO_FILE {
-  int _flags; /* High-order word is _IO_MAGIC; rest is flags. */
-
-
-  /* The following pointers correspond to the C++ streambuf protocol. */
-  /* Note:  Tk uses the _IO_read_ptr and _IO_read_end fields directly. */
-  char* _IO_read_ptr; /* Current read pointer */
-  char* _IO_read_end; /* End of get area. */
-  char* _IO_read_base; /* Start of putback+get area. */
-  char* _IO_write_base; /* Start of put area. */
-  char* _IO_write_ptr; /* Current put pointer. */
-  char* _IO_write_end; /* End of put area. */
-  char* _IO_buf_base; /* Start of reserve area. */
-  char* _IO_buf_end; /* End of reserve area. */
-  /* The following fields are used to support backing up and undo. */
-  char *_IO_save_base; /* Pointer to start of non-current get area. */
-  char *_IO_backup_base; /* Pointer to first valid character of backup area */
-  char *_IO_save_end; /* Pointer to end of non-current get area. */
-
-  struct _IO_marker *_markers;
-
-  struct _IO_FILE *_chain;
-
-  int _fileno;
-
-
-
-  int _flags2;
-
-  __off_t _old_offset; /* This used to be _offset but it's too small.  */
-
-
-  /* 1+column number of pbase(); 0 is unknown. */
-  unsigned short _cur_column;
-  signed char _vtable_offset;
-  char _shortbuf[1];
-
-  /*  char* _save_gptr;  char* _save_egptr; */
-
-  _IO_lock_t *_lock;
-# 319 "/usr/include/libio.h" 3 4
-  __off64_t _offset;
-# 328 "/usr/include/libio.h" 3 4
-  void *__pad1;
-  void *__pad2;
-  void *__pad3;
-  void *__pad4;
-  size_t __pad5;
-
-  int _mode;
-  /* Make sure we don't get into trouble again.  */
-  char _unused2[15 * sizeof (int) - 4 * sizeof (void *) - sizeof (size_t)];
-
-};
-
-
-
-
-
-struct _IO_FILE_plus;
-
-extern struct _IO_FILE_plus _IO_2_1_stdin_;
-extern struct _IO_FILE_plus _IO_2_1_stdout_;
-extern struct _IO_FILE_plus _IO_2_1_stderr_;
-# 360 "/usr/include/libio.h" 3 4
-/* Functions to do I/O and file management for a stream.  */
-
-/* Read NBYTES bytes from COOKIE into a buffer pointed to by BUF.
-   Return number of bytes read.  */
-typedef __ssize_t __io_read_fn (void *__cookie, char *__buf, size_t __nbytes);
-
-/* Write N bytes pointed to by BUF to COOKIE.  Write all N bytes
-   unless there is an error.  Return number of bytes written, or -1 if
-   there is an error without writing anything.  If the file has been
-   opened for append (__mode.__append set), then set the file pointer
-   to the end of the file and then do the write; if not, just write at
-   the current file pointer.  */
-typedef __ssize_t __io_write_fn (void *__cookie, __const char *__buf,
-     size_t __n);
-
-/* Move COOKIE's file position to *POS bytes from the
-   beginning of the file (if W is SEEK_SET),
-   the current position (if W is SEEK_CUR),
-   or the end of the file (if W is SEEK_END).
-   Set *POS to the new file position.
-   Returns zero if successful, nonzero if not.  */
-typedef int __io_seek_fn (void *__cookie, __off64_t *__pos, int __w);
-
-/* Close COOKIE.  */
-typedef int __io_close_fn (void *__cookie);
-
-
-
-/* User-visible names for the above.  */
-typedef __io_read_fn cookie_read_function_t;
-typedef __io_write_fn cookie_write_function_t;
-typedef __io_seek_fn cookie_seek_function_t;
-typedef __io_close_fn cookie_close_function_t;
-
-/* The structure with the cookie function pointers.  */
-typedef struct
-{
-  __io_read_fn *read; /* Read bytes.  */
-  __io_write_fn *write; /* Write bytes.  */
-  __io_seek_fn *seek; /* Seek/tell file position.  */
-  __io_close_fn *close; /* Close file.  */
-} _IO_cookie_io_functions_t;
-typedef _IO_cookie_io_functions_t cookie_io_functions_t;
-
-struct _IO_cookie_file;
-
-/* Initialize one of those.  */
-extern void _IO_cookie_init (struct _IO_cookie_file *__cfile, int __read_write,
-        void *__cookie, _IO_cookie_io_functions_t __fns);
-
-
-
-
-extern "C" {
-
-
-extern int __underflow (_IO_FILE *);
-extern int __uflow (_IO_FILE *);
-extern int __overflow (_IO_FILE *, int);
-# 458 "/usr/include/libio.h" 3 4
-extern int _IO_getc (_IO_FILE *__fp);
-extern int _IO_putc (int __c, _IO_FILE *__fp);
-extern int _IO_feof (_IO_FILE *__fp) throw ();
-extern int _IO_ferror (_IO_FILE *__fp) throw ();
-
-extern int _IO_peekc_locked (_IO_FILE *__fp);
-
-/* This one is for Emacs. */
-
-
-
-extern void _IO_flockfile (_IO_FILE *) throw ();
-extern void _IO_funlockfile (_IO_FILE *) throw ();
-extern int _IO_ftrylockfile (_IO_FILE *) throw ();
-# 488 "/usr/include/libio.h" 3 4
-extern int _IO_vfscanf (_IO_FILE * __restrict, const char * __restrict,
-   __gnuc_va_list, int *__restrict);
-extern int _IO_vfprintf (_IO_FILE *__restrict, const char *__restrict,
-    __gnuc_va_list);
-extern __ssize_t _IO_padn (_IO_FILE *, int, __ssize_t);
-extern size_t _IO_sgetn (_IO_FILE *, void *, size_t);
-
-extern __off64_t _IO_seekoff (_IO_FILE *, __off64_t, int, int);
-extern __off64_t _IO_seekpos (_IO_FILE *, __off64_t, int);
-
-extern void _IO_free_backup_area (_IO_FILE *) throw ();
-# 550 "/usr/include/libio.h" 3 4
-}
-# 76 "/usr/include/stdio.h" 2 3 4
-
-
-
-
-typedef __gnuc_va_list va_list;
-
-
-
-
-
-
-
-/* The type of the second argument to `fgetpos' and `fsetpos'.  */
-
-
-typedef _G_fpos_t fpos_t;
-
-
-
-
-
-typedef _G_fpos64_t fpos64_t;
-
-
-/* The possibilities for the third argument to `setvbuf'.  */
-
-
-
-
-
-/* Default buffer size.  */
-
-
-
-
-
-/* End of file character.
-   Some things throughout the library rely on this being -1.  */
-
-
-
-
-
-/* The possibilities for the third argument to `fseek'.
-   These values should not be changed.  */
-
-
-
-
-
-
-/* Default path prefix for `tempnam' and `tmpnam'.  */
-
-
-
-
-/* Get the values:
-   L_tmpnam	How long an array of chars must be to be passed to `tmpnam'.
-   TMP_MAX	The minimum number of unique filenames generated by tmpnam
-   		(and tempnam when it uses tmpnam's name space),
-		or tempnam (the two are separate).
-   L_ctermid	How long an array to pass to `ctermid'.
-   L_cuserid	How long an array to pass to `cuserid'.
-   FOPEN_MAX	Minimum number of files that can be open at once.
-   FILENAME_MAX	Maximum length of a filename.  */
-# 1 "/usr/include/bits/stdio_lim.h" 1 3 4
-/* Copyright (C) 1994, 1997, 1998, 1999 Free Software Foundation, Inc.
-   This file is part of the GNU C Library.
-
-   The GNU C Library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Lesser General Public
-   License as published by the Free Software Foundation; either
-   version 2.1 of the License, or (at your option) any later version.
-
-   The GNU C Library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Lesser General Public License for more details.
-
-   You should have received a copy of the GNU Lesser General Public
-   License along with the GNU C Library; if not, write to the Free
-   Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
-   02111-1307 USA.  */
-# 142 "/usr/include/stdio.h" 2 3 4
-
-
-/* Standard streams.  */
-extern struct _IO_FILE *stdin; /* Standard input stream.  */
-extern struct _IO_FILE *stdout; /* Standard output stream.  */
-extern struct _IO_FILE *stderr; /* Standard error output stream.  */
-/* C89/C99 say they're macros.  Make them happy.  */
-
-
-
-
-
-/* Remove file FILENAME.  */
-extern int remove (__const char *__filename) throw ();
-/* Rename file OLD to NEW.  */
-extern int rename (__const char *__old, __const char *__new) throw ();
-
-
-
-/* Rename file OLD relative to OLDFD to NEW relative to NEWFD.  */
-extern int renameat (int __oldfd, __const char *__old, int __newfd,
-       __const char *__new) throw ();
-
-
-
-/* Create a temporary file and open it read/write.
-
-   This function is a possible cancellation points and therefore not
-   marked with __THROW.  */
-
-extern FILE *tmpfile (void) ;
-# 182 "/usr/include/stdio.h" 3 4
-extern FILE *tmpfile64 (void) ;
-
-
-/* Generate a temporary filename.  */
-extern char *tmpnam (char *__s) throw () ;
-
-
-
-/* This is the reentrant variant of `tmpnam'.  The only difference is
-   that it does not allow S to be NULL.  */
-extern char *tmpnam_r (char *__s) throw () ;
-
-
-
-
-/* Generate a unique temporary filename using up to five characters of PFX
-   if it is not NULL.  The directory to put this file in is searched for
-   as follows: First the environment variable "TMPDIR" is checked.
-   If it contains the name of a writable directory, that directory is used.
-   If not and if DIR is not NULL, that value is checked.  If that fails,
-   P_tmpdir is tried and finally "/tmp".  The storage for the filename
-   is allocated by `malloc'.  */
-extern char *tempnam (__const char *__dir, __const char *__pfx)
-     throw () __attribute__ ((__malloc__)) ;
-
-
-
-
-/* Close STREAM.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern int fclose (FILE *__stream);
-/* Flush STREAM, or all streams if STREAM is NULL.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern int fflush (FILE *__stream);
-
-
-
-/* Faster versions when locking is not required.
-
-   This function is not part of POSIX and therefore no official
-   cancellation point.  But due to similarity with an POSIX interface
-   or due to the implementation it is a cancellation point and
-   therefore not marked with __THROW.  */
-extern int fflush_unlocked (FILE *__stream);
-
-
-
-/* Close all streams.
-
-   This function is not part of POSIX and therefore no official
-   cancellation point.  But due to similarity with an POSIX interface
-   or due to the implementation it is a cancellation point and
-   therefore not marked with __THROW.  */
-extern int fcloseall (void);
-
-
-
-
-
-/* Open a file and create a new stream for it.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern FILE *fopen (__const char *__restrict __filename,
-      __const char *__restrict __modes) ;
-/* Open a file, replacing an existing stream with it.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern FILE *freopen (__const char *__restrict __filename,
-        __const char *__restrict __modes,
-        FILE *__restrict __stream) ;
-# 272 "/usr/include/stdio.h" 3 4
-
-
-extern FILE *fopen64 (__const char *__restrict __filename,
-        __const char *__restrict __modes) ;
-extern FILE *freopen64 (__const char *__restrict __filename,
-   __const char *__restrict __modes,
-   FILE *__restrict __stream) ;
-
-
-
-/* Create a new stream that refers to an existing system file descriptor.  */
-extern FILE *fdopen (int __fd, __const char *__modes) throw () ;
-
-
-
-/* Create a new stream that refers to the given magic cookie,
-   and uses the given functions for input and output.  */
-extern FILE *fopencookie (void *__restrict __magic_cookie,
-     __const char *__restrict __modes,
-     _IO_cookie_io_functions_t __io_funcs) throw () ;
-
-/* Create a new stream that refers to a memory buffer.  */
-extern FILE *fmemopen (void *__s, size_t __len, __const char *__modes)
-  throw () ;
-
-/* Open a stream that writes into a malloc'd buffer that is expanded as
-   necessary.  *BUFLOC and *SIZELOC are updated with the buffer's location
-   and the number of characters written on fflush or fclose.  */
-extern FILE *open_memstream (char **__bufloc, size_t *__sizeloc) throw () ;
-
-
-
-
-/* If BUF is NULL, make STREAM unbuffered.
-   Else make it use buffer BUF, of size BUFSIZ.  */
-extern void setbuf (FILE *__restrict __stream, char *__restrict __buf) throw ();
-/* Make STREAM use buffering mode MODE.
-   If BUF is not NULL, use N bytes of it for buffering;
-   else allocate an internal buffer N bytes long.  */
-extern int setvbuf (FILE *__restrict __stream, char *__restrict __buf,
-      int __modes, size_t __n) throw ();
-
-
-
-/* If BUF is NULL, make STREAM unbuffered.
-   Else make it use SIZE bytes of BUF for buffering.  */
-extern void setbuffer (FILE *__restrict __stream, char *__restrict __buf,
-         size_t __size) throw ();
-
-/* Make STREAM line-buffered.  */
-extern void setlinebuf (FILE *__stream) throw ();
-
-
-
-
-/* Write formatted output to STREAM.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern int fprintf (FILE *__restrict __stream,
-      __const char *__restrict __format, ...);
-/* Write formatted output to stdout.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern int printf (__const char *__restrict __format, ...);
-/* Write formatted output to S.  */
-extern int sprintf (char *__restrict __s,
-      __const char *__restrict __format, ...) throw ();
-
-/* Write formatted output to S from argument list ARG.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern int vfprintf (FILE *__restrict __s, __const char *__restrict __format,
-       __gnuc_va_list __arg);
-/* Write formatted output to stdout from argument list ARG.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern int vprintf (__const char *__restrict __format, __gnuc_va_list __arg);
-/* Write formatted output to S from argument list ARG.  */
-extern int vsprintf (char *__restrict __s, __const char *__restrict __format,
-       __gnuc_va_list __arg) throw ();
-
-
-
-
-/* Maximum chars of output to write in MAXLEN.  */
-extern int snprintf (char *__restrict __s, size_t __maxlen,
-       __const char *__restrict __format, ...)
-     throw () __attribute__ ((__format__ (__printf__, 3, 4)));
-
-extern int vsnprintf (char *__restrict __s, size_t __maxlen,
-        __const char *__restrict __format, __gnuc_va_list __arg)
-     throw () __attribute__ ((__format__ (__printf__, 3, 0)));
-
-
-
-
-/* Write formatted output to a string dynamically allocated with `malloc'.
-   Store the address of the string in *PTR.  */
-extern int vasprintf (char **__restrict __ptr, __const char *__restrict __f,
-        __gnuc_va_list __arg)
-     throw () __attribute__ ((__format__ (__printf__, 2, 0))) ;
-extern int __asprintf (char **__restrict __ptr,
-         __const char *__restrict __fmt, ...)
-     throw () __attribute__ ((__format__ (__printf__, 2, 3))) ;
-extern int asprintf (char **__restrict __ptr,
-       __const char *__restrict __fmt, ...)
-     throw () __attribute__ ((__format__ (__printf__, 2, 3))) ;
-
-/* Write formatted output to a file descriptor.
-
-   These functions are not part of POSIX and therefore no official
-   cancellation point.  But due to similarity with an POSIX interface
-   or due to the implementation they are cancellation points and
-   therefore not marked with __THROW.  */
-extern int vdprintf (int __fd, __const char *__restrict __fmt,
-       __gnuc_va_list __arg)
-     __attribute__ ((__format__ (__printf__, 2, 0)));
-extern int dprintf (int __fd, __const char *__restrict __fmt, ...)
-     __attribute__ ((__format__ (__printf__, 2, 3)));
-
-
-
-
-/* Read formatted input from STREAM.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern int fscanf (FILE *__restrict __stream,
-     __const char *__restrict __format, ...) ;
-/* Read formatted input from stdin.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern int scanf (__const char *__restrict __format, ...) ;
-/* Read formatted input from S.  */
-extern int sscanf (__const char *__restrict __s,
-     __const char *__restrict __format, ...) throw ();
-# 441 "/usr/include/stdio.h" 3 4
-
-
-
-
-/* Read formatted input from S into argument list ARG.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern int vfscanf (FILE *__restrict __s, __const char *__restrict __format,
-      __gnuc_va_list __arg)
-     __attribute__ ((__format__ (__scanf__, 2, 0))) ;
-
-/* Read formatted input from stdin into argument list ARG.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern int vscanf (__const char *__restrict __format, __gnuc_va_list __arg)
-     __attribute__ ((__format__ (__scanf__, 1, 0))) ;
-
-/* Read formatted input from S into argument list ARG.  */
-extern int vsscanf (__const char *__restrict __s,
-      __const char *__restrict __format, __gnuc_va_list __arg)
-     throw () __attribute__ ((__format__ (__scanf__, 2, 0)));
-# 500 "/usr/include/stdio.h" 3 4
-
-
-
-
-
-/* Read a character from STREAM.
-
-   These functions are possible cancellation points and therefore not
-   marked with __THROW.  */
-extern int fgetc (FILE *__stream);
-extern int getc (FILE *__stream);
-
-/* Read a character from stdin.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern int getchar (void);
-
-
-/* The C standard explicitly says this is a macro, so we always do the
-   optimization for it.  */
-
-
-
-/* These are defined in POSIX.1:1996.
-
-   These functions are possible cancellation points and therefore not
-   marked with __THROW.  */
-extern int getc_unlocked (FILE *__stream);
-extern int getchar_unlocked (void);
-
-
-
-/* Faster version when locking is not necessary.
-
-   This function is not part of POSIX and therefore no official
-   cancellation point.  But due to similarity with an POSIX interface
-   or due to the implementation it is a cancellation point and
-   therefore not marked with __THROW.  */
-extern int fgetc_unlocked (FILE *__stream);
-
-
-
-
-/* Write a character to STREAM.
-
-   These functions are possible cancellation points and therefore not
-   marked with __THROW.
-
-   These functions is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern int fputc (int __c, FILE *__stream);
-extern int putc (int __c, FILE *__stream);
-
-/* Write a character to stdout.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern int putchar (int __c);
-
-
-/* The C standard explicitly says this can be a macro,
-   so we always do the optimization for it.  */
-
-
-
-/* Faster version when locking is not necessary.
-
-   This function is not part of POSIX and therefore no official
-   cancellation point.  But due to similarity with an POSIX interface
-   or due to the implementation it is a cancellation point and
-   therefore not marked with __THROW.  */
-extern int fputc_unlocked (int __c, FILE *__stream);
-
-
-
-/* These are defined in POSIX.1:1996.
-
-   These functions are possible cancellation points and therefore not
-   marked with __THROW.  */
-extern int putc_unlocked (int __c, FILE *__stream);
-extern int putchar_unlocked (int __c);
-
-
-
-
-
-/* Get a word (int) from STREAM.  */
-extern int getw (FILE *__stream);
-
-/* Write a word (int) to STREAM.  */
-extern int putw (int __w, FILE *__stream);
-
-
-
-
-/* Get a newline-terminated string of finite length from STREAM.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern char *fgets (char *__restrict __s, int __n, FILE *__restrict __stream)
-     ;
-
-/* Get a newline-terminated string from stdin, removing the newline.
-   DO NOT USE THIS FUNCTION!!  There is no limit on how much it will read.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern char *gets (char *__s) ;
-
-
-
-/* This function does the same as `fgets' but does not lock the stream.
-
-   This function is not part of POSIX and therefore no official
-   cancellation point.  But due to similarity with an POSIX interface
-   or due to the implementation it is a cancellation point and
-   therefore not marked with __THROW.  */
-extern char *fgets_unlocked (char *__restrict __s, int __n,
-        FILE *__restrict __stream) ;
-
-
-
-
-/* Read up to (and including) a DELIMITER from STREAM into *LINEPTR
-   (and null-terminate it). *LINEPTR is a pointer returned from malloc (or
-   NULL), pointing to *N characters of space.  It is realloc'd as
-   necessary.  Returns the number of characters read (not including the
-   null terminator), or -1 on error or EOF.
-
-   These functions are not part of POSIX and therefore no official
-   cancellation point.  But due to similarity with an POSIX interface
-   or due to the implementation they are cancellation points and
-   therefore not marked with __THROW.  */
-extern __ssize_t __getdelim (char **__restrict __lineptr,
-          size_t *__restrict __n, int __delimiter,
-          FILE *__restrict __stream) ;
-extern __ssize_t getdelim (char **__restrict __lineptr,
-        size_t *__restrict __n, int __delimiter,
-        FILE *__restrict __stream) ;
-
-/* Like `getdelim', but reads up to a newline.
-
-   This function is not part of POSIX and therefore no official
-   cancellation point.  But due to similarity with an POSIX interface
-   or due to the implementation it is a cancellation point and
-   therefore not marked with __THROW.  */
-extern __ssize_t getline (char **__restrict __lineptr,
-       size_t *__restrict __n,
-       FILE *__restrict __stream) ;
-
-
-
-
-/* Write a string to STREAM.
-
-   This function is a possible cancellation points and therefore not
-   marked with __THROW.  */
-extern int fputs (__const char *__restrict __s, FILE *__restrict __stream);
-
-/* Write a string, followed by a newline, to stdout.
-
-   This function is a possible cancellation points and therefore not
-   marked with __THROW.  */
-extern int puts (__const char *__s);
-
-
-/* Push a character back onto the input buffer of STREAM.
-
-   This function is a possible cancellation points and therefore not
-   marked with __THROW.  */
-extern int ungetc (int __c, FILE *__stream);
-
-
-/* Read chunks of generic data from STREAM.
-
-   This function is a possible cancellation points and therefore not
-   marked with __THROW.  */
-extern size_t fread (void *__restrict __ptr, size_t __size,
-       size_t __n, FILE *__restrict __stream) ;
-/* Write chunks of generic data to STREAM.
-
-   This function is a possible cancellation points and therefore not
-   marked with __THROW.  */
-extern size_t fwrite (__const void *__restrict __ptr, size_t __size,
-        size_t __n, FILE *__restrict __s) ;
-
-
-
-/* This function does the same as `fputs' but does not lock the stream.
-
-   This function is not part of POSIX and therefore no official
-   cancellation point.  But due to similarity with an POSIX interface
-   or due to the implementation it is a cancellation point and
-   therefore not marked with __THROW.  */
-extern int fputs_unlocked (__const char *__restrict __s,
-      FILE *__restrict __stream);
-
-
-
-/* Faster versions when locking is not necessary.
-
-   These functions are not part of POSIX and therefore no official
-   cancellation point.  But due to similarity with an POSIX interface
-   or due to the implementation they are cancellation points and
-   therefore not marked with __THROW.  */
-extern size_t fread_unlocked (void *__restrict __ptr, size_t __size,
-         size_t __n, FILE *__restrict __stream) ;
-extern size_t fwrite_unlocked (__const void *__restrict __ptr, size_t __size,
-          size_t __n, FILE *__restrict __stream) ;
-
-
-
-
-/* Seek to a certain position on STREAM.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern int fseek (FILE *__stream, long int __off, int __whence);
-/* Return the current position of STREAM.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern long int ftell (FILE *__stream) ;
-/* Rewind to the beginning of STREAM.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern void rewind (FILE *__stream);
-
-
-/* The Single Unix Specification, Version 2, specifies an alternative,
-   more adequate interface for the two functions above which deal with
-   file offset.  `long int' is not the right type.  These definitions
-   are originally defined in the Large File Support API.  */
-
-
-
-/* Seek to a certain position on STREAM.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern int fseeko (FILE *__stream, __off_t __off, int __whence);
-/* Return the current position of STREAM.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern __off_t ftello (FILE *__stream) ;
-# 761 "/usr/include/stdio.h" 3 4
-
-
-/* Get STREAM's position.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern int fgetpos (FILE *__restrict __stream, fpos_t *__restrict __pos);
-/* Set STREAM's position.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern int fsetpos (FILE *__stream, __const fpos_t *__pos);
-# 784 "/usr/include/stdio.h" 3 4
-
-
-
-extern int fseeko64 (FILE *__stream, __off64_t __off, int __whence);
-extern __off64_t ftello64 (FILE *__stream) ;
-extern int fgetpos64 (FILE *__restrict __stream, fpos64_t *__restrict __pos);
-extern int fsetpos64 (FILE *__stream, __const fpos64_t *__pos);
-
-
-
-/* Clear the error and EOF indicators for STREAM.  */
-extern void clearerr (FILE *__stream) throw ();
-/* Return the EOF indicator for STREAM.  */
-extern int feof (FILE *__stream) throw () ;
-/* Return the error indicator for STREAM.  */
-extern int ferror (FILE *__stream) throw () ;
-
-
-
-/* Faster versions when locking is not required.  */
-extern void clearerr_unlocked (FILE *__stream) throw ();
-extern int feof_unlocked (FILE *__stream) throw () ;
-extern int ferror_unlocked (FILE *__stream) throw () ;
-
-
-
-
-/* Print a message describing the meaning of the value of errno.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern void perror (__const char *__s);
-
-
-/* Provide the declarations for `sys_errlist' and `sys_nerr' if they
-   are available on this system.  Even if available, these variables
-   should not be used directly.  The `strerror' function provides
-   all the necessary functionality.  */
-# 1 "/usr/include/bits/sys_errlist.h" 1 3 4
-/* Declare sys_errlist and sys_nerr, or don't.  Compatibility (do) version.
-   Copyright (C) 2002 Free Software Foundation, Inc.
-   This file is part of the GNU C Library.
-
-   The GNU C Library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Lesser General Public
-   License as published by the Free Software Foundation; either
-   version 2.1 of the License, or (at your option) any later version.
-
-   The GNU C Library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Lesser General Public License for more details.
-
-   You should have received a copy of the GNU Lesser General Public
-   License along with the GNU C Library; if not, write to the Free
-   Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
-   02111-1307 USA.  */
-
-
-
-
-
-/* sys_errlist and sys_nerr are deprecated.  Use strerror instead.  */
-
-
-extern int sys_nerr;
-extern __const char *__const sys_errlist[];
-
-
-extern int _sys_nerr;
-extern __const char *__const _sys_errlist[];
-# 823 "/usr/include/stdio.h" 2 3 4
-
-
-
-/* Return the system file descriptor for STREAM.  */
-extern int fileno (FILE *__stream) throw () ;
-
-
-
-/* Faster version when locking is not required.  */
-extern int fileno_unlocked (FILE *__stream) throw () ;
-
-
-
-
-
-/* Create a new stream connected to a pipe running the given command.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern FILE *popen (__const char *__command, __const char *__modes) ;
-
-/* Close a stream opened by popen and return the status of its child.
-
-   This function is a possible cancellation point and therefore not
-   marked with __THROW.  */
-extern int pclose (FILE *__stream);
-
-
-
-
-/* Return the name of the controlling terminal.  */
-extern char *ctermid (char *__s) throw ();
-
-
-
-
-/* Return the name of the current user.  */
-extern char *cuserid (char *__s);
-
-
-
-
-struct obstack; /* See <obstack.h>.  */
-
-/* Write formatted output to an obstack.  */
-extern int obstack_printf (struct obstack *__restrict __obstack,
-      __const char *__restrict __format, ...)
-     throw () __attribute__ ((__format__ (__printf__, 2, 3)));
-extern int obstack_vprintf (struct obstack *__restrict __obstack,
-       __const char *__restrict __format,
-       __gnuc_va_list __args)
-     throw () __attribute__ ((__format__ (__printf__, 2, 0)));
-
-
-
-
-/* These are defined in POSIX.1:1996.  */
-
-/* Acquire ownership of STREAM.  */
-extern void flockfile (FILE *__stream) throw ();
-
-/* Try to acquire ownership of STREAM but do not block if it is not
-   possible.  */
-extern int ftrylockfile (FILE *__stream) throw () ;
-
-/* Relinquish the ownership granted for STREAM.  */
-extern void funlockfile (FILE *__stream) throw ();
-# 900 "/usr/include/stdio.h" 3 4
-/* If we are compiling with optimizing read this file.  It contains
-   several optimizing inline functions and macros.  */
-
-# 1 "/usr/include/bits/stdio.h" 1 3 4
-/* Optimizing macros and inline functions for stdio functions.
-   Copyright (C) 1998, 2000, 2001, 2004, 2007 Free Software Foundation, Inc.
-   This file is part of the GNU C Library.
-
-   The GNU C Library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Lesser General Public
-   License as published by the Free Software Foundation; either
-   version 2.1 of the License, or (at your option) any later version.
-
-   The GNU C Library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Lesser General Public License for more details.
-
-   You should have received a copy of the GNU Lesser General Public
-   License along with the GNU C Library; if not, write to the Free
-   Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
-   02111-1307 USA.  */
-# 32 "/usr/include/bits/stdio.h" 3 4
-/* For -D_FORTIFY_SOURCE{,=2} bits/stdio2.h will define a different
-   inline.  */
-
-/* Write formatted output to stdout from argument list ARG.  */
-extern __inline __attribute__ ((__gnu_inline__)) int
-vprintf (__const char *__restrict __fmt, __gnuc_va_list __arg)
-{
-  return vfprintf (stdout, __fmt, __arg);
-}
-
-
-/* Read a character from stdin.  */
-extern __inline __attribute__ ((__gnu_inline__)) int
-getchar (void)
-{
-  return _IO_getc (stdin);
-}
-
-
-
-/* Faster version when locking is not necessary.  */
-extern __inline __attribute__ ((__gnu_inline__)) int
-fgetc_unlocked (FILE *__fp)
-{
-  return (__builtin_expect (((__fp)->_IO_read_ptr >= (__fp)->_IO_read_end), 0) ? __uflow (__fp) : *(unsigned char *) (__fp)->_IO_read_ptr++);
-}
-
-
-
-
-/* This is defined in POSIX.1:1996.  */
-extern __inline __attribute__ ((__gnu_inline__)) int
-getc_unlocked (FILE *__fp)
-{
-  return (__builtin_expect (((__fp)->_IO_read_ptr >= (__fp)->_IO_read_end), 0) ? __uflow (__fp) : *(unsigned char *) (__fp)->_IO_read_ptr++);
-}
-
-/* This is defined in POSIX.1:1996.  */
-extern __inline __attribute__ ((__gnu_inline__)) int
-getchar_unlocked (void)
-{
-  return (__builtin_expect (((stdin)->_IO_read_ptr >= (stdin)->_IO_read_end), 0) ? __uflow (stdin) : *(unsigned char *) (stdin)->_IO_read_ptr++);
-}
-
-
-
-/* Write a character to stdout.  */
-extern __inline __attribute__ ((__gnu_inline__)) int
-putchar (int __c)
-{
-  return _IO_putc (__c, stdout);
-}
-
-
-
-/* Faster version when locking is not necessary.  */
-extern __inline __attribute__ ((__gnu_inline__)) int
-fputc_unlocked (int __c, FILE *__stream)
-{
-  return (__builtin_expect (((__stream)->_IO_write_ptr >= (__stream)->_IO_write_end), 0) ? __overflow (__stream, (unsigned char) (__c)) : (unsigned char) (*(__stream)->_IO_write_ptr++ = (__c)));
-}
-
-
-
-
-/* This is defined in POSIX.1:1996.  */
-extern __inline __attribute__ ((__gnu_inline__)) int
-putc_unlocked (int __c, FILE *__stream)
-{
-  return (__builtin_expect (((__stream)->_IO_write_ptr >= (__stream)->_IO_write_end), 0) ? __overflow (__stream, (unsigned char) (__c)) : (unsigned char) (*(__stream)->_IO_write_ptr++ = (__c)));
-}
-
-/* This is defined in POSIX.1:1996.  */
-extern __inline __attribute__ ((__gnu_inline__)) int
-putchar_unlocked (int __c)
-{
-  return (__builtin_expect (((stdout)->_IO_write_ptr >= (stdout)->_IO_write_end), 0) ? __overflow (stdout, (unsigned char) (__c)) : (unsigned char) (*(stdout)->_IO_write_ptr++ = (__c)));
-}
-
-
-
-
-/* Like `getdelim', but reads up to a newline.  */
-extern __inline __attribute__ ((__gnu_inline__)) __ssize_t
-getline (char **__lineptr, size_t *__n, FILE *__stream)
-{
-  return __getdelim (__lineptr, __n, '\n', __stream);
-}
-
-
-
-
-/* Faster versions when locking is not required.  */
-extern __inline __attribute__ ((__gnu_inline__)) int
-feof_unlocked (FILE *__stream) throw ()
-{
-  return (((__stream)->_flags & 0x10) != 0);
-}
-
-/* Faster versions when locking is not required.  */
-extern __inline __attribute__ ((__gnu_inline__)) int
-ferror_unlocked (FILE *__stream) throw ()
-{
-  return (((__stream)->_flags & 0x20) != 0);
-}
-# 190 "/usr/include/bits/stdio.h" 3 4
-/* Define helper macro.  */
-# 904 "/usr/include/stdio.h" 2 3 4
-# 912 "/usr/include/stdio.h" 3 4
-}
-# 19 "src/cuda/main.cu" 2
 # 1 "/usr/include/stdlib.h" 1 3 4
 /* Copyright (C) 1991-2003,2004,2005,2006,2007 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
@@ -20360,9 +20994,9 @@ ferror_unlocked (FILE *__stream) throw ()
 /*
  *	ISO C99 Standard: 7.20 General utilities	<stdlib.h>
  */
-# 20 "src/cuda/main.cu" 2
+# 30 "src/cuda_fi_prerun/main.cu" 2
 
-# 1 "src/cuda/cuenergy.h" 1
+# 1 "src/cuda_fi_prerun/cuenergy.h" 1
 /***************************************************************************
  *cr
  *cr            (C) Copyright 2007 The Board of Trustees of the
@@ -20391,217 +21025,659 @@ ferror_unlocked (FILE *__stream) throw ()
  * For ATOMCOUNT, 100000 is suitable for GPU computation and 10000 is
  * suitable for CPU computation.
  */
-# 38 "src/cuda/cuenergy.h"
-__attribute__((__global__)) void cenergy(int numatoms,
-   float gridspacing,
-   float * energygrid);
+# 38 "src/cuda_fi_prerun/cuenergy.h"
+/*
+__global__ void cenergy(int numatoms,
+			float gridspacing,
+			float * energygrid);
+*/
 
 int copyatomstoconstbuf(float *atoms,
    int count,
    float zplane);
-# 22 "src/cuda/main.cu" 2
+# 32 "src/cuda_fi_prerun/main.cu" 2
 
-/* initatoms()
- * Store a pseudorandom arrangement of point charges in *atombuf.
+# 1 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu" 1
+/* Instrumented by FaultInjector */
+
+
+/*
+
+**************************************************************************
+
+ *cr
+
+ *cr            (C) Copyright 2007 The Board of Trustees of the
+
+ *cr                        University of Illinois
+
+ *cr                         All Rights Reserved
+
+ *cr
+
+ **************************************************************************
+
+*/
+# 15 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu"
+/* #include <stdio.h>
+
  */
-static int
-initatoms(float **atombuf, int count, dim3 volsize, float gridspacing) {
-  dim3 size;
-  int i;
-  float *atoms;
+# 17 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu"
+# 1 "src/cuda_fi_prerun/cuenergy.h" 1
+/***************************************************************************
+ *cr
+ *cr            (C) Copyright 2007 The Board of Trustees of the
+ *cr                        University of Illinois
+ *cr                         All Rights Reserved
+ *cr
+ ***************************************************************************/
 
-  srand(54321); // Ensure that atom placement is repeatable
+/* Size of a thread block */
 
-  atoms = (float *) malloc(count * 4 * sizeof(float));
-  *atombuf = atoms;
 
-  // compute grid dimensions in angstroms
-  size.x = gridspacing * volsize.x;
-  size.y = gridspacing * volsize.y;
-  size.z = gridspacing * volsize.z;
 
-  for (i=0; i<count; i++) {
-    int addr = i * 4;
-    atoms[addr ] = (rand() / (float) 2147483647) * size.x;
-    atoms[addr + 1] = (rand() / (float) 2147483647) * size.y;
-    atoms[addr + 2] = (rand() / (float) 2147483647) * size.z;
-    atoms[addr + 3] = ((rand() / (float) 2147483647) * 2.0) - 1.0; // charge
-  }
+/* Number of grid points processed by a thread */
 
-  return 0;
-}
 
-/* writeenergy()
- * Write part of the energy array to an output file for verification.
+/* Number of atoms processed by a kernel */
+
+
+/* Size of the benchmark problem.  The GPU can run larger problems in a
+ * reasonable time.
+ *
+ * For VOLSIZEX, VOLSIZEY, size 1024 is suitable for a few seconds of
+ * GPU computation and size 128 is suitable for a few seconds of
+ * CPU computation.
+ *
+ * For ATOMCOUNT, 100000 is suitable for GPU computation and 10000 is
+ * suitable for CPU computation.
  */
-static int
-writeenergy(char *filename, float *energy, dim3 volsize)
+# 38 "src/cuda_fi_prerun/cuenergy.h"
+/*
+__global__ void cenergy(int numatoms,
+			float gridspacing,
+			float * energygrid);
+*/
+
+int copyatomstoconstbuf(float *atoms,
+   int count,
+   float zplane);
+# 18 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu" 2
+
+/* typedef double float4;
+
+ */
+# 21 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu"
+/* Max constant buffer size is 64KB, minus whatever
+
+ */
+# 23 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu"
+/* the CUDA runtime and compiler are using that we don't know about.
+
+ */
+# 25 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu"
+/* At 16 bytes for atom, for this program 4070 atoms is about the max
+
+ */
+# 27 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu"
+/* we can store in the constant buffer.
+
+ */
+# 29 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu"
+__attribute__((__constant__)) float4 atominfo[4000];
+/* This kernel calculates coulombic potential at each grid point and
+
+ */
+# 32 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu"
+/* stores the results in the output array.
+
+ */
+# 34 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu"
+__attribute__((__global__)) void cenergy(int numatoms, float gridspacing, float * energygrid, struct _gpufi_data_ *gpufi_dev)
 {
-  FILE *outfile;
-  int x, y;
+    GPUFI_KERNEL(gpufi_dev, 0, 0, "cenergy");
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 0, "numatoms", (int*)&numatoms, 1);
 
-  outfile = fopen(filename, "w");
-  if (outfile == __null) {
-    fputs("Cannot open output file\n", stderr);
-    return -1;
+
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 1, "gridspacing", (int*)&gridspacing, 2);
+
+
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 2, "energygrid", (int*)&energygrid, 4);
+
+
+    unsigned int xindex = ((__umul24(blockIdx.x, blockDim.x)*8)+threadIdx.x);
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 3, "xindex", (int*)&xindex, 1);
+
+
+    unsigned int yindex = (__umul24(blockIdx.y, blockDim.y)+threadIdx.y);
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 4, "yindex", (int*)&yindex, 1);
+
+
+    unsigned int outaddr = (((__umul24(gridDim.x, blockDim.x)*8)*yindex)+xindex);
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 5, "outaddr", (int*)&outaddr, 1);
+
+
+    float coory = (gridspacing*yindex);
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 6, "coory", (int*)&coory, 2);
+
+
+    float coorx = (gridspacing*xindex);
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 7, "coorx", (int*)&coorx, 2);
+
+
+    float energyvalx1 = 0.0;
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 8, "energyvalx1", (int*)&energyvalx1, 2);
+
+
+    float energyvalx2 = 0.0;
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 9, "energyvalx2", (int*)&energyvalx2, 2);
+
+
+    float energyvalx3 = 0.0;
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 10, "energyvalx3", (int*)&energyvalx3, 2);
+
+
+    float energyvalx4 = 0.0;
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 11, "energyvalx4", (int*)&energyvalx4, 2);
+
+
+    float energyvalx5 = 0.0;
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 12, "energyvalx5", (int*)&energyvalx5, 2);
+
+
+    float energyvalx6 = 0.0;
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 13, "energyvalx6", (int*)&energyvalx6, 2);
+
+
+    float energyvalx7 = 0.0;
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 14, "energyvalx7", (int*)&energyvalx7, 2);
+
+
+    float energyvalx8 = 0.0;
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 15, "energyvalx8", (int*)&energyvalx8, 2);
+
+
+    float gridspacing_u = (gridspacing*16);
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 16, "gridspacing_u", (int*)&gridspacing_u, 2);
+
+
+    int atomid;
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 17, "atomid", (int*)&atomid, 1);
+
+
+    /* Fault Injector Instrumentation Begin */
+    GPUFI_KERNEL_LOOP(gpufi_dev, 0);
+    /* Fault Injector Instrumentation End */
+
+    for (atomid=0; atomid<numatoms; atomid ++ )
+    {
+        /* Fault Injector Instrumentation Begin */
+        GPUFI_KERNEL_ITERATION(gpufi_dev);
+        /* Fault Injector Instrumentation End */
+
+        float dy = (coory-atominfo[atomid].y);
+        GPUFI_KERNEL_VARIABLE(gpufi_dev, 20, "dy", (int*)&dy, 2);
+
+
+        float dyz2 = ((dy*dy)+atominfo[atomid].z);
+        GPUFI_KERNEL_VARIABLE(gpufi_dev, 21, "dyz2", (int*)&dyz2, 2);
+
+
+        float dx1 = (coorx-atominfo[atomid].x);
+        GPUFI_KERNEL_VARIABLE(gpufi_dev, 22, "dx1", (int*)&dx1, 2);
+
+
+        float dx2 = (dx1+gridspacing_u);
+        GPUFI_KERNEL_VARIABLE(gpufi_dev, 23, "dx2", (int*)&dx2, 2);
+
+
+        float dx3 = (dx2+gridspacing_u);
+        GPUFI_KERNEL_VARIABLE(gpufi_dev, 24, "dx3", (int*)&dx3, 2);
+
+
+        float dx4 = (dx3+gridspacing_u);
+        GPUFI_KERNEL_VARIABLE(gpufi_dev, 25, "dx4", (int*)&dx4, 2);
+
+
+        float dx5 = (dx4+gridspacing_u);
+        GPUFI_KERNEL_VARIABLE(gpufi_dev, 26, "dx5", (int*)&dx5, 2);
+
+
+        float dx6 = (dx5+gridspacing_u);
+        GPUFI_KERNEL_VARIABLE(gpufi_dev, 27, "dx6", (int*)&dx6, 2);
+
+
+        float dx7 = (dx6+gridspacing_u);
+        GPUFI_KERNEL_VARIABLE(gpufi_dev, 28, "dx7", (int*)&dx7, 2);
+
+
+        float dx8 = (dx7+gridspacing_u);
+        GPUFI_KERNEL_VARIABLE(gpufi_dev, 29, "dx8", (int*)&dx8, 2);
+
+
+        energyvalx1+=(atominfo[atomid].w*(1.0/sqrtf(((dx1*dx1)+dyz2))));
+        GPUFI_KERNEL_VARIABLE(gpufi_dev, 30, "energyvalx1", (int*)&energyvalx1, 2);
+
+
+        energyvalx2+=(atominfo[atomid].w*(1.0/sqrtf(((dx2*dx2)+dyz2))));
+        GPUFI_KERNEL_VARIABLE(gpufi_dev, 31, "energyvalx2", (int*)&energyvalx2, 2);
+
+
+        energyvalx3+=(atominfo[atomid].w*(1.0/sqrtf(((dx3*dx3)+dyz2))));
+        GPUFI_KERNEL_VARIABLE(gpufi_dev, 32, "energyvalx3", (int*)&energyvalx3, 2);
+
+
+        energyvalx4+=(atominfo[atomid].w*(1.0/sqrtf(((dx4*dx4)+dyz2))));
+        GPUFI_KERNEL_VARIABLE(gpufi_dev, 33, "energyvalx4", (int*)&energyvalx4, 2);
+
+
+        energyvalx5+=(atominfo[atomid].w*(1.0/sqrtf(((dx5*dx5)+dyz2))));
+        GPUFI_KERNEL_VARIABLE(gpufi_dev, 34, "energyvalx5", (int*)&energyvalx5, 2);
+
+
+        energyvalx6+=(atominfo[atomid].w*(1.0/sqrtf(((dx6*dx6)+dyz2))));
+        GPUFI_KERNEL_VARIABLE(gpufi_dev, 35, "energyvalx6", (int*)&energyvalx6, 2);
+
+
+        energyvalx7+=(atominfo[atomid].w*(1.0/sqrtf(((dx7*dx7)+dyz2))));
+        GPUFI_KERNEL_VARIABLE(gpufi_dev, 36, "energyvalx7", (int*)&energyvalx7, 2);
+
+
+        energyvalx8+=(atominfo[atomid].w*(1.0/sqrtf(((dx8*dx8)+dyz2))));
+        GPUFI_KERNEL_VARIABLE(gpufi_dev, 37, "energyvalx8", (int*)&energyvalx8, 2);
+
+
     }
+    /* Automatically inserted by Cetus_Cuda */
+    GPUFI_KERNEL_LOOP(gpufi_dev, 1);
+    /* Fault Injector Instrumentation End *//* End of Cetus_Cuda code */
 
-  /* Print the execution parameters */
-  fprintf(outfile, "%d %d %d %d\n", volsize.x, volsize.y, volsize.z, 40000);
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 19, "atomid", (int*)&atomid, 1);
 
-  /* Print a checksum */
-  {
-    double sum = 0.0;
 
-    for (y = 0; y < volsize.y; y++) {
-      for (x = 0; x < volsize.x; x++) {
-        double t = energy[y*volsize.x+x];
-        t = fmax(-20.0, fmin(20.0, t));
-     sum += t;
-      }
-    }
-    fprintf(outfile, "%.4g\n", sum);
-  }
+    energygrid[outaddr]+=energyvalx1;
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 38, "energygrid[outaddr]", (int*)&energygrid[outaddr], 2);
 
-  /* Print several rows of the computed data */
-  for (y = 0; y < 17; y++) {
-    for (x = 0; x < volsize.x; x++) {
-      int addr = y * volsize.x + x;
-      fprintf(outfile, "%.4g ", energy[addr]);
-    }
-    fprintf(outfile, "\n");
-  }
 
-  fclose(outfile);
+    energygrid[(outaddr+(1*16))]+=energyvalx2;
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 39, "energygrid[(outaddr+(1*16))]", (int*)&energygrid[(outaddr+(1*16))], 2);
 
-  return 0;
+
+    energygrid[(outaddr+(2*16))]+=energyvalx3;
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 40, "energygrid[(outaddr+(2*16))]", (int*)&energygrid[(outaddr+(2*16))], 2);
+
+
+    energygrid[(outaddr+(3*16))]+=energyvalx4;
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 41, "energygrid[(outaddr+(3*16))]", (int*)&energygrid[(outaddr+(3*16))], 2);
+
+
+    energygrid[(outaddr+(4*16))]+=energyvalx5;
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 42, "energygrid[(outaddr+(4*16))]", (int*)&energygrid[(outaddr+(4*16))], 2);
+
+
+    energygrid[(outaddr+(5*16))]+=energyvalx6;
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 43, "energygrid[(outaddr+(5*16))]", (int*)&energygrid[(outaddr+(5*16))], 2);
+
+
+    energygrid[(outaddr+(6*16))]+=energyvalx7;
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 44, "energygrid[(outaddr+(6*16))]", (int*)&energygrid[(outaddr+(6*16))], 2);
+
+
+    energygrid[(outaddr+(7*16))]+=energyvalx8;
+    GPUFI_KERNEL_VARIABLE(gpufi_dev, 45, "energygrid[(outaddr+(7*16))]", (int*)&energygrid[(outaddr+(7*16))], 2);
+
+
+    GPUFI_KERNEL(gpufi_dev, 1, 0, "cenergy");
 }
 
-int main(int argc, char** argv) {
-  struct pb_TimerSet timers;
-  struct pb_Parameters *parameters;
+/* This function copies atoms from the CPU to the GPU and
 
-  float *energy = __null; // Output of device calculation
-  float *atoms = __null;
-  dim3 volsize, Gsz, Bsz;
+ */
+# 233 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu"
+/* precalculates (z^2) for each atom.
 
-  // int final_iteration_count;
-
-  // number of atoms to simulate
-  int atomcount = 40000;
-
-  // voxel spacing
-  const float gridspacing = 0.1;
-
-  // Size of buffer on GPU
-  int volmemsz;
-
-  printf("CUDA accelerated coulombic potential microbenchmark\n");
-  printf("Original version by John E. Stone <johns@ks.uiuc.edu>\n");
-  printf("This version maintained by Chris Rodrigues\n");
-
-  parameters = pb_ReadParameters(&argc, argv);
-  if (!parameters)
-    return -1;
-
-  if (parameters->inpFiles[0]) {
-    fputs("No input files expected\n", stderr);
-    return -1;
-  }
-
-  pb_InitializeTimerSet(&timers);
-  pb_SwitchToTimer(&timers, pb_TimerID_COMPUTE);
-
-  // setup energy grid size
-  volsize.x = 512;
-  volsize.y = 512;
-  volsize.z = 1;
-
-  // setup CUDA grid and block sizes
-  Bsz.x = 16; // each thread does multiple Xs
-  Bsz.y = 8;
-  Bsz.z = 1;
-  Gsz.x = volsize.x / (Bsz.x * 8); // each thread does multiple Xs
-  Gsz.y = volsize.y / Bsz.y;
-  Gsz.z = volsize.z / Bsz.z;
-
-
-
-
-
-
-  // allocate and initialize atom coordinates and charges
-  if (initatoms(&atoms, atomcount, volsize, gridspacing))
-    return -1;
-
-  // allocate and initialize the GPU output array
-  volmemsz = sizeof(float) * volsize.x * volsize.y * volsize.z;
-
-  // Main computation
-  {
-    float *d_output = __null; // Output on device
-    int iterations=0;
-    int atomstart;
-
-    pb_SwitchToTimer(&timers, pb_TimerID_COPY);
-    cudaMalloc((void**)&d_output, volmemsz);
-    { cudaError_t err; if ((err = cudaGetLastError()) != cudaSuccess) { printf("CUDA error: %s, line %d\n", cudaGetErrorString(err), 167); return -1; }} // check and clear any existing errors
-    cudaMemset(d_output, 0, volmemsz);
-    { cudaError_t err; if ((err = cudaGetLastError()) != cudaSuccess) { printf("CUDA error: %s, line %d\n", cudaGetErrorString(err), 169); return -1; }} // check and clear any existing errors
-    pb_SwitchToTimer(&timers, pb_TimerID_COMPUTE);
-
-    for (atomstart=0; atomstart<atomcount; atomstart+=4000) {
-      int atomsremaining = atomcount - atomstart;
-      int runatoms = (atomsremaining > 4000) ? 4000 : atomsremaining;
-      iterations++;
-
-      // copy the atoms to the GPU
-      pb_SwitchToTimer(&timers, pb_TimerID_COPY);
-      if (copyatomstoconstbuf(atoms + 4*atomstart, runatoms, 0*gridspacing))
- return -1;
-
-      if (parameters->synchronizeGpu) cudaThreadSynchronize();
-      pb_SwitchToTimer(&timers, pb_TimerID_GPU);
-
-      // RUN the kernel...
-      cenergy<<<Gsz, Bsz, 0>>>(runatoms, 0.1, d_output);
-      { cudaError_t err; if ((err = cudaGetLastError()) != cudaSuccess) { printf("CUDA error: %s, line %d\n", cudaGetErrorString(err), 187); return -1; }} // check and clear any existing errors
-
-      if (parameters->synchronizeGpu) cudaThreadSynchronize();
-      pb_SwitchToTimer(&timers, pb_TimerID_COMPUTE);
-
-      // final_iteration_count = iterations;
+ */
+# 235 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu"
+int copyatomstoconstbuf(float * atoms, int count, float zplane)
+{
+    float atompre[(4*4000)];
+    int i;
+    if ((count>4000))
+    {
+        printf("Atom count exceeds constant buffer storage capacity\n");
+        return ( - 1);
     }
+    for (i=0; i<(count*4); i+=4)
+    {
+        float dz;
+        atompre[i]=atoms[i];
+        atompre[(i+1)]=atoms[(i+1)];
+        dz=(zplane-atoms[(i+2)]);
+        atompre[(i+2)]=(dz*dz);
+        atompre[(i+3)]=atoms[(i+3)];
+    }
+    cudaMemcpyToSymbol(atominfo, atompre, ((count*4)*sizeof (float)), 0);
+    if (1)
+    {
+        ;
+    }
+    /* check and clear any existing errors
+
+     */
+# 260 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu"
+    return 0;
+}
+# 34 "src/cuda_fi_prerun/main.cu" 2
 
 
 
+/*
 
-    // Copy the GPU output data back to the host and use/store it..
-    energy = (float *) malloc(volmemsz);
-    pb_SwitchToTimer(&timers, pb_TimerID_COPY);
-    cudaMemcpy(energy, d_output, volmemsz, cudaMemcpyDeviceToHost);
-    { cudaError_t err; if ((err = cudaGetLastError()) != cudaSuccess) { printf("CUDA error: %s, line %d\n", cudaGetErrorString(err), 202); return -1; }} // check and clear any existing errors
+initatoms()
 
-    cudaFree(d_output);
+ * Store a pseudorandom arrangement of point charges in *atombuf.
 
-    pb_SwitchToTimer(&timers, pb_TimerID_COMPUTE);
-  }
+ 
 
-  /* Print a subset of the results to a file */
-  if (parameters->outFile) {
-    pb_SwitchToTimer(&timers, pb_TimerID_IO);
-    if (writeenergy(parameters->outFile, energy, volsize) == -1)
-      return -1;
-    pb_SwitchToTimer(&timers, pb_TimerID_COMPUTE);
-  }
+*/
+# 42 "src/cuda_fi_prerun/main.cu"
+static int initatoms(float * * atombuf, int count, dim3 volsize, float gridspacing)
+{
+    dim3 size;
+    int i;
+    float * atoms;
+    srand(54321);
+    /* Ensure that atom placement is repeatable
 
-  free(atoms);
-  free(energy);
+     */
+# 50 "src/cuda_fi_prerun/main.cu"
+    atoms=((float * )malloc(((count*4)*sizeof (float))));
+    ( * atombuf)=atoms;
+    /* compute grid dimensions in angstroms
 
-  pb_SwitchToTimer(&timers, pb_TimerID_NONE);
+     */
+# 54 "src/cuda_fi_prerun/main.cu"
+    size.x=(gridspacing*volsize.x);
+    size.y=(gridspacing*volsize.y);
+    size.z=(gridspacing*volsize.z);
+    for (i=0; i<count; i ++ )
+    {
+        int addr = (i*4);
+        atoms[addr]=((rand()/((float)2147483647))*size.x);
+        atoms[(addr+1)]=((rand()/((float)2147483647))*size.y);
+        atoms[(addr+2)]=((rand()/((float)2147483647))*size.z);
+        atoms[(addr+3)]=(((rand()/((float)2147483647))*2.0)-1.0);
+        /* charge
 
-  pb_PrintTimerSet(&timers);
-  pb_FreeParameters(parameters);
+         */
+# 66 "src/cuda_fi_prerun/main.cu"
+    }
+    return 0;
+}
 
-  return 0;
+/*
+
+writeenergy()
+
+ * Write part of the energy array to an output file for verification.
+
+ 
+
+*/
+# 75 "src/cuda_fi_prerun/main.cu"
+static int writeenergy(char * filename, float * energy, dim3 volsize)
+{
+    FILE * outfile;
+    int x, y;
+    outfile=fopen(filename, "w");
+    if ((outfile==__null))
+    {
+        fputs("Cannot open output file\n", stderr);
+        return ( - 1);
+    }
+    /* Print the execution parameters */
+    fprintf(outfile, "%d %d %d %d\n", volsize.x, volsize.y, volsize.z, 40000);
+    /* Print a checksum */
+    {
+        double sum = 0.0;
+        for (y=0; y<volsize.y; y ++ )
+        {
+            for (x=0; x<volsize.x; x ++ )
+            {
+                double t = energy[((y*volsize.x)+x)];
+                t=fmax(( - 20.0), fmin(20.0, t));
+                sum+=t;
+            }
+        }
+        fprintf(outfile, "%.4g\n", sum);
+    }
+    /* Print several rows of the computed data */
+    for (y=0; y<17; y ++ )
+    {
+        for (x=0; x<volsize.x; x ++ )
+        {
+            int addr = ((y*volsize.x)+x);
+            fprintf(outfile, "%.4g ", energy[addr]);
+        }
+        fprintf(outfile, "\n");
+    }
+    fclose(outfile);
+    return 0;
+}
+
+int main(int argc, char * * argv)
+{
+    struct pb_TimerSet timers;
+    struct pb_Parameters * parameters;
+    float * energy = __null;
+    /* Output of device calculation
+
+     */
+# 122 "src/cuda_fi_prerun/main.cu"
+    GPUFI_INIT(1, 46);
+
+
+    float * atoms = __null;
+    dim3 volsize, Gsz, Bsz;
+    /* int final_iteration_count;
+
+     */
+# 129 "src/cuda_fi_prerun/main.cu"
+    /* number of atoms to simulate
+
+     */
+# 131 "src/cuda_fi_prerun/main.cu"
+    int atomcount = 40000;
+    /* voxel spacing
+
+     */
+# 134 "src/cuda_fi_prerun/main.cu"
+    const float gridspacing = 0.1;
+    /* Size of buffer on GPU
+
+     */
+# 137 "src/cuda_fi_prerun/main.cu"
+    int volmemsz;
+    printf("CUDA accelerated coulombic potential microbenchmark\n");
+    printf("Original version by John E. Stone <johns@ks.uiuc.edu>\n");
+    printf("This version maintained by Chris Rodrigues\n");
+    parameters=pb_ReadParameters(( & argc), argv);
+    if (( ! parameters))
+    {
+        GPUFI_HALT("fi_profile.txt");
+        return ( - 1);
+    }
+    if (parameters->inpFiles[0])
+    {
+        fputs("No input files expected\n", stderr);
+        GPUFI_HALT("fi_profile.txt");
+        return ( - 1);
+    }
+    pb_InitializeTimerSet(( & timers));
+    pb_SwitchToTimer(( & timers), pb_TimerID_COMPUTE);
+    /* setup energy grid size
+
+     */
+# 157 "src/cuda_fi_prerun/main.cu"
+    volsize.x=512;
+    volsize.y=512;
+    volsize.z=1;
+    /* setup CUDA grid and block sizes
+
+     */
+# 162 "src/cuda_fi_prerun/main.cu"
+    Bsz.x=16;
+    /* each thread does multiple Xs
+
+     */
+# 165 "src/cuda_fi_prerun/main.cu"
+    Bsz.y=8;
+    Bsz.z=1;
+    Gsz.x=(volsize.x/(Bsz.x*8));
+    /* each thread does multiple Xs
+
+     */
+# 170 "src/cuda_fi_prerun/main.cu"
+    Gsz.y=(volsize.y/Bsz.y);
+    Gsz.z=(volsize.z/Bsz.z);
+    /* allocate and initialize atom coordinates and charges
+
+     */
+# 174 "src/cuda_fi_prerun/main.cu"
+    if (initatoms(( & atoms), atomcount, volsize, gridspacing))
+    {
+        GPUFI_HALT("fi_profile.txt");
+        return ( - 1);
+    }
+    /* allocate and initialize the GPU output array
+
+     */
+# 181 "src/cuda_fi_prerun/main.cu"
+    volmemsz=(((sizeof (float)*volsize.x)*volsize.y)*volsize.z);
+    /* Main computation
+
+     */
+# 184 "src/cuda_fi_prerun/main.cu"
+    {
+        float * d_output = __null;
+        /* Output on device
+
+         */
+# 188 "src/cuda_fi_prerun/main.cu"
+        int iterations = 0;
+        int atomstart;
+        pb_SwitchToTimer(( & timers), pb_TimerID_COPY);
+        cudaMalloc(((void * * )( & d_output)), volmemsz);
+        if (1)
+        {
+            ;
+        }
+        /* check and clear any existing errors
+
+         */
+# 198 "src/cuda_fi_prerun/main.cu"
+        cudaMemset(d_output, 0, volmemsz);
+        if (1)
+        {
+            ;
+        }
+        /* check and clear any existing errors
+
+         */
+# 205 "src/cuda_fi_prerun/main.cu"
+        pb_SwitchToTimer(( & timers), pb_TimerID_COMPUTE);
+        for (atomstart=0; atomstart<atomcount; atomstart+=4000)
+        {
+            int atomsremaining = (atomcount-atomstart);
+            int runatoms = ((atomsremaining>4000) ? 4000 : atomsremaining);
+            iterations ++ ;
+            /* copy the atoms to the GPU
+
+             */
+# 213 "src/cuda_fi_prerun/main.cu"
+            pb_SwitchToTimer(( & timers), pb_TimerID_COPY);
+            if (copyatomstoconstbuf((atoms+(4*atomstart)), runatoms, (0*gridspacing)))
+            {
+                GPUFI_HALT("fi_profile.txt");
+                return ( - 1);
+            }
+            if (parameters->synchronizeGpu)
+            {
+                cudaThreadSynchronize();
+            }
+            pb_SwitchToTimer(( & timers), pb_TimerID_GPU);
+            /* RUN the kernel...
+
+             */
+# 226 "src/cuda_fi_prerun/main.cu"
+            /* Fault Injection Instrumentation Begin */
+            cudaMalloc((void**)&gpufi_dev, sizeof(struct _gpufi_data_));
+            {cudaError_t err; if ((err = cudaGetLastError()) != cudaSuccess) { fprintf(stderr, "CUDA error on line %d: %s\n", 228, cudaGetErrorString(err)); exit(-1); } }
+            cudaMemcpy(gpufi_dev, &gpufi_host, sizeof(struct _gpufi_data_), cudaMemcpyHostToDevice);
+            {cudaError_t err; if ((err = cudaGetLastError()) != cudaSuccess) { fprintf(stderr, "CUDA error on line %d: %s\n", 230, cudaGetErrorString(err)); exit(-1); } }
+            /* Fault Injection Instrumentation End */
+
+            cenergy<<<Gsz, Bsz, 0>>> (runatoms, 0.1, d_output, gpufi_dev);
+            /* Fault Injection Instrumentation Begin */
+            cudaMemcpy(&gpufi_host, gpufi_dev, sizeof(struct _gpufi_data_), cudaMemcpyDeviceToHost);
+            {cudaError_t err; if ((err = cudaGetLastError()) != cudaSuccess) { fprintf(stderr, "CUDA error on line %d: %s\n", 236, cudaGetErrorString(err)); exit(-1); } }
+            cudaFree(gpufi_dev);
+            {cudaError_t err; if ((err = cudaGetLastError()) != cudaSuccess) { fprintf(stderr, "CUDA error on line %d: %s\n", 238, cudaGetErrorString(err)); exit(-1); } }
+            /* Fault Injection Instrumentation End */
+
+            if (1)
+            {
+                ;
+            }
+            /* check and clear any existing errors
+
+             */
+# 247 "src/cuda_fi_prerun/main.cu"
+            if (parameters->synchronizeGpu)
+            {
+                cudaThreadSynchronize();
+            }
+            pb_SwitchToTimer(( & timers), pb_TimerID_COMPUTE);
+            /* final_iteration_count = iterations;
+
+             */
+# 254 "src/cuda_fi_prerun/main.cu"
+        }
+        /* Copy the GPU output data back to the host and use/store it..
+
+         */
+# 257 "src/cuda_fi_prerun/main.cu"
+        energy=((float * )malloc(volmemsz));
+        pb_SwitchToTimer(( & timers), pb_TimerID_COPY);
+        cudaMemcpy(energy, d_output, volmemsz, cudaMemcpyDeviceToHost);
+        if (1)
+        {
+            ;
+        }
+        /* check and clear any existing errors
+
+         */
+# 266 "src/cuda_fi_prerun/main.cu"
+        cudaFree(d_output);
+        pb_SwitchToTimer(( & timers), pb_TimerID_COMPUTE);
+    }
+    /* Print a subset of the results to a file */
+    if (parameters->outFile)
+    {
+        pb_SwitchToTimer(( & timers), pb_TimerID_IO);
+        if ((writeenergy(parameters->outFile, energy, volsize)==( - 1)))
+        {
+            GPUFI_HALT("fi_profile.txt");
+            return ( - 1);
+        }
+        pb_SwitchToTimer(( & timers), pb_TimerID_COMPUTE);
+    }
+    free(atoms);
+    free(energy);
+    pb_SwitchToTimer(( & timers), pb_TimerID_NONE);
+    pb_PrintTimerSet(( & timers));
+    pb_FreeParameters(parameters);
+    GPUFI_HALT("fi_profile.txt");
+    return 0;
+    GPUFI_HALT("fi_profile.txt");
 }
