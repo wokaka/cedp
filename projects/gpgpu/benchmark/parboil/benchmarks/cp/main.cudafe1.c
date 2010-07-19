@@ -1,7 +1,7 @@
 #ifdef _WIN32
 #pragma warning(disable:4164 4003)
 #endif 
-# 1 "src/cuda_fi_prerun/main.cu"
+# 1 "src/cuda_fi/main.cu"
 # 60 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
 struct _Z7textureIcLi1EL19cudaTextureReadMode0EE;
 # 60 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
@@ -326,34 +326,27 @@ struct _Z7textureI7ushort2Li3EL19cudaTextureReadMode1EE;
 struct _Z7textureI6short4Li3EL19cudaTextureReadMode1EE;
 # 60 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
 struct _Z7textureI7ushort4Li3EL19cudaTextureReadMode1EE;
-# 14 "src/cuda_fi_prerun/gpufi.h"
+# 6 "src/cuda_fi/gpufi.h"
 struct _gpufi_fault_;
-# 46 "src/cuda_fi_prerun/gpufi.h"
-struct _gpufi_profile_kernel_;
-# 54 "src/cuda_fi_prerun/gpufi.h"
-struct _gpufi_profile_variable_;
-
-
-
-
-
-struct _gpufi_profile_;
-# 76 "src/cuda_fi_prerun/gpufi.h"
+# 24 "src/cuda_fi/gpufi.h"
 struct _gpufi_current_;
-# 98 "src/cuda_fi_prerun/gpufi.h"
+
+
+
+
 struct _gpufi_data_;
 # 271 "/usr/include/libio.h" 3
 struct _IO_FILE;
-# 12 "src/cuda_fi_prerun/parboil.h"
+# 12 "src/cuda_fi/parboil.h"
 struct pb_Parameters;
-# 58 "src/cuda_fi_prerun/parboil.h"
+# 58 "src/cuda_fi/parboil.h"
 enum pb_TimerState {
 pb_Timer_STOPPED,
 pb_Timer_RUNNING};
 
 
 struct pb_Timer;
-# 98 "src/cuda_fi_prerun/parboil.h"
+# 98 "src/cuda_fi/parboil.h"
 enum pb_TimerID {
 pb_TimerID_NONE,
 pb_TimerID_IO,
@@ -707,79 +700,37 @@ struct _Z7textureI7ushort2Li3EL19cudaTextureReadMode1EE { struct textureReferenc
 struct _Z7textureI6short4Li3EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
 # 60 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
 struct _Z7textureI7ushort4Li3EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
-# 14 "src/cuda_fi_prerun/gpufi.h"
+# 6 "src/cuda_fi/gpufi.h"
 struct _gpufi_fault_ {
 int kernel;
-
 int instance;
 int varid;
 int call;
 
-int mask_type;
-
-
 unsigned mask;
+
+
+
+
 int injected;
 int disabled;
-int mode;};
-# 46 "src/cuda_fi_prerun/gpufi.h"
-struct _gpufi_profile_kernel_ {
-char state;
-int id;
-int instance;
-char name[32];};
 
-
-
-struct _gpufi_profile_variable_ {
-int call_count;
-int loop_id;
-int type;};
-
-
-struct _gpufi_profile_ {
-
-struct _gpufi_profile_kernel_ kernel[10];
-struct _gpufi_profile_variable_ variable[10][512];
-
-
-char kernel_bitmap[10];
-int kernel_instance[10];
-
-char variable_bitmap[512];
-char variable_name[512][32];};
-
-
-
-
-
-struct _gpufi_current_ {
-int mode;
-int kernel;
-int instance;
-int loop;
-int loop_count;
-int iteration;
-
-int profile_index;
-int profile_mode;
-# 93 "src/cuda_fi_prerun/gpufi.h"
 int blid;
 int thid;};
 
 
+struct _gpufi_current_ {
+int instance;
+int count;};
+
 
 struct _gpufi_data_ {
 struct _gpufi_fault_ fault;
-
-
-
-struct _gpufi_fault_ debug;
 struct _gpufi_current_ current;
-struct _gpufi_profile_ profile;};
+int sdc;};
 # 49 "/usr/include/stdio.h" 3
 typedef struct _IO_FILE FILE;
-# 12 "src/cuda_fi_prerun/parboil.h"
+# 12 "src/cuda_fi/parboil.h"
 struct pb_Parameters {
 char *outFile;
 
@@ -789,14 +740,14 @@ char **inpFiles;
 
 
 int synchronizeGpu;};
-# 53 "src/cuda_fi_prerun/parboil.h"
+# 53 "src/cuda_fi/parboil.h"
 typedef unsigned long long pb_Timestamp;
-# 63 "src/cuda_fi_prerun/parboil.h"
+# 63 "src/cuda_fi/parboil.h"
 struct pb_Timer {
 enum pb_TimerState state;
 pb_Timestamp elapsed;
 pb_Timestamp init;};
-# 111 "src/cuda_fi_prerun/parboil.h"
+# 111 "src/cuda_fi/parboil.h"
 struct pb_TimerSet {
 enum pb_TimerID current;__pad__(volatile char:8;)__pad__(volatile char:8;)__pad__(volatile char:8;)__pad__(volatile char:8;)
 struct pb_Timer timers[5];};
@@ -1224,18 +1175,18 @@ extern int printf(const char *__restrict__, ...);
 extern int fscanf(FILE *__restrict__, const char *__restrict__, ...);
 # 658 "/usr/include/stdio.h" 3
 extern int fputs(const char *__restrict__, FILE *__restrict__);
-# 25 "src/cuda_fi_prerun/gpufi_kernel.cu"
+# 20 "src/cuda_fi/gpufi_kernel.cu"
 extern int _Z10GPUFI_INITii(int, int);
-# 95 "src/cuda_fi_prerun/gpufi_kernel.cu"
+# 58 "src/cuda_fi/gpufi_kernel.cu"
 extern int _Z10GPUFI_HALTPc(char *);
-# 39 "src/cuda_fi_prerun/parboil.h"
+# 39 "src/cuda_fi/parboil.h"
 extern struct pb_Parameters *pb_ReadParameters(int *, char **);
 
 
 
 
 extern void pb_FreeParameters(struct pb_Parameters *);
-# 118 "src/cuda_fi_prerun/parboil.h"
+# 118 "src/cuda_fi/parboil.h"
 extern void pb_InitializeTimerSet(struct pb_TimerSet *);
 
 
@@ -1247,39 +1198,26 @@ extern void pb_SwitchToTimer(struct pb_TimerSet *, enum pb_TimerID);
 
 
 extern void pb_PrintTimerSet(struct pb_TimerSet *);
-# 235 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu"
+# 235 "src/cuda_fi/cuenergy_pre8_coalesce.cu"
 extern int _Z19copyatomstoconstbufPfif(float *, int, float);
 # 184 "/usr/local/cuda/bin/../include/cuda_runtime.h"
 extern  __attribute__((__weak__)) /* COMDAT group: _Z18cudaMemcpyToSymbolIA4000_6float4E9cudaErrorRKT_PKvjj14cudaMemcpyKind */ __inline__ cudaError_t _Z18cudaMemcpyToSymbolIA4000_6float4E9cudaErrorRKT_PKvjj14cudaMemcpyKind(const float4 (*)[4000], const void *, size_t, size_t, enum cudaMemcpyKind);
-# 42 "src/cuda_fi_prerun/main.cu"
+# 42 "src/cuda_fi/main.cu"
 static int _Z9initatomsPPfi4dim3f(float **, int, dim3, float);
-# 75 "src/cuda_fi_prerun/main.cu"
+# 75 "src/cuda_fi/main.cu"
 static int _Z11writeenergyPcPf4dim3(char *, float *, dim3);
-# 115 "src/cuda_fi_prerun/main.cu"
+# 115 "src/cuda_fi/main.cu"
 extern int main(int, char **);
-static void __sti___12_main_cpp1_ii_46b07679(void) __attribute__((__constructor__));
-# 73 "src/cuda_fi_prerun/gpufi.h"
-extern int gpufi_profile_variable_count;
-extern int gpufi_profile_kernel_count;
+static void __sti___12_main_cpp1_ii_571f98e8(void) __attribute__((__constructor__));
 # 147 "/usr/include/stdio.h" 3
 extern struct _IO_FILE *stderr;
-# 9 "src/cuda_fi_prerun/gpufi_kernel.cu"
+# 9 "src/cuda_fi/gpufi_kernel.cu"
 extern struct _gpufi_data_ gpufi_host;
-# 18 "src/cuda_fi_prerun/gpufi_kernel.cu"
-int variable_count = 0;
-int kernel_count = 0;
-# 93 "src/cuda_fi_prerun/gpufi_kernel.cu"
-extern char *gpufi_type_name[6];
 #include "main.cudafe1.stub.h"
-# 73 "src/cuda_fi_prerun/gpufi.h"
-int gpufi_profile_variable_count = 0;
-int gpufi_profile_kernel_count = 0;
-# 9 "src/cuda_fi_prerun/gpufi_kernel.cu"
+# 9 "src/cuda_fi/gpufi_kernel.cu"
 struct _gpufi_data_ gpufi_host = {{0}};
 __loc_sc__(__device__,,) struct _gpufi_data_ *__shadow_var(gpufi_dev,gpufi_dev);
-# 93 "src/cuda_fi_prerun/gpufi_kernel.cu"
-char *gpufi_type_name[6] = {((char *)"unknown"),((char *)"int"),((char *)"fp"),((char *)"int_pt"),((char *)"fp_pt"),((char *)"unknown_pt")};
-# 29 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu"
+# 29 "src/cuda_fi/cuenergy_pre8_coalesce.cu"
 __loc_sc__(__constant__,,) float4 __shadow_var(atominfo,atominfo)[4000];
 # 36 "/usr/include/bits/mathinline.h" 3
 extern  __attribute__((__extern_weak__ __weak__))  /* COMDAT group: __signbitf */ __inline__ int __signbitf( float __x)
@@ -1297,20 +1235,15 @@ auto union __C10 __u;
 (__u.__d) = __x; {
 __T22 = ((int)((((int *)(&__u.__i))[1]) < 0)); return __T22; }
 }
-# 25 "src/cuda_fi_prerun/gpufi_kernel.cu"
+# 20 "src/cuda_fi/gpufi_kernel.cu"
 int _Z10GPUFI_INITii( int kernel_cnt,  int variable_cnt)
 {
 auto FILE *fp;
 auto char cmd[32];
 
-
-kernel_count = (kernel_cnt + 1);
-variable_count = variable_cnt;
-
-memset(((void *)(&gpufi_host)), 0, 78940U);
+memset(((void *)(&gpufi_host)), 0, 48U);
 
 fp = (fopen("fi_cmd.txt", "rt"));
-
 if (!(fp != ((FILE *)0))) {
 printf("file open error\n");
 system("pwd");
@@ -1319,82 +1252,32 @@ return (-1);
 
 fscanf(fp, "%s", ((char *)cmd));
 printf("%s ", ((char *)cmd));
-if (!(strcmp(((const char *)((char *)cmd)), "profile"))) {
-((gpufi_host.current).blid) = 0;
-((gpufi_host.current).thid) = 0;
+if (!(strcmp(((const char *)((char *)cmd)), "fi"))) {
+fscanf(fp, "%d %d %d %d 0x%x %d %d\n", (&(gpufi_host.fault).kernel), (&(gpufi_host.fault).instance), (&(gpufi_host.fault).varid), (&(gpufi_host.fault).call), (&(gpufi_host.fault).mask), (&(gpufi_host.fault).blid), (&(gpufi_host.fault).thid));
+# 46 "src/cuda_fi/gpufi_kernel.cu"
+((gpufi_host.fault).injected) = 0;
+((gpufi_host.fault).disabled) = 1;
 
-((gpufi_host.fault).mode) = 1;
-((gpufi_host.current).profile_index) = (-1);
-fscanf(fp, "%s", ((char *)cmd));
-printf("%s ", ((char *)cmd));
-if (!(strcmp(((const char *)((char *)cmd)), "none"))) {
-((gpufi_host.current).profile_mode) = 0;
-} else  {
-if (!(strcmp(((const char *)((char *)cmd)), "value"))) {
-fscanf(fp, "%s", ((char *)cmd));
-printf("%s ", ((char *)cmd));
-if (!(strcmp(((const char *)((char *)cmd)), "loop"))) {
-((gpufi_host.current).profile_mode) = 1; } else  {
-if (!(strcmp(((const char *)((char *)cmd)), "kernel"))) {
-((gpufi_host.current).profile_mode) = 2; } else  {
-if (!(strcmp(((const char *)((char *)cmd)), "thread"))) {
-((gpufi_host.current).profile_mode) = 3;
-fscanf(fp, "%d", (&(gpufi_host.current).blid));
-printf(" %d ", (((gpufi_host.current).blid)));
-} else  {
-if (!(strcmp(((const char *)((char *)cmd)), "block"))) {
-((gpufi_host.current).profile_mode) = 4;
-} } } }
-} }
-printf(" (%d)\n", (((gpufi_host.current).profile_mode)));
+printf("fi_cmd %d %d %d %d 0x%x\n", (((gpufi_host.fault).kernel)), (((gpufi_host.fault).instance)), (((gpufi_host.fault).varid)), (((gpufi_host.fault).call)), (((gpufi_host.fault).mask)));
+
 }
 
 fclose(fp);
 
 return 0;
 }
-# 95 "src/cuda_fi_prerun/gpufi_kernel.cu"
+
 int _Z10GPUFI_HALTPc( char *fname)
 {
-auto FILE *fp;
-auto int i;
-# 98 "src/cuda_fi_prerun/gpufi_kernel.cu"
-auto int j;
+printf("* injected: %d\n", (((gpufi_host.fault).injected)));
+fprintf(stderr, "* injected: %d\n", (((gpufi_host.fault).injected)));
 
-if ((((gpufi_host.fault).mode)) == 1) {
+printf("fi %d %d %d %d 0x%x\n", (((gpufi_host.fault).kernel)), (((gpufi_host.fault).instance)), (((gpufi_host.fault).varid)), (((gpufi_host.fault).call)), (((gpufi_host.fault).mask)));
 
-
-fp = (fopen(((const char *)fname), "wt"));
-if (!(fp != ((FILE *)0))) {
-printf("can\'t write to an output file, %s\n", fname);
-return (-1);
-}
-
-for (i = 0; (i < 10); i++) {
-if (((int)(((((struct _gpufi_profile_kernel_ *)(&(gpufi_host.profile).kernel))[i]).state))) == 1) {
-fprintf(fp, "kernel\t%d\t%s\t%d\n", (((((struct _gpufi_profile_kernel_ *)(&(gpufi_host.profile).kernel))[i]).id)), ((char *)(&(((struct _gpufi_profile_kernel_ *)(&(gpufi_host.profile).kernel))[i]).name)), (((((struct _gpufi_profile_kernel_ *)(&(gpufi_host.profile).kernel))[i]).instance))); } else  {
-
-
-
-
-goto __T23; }
-
-for (j = 0; (j < variable_count); j++) {
-if (((((struct _gpufi_profile_variable_ *)(((struct _gpufi_profile_variable_ (*)[512])(&(gpufi_host.profile).variable)) + i))[j]).call_count)) {
-fprintf(fp, "variable\t%d\t%s\t%d\t%d\t%s\t", j, (((int)(((char *)(&(gpufi_host.profile).variable_bitmap))[j])) ? ((const char *)((char *)(((char (*)[32])(&(gpufi_host.profile).variable_name)) + j))) : ""), (((((struct _gpufi_profile_variable_ *)(((struct _gpufi_profile_variable_ (*)[512])(&(gpufi_host.profile).variable)) + i))[j]).call_count)), (((((struct _gpufi_profile_variable_ *)(((struct _gpufi_profile_variable_ (*)[512])(&(gpufi_host.profile).variable)) + i))[j]).loop_id)), (gpufi_type_name[(((((struct _gpufi_profile_variable_ *)(((struct _gpufi_profile_variable_ (*)[512])(&(gpufi_host.profile).variable)) + i))[j]).type))]));
-# 127 "src/cuda_fi_prerun/gpufi_kernel.cu"
-fprintf(fp, "\n");
-}
-}
-fprintf(fp, "\n");
-} __T23:;
-
-fclose(fp);
-}
 
 return 0;
 }
-# 235 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu"
+# 235 "src/cuda_fi/cuenergy_pre8_coalesce.cu"
 int _Z19copyatomstoconstbufPfif( float *atoms,  int count,  float zplane)
 {
 auto float atompre[16000];
@@ -1418,7 +1301,7 @@ if (1)
 {
 
 }
-# 260 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu"
+# 260 "src/cuda_fi/cuenergy_pre8_coalesce.cu"
 return 0;
 }
 # 184 "/usr/local/cuda/bin/../include/cuda_runtime.h"
@@ -1432,43 +1315,43 @@ enum cudaMemcpyKind kind)
 {
 return cudaMemcpyToSymbol(((const char *)symbol), src, count, offset, kind);
 }
-# 42 "src/cuda_fi_prerun/main.cu"
+# 42 "src/cuda_fi/main.cu"
 static int _Z9initatomsPPfi4dim3f( float **atombuf,  int count,  dim3 volsize,  float gridspacing)
 {
 auto dim3 size;
 auto int i;
 auto float *atoms;
-# 44 "src/cuda_fi_prerun/main.cu"
+# 44 "src/cuda_fi/main.cu"
 { (size.x) = 1U; (size.y) = 1U; (size.z) = 1U; }
 
 
 srand(54321U);
-# 50 "src/cuda_fi_prerun/main.cu"
+# 50 "src/cuda_fi/main.cu"
 atoms = ((float *)(malloc((((unsigned)(count * 4)) * 4U))));
 (*atombuf) = atoms;
-# 54 "src/cuda_fi_prerun/main.cu"
+# 54 "src/cuda_fi/main.cu"
 (size.x) = ((unsigned)(gridspacing * ((float)((volsize.x)))));
 (size.y) = ((unsigned)(gridspacing * ((float)((volsize.y)))));
 (size.z) = ((unsigned)(gridspacing * ((float)((volsize.z)))));
 for (i = 0; (i < count); i++)
 {
 auto int addr;
-# 59 "src/cuda_fi_prerun/main.cu"
+# 59 "src/cuda_fi/main.cu"
 addr = (i * 4);
 (atoms[addr]) = ((((float)(rand())) / (2147483648.0F)) * ((float)((size.x))));
 (atoms[addr + 1]) = ((((float)(rand())) / (2147483648.0F)) * ((float)((size.y))));
 (atoms[addr + 2]) = ((((float)(rand())) / (2147483648.0F)) * ((float)((size.z))));
 (atoms[addr + 3]) = ((float)((((double)(((float)(rand())) / (2147483648.0F))) * (2.0)) - (1.0)));
-# 66 "src/cuda_fi_prerun/main.cu"
+# 66 "src/cuda_fi/main.cu"
 }
 return 0;
 }
-# 75 "src/cuda_fi_prerun/main.cu"
+# 75 "src/cuda_fi/main.cu"
 static int _Z11writeenergyPcPf4dim3( char *filename,  float *energy,  dim3 volsize)
 {
 auto FILE *outfile;
 auto int x;
-# 78 "src/cuda_fi_prerun/main.cu"
+# 78 "src/cuda_fi/main.cu"
 auto int y;
 outfile = (fopen(((const char *)filename), "w"));
 if (outfile == ((FILE *)0))
@@ -1481,14 +1364,14 @@ fprintf(outfile, "%d %d %d %d\n", ((volsize.x)), ((volsize.y)), ((volsize.z)), 4
 
 {
 auto double sum;
-# 89 "src/cuda_fi_prerun/main.cu"
+# 89 "src/cuda_fi/main.cu"
 sum = (0.0);
 for (y = 0; (((unsigned)y) < ((volsize.y))); y++)
 {
 for (x = 0; (((unsigned)x) < ((volsize.x))); x++)
 {
 auto double t;
-# 94 "src/cuda_fi_prerun/main.cu"
+# 94 "src/cuda_fi/main.cu"
 t = ((double)(energy[((((unsigned)y) * ((volsize.x))) + ((unsigned)x))]));
 t = (fmax((-20.0), (fmin((20.0), t))));
 sum += t;
@@ -1502,7 +1385,7 @@ for (y = 0; (y < 17); y++)
 for (x = 0; (((unsigned)x) < ((volsize.x))); x++)
 {
 auto int addr;
-# 106 "src/cuda_fi_prerun/main.cu"
+# 106 "src/cuda_fi/main.cu"
 addr = ((int)((((unsigned)y) * ((volsize.x))) + ((unsigned)x)));
 fprintf(outfile, "%.4g ", ((double)(energy[addr])));
 }
@@ -1517,32 +1400,32 @@ int main( int argc,  char **argv)
 auto struct pb_TimerSet timers;
 auto struct pb_Parameters *parameters;
 auto float *energy;
-# 125 "src/cuda_fi_prerun/main.cu"
+# 125 "src/cuda_fi/main.cu"
 auto float *atoms;
 auto dim3 volsize;
-# 126 "src/cuda_fi_prerun/main.cu"
+# 126 "src/cuda_fi/main.cu"
 auto dim3 Gsz;
-# 126 "src/cuda_fi_prerun/main.cu"
+# 126 "src/cuda_fi/main.cu"
 auto dim3 Bsz;
-# 131 "src/cuda_fi_prerun/main.cu"
+# 131 "src/cuda_fi/main.cu"
 auto int atomcount;
-# 134 "src/cuda_fi_prerun/main.cu"
+# 134 "src/cuda_fi/main.cu"
 auto float gridspacing;
-# 137 "src/cuda_fi_prerun/main.cu"
+# 137 "src/cuda_fi/main.cu"
 auto int volmemsz;
-# 119 "src/cuda_fi_prerun/main.cu"
+# 119 "src/cuda_fi/main.cu"
 energy = ((float *)0);
-# 122 "src/cuda_fi_prerun/main.cu"
+# 122 "src/cuda_fi/main.cu"
 _Z10GPUFI_INITii(1, 46);
 
 
 atoms = ((float *)0);
 { (volsize.x) = 1U; (volsize.y) = 1U; (volsize.z) = 1U; } { (Gsz.x) = 1U; (Gsz.y) = 1U; (Gsz.z) = 1U; } { (Bsz.x) = 1U; (Bsz.y) = 1U; (Bsz.z) = 1U; }
-# 131 "src/cuda_fi_prerun/main.cu"
+# 131 "src/cuda_fi/main.cu"
 atomcount = 40000;
-# 134 "src/cuda_fi_prerun/main.cu"
+# 134 "src/cuda_fi/main.cu"
 gridspacing = (0.1000000015F);
-# 138 "src/cuda_fi_prerun/main.cu"
+# 138 "src/cuda_fi/main.cu"
 printf("CUDA accelerated coulombic potential microbenchmark\n");
 printf("Original version by John E. Stone <johns@ks.uiuc.edu>\n");
 printf("This version maintained by Chris Rodrigues\n");
@@ -1560,36 +1443,36 @@ return (-1);
 }
 pb_InitializeTimerSet((&timers));
 pb_SwitchToTimer((&timers), pb_TimerID_COMPUTE);
-# 157 "src/cuda_fi_prerun/main.cu"
+# 157 "src/cuda_fi/main.cu"
 (volsize.x) = 512U;
 (volsize.y) = 512U;
 (volsize.z) = 1U;
-# 162 "src/cuda_fi_prerun/main.cu"
+# 162 "src/cuda_fi/main.cu"
 (Bsz.x) = 16U;
-# 165 "src/cuda_fi_prerun/main.cu"
+# 165 "src/cuda_fi/main.cu"
 (Bsz.y) = 8U;
 (Bsz.z) = 1U;
 (Gsz.x) = (((volsize.x)) / (((Bsz.x)) * 8U));
-# 170 "src/cuda_fi_prerun/main.cu"
+# 170 "src/cuda_fi/main.cu"
 (Gsz.y) = (((volsize.y)) / ((Bsz.y)));
 (Gsz.z) = (((volsize.z)) / ((Bsz.z)));
-# 174 "src/cuda_fi_prerun/main.cu"
+# 174 "src/cuda_fi/main.cu"
 if (_Z9initatomsPPfi4dim3f((&atoms), atomcount, volsize, (0.1000000015F)))
 {
 _Z10GPUFI_HALTPc(((char *)"fi_profile.txt"));
 return (-1);
 }
-# 181 "src/cuda_fi_prerun/main.cu"
+# 181 "src/cuda_fi/main.cu"
 volmemsz = ((int)(((4U * ((volsize.x))) * ((volsize.y))) * ((volsize.z))));
-# 184 "src/cuda_fi_prerun/main.cu"
+# 184 "src/cuda_fi/main.cu"
 {
 auto float *d_output;
-# 188 "src/cuda_fi_prerun/main.cu"
+# 188 "src/cuda_fi/main.cu"
 auto int iterations;
 auto int atomstart;
-# 185 "src/cuda_fi_prerun/main.cu"
+# 185 "src/cuda_fi/main.cu"
 d_output = ((float *)0);
-# 188 "src/cuda_fi_prerun/main.cu"
+# 188 "src/cuda_fi/main.cu"
 iterations = 0;
 
 pb_SwitchToTimer((&timers), pb_TimerID_COPY);
@@ -1598,23 +1481,23 @@ if (1)
 {
 
 }
-# 198 "src/cuda_fi_prerun/main.cu"
+# 198 "src/cuda_fi/main.cu"
 cudaMemset(((void *)d_output), 0, ((size_t)volmemsz));
 if (1)
 {
 
 }
-# 205 "src/cuda_fi_prerun/main.cu"
+# 205 "src/cuda_fi/main.cu"
 pb_SwitchToTimer((&timers), pb_TimerID_COMPUTE);
 for (atomstart = 0; (atomstart < atomcount); atomstart += 4000)
 {
 auto int atomsremaining;
 auto int runatoms;
-# 208 "src/cuda_fi_prerun/main.cu"
+# 208 "src/cuda_fi/main.cu"
 atomsremaining = (atomcount - atomstart);
 runatoms = ((atomsremaining > 4000) ? 4000 : atomsremaining);
 iterations++;
-# 213 "src/cuda_fi_prerun/main.cu"
+# 213 "src/cuda_fi/main.cu"
 pb_SwitchToTimer((&timers), pb_TimerID_COPY);
 if (_Z19copyatomstoconstbufPfif((atoms + (4 * atomstart)), runatoms, (0.0F)))
 {
@@ -1626,26 +1509,26 @@ if ((parameters->synchronizeGpu))
 cudaThreadSynchronize();
 }
 pb_SwitchToTimer((&timers), pb_TimerID_GPU);
-# 227 "src/cuda_fi_prerun/main.cu"
-cudaMalloc(((void **)(&__shadow_var(gpufi_dev,gpufi_dev))), 78940U);
+# 227 "src/cuda_fi/main.cu"
+cudaMalloc(((void **)(&__shadow_var(gpufi_dev,gpufi_dev))), 48U);
 { auto cudaError_t err;
-# 228 "src/cuda_fi_prerun/main.cu"
+# 228 "src/cuda_fi/main.cu"
 if ((int)(err = (cudaGetLastError()))) { fprintf(stderr, "CUDA error on line %d: %s\n", 228, (cudaGetErrorString(err))); exit((-1)); } }
-cudaMemcpy(((void *)__shadow_var(gpufi_dev,gpufi_dev)), ((const void *)(&gpufi_host)), 78940U, cudaMemcpyHostToDevice);
+cudaMemcpy(((void *)__shadow_var(gpufi_dev,gpufi_dev)), ((const void *)(&gpufi_host)), 48U, cudaMemcpyHostToDevice);
 { auto cudaError_t err;
-# 230 "src/cuda_fi_prerun/main.cu"
+# 230 "src/cuda_fi/main.cu"
 if ((int)(err = (cudaGetLastError()))) { fprintf(stderr, "CUDA error on line %d: %s\n", 230, (cudaGetErrorString(err))); exit((-1)); } }
 
 
 ((int)(cudaConfigureCall(Gsz, Bsz, 0U, 0))) ? ((void)0) : (__device_stub__Z7cenergyifPfP12_gpufi_data_(runatoms, (0.1000000015F), d_output, __shadow_var(gpufi_dev,gpufi_dev)));
 
-cudaMemcpy(((void *)(&gpufi_host)), ((const void *)__shadow_var(gpufi_dev,gpufi_dev)), 78940U, cudaMemcpyDeviceToHost);
+cudaMemcpy(((void *)(&gpufi_host)), ((const void *)__shadow_var(gpufi_dev,gpufi_dev)), 48U, cudaMemcpyDeviceToHost);
 { auto cudaError_t err;
-# 236 "src/cuda_fi_prerun/main.cu"
+# 236 "src/cuda_fi/main.cu"
 if ((int)(err = (cudaGetLastError()))) { fprintf(stderr, "CUDA error on line %d: %s\n", 236, (cudaGetErrorString(err))); exit((-1)); } }
 cudaFree(((void *)__shadow_var(gpufi_dev,gpufi_dev)));
 { auto cudaError_t err;
-# 238 "src/cuda_fi_prerun/main.cu"
+# 238 "src/cuda_fi/main.cu"
 if ((int)(err = (cudaGetLastError()))) { fprintf(stderr, "CUDA error on line %d: %s\n", 238, (cudaGetErrorString(err))); exit((-1)); } }
 
 
@@ -1653,15 +1536,15 @@ if (1)
 {
 
 }
-# 247 "src/cuda_fi_prerun/main.cu"
+# 247 "src/cuda_fi/main.cu"
 if ((parameters->synchronizeGpu))
 {
 cudaThreadSynchronize();
 }
 pb_SwitchToTimer((&timers), pb_TimerID_COMPUTE);
-# 254 "src/cuda_fi_prerun/main.cu"
+# 254 "src/cuda_fi/main.cu"
 }
-# 257 "src/cuda_fi_prerun/main.cu"
+# 257 "src/cuda_fi/main.cu"
 energy = ((float *)(malloc(((size_t)volmemsz))));
 pb_SwitchToTimer((&timers), pb_TimerID_COPY);
 cudaMemcpy(((void *)energy), ((const void *)d_output), ((size_t)volmemsz), cudaMemcpyDeviceToHost);
@@ -1669,7 +1552,7 @@ if (1)
 {
 
 }
-# 266 "src/cuda_fi_prerun/main.cu"
+# 266 "src/cuda_fi/main.cu"
 cudaFree(((void *)d_output));
 pb_SwitchToTimer((&timers), pb_TimerID_COMPUTE);
 }
@@ -1693,6 +1576,6 @@ _Z10GPUFI_HALTPc(((char *)"fi_profile.txt"));
 return 0;
 _Z10GPUFI_HALTPc(((char *)"fi_profile.txt"));
 }
-static void __sti___12_main_cpp1_ii_46b07679(void) {   }
+static void __sti___12_main_cpp1_ii_571f98e8(void) {   }
 
 #include "main.cudafe1.stub.c"

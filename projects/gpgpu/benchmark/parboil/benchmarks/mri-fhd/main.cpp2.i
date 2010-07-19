@@ -327,35 +327,41 @@ struct _Z7textureI7ushort2Li3EL19cudaTextureReadMode1EE;
 struct _Z7textureI6short4Li3EL19cudaTextureReadMode1EE;
 # 60 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
 struct _Z7textureI7ushort4Li3EL19cudaTextureReadMode1EE;
+# 6 "src/cuda_fi/gpufi.h"
+struct _gpufi_fault_;
+# 24 "src/cuda_fi/gpufi.h"
+struct _gpufi_current_;
+# 29 "src/cuda_fi/gpufi.h"
+struct _gpufi_data_;
 # 271 "/usr/include/libio.h" 3
 struct _IO_FILE;
-# 12 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 12 "src/cuda_fi/parboil.h"
 struct pb_Parameters;
-# 58 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 58 "src/cuda_fi/parboil.h"
 enum pb_TimerState {
-# 59 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 59 "src/cuda_fi/parboil.h"
 pb_Timer_STOPPED,
-# 60 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 60 "src/cuda_fi/parboil.h"
 pb_Timer_RUNNING};
-# 63 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 63 "src/cuda_fi/parboil.h"
 struct pb_Timer;
-# 98 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 98 "src/cuda_fi/parboil.h"
 enum pb_TimerID {
-# 99 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 99 "src/cuda_fi/parboil.h"
 pb_TimerID_NONE,
-# 100 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 100 "src/cuda_fi/parboil.h"
 pb_TimerID_IO,
-# 101 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 101 "src/cuda_fi/parboil.h"
 pb_TimerID_GPU,
-# 102 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 102 "src/cuda_fi/parboil.h"
 pb_TimerID_COPY,
-# 104 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 104 "src/cuda_fi/parboil.h"
 pb_TimerID_COMPUTE,
-# 107 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 107 "src/cuda_fi/parboil.h"
 pb_TimerID_LAST};
-# 111 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 111 "src/cuda_fi/parboil.h"
 struct pb_TimerSet;
-# 28 "src/cuda_wo_loop/computeFH.cu"
+# 22 "src/cuda_fi/computeFH.cu"
 struct kValues;
 # 38 "/usr/include/bits/mathinline.h" 3
 union __C9;
@@ -1884,43 +1890,77 @@ struct _Z7textureI7ushort2Li3EL19cudaTextureReadMode1EE { struct textureReferenc
 struct _Z7textureI6short4Li3EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
 # 60 "/usr/local/cuda/bin/../include/cuda_texture_types.h"
 struct _Z7textureI7ushort4Li3EL19cudaTextureReadMode1EE { struct textureReference __b_16textureReference;};
+# 6 "src/cuda_fi/gpufi.h"
+struct _gpufi_fault_ {
+# 7 "src/cuda_fi/gpufi.h"
+int kernel;
+# 8 "src/cuda_fi/gpufi.h"
+int instance;
+# 9 "src/cuda_fi/gpufi.h"
+int varid;
+# 10 "src/cuda_fi/gpufi.h"
+int call;
+# 12 "src/cuda_fi/gpufi.h"
+unsigned mask;
+# 17 "src/cuda_fi/gpufi.h"
+int injected;
+# 18 "src/cuda_fi/gpufi.h"
+int disabled;
+# 20 "src/cuda_fi/gpufi.h"
+int blid;
+# 21 "src/cuda_fi/gpufi.h"
+int thid;};
+# 24 "src/cuda_fi/gpufi.h"
+struct _gpufi_current_ {
+# 25 "src/cuda_fi/gpufi.h"
+int instance;
+# 26 "src/cuda_fi/gpufi.h"
+int count;};
+# 29 "src/cuda_fi/gpufi.h"
+struct _gpufi_data_ {
+# 30 "src/cuda_fi/gpufi.h"
+struct _gpufi_fault_ fault;
+# 31 "src/cuda_fi/gpufi.h"
+struct _gpufi_current_ current;
+# 32 "src/cuda_fi/gpufi.h"
+int sdc;};
 # 49 "/usr/include/stdio.h" 3
 typedef struct _IO_FILE FILE;
-# 12 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 12 "src/cuda_fi/parboil.h"
 struct pb_Parameters {
-# 13 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 13 "src/cuda_fi/parboil.h"
 char *outFile;
-# 16 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 16 "src/cuda_fi/parboil.h"
 char **inpFiles;
-# 20 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 20 "src/cuda_fi/parboil.h"
 int synchronizeGpu;};
-# 53 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 53 "src/cuda_fi/parboil.h"
 typedef unsigned long long pb_Timestamp;
-# 63 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 63 "src/cuda_fi/parboil.h"
 struct pb_Timer {
-# 64 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 64 "src/cuda_fi/parboil.h"
 enum pb_TimerState state;
-# 65 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 65 "src/cuda_fi/parboil.h"
 pb_Timestamp elapsed;
-# 66 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 66 "src/cuda_fi/parboil.h"
 pb_Timestamp init;};
-# 111 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 111 "src/cuda_fi/parboil.h"
 struct pb_TimerSet {
-# 112 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 112 "src/cuda_fi/parboil.h"
 enum pb_TimerID current;
-# 113 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 113 "src/cuda_fi/parboil.h"
 struct pb_Timer timers[5];};
-# 28 "src/cuda_wo_loop/computeFH.cu"
+# 22 "src/cuda_fi/computeFH.cu"
 struct kValues {
-# 29 "src/cuda_wo_loop/computeFH.cu"
+# 24 "src/cuda_fi/computeFH.cu"
 float Kx;
-# 30 "src/cuda_wo_loop/computeFH.cu"
+# 25 "src/cuda_fi/computeFH.cu"
 float Ky;
-# 31 "src/cuda_wo_loop/computeFH.cu"
+# 26 "src/cuda_fi/computeFH.cu"
 float Kz;
-# 32 "src/cuda_wo_loop/computeFH.cu"
+# 27 "src/cuda_fi/computeFH.cu"
 float RhoPhiR;
-# 33 "src/cuda_wo_loop/computeFH.cu"
+# 28 "src/cuda_fi/computeFH.cu"
 float RhoPhiI;};
 # 38 "/usr/include/bits/mathinline.h" 3
 union __C9 {
@@ -2410,6 +2450,44 @@ int __i[2];};
 /*DEVICE_BUILTIN*/extern __attribute__((__device__)) int __popcll(unsigned long long);
 # 274 "/usr/local/cuda/bin/../include/device_functions.h"
 /*DEVICE_BUILTIN*/extern __attribute__((__device__)) unsigned long long __brevll(unsigned long long);
+# 55 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/extern __attribute__((__device__)) int __iAtomicAdd(int *, int);
+# 57 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/extern __attribute__((__device__)) unsigned __uAtomicAdd(unsigned *, unsigned);
+# 59 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/extern __attribute__((__device__)) int __iAtomicExch(int *, int);
+# 61 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/extern __attribute__((__device__)) unsigned __uAtomicExch(unsigned *, unsigned);
+# 63 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/extern __attribute__((__device__)) float __fAtomicExch(float *, float);
+# 65 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/extern __attribute__((__device__)) int __iAtomicMin(int *, int);
+# 67 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/extern __attribute__((__device__)) unsigned __uAtomicMin(unsigned *, unsigned);
+# 69 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/extern __attribute__((__device__)) int __iAtomicMax(int *, int);
+# 71 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/extern __attribute__((__device__)) unsigned __uAtomicMax(unsigned *, unsigned);
+# 73 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/extern __attribute__((__device__)) unsigned __uAtomicInc(unsigned *, unsigned);
+# 75 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/extern __attribute__((__device__)) unsigned __uAtomicDec(unsigned *, unsigned);
+# 77 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/extern __attribute__((__device__)) int __iAtomicAnd(int *, int);
+# 79 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/extern __attribute__((__device__)) unsigned __uAtomicAnd(unsigned *, unsigned);
+# 81 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/extern __attribute__((__device__)) int __iAtomicOr(int *, int);
+# 83 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/extern __attribute__((__device__)) unsigned __uAtomicOr(unsigned *, unsigned);
+# 85 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/extern __attribute__((__device__)) int __iAtomicXor(int *, int);
+# 87 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/extern __attribute__((__device__)) unsigned __uAtomicXor(unsigned *, unsigned);
+# 89 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/extern __attribute__((__device__)) int __iAtomicCAS(int *, int, int);
+# 91 "/usr/local/cuda/bin/../include/sm_11_atomic_functions.h"
+/*DEVICE_BUILTIN*/extern __attribute__((__device__)) unsigned __uAtomicCAS(unsigned *, unsigned, unsigned);
 # 60 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
 /*DEVICE_BUILTIN*/extern __attribute__((__device__)) uint4 __utexfetchi(__texture_type__, int4);
 # 62 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
@@ -2842,11 +2920,23 @@ int __i[2];};
 /*DEVICE_BUILTIN*/extern __attribute__((__device__)) int4 __itexfetch(__texture_type__, float4, int);
 # 67 "/usr/local/cuda/bin/../include/texture_fetch_functions.h"
 /*DEVICE_BUILTIN*/extern __attribute__((__device__)) uint4 __utexfetch(__texture_type__, float4, int);
-# 49 "src/cuda_wo_loop/computeFH.cu"
-__attribute__((__global__)) extern void _Z16ComputeRhoPhiGPUiPfS_S_S_S_S_(int, float *, float *, float *, float *, float *, float *);
-# 66 "src/cuda_wo_loop/computeFH.cu"
-__attribute__((__global__)) extern void _Z13ComputeFH_GPUiiPfS_S_S_S_(int, int, float *, float *, float *, float *, float *);
-# 36 "src/cuda_wo_loop/computeFH.cu"
+# 74 "src/cuda_fi/gpufi_kernel.cu"
+extern __attribute__((__device__)) int _Z10GPUFI_EXITP12_gpufi_data_i(struct _gpufi_data_ *, int);
+# 84 "src/cuda_fi/gpufi_kernel.cu"
+extern __attribute__((__device__)) void _Z12GPUFI_KERNELP12_gpufi_data_iiPc(struct _gpufi_data_ *, int, int, char *);
+# 100 "src/cuda_fi/gpufi_kernel.cu"
+extern __attribute__((__device__)) void _Z17GPUFI_KERNEL_LOOPP12_gpufi_data_i(struct _gpufi_data_ *, int);
+# 105 "src/cuda_fi/gpufi_kernel.cu"
+extern __attribute__((__device__)) void _Z22GPUFI_KERNEL_ITERATIONP12_gpufi_data_(struct _gpufi_data_ *);
+# 110 "src/cuda_fi/gpufi_kernel.cu"
+extern __attribute__((__device__)) void _Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(struct _gpufi_data_ *, int, char *, int *, int);
+# 44 "src/cuda_fi/computeFH.cu"
+__attribute__((__global__)) extern void _Z16ComputeRhoPhiGPUiPfS_S_S_S_S_P12_gpufi_data_(int, float *, float *, float *, float *, float *, float *, struct _gpufi_data_ *);
+# 102 "src/cuda_fi/computeFH.cu"
+__attribute__((__global__)) extern void _Z13ComputeFH_GPUiiPfS_S_S_S_P12_gpufi_data_(int, int, float *, float *, float *, float *, float *, struct _gpufi_data_ *);
+# 10 "src/cuda_fi/gpufi_kernel.cu"
+ __attribute__((__device__)) struct _gpufi_data_ *gpufi_dev;
+# 31 "src/cuda_fi/computeFH.cu"
  __attribute__((__constant__)) struct kValues c[512];
 # 1 "/usr/local/cuda/bin/../include/common_functions.h" 1
 /*
@@ -2981,116 +3071,582 @@ __attribute__((__global__)) extern void _Z13ComputeFH_GPUiiPfS_S_S_S_(int, int, 
  */
 # 3864 "/usr/local/cuda/bin/../include/math_functions.h" 2 3
 # 94 "/usr/local/cuda/bin/../include/common_functions.h" 2
-# 38 "src/cuda_wo_loop/computeFH.cu" 2
-# 49 "src/cuda_wo_loop/computeFH.cu"
-__attribute__((__global__)) void _Z16ComputeRhoPhiGPUiPfS_S_S_S_S_(
-# 49 "src/cuda_wo_loop/computeFH.cu"
+# 33 "src/cuda_fi/computeFH.cu" 2
+# 74 "src/cuda_fi/gpufi_kernel.cu"
+ __attribute__((__device__)) int _Z10GPUFI_EXITP12_gpufi_data_i(
+# 74 "src/cuda_fi/gpufi_kernel.cu"
+struct _gpufi_data_ *gpufi_dev,
+# 74 "src/cuda_fi/gpufi_kernel.cu"
+int errno)
+# 75 "src/cuda_fi/gpufi_kernel.cu"
+{
+# 76 "src/cuda_fi/gpufi_kernel.cu"
+(gpufi_dev->sdc) = 1;
+# 80 "src/cuda_fi/gpufi_kernel.cu"
+return 0;
+# 81 "src/cuda_fi/gpufi_kernel.cu"
+}
+# 84 "src/cuda_fi/gpufi_kernel.cu"
+ __attribute__((__device__)) void _Z12GPUFI_KERNELP12_gpufi_data_iiPc(
+# 84 "src/cuda_fi/gpufi_kernel.cu"
+struct _gpufi_data_ *gpufi_dev,
+# 84 "src/cuda_fi/gpufi_kernel.cu"
+int begin,
+# 84 "src/cuda_fi/gpufi_kernel.cu"
+int type,
+# 84 "src/cuda_fi/gpufi_kernel.cu"
+char *name)
+# 85 "src/cuda_fi/gpufi_kernel.cu"
+{
+# 86 "src/cuda_fi/gpufi_kernel.cu"
+if ((((blockIdx.x)) != ((unsigned)(((gpufi_dev->fault).blid)))) || (((threadIdx.x)) != ((unsigned)(((gpufi_dev->fault).thid))))) {
+# 87 "src/cuda_fi/gpufi_kernel.cu"
+return; }
+# 89 "src/cuda_fi/gpufi_kernel.cu"
+((gpufi_dev->fault).disabled) = 1;
+# 90 "src/cuda_fi/gpufi_kernel.cu"
+if (begin == 0)
+# 90 "src/cuda_fi/gpufi_kernel.cu"
+{
+# 91 "src/cuda_fi/gpufi_kernel.cu"
+if ((((gpufi_dev->fault).kernel)) == type)
+# 91 "src/cuda_fi/gpufi_kernel.cu"
+{
+# 92 "src/cuda_fi/gpufi_kernel.cu"
+if ((((gpufi_dev->fault).instance)) == (((gpufi_dev->current).instance)++))
+# 92 "src/cuda_fi/gpufi_kernel.cu"
+{
+# 93 "src/cuda_fi/gpufi_kernel.cu"
+((gpufi_dev->fault).disabled) = 0;
+# 94 "src/cuda_fi/gpufi_kernel.cu"
+}
+# 95 "src/cuda_fi/gpufi_kernel.cu"
+}
+# 96 "src/cuda_fi/gpufi_kernel.cu"
+}
+# 97 "src/cuda_fi/gpufi_kernel.cu"
+}
+# 100 "src/cuda_fi/gpufi_kernel.cu"
+ __attribute__((__device__)) void _Z17GPUFI_KERNEL_LOOPP12_gpufi_data_i(
+# 100 "src/cuda_fi/gpufi_kernel.cu"
+struct _gpufi_data_ *gpufi_dev,
+# 100 "src/cuda_fi/gpufi_kernel.cu"
+int begin)
+# 101 "src/cuda_fi/gpufi_kernel.cu"
+{
+# 101 "src/cuda_fi/gpufi_kernel.cu"
+# 102 "src/cuda_fi/gpufi_kernel.cu"
+}
+# 105 "src/cuda_fi/gpufi_kernel.cu"
+ __attribute__((__device__)) void _Z22GPUFI_KERNEL_ITERATIONP12_gpufi_data_(
+# 105 "src/cuda_fi/gpufi_kernel.cu"
+struct _gpufi_data_ *gpufi_dev)
+# 106 "src/cuda_fi/gpufi_kernel.cu"
+{
+# 106 "src/cuda_fi/gpufi_kernel.cu"
+# 107 "src/cuda_fi/gpufi_kernel.cu"
+}
+# 110 "src/cuda_fi/gpufi_kernel.cu"
+ __attribute__((__device__)) void _Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(
+# 110 "src/cuda_fi/gpufi_kernel.cu"
+struct _gpufi_data_ *gpufi_dev,
+# 110 "src/cuda_fi/gpufi_kernel.cu"
+int varid,
+# 110 "src/cuda_fi/gpufi_kernel.cu"
+char *name,
+# 110 "src/cuda_fi/gpufi_kernel.cu"
+int *variable,
+# 110 "src/cuda_fi/gpufi_kernel.cu"
+int var_type)
+# 111 "src/cuda_fi/gpufi_kernel.cu"
+{
+# 112 "src/cuda_fi/gpufi_kernel.cu"
+if ((((blockIdx.x)) != ((unsigned)(((gpufi_dev->fault).blid)))) || (((threadIdx.x)) != ((unsigned)(((gpufi_dev->fault).thid))))) {
+# 113 "src/cuda_fi/gpufi_kernel.cu"
+return; }
+# 115 "src/cuda_fi/gpufi_kernel.cu"
+if (((gpufi_dev->fault).disabled)) {
+# 116 "src/cuda_fi/gpufi_kernel.cu"
+return; }
+# 118 "src/cuda_fi/gpufi_kernel.cu"
+if (varid == (((gpufi_dev->fault).varid)))
+# 118 "src/cuda_fi/gpufi_kernel.cu"
+{
+# 119 "src/cuda_fi/gpufi_kernel.cu"
+if ((((gpufi_dev->fault).call)) == (((gpufi_dev->current).count)++))
+# 119 "src/cuda_fi/gpufi_kernel.cu"
+{
+# 120 "src/cuda_fi/gpufi_kernel.cu"
+((gpufi_dev->fault).disabled) = 1;
+# 121 "src/cuda_fi/gpufi_kernel.cu"
+((gpufi_dev->fault).injected)++;
+# 123 "src/cuda_fi/gpufi_kernel.cu"
+if (var_type == 10)
+# 123 "src/cuda_fi/gpufi_kernel.cu"
+{
+# 124 "src/cuda_fi/gpufi_kernel.cu"
+(*variable) ^= (((gpufi_dev->fault).mask));
+# 125 "src/cuda_fi/gpufi_kernel.cu"
+} else {
+# 126 "src/cuda_fi/gpufi_kernel.cu"
+if (((var_type == 40) || (var_type == 30)) || (var_type == 50))
+# 128 "src/cuda_fi/gpufi_kernel.cu"
+{
+# 129 "src/cuda_fi/gpufi_kernel.cu"
+auto int temp;
+# 130 "src/cuda_fi/gpufi_kernel.cu"
+temp = ((*variable));
+# 131 "src/cuda_fi/gpufi_kernel.cu"
+temp ^= (((gpufi_dev->fault).mask));
+# 132 "src/cuda_fi/gpufi_kernel.cu"
+(*variable) = temp;
+# 133 "src/cuda_fi/gpufi_kernel.cu"
+} else {
+# 134 "src/cuda_fi/gpufi_kernel.cu"
+if (var_type == 20)
+# 134 "src/cuda_fi/gpufi_kernel.cu"
+{
+# 135 "src/cuda_fi/gpufi_kernel.cu"
+(*variable) = ((int)__float2int_rz((float)((__int_as_float(((int)(((unsigned)(__float_as_int(((float)((*variable)))))) ^ (((gpufi_dev->fault).mask)))))))));
+# 136 "src/cuda_fi/gpufi_kernel.cu"
+}
+# 137 "src/cuda_fi/gpufi_kernel.cu"
+else
+# 137 "src/cuda_fi/gpufi_kernel.cu"
+{
+# 138 "src/cuda_fi/gpufi_kernel.cu"
+auto int temp;
+# 139 "src/cuda_fi/gpufi_kernel.cu"
+temp = ((*variable));
+# 140 "src/cuda_fi/gpufi_kernel.cu"
+temp ^= (((gpufi_dev->fault).mask));
+# 141 "src/cuda_fi/gpufi_kernel.cu"
+(*variable) = temp;
+# 142 "src/cuda_fi/gpufi_kernel.cu"
+} } }
+# 143 "src/cuda_fi/gpufi_kernel.cu"
+}
+# 144 "src/cuda_fi/gpufi_kernel.cu"
+}
+# 145 "src/cuda_fi/gpufi_kernel.cu"
+}
+# 44 "src/cuda_fi/computeFH.cu"
+__attribute__((__global__)) void _Z16ComputeRhoPhiGPUiPfS_S_S_S_S_P12_gpufi_data_(
+# 44 "src/cuda_fi/computeFH.cu"
 int numK,
-# 50 "src/cuda_wo_loop/computeFH.cu"
+# 44 "src/cuda_fi/computeFH.cu"
 float *phiR,
-# 50 "src/cuda_wo_loop/computeFH.cu"
+# 44 "src/cuda_fi/computeFH.cu"
 float *phiI,
-# 51 "src/cuda_wo_loop/computeFH.cu"
+# 44 "src/cuda_fi/computeFH.cu"
 float *dR,
-# 51 "src/cuda_wo_loop/computeFH.cu"
+# 44 "src/cuda_fi/computeFH.cu"
 float *dI,
-# 52 "src/cuda_wo_loop/computeFH.cu"
+# 44 "src/cuda_fi/computeFH.cu"
 float *realRhoPhi,
-# 52 "src/cuda_wo_loop/computeFH.cu"
-float *imagRhoPhi){
-# 53 "src/cuda_wo_loop/computeFH.cu"
+# 44 "src/cuda_fi/computeFH.cu"
+float *imagRhoPhi,
+# 44 "src/cuda_fi/computeFH.cu"
+struct _gpufi_data_ *gpufi_dev){;;;;;;;
+# 45 "src/cuda_fi/computeFH.cu"
 {
-# 54 "src/cuda_wo_loop/computeFH.cu"
+# 68 "src/cuda_fi/computeFH.cu"
 auto int indexK;
-# 54 "src/cuda_wo_loop/computeFH.cu"
+# 46 "src/cuda_fi/computeFH.cu"
+_Z12GPUFI_KERNELP12_gpufi_data_iiPc(gpufi_dev, 0, 0, ((char *)"ComputeRhoPhiGPU"));
+# 47 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 0, ((char *)"numK"), (&numK), 10);
+# 50 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 1, ((char *)"phiR"), ((int *)(&phiR)), 40);
+# 53 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 2, ((char *)"phiI"), ((int *)(&phiI)), 40);
+# 56 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 3, ((char *)"dR"), ((int *)(&dR)), 40);
+# 59 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 4, ((char *)"dI"), ((int *)(&dI)), 40);
+# 62 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 5, ((char *)"realRhoPhi"), ((int *)(&realRhoPhi)), 40);
+# 65 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 6, ((char *)"imagRhoPhi"), ((int *)(&imagRhoPhi)), 40);
+# 68 "src/cuda_fi/computeFH.cu"
 indexK = ((int)((((blockIdx.x)) * 512U) + ((threadIdx.x))));
-# 55 "src/cuda_wo_loop/computeFH.cu"
+# 69 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 14, ((char *)"indexK"), (&indexK), 10);
+# 72 "src/cuda_fi/computeFH.cu"
 if (indexK < numK)
-# 55 "src/cuda_wo_loop/computeFH.cu"
+# 73 "src/cuda_fi/computeFH.cu"
 {
-# 56 "src/cuda_wo_loop/computeFH.cu"
+# 74 "src/cuda_fi/computeFH.cu"
 auto float rPhiR;
-# 57 "src/cuda_wo_loop/computeFH.cu"
+# 78 "src/cuda_fi/computeFH.cu"
 auto float rPhiI;
-# 58 "src/cuda_wo_loop/computeFH.cu"
+# 82 "src/cuda_fi/computeFH.cu"
 auto float rDR;
-# 59 "src/cuda_wo_loop/computeFH.cu"
+# 86 "src/cuda_fi/computeFH.cu"
 auto float rDI;
-# 56 "src/cuda_wo_loop/computeFH.cu"
+# 74 "src/cuda_fi/computeFH.cu"
 rPhiR = (phiR[indexK]);
-# 57 "src/cuda_wo_loop/computeFH.cu"
+# 75 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 15, ((char *)"rPhiR"), ((int *)(&rPhiR)), 20);
+# 78 "src/cuda_fi/computeFH.cu"
 rPhiI = (phiI[indexK]);
-# 58 "src/cuda_wo_loop/computeFH.cu"
+# 79 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 16, ((char *)"rPhiI"), ((int *)(&rPhiI)), 20);
+# 82 "src/cuda_fi/computeFH.cu"
 rDR = (dR[indexK]);
-# 59 "src/cuda_wo_loop/computeFH.cu"
+# 83 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 17, ((char *)"rDR"), ((int *)(&rDR)), 20);
+# 86 "src/cuda_fi/computeFH.cu"
 rDI = (dI[indexK]);
-# 60 "src/cuda_wo_loop/computeFH.cu"
+# 87 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 18, ((char *)"rDI"), ((int *)(&rDI)), 20);
+# 90 "src/cuda_fi/computeFH.cu"
 (realRhoPhi[indexK]) = ((rPhiR * rDR) + (rPhiI * rDI));
-# 61 "src/cuda_wo_loop/computeFH.cu"
+# 91 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 19, ((char *)"realRhoPhi[indexK]"), ((int *)(realRhoPhi + indexK)), 20);
+# 94 "src/cuda_fi/computeFH.cu"
 (imagRhoPhi[indexK]) = ((rPhiR * rDI) - (rPhiI * rDR));
-# 62 "src/cuda_wo_loop/computeFH.cu"
+# 95 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 20, ((char *)"imagRhoPhi[indexK]"), ((int *)(imagRhoPhi + indexK)), 20);
+# 98 "src/cuda_fi/computeFH.cu"
 }
-# 63 "src/cuda_wo_loop/computeFH.cu"
+# 99 "src/cuda_fi/computeFH.cu"
+_Z12GPUFI_KERNELP12_gpufi_data_iiPc(gpufi_dev, 1, 0, ((char *)"ComputeRhoPhiGPU"));
+# 100 "src/cuda_fi/computeFH.cu"
 }}
-# 66 "src/cuda_wo_loop/computeFH.cu"
-__attribute__((__global__)) void _Z13ComputeFH_GPUiiPfS_S_S_S_(
-# 66 "src/cuda_wo_loop/computeFH.cu"
+# 102 "src/cuda_fi/computeFH.cu"
+__attribute__((__global__)) void _Z13ComputeFH_GPUiiPfS_S_S_S_P12_gpufi_data_(
+# 102 "src/cuda_fi/computeFH.cu"
 int numK,
-# 66 "src/cuda_wo_loop/computeFH.cu"
+# 102 "src/cuda_fi/computeFH.cu"
 int kGlobalIndex,
-# 67 "src/cuda_wo_loop/computeFH.cu"
+# 102 "src/cuda_fi/computeFH.cu"
 float *x,
-# 67 "src/cuda_wo_loop/computeFH.cu"
+# 102 "src/cuda_fi/computeFH.cu"
 float *y,
-# 67 "src/cuda_wo_loop/computeFH.cu"
+# 102 "src/cuda_fi/computeFH.cu"
 float *z,
-# 68 "src/cuda_wo_loop/computeFH.cu"
+# 102 "src/cuda_fi/computeFH.cu"
 float *outR,
-# 68 "src/cuda_wo_loop/computeFH.cu"
-float *outI){
-# 69 "src/cuda_wo_loop/computeFH.cu"
+# 102 "src/cuda_fi/computeFH.cu"
+float *outI,
+# 102 "src/cuda_fi/computeFH.cu"
+struct _gpufi_data_ *gpufi_dev){;;;;;;;
+# 103 "src/cuda_fi/computeFH.cu"
 {
-# 70 "src/cuda_wo_loop/computeFH.cu"
+# 126 "src/cuda_fi/computeFH.cu"
 auto float sX;
-# 71 "src/cuda_wo_loop/computeFH.cu"
+# 130 "src/cuda_fi/computeFH.cu"
 auto float sY;
-# 72 "src/cuda_wo_loop/computeFH.cu"
+# 134 "src/cuda_fi/computeFH.cu"
 auto float sZ;
-# 73 "src/cuda_wo_loop/computeFH.cu"
+# 138 "src/cuda_fi/computeFH.cu"
 auto float sOutR;
-# 74 "src/cuda_wo_loop/computeFH.cu"
+# 142 "src/cuda_fi/computeFH.cu"
 auto float sOutI;
-# 77 "src/cuda_wo_loop/computeFH.cu"
+# 148 "src/cuda_fi/computeFH.cu"
 auto int xIndex;
-# 87 "src/cuda_wo_loop/computeFH.cu"
+# 152 "src/cuda_fi/computeFH.cu"
+auto float *test;
+# 156 "src/cuda_fi/computeFH.cu"
 auto int kIndex;
-# 88 "src/cuda_wo_loop/computeFH.cu"
+# 160 "src/cuda_fi/computeFH.cu"
 auto int kCnt;
-# 77 "src/cuda_wo_loop/computeFH.cu"
+# 104 "src/cuda_fi/computeFH.cu"
+_Z12GPUFI_KERNELP12_gpufi_data_iiPc(gpufi_dev, 0, 1, ((char *)"ComputeFH_GPU"));
+# 105 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 10, ((char *)"y"), ((int *)(&y)), 40);
+# 108 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 11, ((char *)"z"), ((int *)(&z)), 40);
+# 111 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 12, ((char *)"outR"), ((int *)(&outR)), 40);
+# 114 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 13, ((char *)"outI"), ((int *)(&outI)), 40);
+# 117 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 7, ((char *)"numK"), (&numK), 10);
+# 120 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 8, ((char *)"kGlobalIndex"), (&kGlobalIndex), 10);
+# 123 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 9, ((char *)"x"), ((int *)(&x)), 40);
+# 127 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 21, ((char *)"sX"), ((int *)(&sX)), 20);
+# 131 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 22, ((char *)"sY"), ((int *)(&sY)), 20);
+# 135 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 23, ((char *)"sZ"), ((int *)(&sZ)), 20);
+# 139 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 24, ((char *)"sOutR"), ((int *)(&sOutR)), 20);
+# 143 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 25, ((char *)"sOutI"), ((int *)(&sOutI)), 20);
+# 148 "src/cuda_fi/computeFH.cu"
 xIndex = ((int)((((blockIdx.x)) * 256U) + ((threadIdx.x))));
-# 79 "src/cuda_wo_loop/computeFH.cu"
-sX = (x[xIndex]);
-# 80 "src/cuda_wo_loop/computeFH.cu"
-sY = (y[xIndex]);
-# 81 "src/cuda_wo_loop/computeFH.cu"
-sZ = (z[xIndex]);
-# 82 "src/cuda_wo_loop/computeFH.cu"
-sOutR = (outR[xIndex]);
-# 83 "src/cuda_wo_loop/computeFH.cu"
-sOutI = (outI[xIndex]);
-# 87 "src/cuda_wo_loop/computeFH.cu"
+# 149 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 26, ((char *)"xIndex"), (&xIndex), 10);
+# 152 "src/cuda_fi/computeFH.cu"
+test = ((float *)0);
+# 153 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 27, ((char *)"test"), ((int *)(&test)), 40);
+# 156 "src/cuda_fi/computeFH.cu"
 kIndex = 0;
-# 88 "src/cuda_wo_loop/computeFH.cu"
+# 157 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 28, ((char *)"kIndex"), (&kIndex), 10);
+# 161 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 29, ((char *)"kCnt"), (&kCnt), 10);
+# 164 "src/cuda_fi/computeFH.cu"
+test = (&sOutR);
+# 165 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 30, ((char *)"test"), ((int *)(&test)), 40);
+# 168 "src/cuda_fi/computeFH.cu"
+sX = (x[xIndex]);
+# 169 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 31, ((char *)"sX"), ((int *)(&sX)), 20);
+# 172 "src/cuda_fi/computeFH.cu"
+sY = (y[xIndex]);
+# 173 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 32, ((char *)"sY"), ((int *)(&sY)), 20);
+# 176 "src/cuda_fi/computeFH.cu"
+sZ = (z[xIndex]);
+# 177 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 33, ((char *)"sZ"), ((int *)(&sZ)), 20);
+# 180 "src/cuda_fi/computeFH.cu"
+sOutR = (outR[xIndex]);
+# 181 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 34, ((char *)"sOutR"), ((int *)(&sOutR)), 20);
+# 184 "src/cuda_fi/computeFH.cu"
+sOutI = (outI[xIndex]);
+# 185 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 35, ((char *)"sOutI"), ((int *)(&sOutI)), 20);
+# 192 "src/cuda_fi/computeFH.cu"
 kCnt = (numK - kGlobalIndex);
-# 89 "src/cuda_wo_loop/computeFH.cu"
+# 193 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 36, ((char *)"kCnt"), (&kCnt), 10);
+# 196 "src/cuda_fi/computeFH.cu"
 if (kCnt < 512)
-# 89 "src/cuda_wo_loop/computeFH.cu"
+# 197 "src/cuda_fi/computeFH.cu"
 {
-# 102 "src/cuda_wo_loop/computeFH.cu"
+# 199 "src/cuda_fi/computeFH.cu"
+_Z17GPUFI_KERNEL_LOOPP12_gpufi_data_i(gpufi_dev, 0);
+# 202 "src/cuda_fi/computeFH.cu"
+for (kIndex = 0; ((kIndex < (kCnt % 4)) && (kGlobalIndex < numK)); (kIndex++) , (kGlobalIndex++))
+# 203 "src/cuda_fi/computeFH.cu"
+{ auto float __T27;
+auto float __T28;
+# 208 "src/cuda_fi/computeFH.cu"
+auto float expArg;
+# 212 "src/cuda_fi/computeFH.cu"
+auto float cosArg;
+# 216 "src/cuda_fi/computeFH.cu"
+auto float sinArg;
+# 205 "src/cuda_fi/computeFH.cu"
+_Z22GPUFI_KERNEL_ITERATIONP12_gpufi_data_(gpufi_dev);
+# 208 "src/cuda_fi/computeFH.cu"
+expArg = ((float)((6.283185307179586232) * ((double)((((((c[kIndex]).Kx)) * sX) + ((((c[kIndex]).Ky)) * sY)) + ((((c[kIndex]).Kz)) * sZ)))));
+# 209 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 40, ((char *)"expArg"), ((int *)(&expArg)), 20);
+# 212 "src/cuda_fi/computeFH.cu"
+cosArg = ((__T27 = expArg) , (__cuda_cosf(__T27)));
+# 213 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 41, ((char *)"cosArg"), ((int *)(&cosArg)), 20);
+# 216 "src/cuda_fi/computeFH.cu"
+sinArg = ((__T28 = expArg) , (__cuda_sinf(__T28)));
+# 217 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 42, ((char *)"sinArg"), ((int *)(&sinArg)), 20);
+# 220 "src/cuda_fi/computeFH.cu"
+sOutR += (((((c[kIndex]).RhoPhiR)) * cosArg) - ((((c[kIndex]).RhoPhiI)) * sinArg));
+# 221 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 43, ((char *)"sOutR"), ((int *)(&sOutR)), 20);
+# 224 "src/cuda_fi/computeFH.cu"
+sOutI += (((((c[kIndex]).RhoPhiI)) * cosArg) + ((((c[kIndex]).RhoPhiR)) * sinArg));
+# 225 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 44, ((char *)"sOutI"), ((int *)(&sOutI)), 20);
+# 228 "src/cuda_fi/computeFH.cu"
 }
-# 141 "src/cuda_wo_loop/computeFH.cu"
+# 230 "src/cuda_fi/computeFH.cu"
+_Z17GPUFI_KERNEL_LOOPP12_gpufi_data_i(gpufi_dev, 1);
+# 233 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 38, ((char *)"kIndex"), (&kIndex), 10);
+# 236 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 39, ((char *)"kGlobalIndex"), (&kGlobalIndex), 10);
+# 239 "src/cuda_fi/computeFH.cu"
+}
+# 241 "src/cuda_fi/computeFH.cu"
+_Z17GPUFI_KERNEL_LOOPP12_gpufi_data_i(gpufi_dev, 0);
+# 244 "src/cuda_fi/computeFH.cu"
+for (; ((kIndex < 512) && (kGlobalIndex < numK)); (kIndex += 4) , (kGlobalIndex += 4))
+# 245 "src/cuda_fi/computeFH.cu"
+{ auto float __T29;
+auto float __T210;
+auto float __T211;
+auto float __T212;
+auto float __T213;
+auto float __T214;
+auto float __T215;
+auto float __T216;
+# 250 "src/cuda_fi/computeFH.cu"
+auto float expArg;
+# 254 "src/cuda_fi/computeFH.cu"
+auto float cosArg;
+# 258 "src/cuda_fi/computeFH.cu"
+auto float sinArg;
+# 262 "src/cuda_fi/computeFH.cu"
+auto int kIndex1;
+# 266 "src/cuda_fi/computeFH.cu"
+auto float expArg1;
+# 270 "src/cuda_fi/computeFH.cu"
+auto float cosArg1;
+# 274 "src/cuda_fi/computeFH.cu"
+auto float sinArg1;
+# 278 "src/cuda_fi/computeFH.cu"
+auto int kIndex2;
+# 282 "src/cuda_fi/computeFH.cu"
+auto float expArg2;
+# 286 "src/cuda_fi/computeFH.cu"
+auto float cosArg2;
+# 290 "src/cuda_fi/computeFH.cu"
+auto float sinArg2;
+# 294 "src/cuda_fi/computeFH.cu"
+auto int kIndex3;
+# 298 "src/cuda_fi/computeFH.cu"
+auto float expArg3;
+# 302 "src/cuda_fi/computeFH.cu"
+auto float cosArg3;
+# 306 "src/cuda_fi/computeFH.cu"
+auto float sinArg3;
+# 247 "src/cuda_fi/computeFH.cu"
+_Z22GPUFI_KERNEL_ITERATIONP12_gpufi_data_(gpufi_dev);
+# 250 "src/cuda_fi/computeFH.cu"
+expArg = ((float)((6.283185307179586232) * ((double)((((((c[kIndex]).Kx)) * sX) + ((((c[kIndex]).Ky)) * sY)) + ((((c[kIndex]).Kz)) * sZ)))));
+# 251 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 47, ((char *)"expArg"), ((int *)(&expArg)), 20);
+# 254 "src/cuda_fi/computeFH.cu"
+cosArg = ((__T29 = expArg) , (__cuda_cosf(__T29)));
+# 255 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 48, ((char *)"cosArg"), ((int *)(&cosArg)), 20);
+# 258 "src/cuda_fi/computeFH.cu"
+sinArg = ((__T210 = expArg) , (__cuda_sinf(__T210)));
+# 259 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 49, ((char *)"sinArg"), ((int *)(&sinArg)), 20);
+# 263 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 50, ((char *)"kIndex1"), (&kIndex1), 10);
+# 267 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 51, ((char *)"expArg1"), ((int *)(&expArg1)), 20);
+# 271 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 52, ((char *)"cosArg1"), ((int *)(&cosArg1)), 20);
+# 275 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 53, ((char *)"sinArg1"), ((int *)(&sinArg1)), 20);
+# 279 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 54, ((char *)"kIndex2"), (&kIndex2), 10);
+# 283 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 55, ((char *)"expArg2"), ((int *)(&expArg2)), 20);
+# 287 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 56, ((char *)"cosArg2"), ((int *)(&cosArg2)), 20);
+# 291 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 57, ((char *)"sinArg2"), ((int *)(&sinArg2)), 20);
+# 295 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 58, ((char *)"kIndex3"), (&kIndex3), 10);
+# 299 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 59, ((char *)"expArg3"), ((int *)(&expArg3)), 20);
+# 303 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 60, ((char *)"cosArg3"), ((int *)(&cosArg3)), 20);
+# 307 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 61, ((char *)"sinArg3"), ((int *)(&sinArg3)), 20);
+# 310 "src/cuda_fi/computeFH.cu"
+sOutR += (((((c[kIndex]).RhoPhiR)) * cosArg) - ((((c[kIndex]).RhoPhiI)) * sinArg));
+# 311 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 62, ((char *)"sOutR"), ((int *)(&sOutR)), 20);
+# 314 "src/cuda_fi/computeFH.cu"
+sOutI += (((((c[kIndex]).RhoPhiI)) * cosArg) + ((((c[kIndex]).RhoPhiR)) * sinArg));
+# 315 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 63, ((char *)"sOutI"), ((int *)(&sOutI)), 20);
+# 318 "src/cuda_fi/computeFH.cu"
+kIndex1 = (kIndex + 1);
+# 319 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 64, ((char *)"kIndex1"), (&kIndex1), 10);
+# 322 "src/cuda_fi/computeFH.cu"
+expArg1 = ((float)((6.283185307179586232) * ((double)((((((c[kIndex1]).Kx)) * sX) + ((((c[kIndex1]).Ky)) * sY)) + ((((c[kIndex1]).Kz)) * sZ)))));
+# 323 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 65, ((char *)"expArg1"), ((int *)(&expArg1)), 20);
+# 326 "src/cuda_fi/computeFH.cu"
+cosArg1 = ((__T211 = expArg1) , (__cuda_cosf(__T211)));
+# 327 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 66, ((char *)"cosArg1"), ((int *)(&cosArg1)), 20);
+# 330 "src/cuda_fi/computeFH.cu"
+sinArg1 = ((__T212 = expArg1) , (__cuda_sinf(__T212)));
+# 331 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 67, ((char *)"sinArg1"), ((int *)(&sinArg1)), 20);
+# 334 "src/cuda_fi/computeFH.cu"
+sOutR += (((((c[kIndex1]).RhoPhiR)) * cosArg1) - ((((c[kIndex1]).RhoPhiI)) * sinArg1));
+# 335 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 68, ((char *)"sOutR"), ((int *)(&sOutR)), 20);
+# 338 "src/cuda_fi/computeFH.cu"
+sOutI += (((((c[kIndex1]).RhoPhiI)) * cosArg1) + ((((c[kIndex1]).RhoPhiR)) * sinArg1));
+# 339 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 69, ((char *)"sOutI"), ((int *)(&sOutI)), 20);
+# 342 "src/cuda_fi/computeFH.cu"
+kIndex2 = (kIndex + 2);
+# 343 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 70, ((char *)"kIndex2"), (&kIndex2), 10);
+# 346 "src/cuda_fi/computeFH.cu"
+expArg2 = ((float)((6.283185307179586232) * ((double)((((((c[kIndex2]).Kx)) * sX) + ((((c[kIndex2]).Ky)) * sY)) + ((((c[kIndex2]).Kz)) * sZ)))));
+# 347 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 71, ((char *)"expArg2"), ((int *)(&expArg2)), 20);
+# 350 "src/cuda_fi/computeFH.cu"
+cosArg2 = ((__T213 = expArg2) , (__cuda_cosf(__T213)));
+# 351 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 72, ((char *)"cosArg2"), ((int *)(&cosArg2)), 20);
+# 354 "src/cuda_fi/computeFH.cu"
+sinArg2 = ((__T214 = expArg2) , (__cuda_sinf(__T214)));
+# 355 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 73, ((char *)"sinArg2"), ((int *)(&sinArg2)), 20);
+# 358 "src/cuda_fi/computeFH.cu"
+sOutR += (((((c[kIndex2]).RhoPhiR)) * cosArg2) - ((((c[kIndex2]).RhoPhiI)) * sinArg2));
+# 359 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 74, ((char *)"sOutR"), ((int *)(&sOutR)), 20);
+# 362 "src/cuda_fi/computeFH.cu"
+sOutI += (((((c[kIndex2]).RhoPhiI)) * cosArg2) + ((((c[kIndex2]).RhoPhiR)) * sinArg2));
+# 363 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 75, ((char *)"sOutI"), ((int *)(&sOutI)), 20);
+# 366 "src/cuda_fi/computeFH.cu"
+kIndex3 = (kIndex + 3);
+# 367 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 76, ((char *)"kIndex3"), (&kIndex3), 10);
+# 370 "src/cuda_fi/computeFH.cu"
+expArg3 = ((float)((6.283185307179586232) * ((double)((((((c[kIndex3]).Kx)) * sX) + ((((c[kIndex3]).Ky)) * sY)) + ((((c[kIndex3]).Kz)) * sZ)))));
+# 371 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 77, ((char *)"expArg3"), ((int *)(&expArg3)), 20);
+# 374 "src/cuda_fi/computeFH.cu"
+cosArg3 = ((__T215 = expArg3) , (__cuda_cosf(__T215)));
+# 375 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 78, ((char *)"cosArg3"), ((int *)(&cosArg3)), 20);
+# 378 "src/cuda_fi/computeFH.cu"
+sinArg3 = ((__T216 = expArg3) , (__cuda_sinf(__T216)));
+# 379 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 79, ((char *)"sinArg3"), ((int *)(&sinArg3)), 20);
+# 382 "src/cuda_fi/computeFH.cu"
+sOutR += (((((c[kIndex3]).RhoPhiR)) * cosArg3) - ((((c[kIndex3]).RhoPhiI)) * sinArg3));
+# 383 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 80, ((char *)"sOutR"), ((int *)(&sOutR)), 20);
+# 386 "src/cuda_fi/computeFH.cu"
+sOutI += (((((c[kIndex3]).RhoPhiI)) * cosArg3) + ((((c[kIndex3]).RhoPhiR)) * sinArg3));
+# 387 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 81, ((char *)"sOutI"), ((int *)(&sOutI)), 20);
+# 390 "src/cuda_fi/computeFH.cu"
+}
+# 392 "src/cuda_fi/computeFH.cu"
+_Z17GPUFI_KERNEL_LOOPP12_gpufi_data_i(gpufi_dev, 1);
+# 395 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 45, ((char *)"kIndex"), (&kIndex), 10);
+# 398 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 46, ((char *)"kGlobalIndex"), (&kGlobalIndex), 10);
+# 401 "src/cuda_fi/computeFH.cu"
 (outR[xIndex]) = sOutR;
-# 142 "src/cuda_wo_loop/computeFH.cu"
+# 402 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 82, ((char *)"outR[xIndex]"), ((int *)(outR + xIndex)), 20);
+# 405 "src/cuda_fi/computeFH.cu"
 (outI[xIndex]) = sOutI;
-# 143 "src/cuda_wo_loop/computeFH.cu"
+# 406 "src/cuda_fi/computeFH.cu"
+_Z21GPUFI_KERNEL_VARIABLEP12_gpufi_data_iPcPii(gpufi_dev, 83, ((char *)"outI[xIndex]"), ((int *)(outI + xIndex)), 20);
+# 409 "src/cuda_fi/computeFH.cu"
+_Z12GPUFI_KERNELP12_gpufi_data_iiPc(gpufi_dev, 1, 1, ((char *)"ComputeFH_GPU"));
+# 410 "src/cuda_fi/computeFH.cu"
 }}

@@ -1,83 +1,76 @@
-//#ifndef __GPUFI_H__
-//#define __GPUFI_H__
+#ifndef __GPU_FI_H__
+#define __GPU_FI_H__
 
-#include <vector_types.h>
+#define GPUFI_CHECK(gpufi,n1,n2) { if(n1 != n2) GPUFI_EXIT(gpufi,0);}
 
-#ifndef GPU_CETUS
-#define GPU_CETUS
+struct _gpufi_fault_ {
+    int kernel;     
+    int instance;
+    int varid;
+    int call;
+
+    unsigned int mask;  
+//    int mask_type;
+//#define MASK_XOR    0    
+//    int mask_length;    // 4 Bytes
+
+    int injected;
+    int disabled;
+
+    int blid;
+    int thid;
+};
+
+struct _gpufi_current_ {
+    int instance;
+    int count;
+};
+
+struct _gpufi_data_ {
+  struct _gpufi_fault_ fault;
+  struct _gpufi_current_ current;
+  int sdc;
+};
+
+#define GPUFI_DATATYPE_UNKNOWN 0
+#define GPUFI_DATATYPE_INTEGER 10
+#define GPUFI_DATATYPE_FLOAT 20
+#define GPUFI_DATATYPE_INTEGER_POINTER 30
+#define GPUFI_DATATYPE_FLOAT_POINTER 40
+#define GPUFI_DATATYPE_UNKNOWN_POINTER 50
+
+__device__ void GPUFI_KERNEL_DEC(struct _gpufi_data_ *, int *count);
+__device__ void GPUFI_KERNEL_SET(struct _gpufi_data_ *, int *count, int value);
+__device__ void GPUFI_KERNEL(struct _gpufi_data_ *, int begin, int type, char *);
+__device__ void GPUFI_KERNEL_LOOP(struct _gpufi_data_ *, int);
+__device__ void GPUFI_KERNEL_ITERATION(struct _gpufi_data_ *);
+__device__ void GPUFI_KERNEL_VARIABLE(struct _gpufi_data_ *, int varid, char *name, int *variable, int var_type);
+__device__ void GPUFI_KERNEL_VARIABLE_STREAM(struct _gpufi_data_ *gpufi_dev, int varid, char *name, int *variable, int length, int count);
+__device__ void GPUFI_DEBUG_LOC(struct _gpufi_data_ *gpufi_dev);
+__device__ int GPUFI_EXIT(struct _gpufi_data_ *gpufi_dev, int errno);
+int GPUFI_INIT(int, int);
+int GPUFI_HALT(char *fname);
+__device__ void CudaStrcpy(char *dst, char *src, int max);
+
+extern struct _gpufi_data_ gpufi_host;
+
+#define GPUFI_KERNEL_BEGIN 0
+#define GPUFI_KERNEL_END 1
+#define GPUFI_LOOP_BEGIN 0
+#define GPUFI_LOOP_END 1
+
+//extern __device__ struct _gpufi_data_ *gpufi_dev;
+
+#ifndef CUDA_ERRCK
+#define CUDA_ERRCK							\
+  {cudaError_t err;							\
+    if ((err = cudaGetLastError()) != cudaSuccess) {			\
+      fprintf(stderr, "CUDA error on line %d: %s\n", __LINE__, cudaGetErrorString(err)); \
+      exit(-1);								\
+    }									\
+  }
 #endif
 
-/* CUDA Built-in Types */
-/*
-typedef struct {char x;} char1;
-typedef struct {unsigned char x;} uchar1;
-typedef struct {char x, y;} char2;
-typedef struct {unsigned char x, y;} uchar2;
-typedef struct {char x, y, z;} char3;
-typedef struct {unsigned char x, y, z;} uchar3;
-typedef struct {char x, y, z, w;} char4;
-typedef struct {unsigned char x, y, z, w;} uchar4;
+#include "gpufi_kernel.cu"
 
-typedef struct {short x;} short1;
-typedef struct {unsigned short x;} ushort1;
-typedef struct {short x, y;} short2;
-typedef struct {unsigned short x, y;} ushort2;
-typedef struct {short x, y, z;} short3;
-typedef struct {unsigned short x, y, z;} ushort3;
-typedef struct {short x, y, z, w;} short4;
-typedef struct {unsigned short x, y, z, w;} ushort4;
-
-typedef struct {int x;} int1;
-typedef struct {unsigned int x;} uint1;
-typedef struct {int x, y;} int2;
-typedef struct {unsigned int x, y;} uint2;
-typedef struct {int x, y, z;} int3;
-typedef struct {unsigned int x, y, z;} uint3;
-typedef struct {int x, y, z, w;} int4;
-typedef struct {unsigned int x, y, z, w;} uint4;
-
-typedef struct {long x;} long1;
-typedef struct {unsigned long x;} ulong1;
-typedef struct {long x, y;} long2;
-typedef struct {unsigned long x, y;} ulong2;
-typedef struct {long x, y, z;} long3;
-typedef struct {unsigned long x, y, z;} ulong3;
-typedef struct {long x, y, z, w;} long4;
-typedef struct {unsigned long x, y, z, w;} ulong4;
-
-typedef struct {float x;} float1;
-typedef struct {unsigned float x;} ufloat1;
-typedef struct {float x, y;} float2;
-typedef struct {unsigned float x, y;} ufloat2;
-typedef struct {float x, y, z;} float3;
-typedef struct {unsigned float x, y, z;} ufloat3;
-typedef struct {float x, y, z, w;} float4;
-typedef struct {unsigned float x, y, z, w;} ufloat4;
-
-typedef struct {double x;} double1;
-typedef struct {unsigned double x;} udouble1;
-typedef struct {double x, y;} double2;
-typedef struct {unsigned double x, y;} udouble2;
-typedef struct {double x, y, z;} double3;
-typedef struct {unsigned double x, y, z;} udouble3;
-typedef struct {double x, y, z, w;} double4;
-typedef struct {unsigned double x, y, z, w;} udouble4;
-*/
-#undef NULL
-typedef uint3 dim3;
-typedef struct kValues kValues;
-typedef struct cudaError_t cudaError_t;
-
-/* PNS */
-typedef unsigned long uint32;
-#undef MERS_A
-#undef MERS_B
-#undef MERS_C
-//#undef MASK
-
-//typedef struct Atom Atom;
-
-#ifdef __device__
-#undef __device__
 #endif
-//#endif

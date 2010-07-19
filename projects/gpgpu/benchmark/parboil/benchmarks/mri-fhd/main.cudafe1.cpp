@@ -1,4 +1,4 @@
-# 1 "src/cuda_wo_loop/main.cu"
+# 1 "src/cuda_fi/main.cu"
 # 233 "/usr/include/c++/4.3/i486-linux-gnu/bits/c++config.h" 3
 namespace std __attribute__((visibility("default"))) { 
 # 245 "/usr/include/c++/4.3/i486-linux-gnu/bits/c++config.h" 3
@@ -5549,6 +5549,41 @@ entry)
 { 
 return cudaFuncGetAttributes(attr, (const char *)entry); 
 } 
+# 6 "src/cuda_fi/gpufi.h"
+struct _gpufi_fault_ { 
+int kernel; 
+int instance; 
+int varid; 
+int call; 
+
+unsigned mask; 
+
+
+
+
+int injected; 
+int disabled; 
+
+int blid; 
+int thid; 
+}; 
+
+struct _gpufi_current_ { 
+int instance; 
+int count; 
+}; 
+
+struct _gpufi_data_ { 
+_gpufi_fault_ fault; 
+_gpufi_current_ current; 
+int sdc; 
+}; 
+# 51 "src/cuda_fi/gpufi.h"
+extern int GPUFI_INIT(int, int); 
+extern int GPUFI_HALT(char *); 
+
+
+extern _gpufi_data_ gpufi_host; 
 # 45 "/usr/include/stdio.h" 3
 struct _IO_FILE; 
 
@@ -6071,6 +6106,51 @@ extern "C" { inline __attribute__((__gnu_inline__)) int ferror_unlocked(FILE *__
 { 
 return ((__stream->_flags) & 32) != 0; 
 } } 
+# 9 "src/cuda_fi/gpufi_kernel.cu"
+_gpufi_data_ gpufi_host = {{0}}; 
+__loc_sc__(__device__,,) _gpufi_data_ *__shadow_var(,gpufi_dev); 
+# 20
+int GPUFI_INIT(int kernel_cnt, int variable_cnt) 
+{ 
+auto FILE *fp; 
+auto char cmd[32]; 
+
+memset(&gpufi_host, 0, sizeof(_gpufi_data_)); 
+
+fp = fopen("fi_cmd.txt", "rt"); 
+if (!(fp)) { 
+printf("file open error\n"); 
+system("pwd"); 
+return -1; 
+}  
+
+fscanf(fp, "%s", cmd); 
+printf("%s ", cmd); 
+if (!(strcmp(cmd, "fi"))) { 
+fscanf(fp, "%d %d %d %d 0x%x %d %d\n", &((gpufi_host.fault).kernel), &((gpufi_host.fault).instance), &((gpufi_host.fault).varid), &((gpufi_host.fault).call), &((gpufi_host.fault).mask), &((gpufi_host.fault).blid), &((gpufi_host.fault).thid)); 
+# 46
+((gpufi_host.fault).injected) = 0; 
+((gpufi_host.fault).disabled) = 1; 
+
+printf("fi_cmd %d %d %d %d 0x%x\n", (gpufi_host.fault).kernel, (gpufi_host.fault).instance, (gpufi_host.fault).varid, (gpufi_host.fault).call, (gpufi_host.fault).mask); 
+
+}  
+
+fclose(fp); 
+
+return 0; 
+} 
+
+int GPUFI_HALT(char *fname) 
+{ 
+printf("* injected: %d\n", (gpufi_host.fault).injected); 
+fprintf(stderr, "* injected: %d\n", (gpufi_host.fault).injected); 
+
+printf("fi %d %d %d %d 0x%x\n", (gpufi_host.fault).kernel, (gpufi_host.fault).instance, (gpufi_host.fault).varid, (gpufi_host.fault).call, (gpufi_host.fault).mask); 
+
+
+return 0; 
+} 
 # 57 "/usr/include/sys/time.h" 3
 extern "C" { struct timezone { 
 
@@ -7091,7 +7171,7 @@ extern "C" void encrypt(char *, int) throw();
 extern "C" void swab(const void *__restrict__, void *__restrict__, ssize_t) throw(); 
 # 1094
 extern "C" char *ctermid(char *) throw(); 
-# 12 "/afs/crhc.illinois.edu/project/depend/yim6/clairvoyant/fi/cedp/cedp/projects/gpgpu/benchmark/parboil/common/include/parboil.h"
+# 12 "src/cuda_fi/parboil.h"
 extern "C" { struct pb_Parameters { 
 char *outFile; 
 
@@ -7174,12 +7254,13 @@ extern "C" void pb_SwitchToTimer(pb_TimerSet *, pb_TimerID);
 
 
 extern "C" void pb_PrintTimerSet(pb_TimerSet *); 
-# 9 "src/cuda_wo_loop/file.h"
+# 9 "src/cuda_fi/file.h"
 extern void inputData(char *, int *, int *, float **, float **, float **, float **, float **, float **, float **, float **, float **, float **); 
 # 15
 extern void outputData(char *, float *, float *, int); 
-# 28 "src/cuda_wo_loop/computeFH.cu"
+# 22 "src/cuda_fi/computeFH.cu"
 struct kValues { 
+
 float Kx; 
 float Ky; 
 float Kz; 
@@ -7189,159 +7270,559 @@ float RhoPhiI;
 
 __loc_sc__(__constant__,,) kValues __shadow_var(,c)[512]; 
 
-void createDataStructs(int numK, int numX, float *&
-realRhoPhi, float *&imagRhoPhi, float *&
-outR, float *&outI) 
+
+
+
+void createDataStructs(int numK, int numX, float **realRhoPhi, float **imagRhoPhi, float **outR, float **outI) 
 { 
-realRhoPhi = (float *)calloc(numK, sizeof(float)); 
-imagRhoPhi = (float *)calloc(numK, sizeof(float)); 
-outR = (float *)calloc(numX, sizeof(float)); 
-outI = (float *)calloc(numX, sizeof(float)); 
+(*realRhoPhi) = (float *)calloc(numK, sizeof(float)); 
+(*imagRhoPhi) = (float *)calloc(numK, sizeof(float)); 
+(*outR) = (float *)calloc(numX, sizeof(float)); 
+(*outI) = (float *)calloc(numX, sizeof(float)); 
 } 
 
-
-void ComputeRhoPhiGPU__entry(int numK, float *
-phiR, float *phiI, float *
-dR, float *dI, float *
-realRhoPhi, float *imagRhoPhi);
+void ComputeRhoPhiGPU__entry(int numK, float *phiR, float *phiI, float *dR, float *dI, float *realRhoPhi, float *imagRhoPhi, _gpufi_data_ *gpufi_dev);
 #if 0
  
-# 53
+# 45
 { 
+GPUFI_KERNEL(gpufi_dev, 0, 0, (char *)("ComputeRhoPhiGPU")); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 0, (char *)("numK"), (int *)(&numK), 10); 
+
+
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 1, (char *)("phiR"), (int *)(&phiR), 40); 
+
+
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 2, (char *)("phiI"), (int *)(&phiI), 40); 
+
+
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 3, (char *)("dR"), (int *)(&dR), 40); 
+
+
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 4, (char *)("dI"), (int *)(&dI), 40); 
+
+
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 5, (char *)("realRhoPhi"), (int *)(&realRhoPhi), 40); 
+
+
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 6, (char *)("imagRhoPhi"), (int *)(&imagRhoPhi), 40); 
+
+
 auto int indexK = (blockIdx.x * (512) + threadIdx.x); 
-if (indexK < numK) { 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 14, (char *)("indexK"), (int *)(&indexK), 10); 
+
+
+if (indexK < numK) 
+{ 
 auto float rPhiR = (phiR[indexK]); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 15, (char *)("rPhiR"), (int *)(&rPhiR), 20); 
+
+
 auto float rPhiI = (phiI[indexK]); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 16, (char *)("rPhiI"), (int *)(&rPhiI), 20); 
+
+
 auto float rDR = (dR[indexK]); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 17, (char *)("rDR"), (int *)(&rDR), 20); 
+
+
 auto float rDI = (dI[indexK]); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 18, (char *)("rDI"), (int *)(&rDI), 20); 
+
+
 (realRhoPhi[indexK]) = rPhiR * rDR + rPhiI * rDI; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 19, (char *)("realRhoPhi[indexK]"), (int *)(realRhoPhi + indexK), 20); 
+
+
 (imagRhoPhi[indexK]) = rPhiR * rDI - rPhiI * rDR; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 20, (char *)("imagRhoPhi[indexK]"), (int *)(imagRhoPhi + indexK), 20); 
+
+
 }  
+GPUFI_KERNEL(gpufi_dev, 1, 0, (char *)("ComputeRhoPhiGPU")); 
 } 
 #endif
-# 66 "src/cuda_wo_loop/computeFH.cu"
-void ComputeFH_GPU__entry(int numK, int kGlobalIndex, float *
-x, float *y, float *z, float *
-outR, float *outI);
+# 102 "src/cuda_fi/computeFH.cu"
+void ComputeFH_GPU__entry(int numK, int kGlobalIndex, float *x, float *y, float *z, float *outR, float *outI, _gpufi_data_ *gpufi_dev);
 #if 0
  
-# 69
+# 103
 { 
+GPUFI_KERNEL(gpufi_dev, 0, 1, (char *)("ComputeFH_GPU")); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 10, (char *)("y"), (int *)(&y), 40); 
+
+
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 11, (char *)("z"), (int *)(&z), 40); 
+
+
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 12, (char *)("outR"), (int *)(&outR), 40); 
+
+
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 13, (char *)("outI"), (int *)(&outI), 40); 
+
+
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 7, (char *)("numK"), (int *)(&numK), 10); 
+
+
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 8, (char *)("kGlobalIndex"), (int *)(&kGlobalIndex), 10); 
+
+
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 9, (char *)("x"), (int *)(&x), 40); 
+
+
 auto float sX; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 21, (char *)("sX"), (int *)(&sX), 20); 
+
+
 auto float sY; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 22, (char *)("sY"), (int *)(&sY), 20); 
+
+
 auto float sZ; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 23, (char *)("sZ"), (int *)(&sZ), 20); 
+
+
 auto float sOutR; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 24, (char *)("sOutR"), (int *)(&sOutR), 20); 
+
+
 auto float sOutI; 
-
-
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 25, (char *)("sOutI"), (int *)(&sOutI), 20); 
+# 148 "src/cuda_fi/computeFH.cu"
 auto int xIndex = (blockIdx.x * (256) + threadIdx.x); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 26, (char *)("xIndex"), (int *)(&xIndex), 10); 
 
-sX = x[xIndex]; 
-sY = y[xIndex]; 
-sZ = z[xIndex]; 
-sOutR = outR[xIndex]; 
-sOutI = outI[xIndex]; 
 
+auto float *test = (__null); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 27, (char *)("test"), (int *)(&test), 40); 
 
 
 auto int kIndex = 0; 
-auto int kCnt = (numK - kGlobalIndex); 
-if (kCnt < 512) { 
-# 102 "src/cuda_wo_loop/computeFH.cu"
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 28, (char *)("kIndex"), (int *)(&kIndex), 10); 
+
+
+auto int kCnt; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 29, (char *)("kCnt"), (int *)(&kCnt), 10); 
+
+
+test = &sOutR; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 30, (char *)("test"), (int *)(&test), 40); 
+
+
+sX = x[xIndex]; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 31, (char *)("sX"), (int *)(&sX), 20); 
+
+
+sY = y[xIndex]; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 32, (char *)("sY"), (int *)(&sY), 20); 
+
+
+sZ = z[xIndex]; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 33, (char *)("sZ"), (int *)(&sZ), 20); 
+
+
+sOutR = outR[xIndex]; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 34, (char *)("sOutR"), (int *)(&sOutR), 20); 
+
+
+sOutI = outI[xIndex]; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 35, (char *)("sOutI"), (int *)(&sOutI), 20); 
+# 192 "src/cuda_fi/computeFH.cu"
+kCnt = numK - kGlobalIndex; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 36, (char *)("kCnt"), (int *)(&kCnt), 10); 
+
+
+if (kCnt < 512) 
+{ 
+
+GPUFI_KERNEL_LOOP(gpufi_dev, 0); 
+
+
+for (kIndex = 0; (kIndex < (kCnt % 4)) && (kGlobalIndex < numK); (kIndex++), (kGlobalIndex++)) 
+{ 
+
+GPUFI_KERNEL_ITERATION(gpufi_dev); 
+
+
+auto float expArg = ((6.283185307179586232) * ((((__shadow_var(,c))[kIndex]).Kx * sX + ((__shadow_var(,c))[kIndex]).Ky * sY) + ((__shadow_var(,c))[kIndex]).Kz * sZ)); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 40, (char *)("expArg"), (int *)(&expArg), 20); 
+
+
+auto float cosArg = cos(expArg); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 41, (char *)("cosArg"), (int *)(&cosArg), 20); 
+
+
+auto float sinArg = sin(expArg); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 42, (char *)("sinArg"), (int *)(&sinArg), 20); 
+
+
+sOutR += ((__shadow_var(,c))[kIndex]).RhoPhiR * cosArg - ((__shadow_var(,c))[kIndex]).RhoPhiI * sinArg; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 43, (char *)("sOutR"), (int *)(&sOutR), 20); 
+
+
+sOutI += ((__shadow_var(,c))[kIndex]).RhoPhiI * cosArg + ((__shadow_var(,c))[kIndex]).RhoPhiR * sinArg; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 44, (char *)("sOutI"), (int *)(&sOutI), 20); 
+
+
 }  
-# 141 "src/cuda_wo_loop/computeFH.cu"
+
+GPUFI_KERNEL_LOOP(gpufi_dev, 1); 
+
+
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 38, (char *)("kIndex"), (int *)(&kIndex), 10); 
+
+
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 39, (char *)("kGlobalIndex"), (int *)(&kGlobalIndex), 10); 
+
+
+}  
+
+GPUFI_KERNEL_LOOP(gpufi_dev, 0); 
+
+
+for (; (kIndex < 512) && (kGlobalIndex < numK); (kIndex += 4), (kGlobalIndex += 4)) 
+{ 
+
+GPUFI_KERNEL_ITERATION(gpufi_dev); 
+
+
+auto float expArg = ((6.283185307179586232) * ((((__shadow_var(,c))[kIndex]).Kx * sX + ((__shadow_var(,c))[kIndex]).Ky * sY) + ((__shadow_var(,c))[kIndex]).Kz * sZ)); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 47, (char *)("expArg"), (int *)(&expArg), 20); 
+
+
+auto float cosArg = cos(expArg); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 48, (char *)("cosArg"), (int *)(&cosArg), 20); 
+
+
+auto float sinArg = sin(expArg); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 49, (char *)("sinArg"), (int *)(&sinArg), 20); 
+
+
+auto int kIndex1; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 50, (char *)("kIndex1"), (int *)(&kIndex1), 10); 
+
+
+auto float expArg1; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 51, (char *)("expArg1"), (int *)(&expArg1), 20); 
+
+
+auto float cosArg1; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 52, (char *)("cosArg1"), (int *)(&cosArg1), 20); 
+
+
+auto float sinArg1; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 53, (char *)("sinArg1"), (int *)(&sinArg1), 20); 
+
+
+auto int kIndex2; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 54, (char *)("kIndex2"), (int *)(&kIndex2), 10); 
+
+
+auto float expArg2; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 55, (char *)("expArg2"), (int *)(&expArg2), 20); 
+
+
+auto float cosArg2; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 56, (char *)("cosArg2"), (int *)(&cosArg2), 20); 
+
+
+auto float sinArg2; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 57, (char *)("sinArg2"), (int *)(&sinArg2), 20); 
+
+
+auto int kIndex3; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 58, (char *)("kIndex3"), (int *)(&kIndex3), 10); 
+
+
+auto float expArg3; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 59, (char *)("expArg3"), (int *)(&expArg3), 20); 
+
+
+auto float cosArg3; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 60, (char *)("cosArg3"), (int *)(&cosArg3), 20); 
+
+
+auto float sinArg3; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 61, (char *)("sinArg3"), (int *)(&sinArg3), 20); 
+
+
+sOutR += ((__shadow_var(,c))[kIndex]).RhoPhiR * cosArg - ((__shadow_var(,c))[kIndex]).RhoPhiI * sinArg; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 62, (char *)("sOutR"), (int *)(&sOutR), 20); 
+
+
+sOutI += ((__shadow_var(,c))[kIndex]).RhoPhiI * cosArg + ((__shadow_var(,c))[kIndex]).RhoPhiR * sinArg; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 63, (char *)("sOutI"), (int *)(&sOutI), 20); 
+
+
+kIndex1 = kIndex + 1; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 64, (char *)("kIndex1"), (int *)(&kIndex1), 10); 
+
+
+expArg1 = (6.283185307179586232) * ((((__shadow_var(,c))[kIndex1]).Kx * sX + ((__shadow_var(,c))[kIndex1]).Ky * sY) + ((__shadow_var(,c))[kIndex1]).Kz * sZ); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 65, (char *)("expArg1"), (int *)(&expArg1), 20); 
+
+
+cosArg1 = cos(expArg1); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 66, (char *)("cosArg1"), (int *)(&cosArg1), 20); 
+
+
+sinArg1 = sin(expArg1); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 67, (char *)("sinArg1"), (int *)(&sinArg1), 20); 
+
+
+sOutR += ((__shadow_var(,c))[kIndex1]).RhoPhiR * cosArg1 - ((__shadow_var(,c))[kIndex1]).RhoPhiI * sinArg1; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 68, (char *)("sOutR"), (int *)(&sOutR), 20); 
+
+
+sOutI += ((__shadow_var(,c))[kIndex1]).RhoPhiI * cosArg1 + ((__shadow_var(,c))[kIndex1]).RhoPhiR * sinArg1; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 69, (char *)("sOutI"), (int *)(&sOutI), 20); 
+
+
+kIndex2 = kIndex + 2; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 70, (char *)("kIndex2"), (int *)(&kIndex2), 10); 
+
+
+expArg2 = (6.283185307179586232) * ((((__shadow_var(,c))[kIndex2]).Kx * sX + ((__shadow_var(,c))[kIndex2]).Ky * sY) + ((__shadow_var(,c))[kIndex2]).Kz * sZ); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 71, (char *)("expArg2"), (int *)(&expArg2), 20); 
+
+
+cosArg2 = cos(expArg2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 72, (char *)("cosArg2"), (int *)(&cosArg2), 20); 
+
+
+sinArg2 = sin(expArg2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 73, (char *)("sinArg2"), (int *)(&sinArg2), 20); 
+
+
+sOutR += ((__shadow_var(,c))[kIndex2]).RhoPhiR * cosArg2 - ((__shadow_var(,c))[kIndex2]).RhoPhiI * sinArg2; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 74, (char *)("sOutR"), (int *)(&sOutR), 20); 
+
+
+sOutI += ((__shadow_var(,c))[kIndex2]).RhoPhiI * cosArg2 + ((__shadow_var(,c))[kIndex2]).RhoPhiR * sinArg2; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 75, (char *)("sOutI"), (int *)(&sOutI), 20); 
+
+
+kIndex3 = kIndex + 3; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 76, (char *)("kIndex3"), (int *)(&kIndex3), 10); 
+
+
+expArg3 = (6.283185307179586232) * ((((__shadow_var(,c))[kIndex3]).Kx * sX + ((__shadow_var(,c))[kIndex3]).Ky * sY) + ((__shadow_var(,c))[kIndex3]).Kz * sZ); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 77, (char *)("expArg3"), (int *)(&expArg3), 20); 
+
+
+cosArg3 = cos(expArg3); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 78, (char *)("cosArg3"), (int *)(&cosArg3), 20); 
+
+
+sinArg3 = sin(expArg3); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 79, (char *)("sinArg3"), (int *)(&sinArg3), 20); 
+
+
+sOutR += ((__shadow_var(,c))[kIndex3]).RhoPhiR * cosArg3 - ((__shadow_var(,c))[kIndex3]).RhoPhiI * sinArg3; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 80, (char *)("sOutR"), (int *)(&sOutR), 20); 
+
+
+sOutI += ((__shadow_var(,c))[kIndex3]).RhoPhiI * cosArg3 + ((__shadow_var(,c))[kIndex3]).RhoPhiR * sinArg3; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 81, (char *)("sOutI"), (int *)(&sOutI), 20); 
+
+
+}  
+
+GPUFI_KERNEL_LOOP(gpufi_dev, 1); 
+
+
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 45, (char *)("kIndex"), (int *)(&kIndex), 10); 
+
+
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 46, (char *)("kGlobalIndex"), (int *)(&kGlobalIndex), 10); 
+
+
 (outR[xIndex]) = sOutR; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 82, (char *)("outR[xIndex]"), (int *)(outR + xIndex), 20); 
+
+
 (outI[xIndex]) = sOutI; 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 83, (char *)("outI[xIndex]"), (int *)(outI + xIndex), 20); 
+
+
+GPUFI_KERNEL(gpufi_dev, 1, 1, (char *)("ComputeFH_GPU")); 
 } 
 #endif
-# 145 "src/cuda_wo_loop/computeFH.cu"
-void computeRhoPhi_GPU(int numK, float *
-phiR_d, float *phiI_d, float *dR_d, float *dI_d, float *
-realRhoPhi_d, float *imagRhoPhi_d) 
+# 412 "src/cuda_fi/computeFH.cu"
+void computeRhoPhi_GPU(int numK, float *phiR_d, float *phiI_d, float *dR_d, float *dI_d, float *realRhoPhi_d, float *imagRhoPhi_d) 
 { 
 auto int rhoPhiBlocks = (numK / 512); 
+auto dim3 DimRhoPhiBlock; 
+auto dim3 DimRhoPhiGrid; 
+if (numK % 512) 
+{ 
+rhoPhiBlocks++; 
+}  
+(DimRhoPhiBlock.x) = (512); 
+(DimRhoPhiBlock.y) = (1); 
+(DimRhoPhiBlock.z) = (1); 
+(DimRhoPhiGrid.x) = rhoPhiBlocks; 
+(DimRhoPhiGrid.y) = (1); 
+(DimRhoPhiGrid.z) = (1); 
+# 432 "src/cuda_fi/computeFH.cu"
+cudaMalloc((void **)(&__shadow_var(,gpufi_dev)), sizeof(_gpufi_data_)); 
+{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 433, cudaGetErrorString(err)); exit(-1); }  } 
+cudaMemcpy(__shadow_var(,gpufi_dev), &gpufi_host, sizeof(_gpufi_data_), cudaMemcpyHostToDevice); 
+{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 435, cudaGetErrorString(err)); exit(-1); }  } 
 
-if (numK % 512) { 
-rhoPhiBlocks++; }  
 
-auto dim3 DimRhoPhiBlock(512, 1); 
-auto dim3 DimRhoPhiGrid(rhoPhiBlocks, 1); 
+cudaConfigureCall(DimRhoPhiGrid, DimRhoPhiBlock) ? ((void)0) : ComputeRhoPhiGPU__entry(numK, phiR_d, phiI_d, dR_d, dI_d, realRhoPhi_d, imagRhoPhi_d, __shadow_var(,gpufi_dev)); 
 
+cudaMemcpy(&gpufi_host, __shadow_var(,gpufi_dev), sizeof(_gpufi_data_), cudaMemcpyDeviceToHost); 
+{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 441, cudaGetErrorString(err)); exit(-1); }  } 
+cudaFree(__shadow_var(,gpufi_dev)); 
+{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 443, cudaGetErrorString(err)); exit(-1); }  } 
 
-
-cudaConfigureCall(DimRhoPhiGrid, DimRhoPhiBlock) ? ((void)0) : ComputeRhoPhiGPU__entry(numK, phiR_d, phiI_d, dR_d, dI_d, realRhoPhi_d, imagRhoPhi_d); 
 
 } 
 
-void computeFH_GPU(int numK, int numX, float *
-x_d, float *y_d, float *z_d, kValues *
-kVals, float *
-outR_d, float *outI_d) 
+void computeFH_GPU(int numK, int numX, float *x_d, float *y_d, float *z_d, kValues *kVals, float *outR_d, float *outI_d) 
 { 
 auto int FHGrids = (numK / 512); 
-if (numK % 512) { 
-FHGrids++; }  
-auto int FHBlocks = (numX / 256); 
-if (numX % 256) { 
-FHBlocks++; }  
-auto dim3 DimFHBlock(256, 1); 
-auto dim3 DimFHGrid(FHBlocks, 1); 
-
-
-
-
-for (int FHGrid = 0; FHGrid < FHGrids; FHGrid++) { 
-
+auto int FHBlocks; 
+auto dim3 DimFHBlock; 
+auto dim3 DimFHGrid; 
+auto int FHGrid; 
+if (numK % 512) 
+{ 
+FHGrids++; 
+}  
+FHBlocks = numX / 256; 
+if (numX % 256) 
+{ 
+FHBlocks++; 
+}  
+(DimFHBlock.x) = (256); 
+(DimFHBlock.y) = (1); 
+(DimFHBlock.z) = (1); 
+(DimFHGrid.x) = FHBlocks; 
+(DimFHGrid.y) = (1); 
+(DimFHGrid.z) = (1); 
+# 474 "src/cuda_fi/computeFH.cu"
+for (FHGrid = 0; FHGrid < FHGrids; FHGrid++) 
+{ 
+# 478 "src/cuda_fi/computeFH.cu"
 auto int FHGridBase = (FHGrid * 512); 
-
 auto kValues *kValsTile = (kVals + FHGridBase); 
 auto int numElems = ((512 < (numK - FHGridBase)) ? 512 : (numK - FHGridBase)); 
 cudaMemcpyToSymbol(__shadow_var(,c), kValsTile, numElems * sizeof(kValues), 0); 
-{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 187, cudaGetErrorString(err)); exit(-1); }  } ; 
-
-cudaConfigureCall(DimFHGrid, DimFHBlock) ? ((void)0) : ComputeFH_GPU__entry(numK, FHGridBase, x_d, y_d, z_d, outR_d, outI_d); 
-
-{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 191, cudaGetErrorString(err)); exit(-1); }  } ; 
+{ 
+auto cudaError_t err; 
+if ((err = cudaGetLastError()) != (cudaSuccess)) 
+{ 
+fprintf(stderr, "CUDA error on line %d: %s\n", 202, cudaGetErrorString(err)); 
+exit(-1); 
 }  
 } 
-# 38 "src/cuda_wo_loop/main.cu"
-static void setupMemoryGPU(int num, int size, float *&dev_ptr, float *&host_ptr) 
+; 
+
+cudaMalloc((void **)(&__shadow_var(,gpufi_dev)), sizeof(_gpufi_data_)); 
+{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 493, cudaGetErrorString(err)); exit(-1); }  } 
+cudaMemcpy(__shadow_var(,gpufi_dev), &gpufi_host, sizeof(_gpufi_data_), cudaMemcpyHostToDevice); 
+{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 495, cudaGetErrorString(err)); exit(-1); }  } 
+
+
+cudaConfigureCall(DimFHGrid, DimFHBlock) ? ((void)0) : ComputeFH_GPU__entry(numK, FHGridBase, x_d, y_d, z_d, outR_d, outI_d, __shadow_var(,gpufi_dev)); 
+
+cudaMemcpy(&gpufi_host, __shadow_var(,gpufi_dev), sizeof(_gpufi_data_), cudaMemcpyDeviceToHost); 
+{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 501, cudaGetErrorString(err)); exit(-1); }  } 
+cudaFree(__shadow_var(,gpufi_dev)); 
+{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 503, cudaGetErrorString(err)); exit(-1); }  } 
+
+
 { 
-cudaMalloc((void **)(&dev_ptr), num * size); 
-{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 41, cudaGetErrorString(err)); exit(-1); }  } ; 
-cudaMemcpy(dev_ptr, host_ptr, num * size, cudaMemcpyHostToDevice); 
-{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 43, cudaGetErrorString(err)); exit(-1); }  } ; 
+auto cudaError_t err; 
+if ((err = cudaGetLastError()) != (cudaSuccess)) 
+{ 
+fprintf(stderr, "CUDA error on line %d: %s\n", 206, cudaGetErrorString(err)); 
+exit(-1); 
+}  
+} 
+; 
+}  
+} 
+# 48 "src/cuda_fi/main.cu"
+static void setupMemoryGPU(int num, int size, float **dev_ptr, float **host_ptr) 
+{ 
+cudaMalloc((void **)dev_ptr, num * size); 
+{ 
+auto cudaError_t err; 
+if ((err = cudaGetLastError()) != (cudaSuccess)) 
+{ 
+fprintf(stderr, "CUDA error on line %d: %s\n", 58, cudaGetErrorString(err)); 
+exit(-1); 
+}  
+} 
+; 
+cudaMemcpy(*dev_ptr, *host_ptr, num * size, cudaMemcpyHostToDevice); 
+{ 
+auto cudaError_t err; 
+if ((err = cudaGetLastError()) != (cudaSuccess)) 
+{ 
+fprintf(stderr, "CUDA error on line %d: %s\n", 60, cudaGetErrorString(err)); 
+exit(-1); 
+}  
+} 
+; 
 } 
 
-
-static void cleanupMemoryGPU(int num, int size, float *&dev_ptr, float *host_ptr) 
+static void cleanupMemoryGPU(int num, int size, float **dev_ptr, float **host_ptr) 
 { 
-cudaMemcpy(host_ptr, dev_ptr, num * size, cudaMemcpyDeviceToHost); 
-{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 50, cudaGetErrorString(err)); exit(-1); }  } ; 
-cudaFree(dev_ptr); 
-{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 52, cudaGetErrorString(err)); exit(-1); }  } ; 
+cudaMemcpy(*host_ptr, *dev_ptr, num * size, cudaMemcpyDeviceToHost); 
+{ 
+auto cudaError_t err; 
+if ((err = cudaGetLastError()) != (cudaSuccess)) 
+{ 
+fprintf(stderr, "CUDA error on line %d: %s\n", 67, cudaGetErrorString(err)); 
+exit(-1); 
+}  
 } 
-
+; 
+cudaFree(*dev_ptr); 
+{ 
+auto cudaError_t err; 
+if ((err = cudaGetLastError()) != (cudaSuccess)) 
+{ 
+fprintf(stderr, "CUDA error on line %d: %s\n", 69, cudaGetErrorString(err)); 
+exit(-1); 
+}  
+} 
+; 
+} 
 
 int main(int argc, char *argv[]) 
 { 
+auto int k; 
 auto int numX; auto int numK; 
+
+GPUFI_INIT(2, 84); 
+
+
 auto int original_numK; 
+
 auto float *kx; auto float *ky; auto float *kz; 
+
 auto float *x; auto float *y; auto float *z; 
+
 auto float *phiR; auto float *phiI; 
+
 auto float *dR; auto float *dI; 
+
 auto float *realRhoPhi; auto float *imagRhoPhi; 
+
 auto float *outI; auto float *outR; 
+
 auto kValues *kVals; 
-
-
-
+# 124 "src/cuda_fi/main.cu"
 auto pb_Parameters *params; 
 auto pb_TimerSet timers; 
-
+auto int i; 
 pb_InitializeTimerSet(&timers); 
-
 
 params = pb_ReadParameters(&argc, argv); 
 if ((((params->inpFiles)[0]) == (__null)) || (((params->inpFiles)[1]) != (__null))) 
@@ -7350,12 +7831,13 @@ fprintf(stderr, "Expecting one input filename\n");
 exit(-1); 
 }  
 
-
 pb_SwitchToTimer(&timers, pb_TimerID_IO); 
 inputData((params->inpFiles)[0], &original_numK, &numX, &kx, &ky, &kz, &x, &y, &z, &phiR, &phiI, &dR, &dI); 
-# 94
-if (argc < 2) { 
-numK = original_numK; } else 
+# 142 "src/cuda_fi/main.cu"
+if (argc < 2) 
+{ 
+numK = original_numK; 
+} else 
 
 { 
 auto int inputK; 
@@ -7366,108 +7848,143 @@ if (end == (argv[1]))
 fprintf(stderr, "Expecting an integer parameter\n"); 
 exit(-1); 
 }  
-
 numK = (inputK < original_numK) ? inputK : original_numK; 
 }  
-
 printf("%d pixels in output; %d samples in trajectory; using %d samples\n", numX, original_numK, numK); 
-
-
 pb_SwitchToTimer(&timers, pb_TimerID_COMPUTE); 
 
-
-createDataStructs(numK, numX, realRhoPhi, imagRhoPhi, outR, outI); 
+createDataStructs(numK, numX, &realRhoPhi, &imagRhoPhi, &outR, &outI); 
 kVals = (kValues *)calloc(numK, sizeof(kValues)); 
-
 
 { 
 
 auto float *phiR_d; auto float *phiI_d; 
 auto float *dR_d; auto float *dI_d; 
 auto float *realRhoPhi_d; auto float *imagRhoPhi_d; 
-
 pb_SwitchToTimer(&timers, pb_TimerID_COPY); 
-setupMemoryGPU(numK, sizeof(float), phiR_d, phiR); 
-setupMemoryGPU(numK, sizeof(float), phiI_d, phiI); 
-setupMemoryGPU(numK, sizeof(float), dR_d, dR); 
-setupMemoryGPU(numK, sizeof(float), dI_d, dI); 
+setupMemoryGPU(numK, sizeof(float), &phiR_d, &phiR); 
+setupMemoryGPU(numK, sizeof(float), &phiI_d, &phiI); 
+setupMemoryGPU(numK, sizeof(float), &dR_d, &dR); 
+setupMemoryGPU(numK, sizeof(float), &dI_d, &dI); 
 cudaMalloc((void **)(&realRhoPhi_d), numK * sizeof(float)); 
-{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 132, cudaGetErrorString(err)); exit(-1); }  } ; 
+{ 
+auto cudaError_t err; 
+if ((err = cudaGetLastError()) != (cudaSuccess)) 
+{ 
+fprintf(stderr, "CUDA error on line %d: %s\n", 150, cudaGetErrorString(err)); 
+exit(-1); 
+}  
+} 
+; 
 cudaMalloc((void **)(&imagRhoPhi_d), numK * sizeof(float)); 
-{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 134, cudaGetErrorString(err)); exit(-1); }  } ; 
-
-if (params->synchronizeGpu) { cudaThreadSynchronize(); }  
+{ 
+auto cudaError_t err; 
+if ((err = cudaGetLastError()) != (cudaSuccess)) 
+{ 
+fprintf(stderr, "CUDA error on line %d: %s\n", 152, cudaGetErrorString(err)); 
+exit(-1); 
+}  
+} 
+; 
+if (params->synchronizeGpu) 
+{ 
+cudaThreadSynchronize(); 
+}  
 pb_SwitchToTimer(&timers, pb_TimerID_GPU); 
 
-
 computeRhoPhi_GPU(numK, phiR_d, phiI_d, dR_d, dI_d, realRhoPhi_d, imagRhoPhi_d); 
-
-
-if (params->synchronizeGpu) { cudaThreadSynchronize(); }  
+if (params->synchronizeGpu) 
+{ 
+cudaThreadSynchronize(); 
+}  
 pb_SwitchToTimer(&timers, pb_TimerID_COPY); 
-
-cleanupMemoryGPU(numK, sizeof(float), realRhoPhi_d, realRhoPhi); 
-cleanupMemoryGPU(numK, sizeof(float), imagRhoPhi_d, imagRhoPhi); 
+cleanupMemoryGPU(numK, sizeof(float), &realRhoPhi_d, &realRhoPhi); 
+cleanupMemoryGPU(numK, sizeof(float), &imagRhoPhi_d, &imagRhoPhi); 
 cudaFree(phiR_d); 
 cudaFree(phiI_d); 
 cudaFree(dR_d); 
 cudaFree(dI_d); 
 } 
-
 pb_SwitchToTimer(&timers, pb_TimerID_COMPUTE); 
 
-
-for (int k = 0; k < numK; k++) { 
+for (k = 0; k < numK; k++) 
+{ 
 ((kVals[k]).Kx) = kx[k]; 
 ((kVals[k]).Ky) = ky[k]; 
 ((kVals[k]).Kz) = kz[k]; 
 ((kVals[k]).RhoPhiR) = realRhoPhi[k]; 
 ((kVals[k]).RhoPhiI) = imagRhoPhi[k]; 
 }  
-
 pb_SwitchToTimer(&timers, pb_TimerID_COPY); 
-
 
 { 
 auto float *x_d; auto float *y_d; auto float *z_d; 
 auto float *outI_d; auto float *outR_d; 
 
-
-setupMemoryGPU(numX, sizeof(float), x_d, x); 
-setupMemoryGPU(numX, sizeof(float), y_d, y); 
-setupMemoryGPU(numX, sizeof(float), z_d, z); 
-
-
-
+setupMemoryGPU(numX, sizeof(float), &x_d, &x); 
+setupMemoryGPU(numX, sizeof(float), &y_d, &y); 
+setupMemoryGPU(numX, sizeof(float), &z_d, &z); 
+# 236 "src/cuda_fi/main.cu"
 cudaMalloc((void **)(&outR_d), numX * sizeof(float)); 
-{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 180, cudaGetErrorString(err)); exit(-1); }  } ; 
+{ 
+auto cudaError_t err; 
+if ((err = cudaGetLastError()) != (cudaSuccess)) 
+{ 
+fprintf(stderr, "CUDA error on line %d: %s\n", 199, cudaGetErrorString(err)); 
+exit(-1); 
+}  
+} 
+; 
 cudaMemset(outR_d, 0, numX * sizeof(float)); 
-{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 182, cudaGetErrorString(err)); exit(-1); }  } ; 
+{ 
+auto cudaError_t err; 
+if ((err = cudaGetLastError()) != (cudaSuccess)) 
+{ 
+fprintf(stderr, "CUDA error on line %d: %s\n", 201, cudaGetErrorString(err)); 
+exit(-1); 
+}  
+} 
+; 
 cudaMalloc((void **)(&outI_d), numX * sizeof(float)); 
-{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 184, cudaGetErrorString(err)); exit(-1); }  } ; 
+{ 
+auto cudaError_t err; 
+if ((err = cudaGetLastError()) != (cudaSuccess)) 
+{ 
+fprintf(stderr, "CUDA error on line %d: %s\n", 203, cudaGetErrorString(err)); 
+exit(-1); 
+}  
+} 
+; 
 cudaMemset(outI_d, 0, numX * sizeof(float)); 
-{ auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 186, cudaGetErrorString(err)); exit(-1); }  } ; 
-
-if (params->synchronizeGpu) { cudaThreadSynchronize(); }  
+{ 
+auto cudaError_t err; 
+if ((err = cudaGetLastError()) != (cudaSuccess)) 
+{ 
+fprintf(stderr, "CUDA error on line %d: %s\n", 205, cudaGetErrorString(err)); 
+exit(-1); 
+}  
+} 
+; 
+if (params->synchronizeGpu) 
+{ 
+cudaThreadSynchronize(); 
+}  
 pb_SwitchToTimer(&timers, pb_TimerID_GPU); 
 
-
 computeFH_GPU(numK, numX, x_d, y_d, z_d, kVals, outR_d, outI_d); 
-
-if (params->synchronizeGpu) { cudaThreadSynchronize(); }  
+if (params->synchronizeGpu) 
+{ 
+cudaThreadSynchronize(); 
+}  
 pb_SwitchToTimer(&timers, pb_TimerID_COPY); 
 
-
-cleanupMemoryGPU(numX, sizeof(float), outR_d, outR); 
-cleanupMemoryGPU(numX, sizeof(float), outI_d, outI); 
-
+cleanupMemoryGPU(numX, sizeof(float), &outR_d, &outR); 
+cleanupMemoryGPU(numX, sizeof(float), &outI_d, &outI); 
 cudaFree(x_d); 
 cudaFree(y_d); 
 cudaFree(z_d); 
 } 
-
 pb_SwitchToTimer(&timers, pb_TimerID_COMPUTE); 
-
 if (params->outFile) 
 { 
 
@@ -7475,7 +7992,6 @@ pb_SwitchToTimer(&timers, pb_TimerID_IO);
 outputData(params->outFile, outR, outI, numX); 
 pb_SwitchToTimer(&timers, pb_TimerID_COMPUTE); 
 }  
-
 free(kx); 
 free(ky); 
 free(kz); 
@@ -7491,12 +8007,12 @@ free(imagRhoPhi);
 free(kVals); 
 free(outR); 
 free(outI); 
-
 pb_SwitchToTimer(&timers, pb_TimerID_NONE); 
 pb_PrintTimerSet(&timers); 
 pb_FreeParameters(params); 
-
+GPUFI_HALT((char *)("fi_profile.txt")); 
 return 0; 
+GPUFI_HALT((char *)("fi_profile.txt")); 
 } 
 
 #include "main.cudafe1.stub.c"
