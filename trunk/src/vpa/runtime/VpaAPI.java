@@ -6,9 +6,11 @@
 package vpa.runtime;
 
 import cedp.node.PerfJavaNode;
+import cedp.util.UtilFile;
 import cedp.util.UtilTable;
 import cedp.util.extlib.JcraftWrapper;
 import cedp.util.extlib.AStyleWrapper;
+import cedp.util.extlib.CetusWrapper;
 import cetus.exec.Driver;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -16,6 +18,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Vector;
 import javax.swing.JTable;
 
 /**
@@ -83,6 +86,17 @@ public class VpaAPI {
         }
 
         return str;
+    }
+
+    public static void FileSave(String fileName, String data)
+    {
+        try{
+            BufferedWriter file = new BufferedWriter(new FileWriter(fileName));
+            file.write(data);
+            file.close();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public static String FileCopy(String src, String dst)
@@ -162,9 +176,42 @@ public class VpaAPI {
       }
     }
 
+    public static JTable GetFITable()
+    {
+      return node.GetFITable();
+    }
+
+    public static String GetFICommands(String folder)
+    {
+      String path_dst = GetHomeDir() + "benchmarks/" + GetSelectedProgram() + "/src/" + folder + "/";
+      String id;
+      String str;
+      JTable fiTable = node.GetFITable();
+      String result = "";
+
+      for(int i=0; i<fiTable.getRowCount(); i++){
+        id = "result-" + (String)fiTable.getValueAt(i, 0) + ".txt";
+        str = (String) fiTable.getValueAt(i, 1);
+        if(str.endsWith("\n"))
+            str = str.substring(0, str.length()-1);
+
+        result += "rm -f " + id + "\n";
+        result += "echo \"" + str + "\" > benchmarks/" + GetSelectedProgram() + "/fi_cmd.txt" + "\n";
+        result += "cat benchmarks/" + GetSelectedProgram() + "/fi_cmd.txt" + "\n";
+        result += "./parboil run " + GetSelectedProgram() + " " + folder + " " + GetSelectedData() + " > " + id + " \n";
+      }
+
+      return result;
+    }
+
+    public static void SaveFICommands(String filename, String folder)
+    {
+      FileSave(filename, GetFICommands(folder));
+    }
     public static void AddFaultCommand(String cmd)
     {
       try{
+        System.out.println(cmd);
         cmdFile.write(cmd + "\n");
       } catch(Exception e){
         e.printStackTrace();

@@ -1,4 +1,4 @@
-# 1 "src/cuda_fi_prerun/main.cu"
+# 1 "src/cuda_fi/main.cu"
 # 233 "/usr/include/c++/4.3/i486-linux-gnu/bits/c++config.h" 3
 namespace std __attribute__((visibility("default"))) { 
 # 245 "/usr/include/c++/4.3/i486-linux-gnu/bits/c++config.h" 3
@@ -5549,79 +5549,36 @@ entry)
 { 
 return cudaFuncGetAttributes(attr, (const char *)entry); 
 } 
-# 14 "src/cuda_fi_prerun/gpufi.h"
+# 6 "src/cuda_fi/gpufi.h"
 struct _gpufi_fault_ { 
 int kernel; 
-
 int instance; 
 int varid; 
 int call; 
 
-int mask_type; 
-
-
 unsigned mask; 
+
+
+
+
 int injected; 
 int disabled; 
-int mode; 
-}; 
-# 46 "src/cuda_fi_prerun/gpufi.h"
-struct _gpufi_profile_kernel_ { 
-char state; 
-int id; 
-int instance; 
-char name[32]; 
-}; 
 
-
-struct _gpufi_profile_variable_ { 
-int call_count; 
-int loop_id; 
-int type; 
-}; 
-
-struct _gpufi_profile_ { 
-
-_gpufi_profile_kernel_ kernel[10]; 
-_gpufi_profile_variable_ variable[10][512]; 
-
-
-char kernel_bitmap[10]; 
-int kernel_instance[10]; 
-
-char variable_bitmap[512]; 
-char variable_name[512][32]; 
-}; 
-
-int gpufi_profile_variable_count = 0; 
-int gpufi_profile_kernel_count = 0; 
-
-struct _gpufi_current_ { 
-int mode; 
-int kernel; 
-int instance; 
-int loop; 
-int loop_count; 
-int iteration; 
-
-int profile_index; 
-int profile_mode; 
-# 93
 int blid; 
 int thid; 
 }; 
 
+struct _gpufi_current_ { 
+int instance; 
+int count; 
+}; 
 
 struct _gpufi_data_ { 
 _gpufi_fault_ fault; 
-
-
-
-_gpufi_fault_ debug; 
 _gpufi_current_ current; 
-_gpufi_profile_ profile; 
+int sdc; 
 }; 
-# 124 "src/cuda_fi_prerun/gpufi.h"
+# 51 "src/cuda_fi/gpufi.h"
 extern int GPUFI_INIT(int, int); 
 extern int GPUFI_HALT(char *); 
 
@@ -6149,26 +6106,18 @@ extern "C" { inline __attribute__((__gnu_inline__)) int ferror_unlocked(FILE *__
 { 
 return ((__stream->_flags) & 32) != 0; 
 } } 
-# 9 "src/cuda_fi_prerun/gpufi_kernel.cu"
+# 9 "src/cuda_fi/gpufi_kernel.cu"
 _gpufi_data_ gpufi_host = {{0}}; 
 __loc_sc__(__device__,,) _gpufi_data_ *__shadow_var(,gpufi_dev); 
-# 18
-int variable_count; 
-int kernel_count; 
-# 25
+# 20
 int GPUFI_INIT(int kernel_cnt, int variable_cnt) 
 { 
 auto FILE *fp; 
 auto char cmd[32]; 
-auto int i; 
-
-kernel_count = kernel_cnt + 1; 
-variable_count = variable_cnt; 
 
 memset(&gpufi_host, 0, sizeof(_gpufi_data_)); 
 
 fp = fopen("fi_cmd.txt", "rt"); 
-
 if (!(fp)) { 
 printf("file open error\n"); 
 system("pwd"); 
@@ -6177,78 +6126,28 @@ return -1;
 
 fscanf(fp, "%s", cmd); 
 printf("%s ", cmd); 
-if (!(strcmp(cmd, "profile"))) { 
-((gpufi_host.current).blid) = 0; 
-((gpufi_host.current).thid) = 0; 
+if (!(strcmp(cmd, "fi"))) { 
+fscanf(fp, "%d %d %d %d 0x%x %d %d\n", &((gpufi_host.fault).kernel), &((gpufi_host.fault).instance), &((gpufi_host.fault).varid), &((gpufi_host.fault).call), &((gpufi_host.fault).mask), &((gpufi_host.fault).blid), &((gpufi_host.fault).thid)); 
+# 46
+((gpufi_host.fault).injected) = 0; 
+((gpufi_host.fault).disabled) = 1; 
 
-((gpufi_host.fault).mode) = 1; 
-((gpufi_host.current).profile_index) = (-1); 
-fscanf(fp, "%s", cmd); 
-printf("%s ", cmd); 
-if (!(strcmp(cmd, "none"))) { 
-((gpufi_host.current).profile_mode) = 0; 
-} else { 
-if (!(strcmp(cmd, "value"))) { 
-fscanf(fp, "%s", cmd); 
-printf("%s ", cmd); 
-if (!(strcmp(cmd, "loop"))) { 
-((gpufi_host.current).profile_mode) = 1; } else { 
-if (!(strcmp(cmd, "kernel"))) { 
-((gpufi_host.current).profile_mode) = 2; } else { 
-if (!(strcmp(cmd, "thread"))) { 
-((gpufi_host.current).profile_mode) = 3; 
-fscanf(fp, "%d", &((gpufi_host.current).blid)); 
-printf(" %d ", (gpufi_host.current).blid); 
-} else { 
-if (!(strcmp(cmd, "block"))) { 
-((gpufi_host.current).profile_mode) = 4; 
-}  }  }  }  
-}  }  
-printf(" (%d)\n", (gpufi_host.current).profile_mode); 
+printf("fi_cmd %d %d %d %d 0x%x\n", (gpufi_host.fault).kernel, (gpufi_host.fault).instance, (gpufi_host.fault).varid, (gpufi_host.fault).call, (gpufi_host.fault).mask); 
+
 }  
 
 fclose(fp); 
 
 return 0; 
 } 
-# 93 "src/cuda_fi_prerun/gpufi_kernel.cu"
-char *gpufi_type_name[6] = {((char *)("unknown")), ((char *)("int")), ((char *)("fp")), ((char *)("int_pt")), ((char *)("fp_pt")), ((char *)("unknown_pt"))}; 
 
 int GPUFI_HALT(char *fname) 
 { 
-auto FILE *fp; 
-auto int i; auto int j; auto int k; auto int m; 
+printf("* injected: %d\n", (gpufi_host.fault).injected); 
+fprintf(stderr, "* injected: %d\n", (gpufi_host.fault).injected); 
 
-if (((gpufi_host.fault).mode) == 1) { 
+printf("fi %d %d %d %d 0x%x\n", (gpufi_host.fault).kernel, (gpufi_host.fault).instance, (gpufi_host.fault).varid, (gpufi_host.fault).call, (gpufi_host.fault).mask); 
 
-
-fp = fopen(fname, "wt"); 
-if (!(fp)) { 
-printf("can\'t write to an output file, %s\n", fname); 
-return -1; 
-}  
-
-for (i = 0; i < 10; i++) { 
-if (((((gpufi_host.profile).kernel)[i]).state) == 1) { 
-fprintf(fp, "kernel\t%d\t%s\t%d\n", (((gpufi_host.profile).kernel)[i]).id, (((gpufi_host.profile).kernel)[i]).name, (((gpufi_host.profile).kernel)[i]).instance); } else { 
-
-
-
-
-break; }  
-
-for (j = 0; j < variable_count; j++) { 
-if ((((((gpufi_host.profile).variable)[i])[j]).call_count) != 0) { 
-fprintf(fp, "variable\t%d\t%s\t%d\t%d\t%s\t", j, (((gpufi_host.profile).variable_bitmap)[j]) ? (((gpufi_host.profile).variable_name)[j]) : (""), ((((gpufi_host.profile).variable)[i])[j]).call_count, ((((gpufi_host.profile).variable)[i])[j]).loop_id, (gpufi_type_name)[((((gpufi_host.profile).variable)[i])[j]).type]); 
-# 127
-fprintf(fp, "\n"); 
-}  
-}  
-fprintf(fp, "\n"); 
-}  
-
-fclose(fp); 
-}  
 
 return 0; 
 } 
@@ -7212,7 +7111,7 @@ extern "C" void encrypt(char *, int) throw();
 extern "C" void swab(const void *__restrict__, void *__restrict__, ssize_t) throw(); 
 # 1094
 extern "C" char *ctermid(char *) throw(); 
-# 12 "src/cuda_fi_prerun/parboil.h"
+# 12 "src/cuda_fi/parboil.h"
 extern "C" { struct pb_Parameters { 
 char *outFile; 
 
@@ -7295,86 +7194,86 @@ extern "C" void pb_SwitchToTimer(pb_TimerSet *, pb_TimerID);
 
 
 extern "C" void pb_PrintTimerSet(pb_TimerSet *); 
-# 44 "src/cuda_fi_prerun/cuenergy.h"
+# 44 "src/cuda_fi/cuenergy.h"
 extern int copyatomstoconstbuf(float *, int, float); 
-# 44 "src/cuda_fi_prerun/cuenergy.h"
+# 44 "src/cuda_fi/cuenergy.h"
 extern int copyatomstoconstbuf(float *, int, float); 
-# 29 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu"
+# 29 "src/cuda_fi/cuenergy_pre8_coalesce.cu"
 __loc_sc__(__constant__,,) float4 __shadow_var(,atominfo)[4000]; 
-# 34 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu"
+# 34 "src/cuda_fi/cuenergy_pre8_coalesce.cu"
 void cenergy__entry(int numatoms, float gridspacing, float *energygrid, _gpufi_data_ *gpufi_dev);
 #if 0
  
 # 35
 { 
 GPUFI_KERNEL(gpufi_dev, 0, 0, (char *)("cenergy")); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 0, (char *)("numatoms"), (int *)(&numatoms), 1); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 0, (char *)("numatoms"), (int *)(&numatoms), 10); 
 
 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 1, (char *)("gridspacing"), (int *)(&gridspacing), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 1, (char *)("gridspacing"), (int *)(&gridspacing), 20); 
 
 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 2, (char *)("energygrid"), (int *)(&energygrid), 4); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 2, (char *)("energygrid"), (int *)(&energygrid), 40); 
 
 
 auto unsigned xindex = (__umul24(blockIdx.x, blockDim.x) * (8) + threadIdx.x); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 3, (char *)("xindex"), (int *)(&xindex), 1); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 3, (char *)("xindex"), (int *)(&xindex), 10); 
 
 
 auto unsigned yindex = (__umul24(blockIdx.y, blockDim.y) + threadIdx.y); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 4, (char *)("yindex"), (int *)(&yindex), 1); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 4, (char *)("yindex"), (int *)(&yindex), 10); 
 
 
 auto unsigned outaddr = ((__umul24(gridDim.x, blockDim.x) * (8)) * yindex + xindex); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 5, (char *)("outaddr"), (int *)(&outaddr), 1); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 5, (char *)("outaddr"), (int *)(&outaddr), 10); 
 
 
 auto float coory = (gridspacing * yindex); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 6, (char *)("coory"), (int *)(&coory), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 6, (char *)("coory"), (int *)(&coory), 20); 
 
 
 auto float coorx = (gridspacing * xindex); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 7, (char *)("coorx"), (int *)(&coorx), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 7, (char *)("coorx"), (int *)(&coorx), 20); 
 
 
 auto float energyvalx1 = ((0.0)); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 8, (char *)("energyvalx1"), (int *)(&energyvalx1), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 8, (char *)("energyvalx1"), (int *)(&energyvalx1), 20); 
 
 
 auto float energyvalx2 = ((0.0)); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 9, (char *)("energyvalx2"), (int *)(&energyvalx2), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 9, (char *)("energyvalx2"), (int *)(&energyvalx2), 20); 
 
 
 auto float energyvalx3 = ((0.0)); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 10, (char *)("energyvalx3"), (int *)(&energyvalx3), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 10, (char *)("energyvalx3"), (int *)(&energyvalx3), 20); 
 
 
 auto float energyvalx4 = ((0.0)); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 11, (char *)("energyvalx4"), (int *)(&energyvalx4), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 11, (char *)("energyvalx4"), (int *)(&energyvalx4), 20); 
 
 
 auto float energyvalx5 = ((0.0)); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 12, (char *)("energyvalx5"), (int *)(&energyvalx5), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 12, (char *)("energyvalx5"), (int *)(&energyvalx5), 20); 
 
 
 auto float energyvalx6 = ((0.0)); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 13, (char *)("energyvalx6"), (int *)(&energyvalx6), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 13, (char *)("energyvalx6"), (int *)(&energyvalx6), 20); 
 
 
 auto float energyvalx7 = ((0.0)); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 14, (char *)("energyvalx7"), (int *)(&energyvalx7), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 14, (char *)("energyvalx7"), (int *)(&energyvalx7), 20); 
 
 
 auto float energyvalx8 = ((0.0)); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 15, (char *)("energyvalx8"), (int *)(&energyvalx8), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 15, (char *)("energyvalx8"), (int *)(&energyvalx8), 20); 
 
 
 auto float gridspacing_u = (gridspacing * (16)); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 16, (char *)("gridspacing_u"), (int *)(&gridspacing_u), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 16, (char *)("gridspacing_u"), (int *)(&gridspacing_u), 20); 
 
 
 auto int atomid; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 17, (char *)("atomid"), (int *)(&atomid), 1); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 17, (char *)("atomid"), (int *)(&atomid), 10); 
 
 
 
@@ -7388,75 +7287,75 @@ GPUFI_KERNEL_ITERATION(gpufi_dev);
 
 
 auto float dy = (coory - ((__shadow_var(,atominfo))[atomid]).y); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 20, (char *)("dy"), (int *)(&dy), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 20, (char *)("dy"), (int *)(&dy), 20); 
 
 
 auto float dyz2 = (dy * dy + ((__shadow_var(,atominfo))[atomid]).z); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 21, (char *)("dyz2"), (int *)(&dyz2), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 21, (char *)("dyz2"), (int *)(&dyz2), 20); 
 
 
 auto float dx1 = (coorx - ((__shadow_var(,atominfo))[atomid]).x); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 22, (char *)("dx1"), (int *)(&dx1), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 22, (char *)("dx1"), (int *)(&dx1), 20); 
 
 
 auto float dx2 = (dx1 + gridspacing_u); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 23, (char *)("dx2"), (int *)(&dx2), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 23, (char *)("dx2"), (int *)(&dx2), 20); 
 
 
 auto float dx3 = (dx2 + gridspacing_u); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 24, (char *)("dx3"), (int *)(&dx3), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 24, (char *)("dx3"), (int *)(&dx3), 20); 
 
 
 auto float dx4 = (dx3 + gridspacing_u); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 25, (char *)("dx4"), (int *)(&dx4), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 25, (char *)("dx4"), (int *)(&dx4), 20); 
 
 
 auto float dx5 = (dx4 + gridspacing_u); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 26, (char *)("dx5"), (int *)(&dx5), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 26, (char *)("dx5"), (int *)(&dx5), 20); 
 
 
 auto float dx6 = (dx5 + gridspacing_u); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 27, (char *)("dx6"), (int *)(&dx6), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 27, (char *)("dx6"), (int *)(&dx6), 20); 
 
 
 auto float dx7 = (dx6 + gridspacing_u); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 28, (char *)("dx7"), (int *)(&dx7), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 28, (char *)("dx7"), (int *)(&dx7), 20); 
 
 
 auto float dx8 = (dx7 + gridspacing_u); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 29, (char *)("dx8"), (int *)(&dx8), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 29, (char *)("dx8"), (int *)(&dx8), 20); 
 
 
 energyvalx1 += ((__shadow_var(,atominfo))[atomid]).w * ((1.0) / sqrtf(dx1 * dx1 + dyz2)); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 30, (char *)("energyvalx1"), (int *)(&energyvalx1), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 30, (char *)("energyvalx1"), (int *)(&energyvalx1), 20); 
 
 
 energyvalx2 += ((__shadow_var(,atominfo))[atomid]).w * ((1.0) / sqrtf(dx2 * dx2 + dyz2)); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 31, (char *)("energyvalx2"), (int *)(&energyvalx2), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 31, (char *)("energyvalx2"), (int *)(&energyvalx2), 20); 
 
 
 energyvalx3 += ((__shadow_var(,atominfo))[atomid]).w * ((1.0) / sqrtf(dx3 * dx3 + dyz2)); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 32, (char *)("energyvalx3"), (int *)(&energyvalx3), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 32, (char *)("energyvalx3"), (int *)(&energyvalx3), 20); 
 
 
 energyvalx4 += ((__shadow_var(,atominfo))[atomid]).w * ((1.0) / sqrtf(dx4 * dx4 + dyz2)); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 33, (char *)("energyvalx4"), (int *)(&energyvalx4), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 33, (char *)("energyvalx4"), (int *)(&energyvalx4), 20); 
 
 
 energyvalx5 += ((__shadow_var(,atominfo))[atomid]).w * ((1.0) / sqrtf(dx5 * dx5 + dyz2)); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 34, (char *)("energyvalx5"), (int *)(&energyvalx5), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 34, (char *)("energyvalx5"), (int *)(&energyvalx5), 20); 
 
 
 energyvalx6 += ((__shadow_var(,atominfo))[atomid]).w * ((1.0) / sqrtf(dx6 * dx6 + dyz2)); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 35, (char *)("energyvalx6"), (int *)(&energyvalx6), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 35, (char *)("energyvalx6"), (int *)(&energyvalx6), 20); 
 
 
 energyvalx7 += ((__shadow_var(,atominfo))[atomid]).w * ((1.0) / sqrtf(dx7 * dx7 + dyz2)); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 36, (char *)("energyvalx7"), (int *)(&energyvalx7), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 36, (char *)("energyvalx7"), (int *)(&energyvalx7), 20); 
 
 
 energyvalx8 += ((__shadow_var(,atominfo))[atomid]).w * ((1.0) / sqrtf(dx8 * dx8 + dyz2)); 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 37, (char *)("energyvalx8"), (int *)(&energyvalx8), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 37, (char *)("energyvalx8"), (int *)(&energyvalx8), 20); 
 
 
 }  
@@ -7464,45 +7363,45 @@ GPUFI_KERNEL_VARIABLE(gpufi_dev, 37, (char *)("energyvalx8"), (int *)(&energyval
 GPUFI_KERNEL_LOOP(gpufi_dev, 1); 
 
 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 19, (char *)("atomid"), (int *)(&atomid), 1); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 19, (char *)("atomid"), (int *)(&atomid), 10); 
 
 
 (energygrid[outaddr]) += energyvalx1; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 38, (char *)("energygrid[outaddr]"), (int *)(energygrid + outaddr), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 38, (char *)("energygrid[outaddr]"), (int *)(energygrid + outaddr), 20); 
 
 
 (energygrid[outaddr + (1 * 16)]) += energyvalx2; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 39, (char *)("energygrid[(outaddr+(1*16))]"), (int *)(energygrid + (outaddr + (1 * 16))), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 39, (char *)("energygrid[(outaddr+(1*16))]"), (int *)(energygrid + (outaddr + (1 * 16))), 20); 
 
 
 (energygrid[outaddr + (2 * 16)]) += energyvalx3; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 40, (char *)("energygrid[(outaddr+(2*16))]"), (int *)(energygrid + (outaddr + (2 * 16))), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 40, (char *)("energygrid[(outaddr+(2*16))]"), (int *)(energygrid + (outaddr + (2 * 16))), 20); 
 
 
 (energygrid[outaddr + (3 * 16)]) += energyvalx4; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 41, (char *)("energygrid[(outaddr+(3*16))]"), (int *)(energygrid + (outaddr + (3 * 16))), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 41, (char *)("energygrid[(outaddr+(3*16))]"), (int *)(energygrid + (outaddr + (3 * 16))), 20); 
 
 
 (energygrid[outaddr + (4 * 16)]) += energyvalx5; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 42, (char *)("energygrid[(outaddr+(4*16))]"), (int *)(energygrid + (outaddr + (4 * 16))), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 42, (char *)("energygrid[(outaddr+(4*16))]"), (int *)(energygrid + (outaddr + (4 * 16))), 20); 
 
 
 (energygrid[outaddr + (5 * 16)]) += energyvalx6; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 43, (char *)("energygrid[(outaddr+(5*16))]"), (int *)(energygrid + (outaddr + (5 * 16))), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 43, (char *)("energygrid[(outaddr+(5*16))]"), (int *)(energygrid + (outaddr + (5 * 16))), 20); 
 
 
 (energygrid[outaddr + (6 * 16)]) += energyvalx7; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 44, (char *)("energygrid[(outaddr+(6*16))]"), (int *)(energygrid + (outaddr + (6 * 16))), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 44, (char *)("energygrid[(outaddr+(6*16))]"), (int *)(energygrid + (outaddr + (6 * 16))), 20); 
 
 
 (energygrid[outaddr + (7 * 16)]) += energyvalx8; 
-GPUFI_KERNEL_VARIABLE(gpufi_dev, 45, (char *)("energygrid[(outaddr+(7*16))]"), (int *)(energygrid + (outaddr + (7 * 16))), 2); 
+GPUFI_KERNEL_VARIABLE(gpufi_dev, 45, (char *)("energygrid[(outaddr+(7*16))]"), (int *)(energygrid + (outaddr + (7 * 16))), 20); 
 
 
 GPUFI_KERNEL(gpufi_dev, 1, 0, (char *)("cenergy")); 
 } 
 #endif
-# 235 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu"
+# 235 "src/cuda_fi/cuenergy_pre8_coalesce.cu"
 int copyatomstoconstbuf(float *atoms, int count, float zplane) 
 { 
 auto float atompre[(4 * 4000)]; 
@@ -7526,20 +7425,20 @@ if (1)
 { 
 ; 
 }  
-# 260 "src/cuda_fi_prerun/cuenergy_pre8_coalesce.cu"
+# 260 "src/cuda_fi/cuenergy_pre8_coalesce.cu"
 return 0; 
 } 
-# 42 "src/cuda_fi_prerun/main.cu"
+# 42 "src/cuda_fi/main.cu"
 static int initatoms(float **atombuf, int count, dim3 volsize, float gridspacing) 
 { 
 auto dim3 size; 
 auto int i; 
 auto float *atoms; 
 srand(54321); 
-# 50 "src/cuda_fi_prerun/main.cu"
+# 50 "src/cuda_fi/main.cu"
 atoms = (float *)malloc((count * 4) * sizeof(float)); 
 (*atombuf) = atoms; 
-# 54 "src/cuda_fi_prerun/main.cu"
+# 54 "src/cuda_fi/main.cu"
 (size.x) = gridspacing * volsize.x; 
 (size.y) = gridspacing * volsize.y; 
 (size.z) = gridspacing * volsize.z; 
@@ -7550,11 +7449,11 @@ auto int addr = (i * 4);
 (atoms[addr + 1]) = (rand() / ((float)2147483647)) * size.y; 
 (atoms[addr + 2]) = (rand() / ((float)2147483647)) * size.z; 
 (atoms[addr + 3]) = (rand() / ((float)2147483647)) * (2.0) - (1.0); 
-# 66 "src/cuda_fi_prerun/main.cu"
+# 66 "src/cuda_fi/main.cu"
 }  
 return 0; 
 } 
-# 75 "src/cuda_fi_prerun/main.cu"
+# 75 "src/cuda_fi/main.cu"
 static int writeenergy(char *filename, float *energy, dim3 volsize) 
 { 
 auto FILE *outfile; 
@@ -7600,17 +7499,17 @@ int main(int argc, char **argv)
 auto pb_TimerSet timers; 
 auto pb_Parameters *parameters; 
 auto float *energy = (__null); 
-# 122 "src/cuda_fi_prerun/main.cu"
+# 122 "src/cuda_fi/main.cu"
 GPUFI_INIT(1, 46); 
 
 
 auto float *atoms = (__null); 
 auto dim3 volsize; auto dim3 Gsz; auto dim3 Bsz; 
-# 131 "src/cuda_fi_prerun/main.cu"
+# 131 "src/cuda_fi/main.cu"
 auto int atomcount = 40000; 
-# 134 "src/cuda_fi_prerun/main.cu"
+# 134 "src/cuda_fi/main.cu"
 auto const float gridspacing = ((0.1000000000000000056)); 
-# 137 "src/cuda_fi_prerun/main.cu"
+# 137 "src/cuda_fi/main.cu"
 auto int volmemsz; 
 printf("CUDA accelerated coulombic potential microbenchmark\n"); 
 printf("Original version by John E. Stone <johns@ks.uiuc.edu>\n"); 
@@ -7629,31 +7528,31 @@ return -1;
 }  
 pb_InitializeTimerSet(&timers); 
 pb_SwitchToTimer(&timers, pb_TimerID_COMPUTE); 
-# 157 "src/cuda_fi_prerun/main.cu"
+# 157 "src/cuda_fi/main.cu"
 (volsize.x) = (512); 
 (volsize.y) = (512); 
 (volsize.z) = (1); 
-# 162 "src/cuda_fi_prerun/main.cu"
+# 162 "src/cuda_fi/main.cu"
 (Bsz.x) = (16); 
-# 165 "src/cuda_fi_prerun/main.cu"
+# 165 "src/cuda_fi/main.cu"
 (Bsz.y) = (8); 
 (Bsz.z) = (1); 
 (Gsz.x) = volsize.x / (Bsz.x * (8)); 
-# 170 "src/cuda_fi_prerun/main.cu"
+# 170 "src/cuda_fi/main.cu"
 (Gsz.y) = volsize.y / Bsz.y; 
 (Gsz.z) = volsize.z / Bsz.z; 
-# 174 "src/cuda_fi_prerun/main.cu"
+# 174 "src/cuda_fi/main.cu"
 if (initatoms(&atoms, atomcount, volsize, gridspacing)) 
 { 
 GPUFI_HALT((char *)("fi_profile.txt")); 
 return -1; 
 }  
-# 181 "src/cuda_fi_prerun/main.cu"
+# 181 "src/cuda_fi/main.cu"
 volmemsz = ((sizeof(float) * volsize.x) * volsize.y) * volsize.z; 
-# 184 "src/cuda_fi_prerun/main.cu"
+# 184 "src/cuda_fi/main.cu"
 { 
 auto float *d_output = (__null); 
-# 188 "src/cuda_fi_prerun/main.cu"
+# 188 "src/cuda_fi/main.cu"
 auto int iterations = 0; 
 auto int atomstart; 
 pb_SwitchToTimer(&timers, pb_TimerID_COPY); 
@@ -7662,20 +7561,20 @@ if (1)
 { 
 ; 
 }  
-# 198 "src/cuda_fi_prerun/main.cu"
+# 198 "src/cuda_fi/main.cu"
 cudaMemset(d_output, 0, volmemsz); 
 if (1) 
 { 
 ; 
 }  
-# 205 "src/cuda_fi_prerun/main.cu"
+# 205 "src/cuda_fi/main.cu"
 pb_SwitchToTimer(&timers, pb_TimerID_COMPUTE); 
 for (atomstart = 0; atomstart < atomcount; atomstart += 4000) 
 { 
 auto int atomsremaining = (atomcount - atomstart); 
 auto int runatoms = ((atomsremaining > 4000) ? 4000 : atomsremaining); 
 iterations++; 
-# 213 "src/cuda_fi_prerun/main.cu"
+# 213 "src/cuda_fi/main.cu"
 pb_SwitchToTimer(&timers, pb_TimerID_COPY); 
 if (copyatomstoconstbuf(atoms + 4 * atomstart, runatoms, (0) * gridspacing)) 
 { 
@@ -7687,7 +7586,7 @@ if (parameters->synchronizeGpu)
 cudaThreadSynchronize(); 
 }  
 pb_SwitchToTimer(&timers, pb_TimerID_GPU); 
-# 227 "src/cuda_fi_prerun/main.cu"
+# 227 "src/cuda_fi/main.cu"
 cudaMalloc((void **)(&__shadow_var(,gpufi_dev)), sizeof(_gpufi_data_)); 
 { auto cudaError_t err; if ((err = cudaGetLastError()) != (cudaSuccess)) { fprintf(stderr, "CUDA error on line %d: %s\n", 228, cudaGetErrorString(err)); exit(-1); }  } 
 cudaMemcpy(__shadow_var(,gpufi_dev), &gpufi_host, sizeof(_gpufi_data_), cudaMemcpyHostToDevice); 
@@ -7706,15 +7605,15 @@ if (1)
 { 
 ; 
 }  
-# 247 "src/cuda_fi_prerun/main.cu"
+# 247 "src/cuda_fi/main.cu"
 if (parameters->synchronizeGpu) 
 { 
 cudaThreadSynchronize(); 
 }  
 pb_SwitchToTimer(&timers, pb_TimerID_COMPUTE); 
-# 254 "src/cuda_fi_prerun/main.cu"
+# 254 "src/cuda_fi/main.cu"
 }  
-# 257 "src/cuda_fi_prerun/main.cu"
+# 257 "src/cuda_fi/main.cu"
 energy = (float *)malloc(volmemsz); 
 pb_SwitchToTimer(&timers, pb_TimerID_COPY); 
 cudaMemcpy(energy, d_output, volmemsz, cudaMemcpyDeviceToHost); 
@@ -7722,7 +7621,7 @@ if (1)
 { 
 ; 
 }  
-# 266 "src/cuda_fi_prerun/main.cu"
+# 266 "src/cuda_fi/main.cu"
 cudaFree(d_output); 
 pb_SwitchToTimer(&timers, pb_TimerID_COMPUTE); 
 } 

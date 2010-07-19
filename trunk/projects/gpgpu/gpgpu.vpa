@@ -13,6 +13,7 @@
 <script>
 import os
 import string
+import thread
 
 
 def Clean():
@@ -143,9 +144,9 @@ def InstrRunCetus(folder, fileList):
 def Generate(folder):
   VpaAPI.RxFile(VpaAPI.GetHomeDir() + "benchmarks/" + VpaAPI.GetSelectedProgram() + "/fi_profile.txt", "fi_profile.txt")
 
-  kern_id = -1
-  kern_name = ""
-  instance = -1
+  kern_id = "-"
+  kern_name = "-"
+  instance = "-"
   
   VpaAPI.SetFaultCommand("fi_cmd.txt", True)
 
@@ -154,28 +155,30 @@ def Generate(folder):
   while line:
     tokens = line.split()
     if len(tokens) > 0:
-    	print "%s %s\n" % (str(len(tokens)), tokens[0])
+      print "%s [%s]\n" % (str(len(tokens)), tokens[0])
     if len(tokens) == 4:
-      if tokens[0] is "kernel":
-        kern_id = int(tokens[1])
-        kern_name = tokens[2]
-        instance = int(tokens[3])
-        print "fi " + str(kern_id) + " " + instance + " " + str(kern_name)
+      print "+ [%s]\n" % tokens[0]
+#      if tokens[0] is "kernel":
+      kern_id = tokens[1]
+      kern_name = tokens[2]
+      instance = tokens[3]
+      print "fi " + kern_id + " " + instance + " " + kern_name
     elif len(tokens) == 6:
-      if tokens[0] is "variable":
-        var_id = int(tokens[1])
-        var_name = tokens[2]
-        call = int(tokens[3])
-        loop_id = int(tokens[4]);
-        var_type = tokens[5];
-
-        VpaAPI.AddFaultCommand("fi " + str(kern_id) + " " + str(instance) + " " + str(var_id) + " " + str(call-1) + " 0x80000000 " + var_type + " " + var_name + "\n")
-        VpaAPI.AddFaultCommand("fi " + str(kern_id) + " " + str(instance) + " " + str(var_id) + " " + str(call-1) + " 0x40000000 " + var_type + " " + var_name + "\n")
-        VpaAPI.AddFaultCommand("fi " + str(kern_id) + " " + str(instance) + " " + str(var_id) + " " + str(call-1) + " 0x08000000 " + var_type + " " + var_name + "\n")
-        VpaAPI.AddFaultCommand("fi " + str(kern_id) + " " + str(instance) + " " + str(var_id) + " " + str(call-1) + " 0x00800000 " + var_type + " " + var_name + "\n")
-        VpaAPI.AddFaultCommand("fi " + str(kern_id) + " " + str(instance) + " " + str(var_id) + " " + str(call-1) + " 0x00400000 " + var_type + " " + var_name + "\n")
-        VpaAPI.AddFaultCommand("fi " + str(kern_id) + " " + str(instance) + " " + str(var_id) + " " + str(call-1) + " 0x00001000 " + var_type + " " + var_name + "\n")
-        VpaAPI.AddFaultCommand("fi " + str(kern_id) + " " + str(instance) + " " + str(var_id) + " " + str(call-1) + " 0x00000001 " + var_type + " " + var_name + "\n")
+      print "+ [%s]\n" % tokens[0]
+#      if tokens[0] is "variable":
+      print "- [%s]\n" % tokens[0]
+      var_id = tokens[1]
+      var_name = tokens[2]
+      call = int(tokens[3])
+      loop_id = tokens[4]
+      var_type = tokens[5]
+      VpaAPI.AddFaultCommand("fi " + kern_id + " " + instance + " " + var_id + " " + str(call-1) + " 0x80000000 " + var_type + " " + var_name + "\n")
+      VpaAPI.AddFaultCommand("fi " + kern_id + " " + instance + " " + var_id + " " + str(call-1) + " 0x40000000 " + var_type + " " + var_name + "\n")
+      VpaAPI.AddFaultCommand("fi " + kern_id + " " + instance + " " + var_id + " " + str(call-1) + " 0x08000000 " + var_type + " " + var_name + "\n")
+      VpaAPI.AddFaultCommand("fi " + kern_id + " " + instance + " " + var_id + " " + str(call-1) + " 0x00800000 " + var_type + " " + var_name + "\n")
+      VpaAPI.AddFaultCommand("fi " + kern_id + " " + instance + " " + var_id + " " + str(call-1) + " 0x00400000 " + var_type + " " + var_name + "\n")
+      VpaAPI.AddFaultCommand("fi " + kern_id + " " + instance + " " + var_id + " " + str(call-1) + " 0x00001000 " + var_type + " " + var_name + "\n")
+      VpaAPI.AddFaultCommand("fi " + kern_id + " " + instance + " " + var_id + " " + str(call-1) + " 0x00000001 " + var_type + " " + var_name + "\n")
     line = infile.readline()
   infile.close()
   VpaAPI.SetFaultCommand("fi_cmd.txt", False)
@@ -214,6 +217,63 @@ def ReadCmds():
 
         VpaAPI.AddFaultCommand("fi " + str(kern_id) + " " + str(instance) + " " + str(var_id) + " " + str(call) + " " + mask + " " + str(blk) + " " + str(thread) + " " + var_type + " " + var_name + "\n")
   VpaAPI.SetFaultCommand("fi_cmd.txt", False)
+
+
+def FIExec(folder):
+  thread.start_new_thread(FIExecMain, (folder,))
+
+
+def FIExecMain(folder):
+  dst = "fi.sh"
+
+  VpaAPI.SaveFICommands(dst, folder)
+  #infile = open(dst, "w")
+  #infile.write("%s" % VpaAPI.GetFICommands(folder))
+  #infile.close()
+	
+  VpaAPI.ExecCmd("rm -f " + dst)
+  VpaAPI.TxFile(dst, VpaAPI.GetHomeDir() + dst)
+  VpaAPI.ExecCmd("chmod 755 " + dst)
+  VpaAPI.ExecCmd("./" + dst)
+
+
+def FIGetFiles(folder):
+  fiTable = VpaAPI.GetFITable()
+  for index in range(fiTable.getRowCount()):
+    id = "result-" + str(fiTable.getValueAt(index, 0)) + ".txt"
+    VpaAPI.RxFile(VpaAPI.GetHomeDir() + id, id)
+
+
+def FileRead(filename):
+  infile = open(filename, "r")
+  result = ""
+  line = infile.readline()
+  while line is not None:
+    result += line;
+    line = infile.readline()
+  infile.close()
+  return result
+
+
+def FIAnalysis(folder):
+  fiTable = VpaAPI.GetFITable()
+  for index in range(fiTable.getRowCount()):
+    id = "result-" + str(fiTable.getValueAt(index, 0)) + ".txt"
+    output = FileRead(id)
+    fiTable.setValueAt(output, index, 3)
+    if output.contains("SDC Detected: 1"):
+      fiTable.setValueAt("Detect-Ctrl", index, 2)
+    elif output.contains("SDC Detected: 2"):
+      fiTable.setValueAt("Detect-Data", index, 2)
+    elif output.contains("Pass"):
+      if output.contains("Injected: 0") or output.contains("injected: 0"):
+        fiTable.setValueAt("NA", index, 2)
+      else:
+        fiTable.setValueAt("Pass", index, 2)
+    elif output.contains("Mismatch"):
+      fiTable.setValueAt("SDC", index, 2)
+    elif output.contains("Run failed"):
+      fiTable.setValueAt("Crash", index, 2)
 
 
 </script>
@@ -315,22 +375,20 @@ Generate("cuda_fi_prerun")
 ReadCmds()
     </item>
     <item name='Compile FI'>
-Compile("cuda_fi" + nameField.getText())
+Compile("cuda_fi")
     </item>
     <item name='FI'>
-FiThread fi = new FiThread()
-fi.FI_Exec("cuda_fi" + nameField.getText())
-FI_GetFiles("cuda_fi" + nameField.getText())
-FI_Analysis("cuda_fi" + nameField.getText())
+FIExec("cuda_fi")
+FIGetFiles("cuda_fi")
+FIAnalysis("cuda_fi")
       <item name='FI Exp'>
-FiThread fi = new FiThread()
-fi.FI_Exec("cuda_fi" + nameField.getText())
+FIExec("cuda_fi")
       </item>
       <item name='Get Files'>
-FI_GetFiles("cuda_fi" + nameField.getText())
+FIGetFiles("cuda_fi")
       </item>
       <item name='Analysis'>
-FI_Analysis("cuda_fi" + nameField.getText())
+FIAnalysis("cuda_fi")
       </item>
     </item>
     </item>

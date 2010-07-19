@@ -1,108 +1,34 @@
 #ifndef __GPU_FI_H__
 #define __GPU_FI_H__
 
-#define GPUFI_GLOBAL   			1		// define global variables
-#define GPUFI_FUNC_INIT 		1		// define GPUFI_INIT function
-#define GPUFI_FUNC_HALT 		1
-#define GPUFI_FUNC_LIB			1
-#define GPUFI_FUNC_KERNEL 	1
-#define GPUFI_FUNC_LOOP 		1
-#define GPUFI_FUNC_VARIABLE 1
-
 #define GPUFI_CHECK(gpufi,n1,n2) { if(n1 != n2) GPUFI_EXIT(gpufi,0);}
 
 struct _gpufi_fault_ {
-    int kernel;         // invocation index
-                        // if it is 0, it means 'ready to inject'
+    int kernel;     
     int instance;
     int varid;
     int call;
 
-    int mask_type;
-#define MASK_XOR    0    
-//    int mask_length;    // 4 Bytes
     unsigned int mask;  
+//    int mask_type;
+//#define MASK_XOR    0    
+//    int mask_length;    // 4 Bytes
+
     int injected;
     int disabled;
-    int mode;
-};
 
-//__device__ extern int gpufi_mode;
-#define GPUFI_PROFILE 1
-#define GPUFI_FI 			0
-
-#if GPUFI_GLOBAL
-#define MAX_KERNEL		10
-#define MAX_VARIABLE	128
-#define MAX_NAME    	32
-#define GPUFI_TABLE_SIZE 81
-#else
-#define MAX_KERNEL		1
-#define MAX_VARIABLE	1
-#define MAX_NAME    	1
-#define GPUFI_TABLE_SIZE 1
-#endif
-
-struct _gpufi_profile_kernel_ {
-    char state;
-    int id;
-    int instance;
-    char name[MAX_NAME];
-};
-
-
-struct _gpufi_profile_variable_ {
-    int call_count;
-    int loop_id;
-    int type;
-};
-
-struct _gpufi_profile_ {
-    /* profiled data */
-    struct _gpufi_profile_kernel_ kernel[MAX_KERNEL];
-    struct _gpufi_profile_variable_ variable[MAX_KERNEL][MAX_VARIABLE];
-
-    /* in order to maintain current */
-    char kernel_bitmap[MAX_KERNEL];
-    int kernel_instance[MAX_KERNEL];
-
-    char variable_bitmap[MAX_VARIABLE];
-    char variable_name[MAX_VARIABLE][MAX_NAME];
-};
-
-int gpufi_profile_variable_count = 0;
-int gpufi_profile_kernel_count = 0;
-
-struct _gpufi_current_ {
-    int mode;
-    int kernel;
-    int instance;
-    int loop;
-    int loop_count;
-    int iteration;
-
-    int profile_index;
-    int profile_mode;
-    
-#define PROFILE_MODE_NONE 0
-#define PROFILE_MODE_VALUE_LOOP 1
-#define PROFILE_MODE_VALUE_KERNEL 2
-#define PROFILE_MODE_VALUE_THREAD 3
-#define PROFILE_MODE_VALUE_BLOCK 4
-		
     int blid;
     int thid;
 };
 
-//__device__ extern struct _gpufi_current_ gpufi_current;
+struct _gpufi_current_ {
+    int instance;
+    int count;
+};
+
 struct _gpufi_data_ {
   struct _gpufi_fault_ fault;
-#if DEBUG_INJECT_LOC
-  struct _gpufi_fault_ injected;
-#endif
-  struct _gpufi_fault_ debug;
   struct _gpufi_current_ current;
-  struct _gpufi_profile_ profile;
   int sdc;
 };
 

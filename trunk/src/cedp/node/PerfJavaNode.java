@@ -871,7 +871,7 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension window = getSize();
 
-        setLocation(screen.width/2 - window.width/2, screen.height/2 - window.height/2);
+        setLocation(screen.width/2 - window.width/2, 0);//screen.height/2 - window.height/2);
 
         //jButton4ActionPerformed(null);
 
