@@ -1,0 +1,7 @@
+#summary Howto setup a software development toolkit (SDK) for CEDP
+
+
+1. NetBeans
+
+ We use the NetBeans IDE v6.7.1 for the development of CEDP software. NetBeans is an sophisticated IDE for Java and other program developments. As compared with another tool with the similar objective (i.e., Eclipse), NetBeans offers powerful features to develop GUI-based programs. This NetBeans + JDK (Java Development Kit) can be downloaded at http://java.sun.com/j2se/1.5.0/download-netbeans.html
+
