@@ -31,7 +31,7 @@ public class LoginDialog extends javax.swing.JFrame
     Dimension window = getSize();
 
     setLocation(screen.width/2 - window.width/2, screen.height/2 - window.height/2);
-    setVisible(true);
+    //setVisible(true);
   }
 
   /** This method is called from within the constructor to

@@ -1,12 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * PerfJavaNode.java
- *
- * Created on Apr 12, 2010, 6:56:47 PM
+/**
+ * CEDP: Computer Evaluator for Dependability and Performance
+ * This file is distributed under the University of Illinois Open Source
+ * License. See LICENSE.TXT for details.
  */
 
 package cedp.node;
@@ -43,124 +38,125 @@ import vpa.interpreter.VpaProgram;
 import vpa.runtime.VpaAPI;
 
 /**
+ * A class for performance Java node.
  *
- * @author yim6
+ * @author Keun Soo Yim (yim2012@gmail.com)
  */
 public class PerfJavaNode extends JFrame implements ClipboardOwner
 {
-    protected String pjtPath;
-    protected JcraftWrapper net;
-    protected VpaProgram vpaProgram;
+  protected String pjtPath;
+  protected JcraftWrapper net;
+  protected VpaProgram vpaProgram;
 
-    protected Thread    thread;
-    protected String    address;
-    protected int       port;
-    protected String    id;
-    protected String    pwd;
+  protected Thread thread;
+  protected String address;
+  protected int port;
+  protected String id;
+  protected String pwd;
 
-    /** Creates new form PerfJavaNode */
-    public PerfJavaNode() {
-        initComponents();
-    }
+  /** Creates new form PerfJavaNode */
+  public PerfJavaNode() {
+    initComponents();
+  }
 
-    public PerfJavaNode(String base, String addrport, VpaProgram vpa, String cfg)
-    {
-        pjtPath = base;
-        setTitle("[CEDP] Performance Java - " + addrport);
-        initComponents();
-        LoadConfig(pjtPath, cfg);
-        vpaProgram = vpa;
-        vpa.LoadPath(homeField);
-        vpa.LoadBenchmarkInfo(programTable);
-        vpa.BuildCommandTree(cmdTree);
-        VpaAPI.SetNode(this);
-        show();
-    }
+  public PerfJavaNode(String base, String addrport, VpaProgram vpa, String cfg)
+  {
+    pjtPath = base;
+    setTitle("[CEDP] Performance Java - " + addrport);
+    initComponents();
+    LoadConfig(pjtPath, cfg);
+    vpaProgram = vpa;
+    vpa.LoadPath(homeField);
+    vpa.LoadBenchmarkInfo(programTable);
+    vpa.BuildCommandTree(cmdTree);
+    VpaAPI.SetNode(this);
+    show();
+  }
 
-    public String GetCurrentDir()
-    {
-        return homeField.getText() + currDir.getText();
-    }
+  public String GetCurrentDir()
+  {
+    return homeField.getText() + currDir.getText();
+  }
 
-    public String GetHomeDir()
-    {
-        return homeField.getText() + currDir.getText();
-    }
+  public String GetHomeDir()
+  {
+    return homeField.getText() + currDir.getText();
+  }
 
-    public String GetSelectedFile()
-    {
-        if(fileTable.getSelectedRowCount() != 1)
-            return "";
+  public String GetSelectedFile()
+  {
+    if(fileTable.getSelectedRowCount() != 1)
+      return "";
 
-        return fileTable.getModel().getValueAt(fileTable.getSelectedRow(), 1).toString();
-    }
+    return fileTable.getModel().getValueAt(fileTable.getSelectedRow(), 1).toString();
+  }
 
-    public void SetSource(String data)
-    {
-        srcArea.setText(data);
-    }
-    
-    public void Launch(String pAddr, int pPort, String pId, String pPwd)
-    {
-        net = new JcraftWrapper(pAddr, pPort, pId, pPwd, consoleArea);
-        connButtonActionPerformed(null);
-    }
-    
-    protected void SaveConfig()
-    {
-        String buffer;
+  public void SetSource(String data)
+  {
+      srcArea.setText(data);
+  }
 
-        buffer = "benchmark:" + benchmarkField.getText() + "\n";
-        buffer += "home:" + homeField.getText() + "\n";
-        buffer += "filefilter:" + fileFilterField.getText() + "\n";
-        buffer += "currdir:" + currDir.getText() + "\n";
-        System.out.println(pjtPath + configFileField.getText());
-        UtilFile.Write(pjtPath + configFileField.getText(), buffer);
-    }
+  public void Launch(String pAddr, int pPort, String pId, String pPwd)
+  {
+      net = new JcraftWrapper(pAddr, pPort, pId, pPwd, consoleArea);
+      connButtonActionPerformed(null);
+  }
 
-    protected void LoadConfig(String path, String fname)
-    {
-        String buffer = UtilFile.Read(path + fname);
+  protected void SaveConfig()
+  {
+      String buffer;
 
-        configFileField.setText(fname);
-        StringTokenizer token = new StringTokenizer(buffer + "\n", "\n");
-        while (token.hasMoreTokens()) {
-            String ln = token.nextToken();
+      buffer = "benchmark:" + benchmarkField.getText() + "\n";
+      buffer += "home:" + homeField.getText() + "\n";
+      buffer += "filefilter:" + fileFilterField.getText() + "\n";
+      buffer += "currdir:" + currDir.getText() + "\n";
+      System.out.println(pjtPath + configFileField.getText());
+      UtilFile.Write(pjtPath + configFileField.getText(), buffer);
+  }
 
-            if(ln.startsWith("#")) // skip comments
-                continue;
+  protected void LoadConfig(String path, String fname)
+  {
+      String buffer = UtilFile.Read(path + fname);
 
-            StringTokenizer ln_token = new StringTokenizer(ln, ":");
+      configFileField.setText(fname);
+      StringTokenizer token = new StringTokenizer(buffer + "\n", "\n");
+      while (token.hasMoreTokens()) {
+          String ln = token.nextToken();
 
-            String first = ln_token.nextToken();
-            String last;
-            if(ln_token.hasMoreTokens())
-                last = ln_token.nextToken();
-            else
-                last = "";
-            
-            if(first.equals("benchmark"))
-                benchmarkField.setText(last);
-            else if(first.equals("home")){
-                if(!last.endsWith("/"))
-                    last += "/";
-                homeField.setText(last);
-            }
-            else if(first.equals("filefilter")){
-                fileFilterField.setText(last);
-            }
-            else if(first.equals("currdir")){
-                currDir.setText(last);
-            }
-        }
-    }
-    
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
+          if(ln.startsWith("#")) // skip comments
+              continue;
+
+          StringTokenizer ln_token = new StringTokenizer(ln, ":");
+
+          String first = ln_token.nextToken();
+          String last;
+          if(ln_token.hasMoreTokens())
+              last = ln_token.nextToken();
+          else
+              last = "";
+
+          if(first.equals("benchmark"))
+              benchmarkField.setText(last);
+          else if(first.equals("home")){
+              if(!last.endsWith("/"))
+                  last += "/";
+              homeField.setText(last);
+          }
+          else if(first.equals("filefilter")){
+              fileFilterField.setText(last);
+          }
+          else if(first.equals("currdir")){
+              currDir.setText(last);
+          }
+      }
+  }
+
+  /** This method is called from within the constructor to
+   * initialize the form.
+   * WARNING: Do NOT modify this code. The content of this method is
+   * always regenerated by the Form Editor.
+   */
+  @SuppressWarnings("unchecked")
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
@@ -239,6 +235,9 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
     setTitle("[CEDP] Main Controller");
     setResizable(false);
     addWindowListener(new java.awt.event.WindowAdapter() {
+      public void windowClosing(java.awt.event.WindowEvent evt) {
+        formWindowClosing(evt);
+      }
       public void windowOpened(java.awt.event.WindowEvent evt) {
         formWindowOpened(evt);
       }
@@ -342,14 +341,14 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
         .addComponent(jLabel4)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(cmdField, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         .addComponent(progBar, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(jButton5)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addContainerGap())
-      .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 934, Short.MAX_VALUE)
+      .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 809, Short.MAX_VALUE)
     );
     jPanel8Layout.setVerticalGroup(
       jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -377,7 +376,7 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
     jPanel1.setLayout(jPanel1Layout);
     jPanel1Layout.setHorizontalGroup(
       jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 934, Short.MAX_VALUE)
+      .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 809, Short.MAX_VALUE)
     );
     jPanel1Layout.setVerticalGroup(
       jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -408,7 +407,7 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
     );
     jPanel12Layout.setVerticalGroup(
       jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
+      .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
     );
 
     jTabbedPane4.addTab("Source", jPanel12);
@@ -421,7 +420,7 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
     );
     jPanel13Layout.setVerticalGroup(
       jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 294, Short.MAX_VALUE)
+      .addGap(0, 267, Short.MAX_VALUE)
     );
 
     jTabbedPane4.addTab("Http", jPanel13);
@@ -450,7 +449,7 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
       .addGroup(jPanel4Layout.createSequentialGroup()
         .addContainerGap()
         .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(157, Short.MAX_VALUE))
+        .addContainerGap(130, Short.MAX_VALUE))
     );
 
     jTabbedPane4.addTab("FI Campaign", jPanel4);
@@ -476,7 +475,7 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
     jPanel10.setLayout(jPanel10Layout);
     jPanel10Layout.setHorizontalGroup(
       jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
+      .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
     );
     jPanel10Layout.setVerticalGroup(
       jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -493,7 +492,7 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
     jPanel2.setLayout(jPanel2Layout);
     jPanel2Layout.setHorizontalGroup(
       jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jSplitPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 943, Short.MAX_VALUE)
+      .addComponent(jSplitPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 818, Short.MAX_VALUE)
     );
     jPanel2Layout.setVerticalGroup(
       jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -752,8 +751,8 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 1218, Short.MAX_VALUE)
-      .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1218, Short.MAX_VALUE)
+      .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 1067, Short.MAX_VALUE)
+      .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1067, Short.MAX_VALUE)
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -766,750 +765,744 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
     pack();
   }// </editor-fold>//GEN-END:initComponents
 
-    public JTable GetBenchmarkTable()
-    {
-      return programTable;
+  public JTable GetBenchmarkTable()
+  {
+    return programTable;
+  }
+
+  protected void UpdateFileList()
+  {
+      String folder = homeField.getText() + currDir.getText();
+
+      TableModel model = fileTable.getModel();
+      UtilTable.DeleteAll(fileTable);
+
+      net.RunCommandBlocked("ls -al " + folder +  " > /tmp/cedp");
+      net.FtpBlocked("/tmp/cedp", "cedp", net.FtpGet);
+      String buffer = UtilFile.Read("cedp");
+
+      // Build srcTree
+      StringTokenizer token = new StringTokenizer(buffer + "\n", "\n");
+      while (token.hasMoreTokens()) {
+          String ln = token.nextToken();
+
+          StringTokenizer ln_token = new StringTokenizer(ln, " ");
+          if(ln_token.countTokens() < 4)
+              continue;
+
+          Object obj[] = new Object[2];
+
+          String first = ln_token.nextToken();
+          String last = first;
+          if(first.startsWith("d"))
+              obj[0] = "Folder";
+          else
+              obj[0] = "File";
+
+          String temp;
+          while(ln_token.hasMoreTokens()){
+              temp = ln_token.nextToken();
+              if(temp.equals("->")){
+                  obj[0] = (String)obj[0] + "-Symlink";
+                  break; /* symlink */
+              }
+              last = temp;
+          }
+
+          obj[1] = last;
+          UtilTable.AddToTable(fileTable, obj, false);
+      }
+  }
+
+  /*
+  protected void UpdateFileList()
+  {
+      UtilTree.RemoveAll(srcTree);
+
+      net.RunCommandBlocked("find . > /tmp/ceval");
+      net.FtpBlocked("/tmp/ceval", "ceval", net.FtpGet);
+
+      String buffer = UtilFile.Read("ceval");
+
+      // Build srcTree
+      StringTokenizer token = new StringTokenizer(buffer + "\n", "\n");
+      DefaultMutableTreeNode parent;
+      boolean check;
+
+      while (token.hasMoreTokens()) {
+          String ln = token.nextToken();
+
+          if(ln.length()<=2)
+              continue;
+
+          StringTokenizer ln_token = new StringTokenizer(ln.substring(2), "/");
+
+          parent = (DefaultMutableTreeNode) srcTree.getModel().getRoot();
+          while(ln_token.countTokens() > 0){
+              String name = ln_token.nextToken();
+
+              check = false;
+
+              for(int j=0; j<parent.getChildCount(); j++){
+                  if(parent.getChildAt(j).toString().equals(name)){
+                      parent = (DefaultMutableTreeNode)parent.getChildAt(j);
+                      check = true;
+                      break;
+                  }
+              }
+
+              if(!check){
+                  DefaultMutableTreeNode child = new DefaultMutableTreeNode(name);
+                  parent.add(child);
+                  parent = child;
+              }
+          }
+      }
+      UtilTree.ApplyFilter((DefaultMutableTreeNode)srcTree.getModel().getRoot(), fileFilterField.getText());
+
+      UtilTree.ExpandAll(srcTree);
+  }
+  */
+
+  protected Vector GetFileList(String path)
+  {
+      Vector  vec = new Vector();
+      String  buffer;
+      int i;
+
+//        cmdOutputStream.StartMonitor();
+      //Thread thread = RunCommand();
+      //thread.wait(FtpGet)
+/*
+      cmdInputStream.AddCommand("ls " + path + " > /tmp/hifi");
+      Wait(1000);
+      FtpIO("/tmp/hifi", "tmp/filelist", FtpGet);
+      buffer = UtilFile.Read("tmp/filelist");*/
+//        buffer = cmdOutputStream.StopMonitor();
+
+      /*
+      i = 1;
+      while (i < buffer.length()) {
+          while (buffer.charAt(i) == buffer.)
+      }
+      */
+
+      StringTokenizer token = new StringTokenizer(buffer, "\n");
+      while (token.hasMoreTokens()) {
+          String file = token.nextToken();
+          vec.addElement(file);
+      }
+
+      //cmdInputStream.AddCommand("./parboil run " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + " cuda default");
+      return vec;
+  }
+
+  protected Vector InstrGetFiles(String dst)
+  {
+      // TODO add your handling code here:
+      /* 1: get file list */
+      String path = baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/src/" + dst + "/";
+      Vector fileList = GetFileList(path);
+      int i;
+
+      String fileName;
+      String path_dst = baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/src/" + dst + "/";
+
+      FtpIO(".." + File.separator + "instr" + File.separator + "before" + File.separator + "gpufi.h", path_dst + "gpufi.h", FtpPut);
+      UtilFile.Copy(".." + File.separator + "instr" + File.separator + "before" + File.separator + "gpufi.h", "gpufi.h");
+//        FtpIO(".." + File.separator + "instr" + File.separator + "before" + File.separator + "gpufi_kernel.cu", path_dst + "gpufi_kernel.cu", FtpPut);
+
+      /* 2: copy the source code from injector to control server */
+      for(i=0; i<fileList.size(); i++){
+          //fileName = "tmp" + File.separatorChar + fileList.elementAt(i);
+          fileName = "" + fileList.elementAt(i);
+          if(fileName.equals("gpufi.h") || fileName.equals("gpufi_kernel.cu"))
+              continue;
+          if(fileName.endsWith(".cu") || fileName.endsWith(".h") || fileName.endsWith(".cpp")){
+              FtpIO(path + fileList.elementAt(i), fileName, FtpGet);
+          }
+      }
+
+      Wait(1000);
+
+      return fileList;
+  }
+
+  public class Worker implements Runnable
+  {
+      Thread  thread;
+      protected Vector fileList;
+
+      public Worker(Vector v)
+      {
+          fileList = v;
+          thread = new Thread(this);
+          thread.start();
+      }
+
+      public void run()
+      {
+      }
+  }
+
+  protected void InstrRunCetus(String folder, Vector fileList)
+  {
+//        new Worker(fileList);
+      int i;
+      String fileName;
+      String currentPath = "";
+
+      if(fileList == null){
+        String path = baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/src/cuda_cetus/";
+        fileList = GetFileList(path);
+      }
+
+      try{
+          currentPath = new java.io.File(".").getCanonicalPath();
+          //currentPath = currentPath.substring(0, currentPath.length()-1) + File.pathSeparator;
+      } catch(Exception e){
+          e.printStackTrace();
+      }
+
+      //System.getProperty("user.dir");
+
+      /* 3: run CETUS for FI instr. */
+      //String userDir = System.getProperty("user.dir");
+      //System.setProperty("user.dir", userDir + File.separatorChar + "tmp");
+
+      for(i=0; i<fileList.size(); i++){
+      //for(i=fileList.size()-1; i>=0; i--){
+          fileName = "" + fileList.elementAt(i);
+          if(fileName.equals("gpufi_kernel.cu"))
+              continue;
+          if(fileName.endsWith(".cu")){
+              String args[] = null;
+              System.out.println("Instrment: " + fileName);
+              //args[0] = "-cuda-inj";
+              if(folder.equals("cuda_fi")){
+                  args = new String[2];
+                  args[0] = "-fault-injector";
+                  args[1] = fileName;
+              }
+              else if(folder.equals("cuda_ed")){
+                  args = new String[2];
+                  args[0] = "-error-detector1pt";
+                  args[1] = fileName;
+              }
+              else if(folder.equals("cuda_fied")){
+                  args = new String[3];
+                  args[0] = "-fault-injector";
+                  args[1] = "-error-detector";
+                  args[2] = fileName;
+              }
+              else{
+                  args = new String[2];
+                  args[0] = "-fault-injector";
+                  args[1] = fileName;
+              }
+              //args[1] = "-expand-all-header";
+              //args[4] = "-verbosity";
+              //args[2] = "-outdir";
+
+              Driver cetusDriver = new Driver();
+              cetusDriver.run(args);
+              /* C beautifier for instrumented code */
+              AStyleWrapper.Buautifier(fileName, fileName + ".beauty");
+              AStyleWrapper.Buautifier("cetus_output" + File.separator + fileName, "cetus_output" + File.separator + fileName + ".beauty");
+          }
+      }
+      //System.setProperty("user.dir", userDir);
+  }
+
+  protected void InstrPutFiles(String folder, Vector fileList)
+  {
+      int i;
+      String fileName;
+      String path = baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/src/cuda_cetus/";
+
+      if(fileList == null)
+          fileList = GetFileList(path);
+
+      /* 4: store the instrumented file back to the injector */
+      /* copy all files from cuda_cetus to cuda_fi */
+      String path_dst = baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/src/" + folder + "/";
+      cmdInputStream.AddCommand("mkdir " + path_dst + " -p");
+      cmdInputStream.AddCommand("cp " + path + "/* " + path_dst + " -rf");
+      Wait(1000);
+
+      /* overwrite instrumented files */
+      for(i=0; i<fileList.size(); i++){
+          fileName = "" + fileList.elementAt(i);
+          if(fileName.equals("gpufi.h") || fileName.equals("gpufi_kernel.cu"))
+              continue;
+          //fileName = "tmp" + File.separatorChar + fileList.elementAt(i);
+          if(fileName.endsWith(".cu")){
+              FtpIO("cetus_output" + File.separator + fileName + ".beauty", path_dst + fileName, FtpPut);
+          }
+      }
+      Wait(1000);
+
+      /* store FI library files */
+      //cmdInputStream.AddCommand("rm " + path_dst + File.separator + "/gpufi.h -f");
+      FtpIO(".." + File.separator + "instr" + File.separator + folder + File.separator + "gpufi.h", path_dst + "gpufi.h", FtpPut);
+      FtpIO(".." + File.separator + "instr" + File.separator + folder + File.separator + "gpufi_kernel.cu", path_dst + "gpufi_kernel.cu", FtpPut);
+      //cmdInputStream.AddCommand("touch " + path_dst + File.separator + "/gpufi.h");
+  }
+
+  protected void Compile(String folder)
+  {
+      cmdInputStream.AddCommand("./parboil clean " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0));
+      cmdInputStream.AddCommand("./parboil compile " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + " " + folder);
+  }
+
+  protected void Profile(String folder, String options)
+  {
+      String path_dst = baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/src/" + folder + "/";
+
+      FtpIO(".." + File.separator + "instr" + File.separator + folder + File.separator + "gpufi.h", path_dst + "gpufi.h", FtpPut);
+      FtpIO(".." + File.separator + "instr" + File.separator + folder + File.separator + "gpufi_kernel.cu", path_dst + "gpufi_kernel.cu", FtpPut);
+
+      Wait(1000);
+
+      cmdInputStream.AddCommand("rm " + baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/fi_profile.txt -f");
+      cmdInputStream.AddCommand("echo profile " + options + " > " + baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/fi_cmd.txt");
+      cmdInputStream.AddCommand("./parboil run " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + " " + folder + " " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 1));
+      cmdInputStream.AddCommand("cat " + baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/fi_profile.txt");
+  }
+
+  protected void Exec(String folder)
+  {
+      cmdInputStream.AddCommand("./parboil run " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + " " + folder + " " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 1));
+  }
+
+  protected void GenerateGolden(String folder)
+  {
+      Exec(folder);
+      cmdInputStream.AddCommand("cp " + baseFolderText.getText() + "benchmarks/" +  programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/run/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 1) + "/* " +
+                                        baseFolderText.getText() + "benchmarks/" +  programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/output/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 1) + "/* -f");
+  }
+
+  protected int fiIndex;
+
+  protected void AddFaultCmd(BufferedWriter fout, String cmd)
+  {
+      try{
+          fout.write(cmd + "\n");
+      } catch(Exception e){
+          e.printStackTrace();
+      }
+
+      Object obj[] = new Object[3];
+
+      obj[0] = (Object) (String)("" + fiIndex++);
+      obj[1] = (Object) (String)(cmd);
+      obj[2] = (Object) (String)("");
+
+      UtilTable.AddToTable(fiTable, obj, false);
+  }
+
+  protected void ReadCmds()
+  {
+      String str = "";
+      String buf;
+      int i;
+      fiIndex = 0;
+
+//        fiTable.removeAll();
+      UtilTable.DeleteAll(fiTable);
+      try{
+          BufferedWriter fout = new BufferedWriter(new FileWriter("fi_cmd.txt"));
+          String fin = campaignTextArea.getText();
+          i = 0;
+          while(i<fin.length()){
+              str = "";
+              while(true){
+                  if(i>=fin.length())
+                      break;
+                  buf = fin.substring(i, i+1);
+                  i++;
+                  if(buf.equals("\n"))
+                      break;
+                  str += buf;
+              }
+              System.out.println("READ CMDS: " + str);
+
+              StringTokenizer st = new StringTokenizer(str, " ");
+              System.out.println("" + str);
+              System.out.println("" + st.countTokens());
+              if(st.countTokens() == 10){
+                  if(st.nextToken().equals("fi")){
+                      int kern_id = UtilString.String2Int(st.nextToken());
+                      int instance = UtilString.String2Int(st.nextToken());
+                      int var_id = UtilString.String2Int(st.nextToken());
+                      int call = UtilString.String2Int(st.nextToken());
+                      String mask = st.nextToken();
+                      int blk = UtilString.String2Int(st.nextToken());
+                      int thread = UtilString.String2Int(st.nextToken());
+                      String var_type = st.nextToken();
+                      String var_name = st.nextToken();
+
+                      AddFaultCmd(fout, "fi " + kern_id + " " + instance + " " + var_id + " " + (call) + " " + mask + " " + blk + " " + thread + " " + var_type + " " + var_name + "\n");
+                  }
+              }
+          }
+          fout.close();
+      } catch(Exception e){
+          e.printStackTrace();
+      }
+  }
+
+  protected void Generate(String folder)
+  {
+      FtpIO(baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/fi_profile.txt", "fi_profile.txt", FtpGet);
+      Wait(1000);
+      String str = "";
+      int i;
+      int kern_id = -1;
+      String kern_name;
+      int instance = -1;
+      fiIndex = 0;
+
+      fiTable.removeAll()
+      try{
+          BufferedWriter fout = new BufferedWriter(new FileWriter("fi_cmd.txt"));
+          BufferedReader fin = new BufferedReader(new FileReader("fi_profile.txt"));
+          while(fin.ready()){
+              str = fin.readLine();
+              StringTokenizer st = new StringTokenizer(str, "\t");
+              if(st.countTokens() == 4){
+                  if(st.nextToken().equals("kernel")){
+                      kern_id = UtilString.String2Int(st.nextToken());
+                      kern_name = st.nextToken();
+                      instance = UtilString.String2Int(st.nextToken());
+                      System.out.println("fi " + kern_id + " " + instance + " " + kern_name);
+                  }
+              }
+              if(st.countTokens() == 6){
+                  if(st.nextToken().equals("variable")){
+                      int var_id = UtilString.String2Int(st.nextToken());
+                      String var_name = st.nextToken();
+                      int call = UtilString.String2Int(st.nextToken());
+                      int loop_id = UtilString.String2Int(st.nextToken());
+                      String var_type = st.nextToken();
+
+                      AddFaultCmd(fout, "fi " + kern_id + " " + instance + " " + var_id + " " + (call-1) + " 0x80000000 " + var_type + " " + var_name + "\n");
+                      AddFaultCmd(fout, "fi " + kern_id + " " + instance + " " + var_id + " " + (call-1) + " 0x40000000 " + var_type + " " + var_name + "\n");
+                      AddFaultCmd(fout, "fi " + kern_id + " " + instance + " " + var_id + " " + (call-1) + " 0x08000000 " + var_type + " " + var_name + "\n");
+                      AddFaultCmd(fout, "fi " + kern_id + " " + instance + " " + var_id + " " + (call-1) + " 0x00800000 " + var_type + " " + var_name + "\n");
+                      AddFaultCmd(fout, "fi " + kern_id + " " + instance + " " + var_id + " " + (call-1) + " 0x00400000 " + var_type + " " + var_name + "\n");
+                      AddFaultCmd(fout, "fi " + kern_id + " " + instance + " " + var_id + " " + (call-1) + " 0x00001000 " + var_type + " " + var_name + "\n");
+                      AddFaultCmd(fout, "fi " + kern_id + " " + instance + " " + var_id + " " + (call-1) + " 0x00000001 " + var_type + " " + var_name + "\n");
+                      //fiTable.getModel().setValueAt(call, fiIndex, fiIndex);
+                  }
+              }
+          }
+          fout.close();
+      } catch(Exception e){
+          e.printStackTrace();
+      }
+  }
+
+  public class FiThread implements Runnable
+  {
+      protected String folder;
+
+      public FiThread()
+      {
+      }
+
+      public void FI_Exec(String f)
+      {
+          folder = f;
+          Thread thread = new Thread(this);
+          thread.start();
+      }
+
+      public void run()
+      {
+          String dst = "fi.sh";
+          String str = "";
+          String id;
+          int i;
+
+          try{
+              File f = new File(dst);
+
+              if(f.exists())
+                  f.delete();
+
+              BufferedWriter fout = new BufferedWriter(new FileWriter(dst));
+
+              String path_dst = baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/src/" + folder + "/";
+
+              //Compile(folder);
+              //
+              for(i=0; i<fiTable.getRowCount(); i++){
+                  id = "result-" + (String)fiTable.getValueAt(i, 0) + ".txt";
+                  str = (String) fiTable.getValueAt(i, 1);
+                  if(str.endsWith("\n"))
+                      str = str.substring(0, str.length()-1);
+                  //BufferedReader file = new BufferedReader(new FileReader("fi_cmd.txt"));
+
+                  fout.write("rm -f " + id + "\n");
+                  fout.write("echo \"" + str + "\" > benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/fi_cmd.txt" + "\n");
+                  fout.write("cat benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/fi_cmd.txt" + "\n");
+                  fout.write("./parboil run " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + " " + folder + " " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 1) + " > " + id + "\n");
+                  //fout.write("cat " + id + "\n");
+                      //cmdInputStream.AddCommand("cat " + baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/fi_profile.txt");
+              }
+              fout.close();
+          } catch(Exception e){
+              e.printStackTrace();
+          }
+
+          cmdInputStream.AddCommand("rm -f " + dst);
+          Wait(1000);
+          FtpIO(dst, baseFolderText.getText() + dst, FtpPut);
+          Wait(2000);
+          cmdInputStream.AddCommand("chmod 755 " + dst);
+          cmdInputStream.AddCommand("./" + dst);
+      }
+  }
+
+  protected void FI_ExecTest(String folder)
+  {
+    String dst = "fi.sh";
+    String str = "";
+    String id = "";
+    int i;
+
+    try{
+      File f = new File(dst);
+
+      if (f.exists()) {
+        f.delete();
+      }
+
+      BufferedWriter fout = new BufferedWriter(new FileWriter(dst));
+      String path_dst = baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/src/" + folder + "/";
+
+      //Compile(folder);
+      id = "result-test.txt";
+      str = "fi 0 0 0 0 0x0";
+
+      fout.write("rm -f " + id + "\n");
+      fout.write("echo \"" + str + "\" > benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/fi_cmd.txt" + "\n");
+      fout.write("cat benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/fi_cmd.txt" + "\n");
+      fout.write("./parboil run " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + " " + folder + " " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 1) + " > " + id + "\n");
+      fout.close();
+    } catch(Exception e){
+      e.printStackTrace();
     }
 
-    protected void UpdateFileList()
-    {
-        String folder = homeField.getText() + currDir.getText();
+    cmdInputStream.AddCommand("rm -f " + dst);
+    Wait(1000);
+    FtpIO(dst, baseFolderText.getText() + dst, FtpPut);
+    Wait(2000);
+    cmdInputStream.AddCommand("chmod 755 " + dst);
+    cmdInputStream.AddCommand("./" + dst);
+    cmdInputStream.AddCommand("cat " + id);
+  }
 
-        TableModel model = fileTable.getModel();
-        UtilTable.DeleteAll(fileTable);
+  protected void ED_Exec(String folder)
+  {
+    cmdInputStream.AddCommand("./parboil run " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + " cuda " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 1));
+    cmdInputStream.AddCommand("./parboil run " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + " " + folder + " " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 1));
+  }
 
-        net.RunCommandBlocked("ls -al " + folder +  " > /tmp/cedp");
-        net.FtpBlocked("/tmp/cedp", "cedp", net.FtpGet);
-        String buffer = UtilFile.Read("cedp");
+  protected void FI_GetFiles(String folder)
+  {
+    for (int i=0; i<fiTable.getRowCount(); i++) {
+        String id = "result-" + (String)fiTable.getValueAt(i, 0) + ".txt";
+        FtpIO(baseFolderText.getText() + id, id, FtpGet);
+    }
+    Wait(1000);
+  }
 
-        // Build srcTree
-        StringTokenizer token = new StringTokenizer(buffer + "\n", "\n");
-        while (token.hasMoreTokens()) {
-            String ln = token.nextToken();
+  protected void FI_Analysis(String folder)
+  {
+    String str = "";
 
-            StringTokenizer ln_token = new StringTokenizer(ln, " ");
-            if(ln_token.countTokens() < 4)
-                continue;
-
-            Object obj[] = new Object[2];
-
-            String first = ln_token.nextToken();
-            String last = first;
-            if(first.startsWith("d"))
-                obj[0] = "Folder";
-            else
-                obj[0] = "File";
-
-            String temp;
-            while(ln_token.hasMoreTokens()){
-                temp = ln_token.nextToken();
-                if(temp.equals("->")){
-                    obj[0] = (String)obj[0] + "-Symlink";
-                    break; /* symlink */
-                }
-                last = temp;
-            }
-
-            obj[1] = last;
-            UtilTable.AddToTable(fileTable, obj, false);
+    for (int i=0; i<fiTable.getRowCount(); i++) {
+      String id = "result-" + (String)fiTable.getValueAt(i, 0) + ".txt";
+      str = FileRead(id);
+      fiTable.setValueAt((Object)str, i, 3);
+      if(str.contains("SDC Detected: 1")) {
+        fiTable.setValueAt((Object)"Detect-Ctrl", i, 2);
+      }
+      else if(str.contains("SDC Detected: 2")) {
+        fiTable.setValueAt((Object)"Detect-Data", i, 2);
+      }
+      else if(str.contains("Pass")) {
+        if(str.contains("Injected: 0") || str.contains("injected: 0")) {
+          fiTable.setValueAt((Object)"NA", i, 2);
         }
+        else {
+          fiTable.setValueAt((Object)"Pass", i, 2);
+        }
+      }
+      else if(str.contains("Mismatch")) {
+        fiTable.setValueAt((Object)"SDC", i, 2);
+      }
+      else if(str.contains("Run failed")) {
+        fiTable.setValueAt((Object)"Crash", i, 2);
+      }
     }
 
     /*
-    protected void UpdateFileList()
-    {
-        UtilTree.RemoveAll(srcTree);
-
-        net.RunCommandBlocked("find . > /tmp/ceval");
-        net.FtpBlocked("/tmp/ceval", "ceval", net.FtpGet);
-
-        String buffer = UtilFile.Read("ceval");
-
-        // Build srcTree
-        StringTokenizer token = new StringTokenizer(buffer + "\n", "\n");
-        DefaultMutableTreeNode parent;
-        boolean check;
-        
-        while (token.hasMoreTokens()) {
-            String ln = token.nextToken();
-
-            if(ln.length()<=2)
-                continue;
-            
-            StringTokenizer ln_token = new StringTokenizer(ln.substring(2), "/");
-
-            parent = (DefaultMutableTreeNode) srcTree.getModel().getRoot();
-            while(ln_token.countTokens() > 0){
-                String name = ln_token.nextToken();
-
-                check = false;
-                
-                for(int j=0; j<parent.getChildCount(); j++){
-                    if(parent.getChildAt(j).toString().equals(name)){
-                        parent = (DefaultMutableTreeNode)parent.getChildAt(j);
-                        check = true;
-                        break;
-                    }
-                }
-
-                if(!check){
-                    DefaultMutableTreeNode child = new DefaultMutableTreeNode(name);
-                    parent.add(child);
-                    parent = child;
-                }
-            }
-        }
-        UtilTree.ApplyFilter((DefaultMutableTreeNode)srcTree.getModel().getRoot(), fileFilterField.getText());
-        
-        UtilTree.ExpandAll(srcTree);
+    try{
+      //BufferedReader file = new BufferedReader(new FileReader("fi_cmd.txt"));
+      while(file.ready()){
+        str = file.readLine();
+        cmdInputStream.AddCommand("echo " + str + " > benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/fi_cmd.txt");
+        cmdInputStream.AddCommand("./parboil run " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + " " + folder + " " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 1));
+        //cmdInputStream.AddCommand("cat " + baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/fi_profile.txt");
+      }
+    } catch(Exception e){
+      e.printStackTrace();
     }
-     */
+    */
+  }
 
-    
+  public JTable GetFITable()
+  {
+    return fiTable;
+  }
+
+  public void lostOwnership(Clipboard clipboard, Transferable contents) {
+    //throw new UnsupportedOperationException("Not supported yet.");
+  }
+
+  private void installButtonActionPerformed(java.awt.event.ActionEvent evt) {
+  }
+
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        int i;
-        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        Dimension window = getSize();
+      int i;
+      Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+      Dimension window = getSize();
 
-        setLocation(screen.width/2 - window.width/2, 0);//screen.height/2 - window.height/2);
+      setLocation(screen.width/2 - window.width/2, 0);//screen.height/2 - window.height/2);
 
-        //jButton4ActionPerformed(null);
+      //jButton4ActionPerformed(null);
 
-        //for(i=0; i<cmdTree.getRowCount(); i++)
-        //    cmdTree.expandRow(i);
-        // TODO add your handling code here:
-        //programTable.getSelectionModel().se
+      //for(i=0; i<cmdTree.getRowCount(); i++)
+      //    cmdTree.expandRow(i);
+      // TODO add your handling code here:
+      //programTable.getSelectionModel().se
     }//GEN-LAST:event_formWindowOpened
 
-    protected Vector GetFileList(String path)
-    {
-        Vector  vec = new Vector();
-        String  buffer;
-        int i;
-
-//        cmdOutputStream.StartMonitor();
-        //Thread thread = RunCommand();
-        //thread.wait(FtpGet)
-/*
-        cmdInputStream.AddCommand("ls " + path + " > /tmp/hifi");
-        Wait(1000);
-        FtpIO("/tmp/hifi", "tmp/filelist", FtpGet);
-        buffer = UtilFile.Read("tmp/filelist");*/
-//        buffer = cmdOutputStream.StopMonitor();
-
-        /*
-        i = 1;
-        while (i < buffer.length()) {
-            while (buffer.charAt(i) == buffer.)
-        }
-        */
-
-        StringTokenizer token = new StringTokenizer(buffer, "\n");
-        while (token.hasMoreTokens()) {
-            String file = token.nextToken();
-            vec.addElement(file);
-        }
-
-        //cmdInputStream.AddCommand("./parboil run " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + " cuda default");
-        return vec;
-    }
-
-    protected Vector InstrGetFiles(String dst)
-    {
-        // TODO add your handling code here:
-        /* 1: get file list */
-        String path = baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/src/" + dst + "/";
-        Vector fileList = GetFileList(path);
-        int i;
-
-        String fileName;
-        String path_dst = baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/src/" + dst + "/";
-        
-        FtpIO(".." + File.separator + "instr" + File.separator + "before" + File.separator + "gpufi.h", path_dst + "gpufi.h", FtpPut);
-        UtilFile.Copy(".." + File.separator + "instr" + File.separator + "before" + File.separator + "gpufi.h", "gpufi.h");
-//        FtpIO(".." + File.separator + "instr" + File.separator + "before" + File.separator + "gpufi_kernel.cu", path_dst + "gpufi_kernel.cu", FtpPut);
-
-        /* 2: copy the source code from injector to control server */
-        for(i=0; i<fileList.size(); i++){
-            //fileName = "tmp" + File.separatorChar + fileList.elementAt(i);
-            fileName = "" + fileList.elementAt(i);
-            if(fileName.equals("gpufi.h") || fileName.equals("gpufi_kernel.cu"))
-                continue;
-            if(fileName.endsWith(".cu") || fileName.endsWith(".h") || fileName.endsWith(".cpp")){
-                FtpIO(path + fileList.elementAt(i), fileName, FtpGet);
-            }
-        }
-
-        Wait(1000);
-
-        return fileList;
-    }
-
-    public class Worker implements Runnable
-    {
-        Thread  thread;
-        protected Vector fileList;
-
-        public Worker(Vector v)
-        {
-            fileList = v;
-            thread = new Thread(this);
-            thread.start();
-        }
-
-        public void run()
-        {
-        }
-    }
-
-    protected void InstrRunCetus(String folder, Vector fileList)
-    {
-//        new Worker(fileList);
-        int i;
-        String fileName;
-        String currentPath = "";
-
-        if(fileList == null){
-            String path = baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/src/cuda_cetus/";
-            fileList = GetFileList(path);
-        }
-
-        try{
-            currentPath = new java.io.File(".").getCanonicalPath();
-            //currentPath = currentPath.substring(0, currentPath.length()-1) + File.pathSeparator;
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-
-        //System.getProperty("user.dir");
-
-        /* 3: run CETUS for FI instr. */
-        //String userDir = System.getProperty("user.dir");
-        //System.setProperty("user.dir", userDir + File.separatorChar + "tmp");
-
-        for(i=0; i<fileList.size(); i++){
-        //for(i=fileList.size()-1; i>=0; i--){
-            fileName = "" + fileList.elementAt(i);
-            if(fileName.equals("gpufi_kernel.cu"))
-                continue;
-            if(fileName.endsWith(".cu")){
-                String args[] = null;
-                System.out.println("Instrment: " + fileName);
-                //args[0] = "-cuda-inj";
-                if(folder.equals("cuda_fi")){
-                    args = new String[2];
-                    args[0] = "-fault-injector";
-                    args[1] = fileName;
-                }
-                else if(folder.equals("cuda_ed")){
-                    args = new String[2];
-                    args[0] = "-error-detector1pt";
-                    args[1] = fileName;
-                }
-                else if(folder.equals("cuda_fied")){
-                    args = new String[3];
-                    args[0] = "-fault-injector";
-                    args[1] = "-error-detector";
-                    args[2] = fileName;
-                }
-                else{
-                    args = new String[2];
-                    args[0] = "-fault-injector";
-                    args[1] = fileName;
-                }
-                //args[1] = "-expand-all-header";
-                //args[4] = "-verbosity";
-                //args[2] = "-outdir";
-
-                Driver cetusDriver = new Driver();
-                cetusDriver.run(args);
-                /* C beautifier for instrumented code */
-                AStyleWrapper.Buautifier(fileName, fileName + ".beauty");
-                AStyleWrapper.Buautifier("cetus_output" + File.separator + fileName, "cetus_output" + File.separator + fileName + ".beauty");
-            }
-        }
-        //System.setProperty("user.dir", userDir);
-    }
-
-    protected void InstrPutFiles(String folder, Vector fileList)
-    {
-        int i;
-        String fileName;
-        String path = baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/src/cuda_cetus/";
-
-        if(fileList == null)
-            fileList = GetFileList(path);
-
-        /* 4: store the instrumented file back to the injector */
-        /* copy all files from cuda_cetus to cuda_fi */
-        String path_dst = baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/src/" + folder + "/";
-        cmdInputStream.AddCommand("mkdir " + path_dst + " -p");
-        cmdInputStream.AddCommand("cp " + path + "/* " + path_dst + " -rf");
-        Wait(1000);
-
-        /* overwrite instrumented files */
-        for(i=0; i<fileList.size(); i++){
-            fileName = "" + fileList.elementAt(i);
-            if(fileName.equals("gpufi.h") || fileName.equals("gpufi_kernel.cu"))
-                continue;
-            //fileName = "tmp" + File.separatorChar + fileList.elementAt(i);
-            if(fileName.endsWith(".cu")){
-                FtpIO("cetus_output" + File.separator + fileName + ".beauty", path_dst + fileName, FtpPut);
-            }
-        }
-        Wait(1000);
-
-        /* store FI library files */
-        //cmdInputStream.AddCommand("rm " + path_dst + File.separator + "/gpufi.h -f");
-        FtpIO(".." + File.separator + "instr" + File.separator + folder + File.separator + "gpufi.h", path_dst + "gpufi.h", FtpPut);
-        FtpIO(".." + File.separator + "instr" + File.separator + folder + File.separator + "gpufi_kernel.cu", path_dst + "gpufi_kernel.cu", FtpPut);
-        //cmdInputStream.AddCommand("touch " + path_dst + File.separator + "/gpufi.h");
-    }
-
-    protected void Compile(String folder)
-    {
-        cmdInputStream.AddCommand("./parboil clean " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0));
-        cmdInputStream.AddCommand("./parboil compile " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + " " + folder);
-    }
-
-    protected void Profile(String folder, String options)
-    {
-        String path_dst = baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/src/" + folder + "/";
-
-        FtpIO(".." + File.separator + "instr" + File.separator + folder + File.separator + "gpufi.h", path_dst + "gpufi.h", FtpPut);
-        FtpIO(".." + File.separator + "instr" + File.separator + folder + File.separator + "gpufi_kernel.cu", path_dst + "gpufi_kernel.cu", FtpPut);
-
-        Wait(1000);
-
-        cmdInputStream.AddCommand("rm " + baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/fi_profile.txt -f");
-        cmdInputStream.AddCommand("echo profile " + options + " > " + baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/fi_cmd.txt");
-        cmdInputStream.AddCommand("./parboil run " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + " " + folder + " " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 1));
-        cmdInputStream.AddCommand("cat " + baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/fi_profile.txt");
-    }
-
-    protected void Exec(String folder)
-    {
-        cmdInputStream.AddCommand("./parboil run " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + " " + folder + " " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 1));
-    }
-
-    protected void GenerateGolden(String folder)
-    {
-        Exec(folder);
-        cmdInputStream.AddCommand("cp " + baseFolderText.getText() + "benchmarks/" +  programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/run/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 1) + "/* " +
-                                          baseFolderText.getText() + "benchmarks/" +  programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/output/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 1) + "/* -f");
-    }
-
-    protected int fiIndex;
-    
-    protected void AddFaultCmd(BufferedWriter fout, String cmd)
-    {
-        try{
-            fout.write(cmd + "\n");
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-
-        Object obj[] = new Object[3];
-
-        obj[0] = (Object) (String)("" + fiIndex++);
-        obj[1] = (Object) (String)(cmd);
-        obj[2] = (Object) (String)("");
-        
-        UtilTable.AddToTable(fiTable, obj, false);
-    }
-
-    protected void ReadCmds()
-    {
-        String str = "";
-        String buf;
-        int i;
-        fiIndex = 0;
-
-//        fiTable.removeAll();
-        UtilTable.DeleteAll(fiTable);
-        try{
-            BufferedWriter fout = new BufferedWriter(new FileWriter("fi_cmd.txt"));
-            String fin = campaignTextArea.getText();
-            i = 0;
-            while(i<fin.length()){
-                str = "";
-                while(true){
-                    if(i>=fin.length())
-                        break;
-                    buf = fin.substring(i, i+1);
-                    i++;
-                    if(buf.equals("\n"))
-                        break;
-                    str += buf;
-                }
-                System.out.println("READ CMDS: " + str);
-                
-                StringTokenizer st = new StringTokenizer(str, " ");
-                System.out.println("" + str);
-                System.out.println("" + st.countTokens());
-                if(st.countTokens() == 10){
-                    if(st.nextToken().equals("fi")){
-                        int kern_id = UtilString.String2Int(st.nextToken());
-                        int instance = UtilString.String2Int(st.nextToken());
-                        int var_id = UtilString.String2Int(st.nextToken());
-                        int call = UtilString.String2Int(st.nextToken());
-                        String mask = st.nextToken();
-                        int blk = UtilString.String2Int(st.nextToken());
-                        int thread = UtilString.String2Int(st.nextToken());
-                        String var_type = st.nextToken();
-                        String var_name = st.nextToken();
-
-                        AddFaultCmd(fout, "fi " + kern_id + " " + instance + " " + var_id + " " + (call) + " " + mask + " " + blk + " " + thread + " " + var_type + " " + var_name + "\n");
-                    }
-                }
-            }
-            fout.close();
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    protected void Generate(String folder)
-    {
-        FtpIO(baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/fi_profile.txt", "fi_profile.txt", FtpGet);
-        Wait(1000);
-        String str = "";
-        int i;
-        int kern_id = -1;
-        String kern_name;
-        int instance = -1;
-        fiIndex = 0;
-
-        fiTable.removeAll()
-        try{
-            BufferedWriter fout = new BufferedWriter(new FileWriter("fi_cmd.txt"));
-            BufferedReader fin = new BufferedReader(new FileReader("fi_profile.txt"));
-            while(fin.ready()){
-                str = fin.readLine();
-                StringTokenizer st = new StringTokenizer(str, "\t");
-                if(st.countTokens() == 4){
-                    if(st.nextToken().equals("kernel")){
-                        kern_id = UtilString.String2Int(st.nextToken());
-                        kern_name = st.nextToken();
-                        instance = UtilString.String2Int(st.nextToken());
-                        System.out.println("fi " + kern_id + " " + instance + " " + kern_name);
-                    }
-                }
-                if(st.countTokens() == 6){
-                    if(st.nextToken().equals("variable")){
-                        int var_id = UtilString.String2Int(st.nextToken());
-                        String var_name = st.nextToken();
-                        int call = UtilString.String2Int(st.nextToken());
-                        int loop_id = UtilString.String2Int(st.nextToken());
-                        String var_type = st.nextToken();
-
-                        AddFaultCmd(fout, "fi " + kern_id + " " + instance + " " + var_id + " " + (call-1) + " 0x80000000 " + var_type + " " + var_name + "\n");
-                        AddFaultCmd(fout, "fi " + kern_id + " " + instance + " " + var_id + " " + (call-1) + " 0x40000000 " + var_type + " " + var_name + "\n");
-                        AddFaultCmd(fout, "fi " + kern_id + " " + instance + " " + var_id + " " + (call-1) + " 0x08000000 " + var_type + " " + var_name + "\n");
-                        AddFaultCmd(fout, "fi " + kern_id + " " + instance + " " + var_id + " " + (call-1) + " 0x00800000 " + var_type + " " + var_name + "\n");
-                        AddFaultCmd(fout, "fi " + kern_id + " " + instance + " " + var_id + " " + (call-1) + " 0x00400000 " + var_type + " " + var_name + "\n");
-                        AddFaultCmd(fout, "fi " + kern_id + " " + instance + " " + var_id + " " + (call-1) + " 0x00001000 " + var_type + " " + var_name + "\n");
-                        AddFaultCmd(fout, "fi " + kern_id + " " + instance + " " + var_id + " " + (call-1) + " 0x00000001 " + var_type + " " + var_name + "\n");
-                        //fiTable.getModel().setValueAt(call, fiIndex, fiIndex);
-                    }
-                }
-            }
-            fout.close();
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    public class FiThread implements Runnable
-    {
-        protected String folder;
-        
-        public FiThread()
-        {
-        }
-
-        public void FI_Exec(String f)
-        {
-            folder = f;
-            Thread thread = new Thread(this);
-            thread.start();
-        }
-
-        public void run()
-        {
-            String dst = "fi.sh";
-            String str = "";
-            String id;
-            int i;
-
-            try{
-                File f = new File(dst);
-
-                if(f.exists())
-                    f.delete();
-
-                BufferedWriter fout = new BufferedWriter(new FileWriter(dst));
-
-                String path_dst = baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/src/" + folder + "/";
-
-                //Compile(folder);
-                //
-                for(i=0; i<fiTable.getRowCount(); i++){
-                    id = "result-" + (String)fiTable.getValueAt(i, 0) + ".txt";
-                    str = (String) fiTable.getValueAt(i, 1);
-                    if(str.endsWith("\n"))
-                        str = str.substring(0, str.length()-1);
-                    //BufferedReader file = new BufferedReader(new FileReader("fi_cmd.txt"));
-
-                    fout.write("rm -f " + id + "\n");
-                    fout.write("echo \"" + str + "\" > benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/fi_cmd.txt" + "\n");
-                    fout.write("cat benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/fi_cmd.txt" + "\n");
-                    fout.write("./parboil run " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + " " + folder + " " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 1) + " > " + id + "\n");
-                    //fout.write("cat " + id + "\n");
-                        //cmdInputStream.AddCommand("cat " + baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/fi_profile.txt");
-                }
-                fout.close();
-            } catch(Exception e){
-                e.printStackTrace();
-            }
-
-            cmdInputStream.AddCommand("rm -f " + dst);
-            Wait(1000);
-            FtpIO(dst, baseFolderText.getText() + dst, FtpPut);
-            Wait(2000);
-            cmdInputStream.AddCommand("chmod 755 " + dst);
-            cmdInputStream.AddCommand("./" + dst);
-        }
-    }
-
-    protected void FI_ExecTest(String folder)
-    {
-        String dst = "fi.sh";
-        String str = "";
-        String id = "";
-        int i;
-
-        try{
-            File f = new File(dst);
-
-            if(f.exists())
-                f.delete();
-
-            BufferedWriter fout = new BufferedWriter(new FileWriter(dst));
-
-            String path_dst = baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/src/" + folder + "/";
-
-            //Compile(folder);
-            //
-            id = "result-test.txt";
-            str = "fi 0 0 0 0 0x0";
-
-            fout.write("rm -f " + id + "\n");
-            fout.write("echo \"" + str + "\" > benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/fi_cmd.txt" + "\n");
-            fout.write("cat benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/fi_cmd.txt" + "\n");
-            fout.write("./parboil run " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + " " + folder + " " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 1) + " > " + id + "\n");
-            fout.close();
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-
-        cmdInputStream.AddCommand("rm -f " + dst);
-        Wait(1000);
-        FtpIO(dst, baseFolderText.getText() + dst, FtpPut);
-        Wait(2000);
-        cmdInputStream.AddCommand("chmod 755 " + dst);
-        cmdInputStream.AddCommand("./" + dst);
-        cmdInputStream.AddCommand("cat " + id);
-    }
-
-    protected void ED_Exec(String folder)
-    {
-        cmdInputStream.AddCommand("./parboil run " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + " cuda " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 1));
-        cmdInputStream.AddCommand("./parboil run " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + " " + folder + " " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 1));
-    }
-
-    protected void FI_GetFiles(String folder)
-    {
-        String str = "";
-        String id;
-        int i;
-
-        for(i=0; i<fiTable.getRowCount(); i++){
-            id = "result-" + (String)fiTable.getValueAt(i, 0) + ".txt";
-            FtpIO(baseFolderText.getText() + id, id, FtpGet);
-        }
-
-        Wait(1000);
-    }
-
-    protected void FI_Analysis(String folder)
-    {
-        String str = "";
-        String id;
-        int i;
-        
-        for(i=0; i<fiTable.getRowCount(); i++){
-            id = "result-" + (String)fiTable.getValueAt(i, 0) + ".txt";
-            str = FileRead(id);
-            fiTable.setValueAt((Object)str, i, 3);
-            if(str.contains("SDC Detected: 1")){
-                fiTable.setValueAt((Object)"Detect-Ctrl", i, 2);
-            }
-            else if(str.contains("SDC Detected: 2")){
-                fiTable.setValueAt((Object)"Detect-Data", i, 2);
-            }
-            else if(str.contains("Pass")){
-                if(str.contains("Injected: 0") || str.contains("injected: 0"))
-                    fiTable.setValueAt((Object)"NA", i, 2);
-                else
-                    fiTable.setValueAt((Object)"Pass", i, 2);
-            }
-            else if(str.contains("Mismatch")){
-                fiTable.setValueAt((Object)"SDC", i, 2);
-            }
-            else if(str.contains("Run failed")){
-                fiTable.setValueAt((Object)"Crash", i, 2);
-            }
-        }
-        
-        /*
-        try{
-            //BufferedReader file = new BufferedReader(new FileReader("fi_cmd.txt"));
-            while(file.ready()){
-                str = file.readLine();
-                cmdInputStream.AddCommand("echo " + str + " > benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/fi_cmd.txt");
-                cmdInputStream.AddCommand("./parboil run " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + " " + folder + " " + programTable.getModel().getValueAt(programTable.getSelectedRow(), 1));
-                //cmdInputStream.AddCommand("cat " + baseFolderText.getText() + "benchmarks/" + programTable.getModel().getValueAt(programTable.getSelectedRow(), 0) + "/fi_profile.txt");
-            }
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-        */
-    }
-
-    public JTable GetFITable()
-    {
-      return fiTable;
-    }
-    
-    public void lostOwnership(Clipboard clipboard, Transferable contents) {
-        //throw new UnsupportedOperationException("Not supported yet.");
-    }
-
     private void cmdTreeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmdTreeMousePressed
-        // TODO add your handling code here:
-        int selRow = cmdTree.getRowForLocation(evt.getX(), evt.getY());
-        TreePath selPath = cmdTree.getPathForLocation(evt.getX(), evt.getY());
+      // TODO add your handling code here:
+      int selRow = cmdTree.getRowForLocation(evt.getX(), evt.getY());
+      TreePath selPath = cmdTree.getPathForLocation(evt.getX(), evt.getY());
 
-        cmdAreaFocusLost(null); /* save the current context of cmdArea as a tooltip */
-        
-        if(selRow != -1) {
-            DefaultMutableTreeNode node = (DefaultMutableTreeNode) selPath.getLastPathComponent();
-            
-            if(evt.getClickCount() == 1) {
-                if(node instanceof ToolTipTreeNode){
-                    ToolTipTreeNode tnode = (ToolTipTreeNode) node;
-                    cmdArea.setText(tnode.GetToolTipText());
-                }
-                else
-                    cmdArea.setText("");
-            }
-            else if(evt.getClickCount() == 2) {
-                if(node instanceof ToolTipTreeNode && node.getChildCount() == 0){
-                    ToolTipTreeNode tnode = (ToolTipTreeNode) node;
-                    //System.out.println("Jython : " + cmdArea.getText());
-                    JythonWrapper.Exec(vpaProgram.GetScript() + "\n" + cmdArea.getText());
-                }
-            }
-        }
+      cmdAreaFocusLost(null); /* save the current context of cmdArea as a tooltip */
+
+      if(selRow != -1) {
+          DefaultMutableTreeNode node = (DefaultMutableTreeNode) selPath.getLastPathComponent();
+
+          if(evt.getClickCount() == 1) {
+              if(node instanceof ToolTipTreeNode){
+                  ToolTipTreeNode tnode = (ToolTipTreeNode) node;
+                  cmdArea.setText(tnode.GetToolTipText());
+              }
+              else
+                  cmdArea.setText("");
+          }
+          else if(evt.getClickCount() == 2) {
+              if(node instanceof ToolTipTreeNode && node.getChildCount() == 0){
+                  ToolTipTreeNode tnode = (ToolTipTreeNode) node;
+                  //System.out.println("Jython : " + cmdArea.getText());
+                  JythonWrapper.Exec(vpaProgram.GetScript() + "\n" + cmdArea.getText());
+              }
+          }
+      }
     }//GEN-LAST:event_cmdTreeMousePressed
 
     private void fileTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fileTableMousePressed
-        // TODO add your handling code here:
-        if(fileTable.getSelectedRowCount() != 1)
-            return;
+      // TODO add your handling code here:
+      if(fileTable.getSelectedRowCount() != 1)
+          return;
 
-        if(evt.getClickCount() == 1) {
-        }
-        else if(evt.getClickCount() == 2) {
-            if(fileTable.getModel().getValueAt(fileTable.getSelectedRow(), 0).toString().startsWith("Folder")){
-                String dir = currDir.getText();
-                String fname = fileTable.getModel().getValueAt(fileTable.getSelectedRow(), 1).toString();
-                if(fname.equals(".")){
-                    /* do nothing */
-                }
-                else if(fname.equals("..")){
-                    /* find the second last '/' */
-                    StringTokenizer token = new StringTokenizer(dir, "/");
-                    if(token.countTokens() == 0){
-                        /* do nothing */
-                        System.out.println("browsing parent directory of home folder is not supported.");
-                    }
-                    else if(token.countTokens() == 1){
-                        currDir.setText("");
-                        UpdateFileList();
-                    }
-                    else{
-                        dir = "";
-                        int cnt = token.countTokens();
-                        for(int i=0; i<cnt-1; i++){
-                            dir += token.nextToken() + "/";
-                        }
-                        currDir.setText(dir);
-                        UpdateFileList();
-                    }
-                }
-                else{
-                    dir += fname + "/";
-                    currDir.setText(dir);
-                    UpdateFileList();
-                }
-            }
-        }
+      if(evt.getClickCount() == 1) {
+      }
+      else if(evt.getClickCount() == 2) {
+          if(fileTable.getModel().getValueAt(fileTable.getSelectedRow(), 0).toString().startsWith("Folder")){
+              String dir = currDir.getText();
+              String fname = fileTable.getModel().getValueAt(fileTable.getSelectedRow(), 1).toString();
+              if(fname.equals(".")){
+                  /* do nothing */
+              }
+              else if(fname.equals("..")){
+                  /* find the second last '/' */
+                  StringTokenizer token = new StringTokenizer(dir, "/");
+                  if(token.countTokens() == 0){
+                      /* do nothing */
+                      System.out.println("browsing parent directory of home folder is not supported.");
+                  }
+                  else if(token.countTokens() == 1){
+                      currDir.setText("");
+                      UpdateFileList();
+                  }
+                  else{
+                      dir = "";
+                      int cnt = token.countTokens();
+                      for(int i=0; i<cnt-1; i++){
+                          dir += token.nextToken() + "/";
+                      }
+                      currDir.setText(dir);
+                      UpdateFileList();
+                  }
+              }
+              else{
+                  dir += fname + "/";
+                  currDir.setText(dir);
+                  UpdateFileList();
+              }
+          }
+      }
     }//GEN-LAST:event_fileTableMousePressed
 
     private void cmdAreaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmdAreaFocusLost
-        // TODO add your handling code here:
-        if(cmdTree == null || cmdTree.getSelectionPath() == null)
-            return;
+      // TODO add your handling code here:
+      if(cmdTree == null || cmdTree.getSelectionPath() == null)
+          return;
 
-        DefaultMutableTreeNode node = (DefaultMutableTreeNode)cmdTree.getSelectionPath().getLastPathComponent();
+      DefaultMutableTreeNode node = (DefaultMutableTreeNode)cmdTree.getSelectionPath().getLastPathComponent();
 
-        if(node instanceof ToolTipTreeNode && node.getChildCount() == 0){
-            ToolTipTreeNode tnode = (ToolTipTreeNode)node;
-            tnode.SetToolTipText(cmdArea.getText());
-        }
+      if(node instanceof ToolTipTreeNode && node.getChildCount() == 0){
+          ToolTipTreeNode tnode = (ToolTipTreeNode)node;
+          tnode.SetToolTipText(cmdArea.getText());
+      }
     }//GEN-LAST:event_cmdAreaFocusLost
 
     private void connButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connButtonActionPerformed
-        // TODO add your handling code here:
-        attachMenuItemActionPerformed(null);
+      attachMenuItemActionPerformed(null);
     }//GEN-LAST:event_connButtonActionPerformed
 
     private void progTreeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_progTreeMousePressed
-        // TODO add your handling code here:
     }//GEN-LAST:event_progTreeMousePressed
 
     private void installMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_installMenuItemActionPerformed
-        // TODO add your handling code here:
-        /* install host side compiler */
-        // we use CPP installed by cygwin (change the PATH to /cygwin/bin and
-        // copy /cygwin/bin/cpp-3.exe /cygwin/bin/cpp.exe
-        // replace the header files (usr/include) by one from Linux (mahler)
+      // TODO add your handling code here:
+      /* install host side compiler */
+      // we use CPP installed by cygwin (change the PATH to /cygwin/bin and
+      // copy /cygwin/bin/cpp-3.exe /cygwin/bin/cpp.exe
+      // replace the header files (usr/include) by one from Linux (mahler)
 }//GEN-LAST:event_installMenuItemActionPerformed
 
     private void attachMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attachMenuItemActionPerformed
-        // TODO add your handling code here:
-        new UtilThread(null){public void run(){
-            progBar.Process();
+      // TODO add your handling code here:
+      new UtilThread(null){public void run(){
+          progBar.Process();
 
-            net.RunCommandBlocked("cd " + homeField.getText());
-            net.RunCommandBlocked("source path");
-            UpdateFileList();
+          net.RunCommandBlocked("cd " + homeField.getText());
+          net.RunCommandBlocked("source path");
+          UpdateFileList();
 
-            progBar.Done();
-        }};
-        //        cmdInputStream.AddCommand("source path");
+          progBar.Done();
+      }};
+      //        cmdInputStream.AddCommand("source path");
 }//GEN-LAST:event_attachMenuItemActionPerformed
 
     private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
@@ -1572,8 +1565,6 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
-
-
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         SaveConfig();
@@ -1589,177 +1580,172 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
       JythonWrapper.Exec(vpaProgram.GetScript() + "\n" + cmdArea.getText());
     }//GEN-LAST:event_execButtonActionPerformed
 
-    private void installButtonActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        
-        // TODO add your handling code here:
-                                                 
-        // TODO add your handling code here:
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+      // TODO add your handling code here:
+      System.exit(-1);
+    }//GEN-LAST:event_formWindowClosing
 
-    
-    }                                             
+  /*
+  public class CmdInputStream extends InputStream
+  {
+      Vector vec;
+      int pos;
+      int count;
 
+      public CmdInputStream()
+      {
+          vec = new Vector();
+          pos = 0;
+          count = 0;
+      }
 
-    /*
-    public class CmdInputStream extends InputStream
-    {
-        Vector vec;
-        int pos;
-        int count;
+      public void AddCommand(String cmd)
+      {
+          vec.addElement(cmd + "\n");
+          count += cmd.length();
+      }
 
-        public CmdInputStream()
-        {
-            vec = new Vector();
-            pos = 0;
-            count = 0;
-        }
+      public int available() throws IOException
+      {
+          return count;
+      }
 
-        public void AddCommand(String cmd)
-        {
-            vec.addElement(cmd + "\n");
-            count += cmd.length();
-        }
+      public int read() throws IOException
+      {
+          int result = -1;
 
-        public int available() throws IOException
-        {
-            return count;
-        }
+          if(vec == null)
+              return -1;
 
-        public int read() throws IOException
-        {
-            int result = -1;
+          while(true){
+              if(vec.isEmpty())
+                  return -1;
 
-            if(vec == null)
-                return -1;
+              String cmd = (String)vec.elementAt(0);
+              if(pos >= cmd.length()){
+                  vec.removeElementAt(0);
+                  pos = 0;
+                  continue;
+              }
+              result = cmd.charAt(pos);
+              pos++;
+              count--;
+              break;
+          }
+          //throw IOException
+          return result;
+      }
 
-            while(true){
-                if(vec.isEmpty())
-                    return -1;
+      // an over rided function which does not return -1.
+      public int read(byte b[], int off, int len) throws IOException
+      {
+          if (b == null) {
+              throw new NullPointerException();
+          } else if (off < 0 || len < 0 || len > b.length - off) {
+              throw new IndexOutOfBoundsException();
+          } else if (len == 0) {
+              return 0;
+          }
 
-                String cmd = (String)vec.elementAt(0);
-                if(pos >= cmd.length()){
-                    vec.removeElementAt(0);
-                    pos = 0;
-                    continue;
-                }
-                result = cmd.charAt(pos);
-                pos++;
-                count--;
-                break;
-            }
-            //throw IOException
-            return result;
-        }
+          int c = read();
+          if (c == -1) {
+              return 0;
+          }
+          b[off] = (byte)c;
 
-        // an over rided function which does not return -1.
-        public int read(byte b[], int off, int len) throws IOException
-        {
-            if (b == null) {
-                throw new NullPointerException();
-            } else if (off < 0 || len < 0 || len > b.length - off) {
-                throw new IndexOutOfBoundsException();
-            } else if (len == 0) {
-                return 0;
-            }
+          int i = 1;
+          try {
+              for (; i < len ; i++) {
+                  c = read();
+                  if (c == -1) {
+                      break;
+                  }
+                  b[off + i] = (byte)c;
+              }
+          } catch (IOException ee) {
+          }
+          return i;
+      }
+  }
 
-            int c = read();
-            if (c == -1) {
-                return 0;
-            }
-            b[off] = (byte)c;
+  public InputStream GetInputStream(final String cmd)
+  {
+      return new InputStream(){
+          String s = cmd;
+          int inPtr=0;
+          public int read()  //minimum implementation of an InputStream
+          {
+              if( inPtr >= s.length() )
+                  return -1;
+              else {
+                  inPtr++;
+                  return s.charAt(inPtr-1);
+              }
+          }//read
+      };//InputStream
+  }//textArea2InputStream
 
-            int i = 1;
-            try {
-                for (; i < len ; i++) {
-                    c = read();
-                    if (c == -1) {
-                        break;
-                    }
-                    b[off + i] = (byte)c;
-                }
-            } catch (IOException ee) {
-            }
-            return i;
-        }
-    }
+  public class CmdOutputStream extends OutputStream
+  {
+      String      monitor_buffer;
+      boolean     monitor_enable;
+      JTextArea   textArea;
 
-    public InputStream GetInputStream(final String cmd)
-    {
-        return new InputStream(){
-            String s = cmd;
-            int inPtr=0;
-            public int read()  //minimum implementation of an InputStream
-            {
-                if( inPtr >= s.length() )
-                    return -1;
-                else {
-                    inPtr++;
-                    return s.charAt(inPtr-1);
-                }
-            }//read
-        };//InputStream
-    }//textArea2InputStream
+      public CmdOutputStream(JTextArea t)
+      {
+          textArea = t;
+          monitor_buffer = "";
+          monitor_enable = false;
+      }
 
-    public class CmdOutputStream extends OutputStream
-    {
-        String      monitor_buffer;
-        boolean     monitor_enable;
-        JTextArea   textArea;
+      public void StartMonitor()
+      {
+          monitor_enable = true;
+          monitor_buffer = "";
+      }
 
-        public CmdOutputStream(JTextArea t)
-        {
-            textArea = t;
-            monitor_buffer = "";
-            monitor_enable = false;
-        }
+      public String StopMonitor()
+      {
+          monitor_enable = false;
+          return monitor_buffer;
+      }
 
-        public void StartMonitor()
-        {
-            monitor_enable = true;
-            monitor_buffer = "";
-        }
+      public void write(int b) //minimum implementation of an OutputStream
+      {
+          String bstr;
+          byte[] bs = new byte[1];
+          bs[0] = (byte) b;
 
-        public String StopMonitor()
-        {
-            monitor_enable = false;
-            return monitor_buffer;
-        }
+          bstr = new String(bs);
+          textArea.append(bstr);
+          textArea.setCaretPosition(textArea.getText().length()-1);
+          //AsyncUpdate(bstr);
+          if(monitor_enable)
+              monitor_buffer += bstr;
+      }
 
-        public void write(int b) //minimum implementation of an OutputStream
-        {
-            String bstr;
-            byte[] bs = new byte[1];
-            bs[0] = (byte) b;
+      private void AsyncUpdate(final String text)
+      {
+          SwingUtilities.invokeLater(new Runnable() {
+              public void run() {
+                  textArea.append(text);
+                  textArea.setCaretPosition(textArea.getText().length()-1);
+              }
+          });
+      }
+  }
+  */
 
-            bstr = new String(bs);
-            textArea.append(bstr);
-            textArea.setCaretPosition(textArea.getText().length()-1);
-            //AsyncUpdate(bstr);
-            if(monitor_enable)
-                monitor_buffer += bstr;
-        }
-
-        private void AsyncUpdate(final String text)
-        {
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    textArea.append(text);
-                    textArea.setCaretPosition(textArea.getText().length()-1);
-                }
-            });
-        }
-    }
-    */
-
-    /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PerfJavaNode().setVisible(true);
-            }
-        });
-    }
+  /**
+  * @param args the command line arguments
+  */
+  public static void main(String args[]) {
+    java.awt.EventQueue.invokeLater(new Runnable() {
+      public void run() {
+        new PerfJavaNode().setVisible(true);
+      }
+    });
+  }
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JMenuItem attachMenuItem;
@@ -1833,5 +1819,4 @@ public class PerfJavaNode extends JFrame implements ClipboardOwner
   private javax.swing.JMenuItem saveMenuItem;
   private javax.swing.JTextArea srcArea;
   // End of variables declaration//GEN-END:variables
-
 }
