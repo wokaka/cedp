@@ -1,54 +1,52 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * CEDP: Computer Evaluator for Dependability and Performance
+ * This file is distributed under the University of Illinois Open Source
+ * License. See LICENSE.TXT for details.
  */
-
 package cedp.util;
 
 import java.util.Random;
 
 /**
- *
- * @author Keun Soo Yim
+ * @author Keun Soo Yim (yim2012@gmail.com)
  */
-public class UtilRandom {
+public class UtilRandom
+{
+  protected static Random random;
 
-    protected static Random   random;
-
-    public static long Random(long s, long e)
-    {
-        long     result;
-
-        if(random == null)
-            random = new Random();
-
-        result = random.nextLong();
-
-        if(result < 0)
-            result *= -1;
-
-        result %= (e - s + 1);
-        result += s;
-
-        return result;
+  public static long Random(long s, long e)
+  {
+    if (random == null) {
+      random = new Random();
     }
 
+    long result = random.nextLong();
 
-    public static int Random(int s, int e)
-    {
-        int     result;
-
-        if(random == null)
-            random = new Random();
-
-        result = random.nextInt();
-
-        if(result < 0)
-            result *= -1;
-
-        result %= (e - s + 1);
-        result += s;
-
-        return result;
+    if (result < 0) {
+        result *= -1;
     }
+
+    result %= (e - s + 1);
+    result += s;
+
+    return result;
+  }
+
+  public static int Random(int start, int end)
+  {
+    if (random == null) {
+      random = new Random();
+    }
+
+    int result = random.nextInt();
+
+    if (result < 0) {
+      result *= -1;
+    }
+
+    result %= end - start + 1;
+    result += start;
+
+    return result;
+  }
 }
