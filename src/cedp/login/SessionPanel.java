@@ -1,17 +1,13 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * SessionPanel.java
- *
- * Created on Jul 27, 2009, 11:42:06 PM
+/**
+ * CEDP: Computer Evaluator for Dependability and Performance
+ * This file is distributed under the University of Illinois Open Source
+ * License. See LICENSE.TXT for details.
  */
 
 package cedp.login;
 
 import cedp.node.PerfJavaNode;
+import cedp.util.UtilLog;
 import cedp.util.UtilRandom;
 import cedp.util.UtilString;
 import cedp.util.UtilTable;
@@ -28,253 +24,221 @@ import javax.swing.table.TableCellRenderer;
 import vpa.interpreter.VpaProgram;
 
 /**
- *
- * @author Keun Soo Yim
+ * This class is for a panel that manages a list of sessions.
+ * 
+ * @author Keun Soo Yim (yim2012@gmail.com)
  */
 public class SessionPanel extends javax.swing.JPanel
 {
-    protected final int maxInjector = 1;
-    
-    /** Creates new form SessionPanel */
-    protected final String configFileName = "session-";
-    protected final String basePath = "projects" +  File.separator;
-    protected Frame parent;
+  private final int maxInjector = 1;
+  private final String configFileName = "session-";
+  private final String basePath = "projects" +  File.separator;
+  private Frame parent;
 
-    public SessionPanel()
+  public SessionPanel()
+  {
+      initComponents();
+      InitCampaign();
+  }
+
+  public SessionPanel(Frame p)
+  {
+      parent = p;
+      initComponents();
+      InitCampaign();
+  }
+
+  public void SaveSession()
+  {
+    if(CheckSession()) {
+      Store(nameField.getText(), GetSession());
+      if(idCombo.getSelectedIndex() == 0 ||
+          !nameField.getText().equals(idCombo.getSelectedItem())) {
+        idCombo.addItem(nameField.getText());
+        idCombo.setSelectedIndex(idCombo.getItemCount()-1);
+      }
+    }
+    else {
+      System.out.println("error: check the session name (it could be either empty or duplicated)");
+    }
+  }
+
+  public void DeleteSession()
+  {
+    if(idCombo.getSelectedIndex() != 0) {
+      Delete(nameField.getText());
+      idCombo.removeItemAt(idCombo.getSelectedIndex());
+    }
+    else {
+      SetSession(GetDefaultSession());
+    }
+  }
+
+  /**
+   * This is to print '*' mark on the TextField that contains a confidential
+   * information (e.g., password).
+   */
+  static public class PasswordRenderer extends DefaultTableCellRenderer
+  {
+    protected void setValue(Object value)
     {
-        initComponents();
+      setText("*");
+    }
+  }
+
+  private boolean CheckSession()
+  {
+    // Checks whether it is an empty string
+    String temp = nameField.getText();
+    if(temp == null || temp.length() < 1) {
+      return false;
     }
 
-    public SessionPanel(Frame p)
-    {
-        parent = p;
-        initComponents();
-        InitCampaign();
-    }
-
-    protected void InitCampaign()
-    {
-        Vector      campList;
-        Session     camp;
-        int         i;
-
-        System.out.println("InitCampaign");
-        campList = Init();
-        if(campList != null){
-            for(i=0; i<campList.size(); i++)
-                idCombo.addItem(campList.get(i));
-
-            if(idCombo.getItemCount() == 1){
-                idCombo.setSelectedIndex(0);
-            }
-            else{
-                idCombo.setSelectedIndex(1);
-            }
-            idComboActionPerformed(null);
+    // Checks whether the session name is same as one preexist
+    if(idCombo.getSelectedIndex() == 0) {
+      Vector list = GetCampaignList();
+      for (int i=0; i<list.size(); i++) {
+        if (list.get(i).equals(temp)) {
+          return false;
         }
+      }
     }
 
-    protected Vector Init()
-    {
-        Vector      result = new Vector();
-        String      files[];
-        int         i, cnt;
+    return true;
+  }
 
-        File dir = new File(basePath);
+  private void SetSession(Session camp) {
+    nameField.setText(camp.name);
+    typeCombo.setSelectedIndex(camp.type);
+    UtilTable.SetTableObject(clientTable, camp.client);
+  }
 
-        files = dir.list();
-        if (files != null) {
-            for (i=0, cnt=0; i<files.length; i++) {
-                if(files[i].startsWith("session-") && files[i].endsWith(".cfg")){
-                    result.add(files[i].substring(8, files[i].length() - 4));
-                }
-            }
+  private Session GetSession() {
+    Session session = new Session();
+    session.name = nameField.getText();
+    session.type = typeCombo.getSelectedIndex();
+    session.client = UtilTable.GetTableObject(clientTable);
+    return session;
+  }
+
+  private Session GetDefaultSession()
+  {
+    return new Session();
+  }
+
+  private void InitCampaign()
+  {
+    UtilLog.Info("InitCampaign");
+    Vector campList = GetCampaignList();
+    if(campList != null) {
+      for(int i=0; i < campList.size(); i++) {
+        idCombo.addItem(campList.get(i));
+      }
+
+      if(idCombo.getItemCount() == 1) {
+        idCombo.setSelectedIndex(0);
+      }
+      else {
+        idCombo.setSelectedIndex(1);
+      }
+      idComboActionPerformed(null);
+    }
+  }
+
+  private Vector GetCampaignList()
+  {
+    Vector result = new Vector();
+    File dir = new File(basePath);
+    String[] files = dir.list();
+    if (files != null) {
+      for (int i=0, cnt=0; i < files.length; i++) {
+        if(files[i].startsWith("session-") && files[i].endsWith(".cfg")) {
+          result.add(files[i].substring(8, files[i].length() - 4));
         }
-
-        return result;
+      }
     }
 
-    public boolean Store(String name, Session camp)
-    {
-        ObjectOutputStream out;
+    return result;
+  }
 
-        Delete(name);
+  private boolean Store(String name, Session session)
+  {
+    Delete(name);
 
-        try {
-            out = new ObjectOutputStream(new FileOutputStream(basePath+"session-" + name + ".cfg"));
-
-            out.writeObject(camp);
-
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-
-        return true;
+    try {
+      ObjectOutputStream out = new ObjectOutputStream(
+          new FileOutputStream(basePath + "session-" + name + ".cfg"));
+      out.writeObject(session);
+      out.close();
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
     }
 
-    public Session Load(String name)
-    {
-        ObjectInputStream in;
-        Object obj;
-        Session camp;
-        File file;
+    return true;
+  }
 
-        try{
-            // Check if file exists or not
-            file = new File(basePath+"session-" + name + ".cfg");
-            if(!file.exists())
-                return null;
-
-            // Read data form a file
-            in = new ObjectInputStream(new FileInputStream(basePath+"session-" + name + ".cfg"));
-
-            obj = in.readObject();
-            if(!(obj instanceof Session)){
-                System.out.println("Config file does follow the format.");
-                return null;
-            }
-            camp = (Session) obj;
-
-            in.close();
-
-            return camp;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+  private Session Load(String name)
+  {
+    try{
+      // Checks if the file exists or not
+      File file = new File(basePath + "session-" + name + ".cfg");
+      if(!file.exists()) {
         return null;
-    }
+      }
 
-    public void Delete(String name)
-    {
-        File    file;
+      // Reads data form the file
+      ObjectInputStream in = new ObjectInputStream(
+          new FileInputStream(basePath + "session-" + name + ".cfg"));
 
-        try{
-            file = new File(basePath+"session-" + name + ".cfg");
-            if(file.exists())
-                file.delete();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void SaveSession()
-    {
-        if(CheckSession()){
-            Store(nameField.getText(), GetSession());
-            if(idCombo.getSelectedIndex() == 0 ||
-               !nameField.getText().equals(idCombo.getSelectedItem())){
-                idCombo.addItem(nameField.getText());
-                idCombo.setSelectedIndex(idCombo.getItemCount()-1);
-            }
-        }
-        else
-            System.out.println("error: check the session name (it could be either empty or duplicated)");
-    }
-
-    public void DeleteSession()
-    {
-        // TODO add your handling code here:
-        if(idCombo.getSelectedIndex() != 0){
-            Delete(nameField.getText());
-            idCombo.removeItemAt(idCombo.getSelectedIndex());
-        }
-        else{
-            Session camp;
-            camp = GetDefaultSession();
-            SetSession(camp);
-        }
-    }
-
-    protected boolean CheckSession()
-    {
-        String  temp;
-        Vector  list;
-        int     i;
-
-        // Check whether it's an empty string
-        temp = nameField.getText();
-        if(temp.length() < 1)
-            return false;
-
-        // Check whether the session name is same as one preexist
-        if(idCombo.getSelectedIndex() == 0){
-            list = Init();
-            for(i=0; i<list.size(); i++)
-                if(list.get(i).equals(temp))
-                    return false;
-        }
-
-        return true;
-    }
-
-    private void SetSession(Session camp) {
-        // TODO add your handling code here:
-        nameField.setText(camp.name);
-        typeCombo.setSelectedIndex(camp.type);
-//        serverPortField.setText(camp.serverPort);
-
-        UtilTable.SetTableObject(clientTable, camp.client);
-
-//        appField.setText(camp.application);
-//        kernCheck.setSelected(camp.kernel);
-//        appField.setEditable(!kernelCheck.isSelected());
-
-//        resetServerField.setText(camp.resetIp);
-//        resetPortField.setText(camp.resetPort);
-    }
-
-    private Session GetSession() {
-        Session camp = new Session();
-
-        camp.name = nameField.getText();
-
-        camp.type = typeCombo.getSelectedIndex();
-//        camp.serverPort = serverPortField.getText();
-
-        camp.client = UtilTable.GetTableObject(clientTable);
-
-//        camp.application = appField.getText();
-//        camp.kernel = kernCheck.isSelected();
-
-//        camp.resetIp = resetServerField.getText();
-//        camp.resetPort = resetPortField.getText();
-
-        return camp;
-    }
-
-    private Session GetDefaultSession() {
-        Session camp = new Session();
-
-        return camp;
-    }
-
-    public void Propagate()
-    {
-    }
-
-    public JTable GetNodeTable()
-    {
+      Object obj = in.readObject();
+      if(!(obj instanceof Session)) {
+        UtilLog.Warning("Config file does follow the format.");
         return null;
+      }
+      in.close();
+
+      return (Session) obj;
+    } catch (Exception e) {
+        e.printStackTrace();
     }
 
-    static class PasswordRenderer extends DefaultTableCellRenderer
-    {
-        protected void setValue(Object value)
-        {
-            setText("*");
-        }
+    return null;
+  }
+
+  private void Delete(String name)
+  {
+    try{
+      File file = new File(basePath + "session-" + name + ".cfg");
+      if(file.exists()) {
+        file.delete();
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
+  }
 
+  private String GetMask(int length)
+  {
+    int numOfSelection = 1;
+    int mask = 0;
+    for(int i=0; i < numOfSelection; i++) {
+      int k;
+      do {
+        k = UtilRandom.Random(0, length * 8 - 1);
+        k = 1 << k;
+      } while((k & mask) != 0);
+      mask |= k;
+    }
+    return "0x" + UtilString.Hex2String(mask);
+  }
 
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
+  /** This method is called from within the constructor to
+   * initialize the form.
+   * WARNING: Do NOT modify this code. The content of this method is
+   * always regenerated by the Form Editor.
+   */
+  @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -456,8 +420,8 @@ public class SessionPanel extends javax.swing.JPanel
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        // TODO add your handling code here:
-        SaveSession();
+      // TODO add your handling code here:
+      SaveSession();
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
@@ -466,163 +430,123 @@ public class SessionPanel extends javax.swing.JPanel
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void idComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idComboActionPerformed
-        // TODO add your handling code here:
-        Session camp;
-
-        // TODO add your handling code here:
-        if(idCombo.getSelectedIndex() == 0){
-            camp = GetDefaultSession();
-            SetSession(camp);
+      if(idCombo.getSelectedIndex() == 0) {
+        SetSession(GetDefaultSession());
+      }
+      else {
+        Session session = Load(idCombo.getSelectedItem().toString());
+        if(session == null) {
+          session = GetDefaultSession();
         }
-        else{
-            camp = Load(idCombo.getSelectedItem().toString());
-            if(camp != null){
-                SetSession(camp);
-            }
-            else{
-                camp = GetDefaultSession();
-                SetSession(camp);
-            }
-        }
+        SetSession(session);
+      }
     }//GEN-LAST:event_idComboActionPerformed
 
     private void typeComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeComboActionPerformed
         // TODO add your handling code here:
-
     }//GEN-LAST:event_typeComboActionPerformed
 
     private void launchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_launchButtonActionPerformed
-        // TODO add your handling code here:
-        int     i;
-        String  addr;
-        int  port;
-        String id, pwd;
-        String vpa, cfg;
+      launchButton.disable();
+      parent.hide();
+      if(typeCombo.getSelectedIndex() == 0) { // Performance - Java
+        for(int i=0; i < clientTable.getModel().getRowCount(); i++) {
+          String addr = (String)clientTable.getModel().getValueAt(i, 0);
+          int port = Integer.parseInt((String) clientTable.getModel().getValueAt(i, 1), 10);
+          String id = (String)clientTable.getModel().getValueAt(i, 2);
+          String pwd = (String)clientTable.getModel().getValueAt(i, 3);
+          String vpa = basePath + nameField.getText() + File.separator +
+              (String)clientTable.getModel().getValueAt(i, 4);
+          String cfg = (String)clientTable.getModel().getValueAt(i, 5);
 
-        launchButton.disable();
-
-        parent.hide();
-        if(typeCombo.getSelectedIndex() == 0){ // Performance - Java
-            for(i=0; i<clientTable.getModel().getRowCount(); i++){
-                addr = (String)clientTable.getModel().getValueAt(i, 0);
-                port = Integer.parseInt((String)clientTable.getModel().getValueAt(i, 1), 10);
-                id = (String)clientTable.getModel().getValueAt(i, 2);
-                pwd = (String)clientTable.getModel().getValueAt(i, 3);
-                vpa = basePath + nameField.getText() + File.separator + (String)clientTable.getModel().getValueAt(i, 4);
-                cfg = (String)clientTable.getModel().getValueAt(i, 5);
-
-                PerfJavaNode perfJava = new PerfJavaNode(basePath + nameField.getText() + File.separator, addr+":"+port, new VpaProgram(vpa), cfg);
-                perfJava.Launch(addr, port, id, pwd);
-            }
+          PerfJavaNode perfJava = new PerfJavaNode(basePath + nameField.getText() + File.separator,
+              addr + ":" + port, new VpaProgram(vpa), cfg);
+          perfJava.Launch(addr, port, id, pwd);
         }
+      }
 
-        /*
-        if(typeCombo.getSelectedIndex() == 0){ // OS Injector Master
-            for(i=0; i<clientTable.getModel().getRowCount(); i++){
-                addr = (String)clientTable.getModel().getValueAt(i, 0);
-                port = Integer.parseInt((String)clientTable.getModel().getValueAt(i, 1), 10);
+      /*
+      if(typeCombo.getSelectedIndex() == 0){ // OS Injector Master
+          for(i=0; i<clientTable.getModel().getRowCount(); i++){
+              addr = (String)clientTable.getModel().getValueAt(i, 0);
+              port = Integer.parseInt((String)clientTable.getModel().getValueAt(i, 1), 10);
 
-                mainFrame.CreateMasterInjector(i, addr+":"+port);
+              mainFrame.CreateMasterInjector(i, addr+":"+port);
 //                mainFrame.GetInjector(i).SetInjector(addr, port, Integer.parseInt(serverPortField.getText(), 10), typeCombo.getSelectedIndex());
 //                mainFrame.GetInjector(i).GetResetClientPanel().SetReset(resetServerField.getText(), Integer.parseInt(resetPortField.getText()), (String)clientTable.getModel().getValueAt(i, 2));
-                if(!mainFrame.GetInjector(i).Launch()){
-                    mainFrame.RemoveInjector(i);
-                }
-            }
-        }
-        else if(typeCombo.getSelectedIndex() == 1){ // OS Injector Slave
-            for(i=0; i<clientTable.getModel().getRowCount(); i++){
-                addr = (String)clientTable.getModel().getValueAt(i, 0);
-                port = Integer.parseInt((String)clientTable.getModel().getValueAt(i, 1), 10);
+              if(!mainFrame.GetInjector(i).Launch()){
+                  mainFrame.RemoveInjector(i);
+              }
+          }
+      }
+      else if(typeCombo.getSelectedIndex() == 1){ // OS Injector Slave
+          for(i=0; i<clientTable.getModel().getRowCount(); i++){
+              addr = (String)clientTable.getModel().getValueAt(i, 0);
+              port = Integer.parseInt((String)clientTable.getModel().getValueAt(i, 1), 10);
 
-                mainFrame.CreateSlaveInjector(i, addr+":"+port);
+              mainFrame.CreateSlaveInjector(i, addr+":"+port);
 //                mainFrame.GetInjector(i).SetInjector(addr, port, Integer.parseInt(serverPortField.getText(), 10), typeCombo.getSelectedIndex());
 //                mainFrame.GetInjector(i).GetResetClientPanel().SetReset(resetServerField.getText(), Integer.parseInt(resetPortField.getText()), (String)clientTable.getModel().getValueAt(i, 2));
-                if(!mainFrame.GetInjector(i).Launch()){
-                    mainFrame.RemoveInjector(i);
-                }
-            }
-        }
-        else if(typeCombo.getSelectedIndex() == 2){ // Memory Profiler
-            mainFrame.CreateProfiler();
-            mainFrame.GetProfiler().Launch();
-        }
-        else if(typeCombo.getSelectedIndex() == 3){ // VMM
-            addr = (String)clientTable.getModel().getValueAt(0, 0);
-            port = Integer.parseInt((String)clientTable.getModel().getValueAt(0, 1), 10);
-            id = (String)clientTable.getModel().getValueAt(0, 2);
-            pwd = (String)clientTable.getModel().getValueAt(0, 3);
+              if(!mainFrame.GetInjector(i).Launch()){
+                  mainFrame.RemoveInjector(i);
+              }
+          }
+      }
+      else if(typeCombo.getSelectedIndex() == 2){ // Memory Profiler
+          mainFrame.CreateProfiler();
+          mainFrame.GetProfiler().Launch();
+      }
+      else if(typeCombo.getSelectedIndex() == 3){ // VMM
+          addr = (String)clientTable.getModel().getValueAt(0, 0);
+          port = Integer.parseInt((String)clientTable.getModel().getValueAt(0, 1), 10);
+          id = (String)clientTable.getModel().getValueAt(0, 2);
+          pwd = (String)clientTable.getModel().getValueAt(0, 3);
 
-            mainFrame.CreateQemuManager(addr+":"+port);
-            mainFrame.GetQemuManager().Launch(addr, port, id, pwd);
-            mainFrame.Hide();
-        }
-        else if(typeCombo.getSelectedIndex() == 4){
-            mainFrame.CreateAnalyzer();
-            mainFrame.GetAnalyzer().Launch();
-        }
-        else if(typeCombo.getSelectedIndex() == 5){
-            addr = (String)clientTable.getModel().getValueAt(0, 0);
-            port = Integer.parseInt((String)clientTable.getModel().getValueAt(0, 1), 10);
-            id = (String)clientTable.getModel().getValueAt(0, 2);
-            pwd = (String)clientTable.getModel().getValueAt(0, 3);
+          mainFrame.CreateQemuManager(addr+":"+port);
+          mainFrame.GetQemuManager().Launch(addr, port, id, pwd);
+          mainFrame.Hide();
+      }
+      else if(typeCombo.getSelectedIndex() == 4){
+          mainFrame.CreateAnalyzer();
+          mainFrame.GetAnalyzer().Launch();
+      }
+      else if(typeCombo.getSelectedIndex() == 5){
+          addr = (String)clientTable.getModel().getValueAt(0, 0);
+          port = Integer.parseInt((String)clientTable.getModel().getValueAt(0, 1), 10);
+          id = (String)clientTable.getModel().getValueAt(0, 2);
+          pwd = (String)clientTable.getModel().getValueAt(0, 3);
 
-            mainFrame.CreateSWFaultManager(addr+":"+port);
-            mainFrame.GetSWFaultManager().Launch(addr, port, id, pwd);
-            mainFrame.Hide();
-        }
-        else if(typeCombo.getSelectedIndex() == 6){
-            addr = (String)clientTable.getModel().getValueAt(0, 0);
-            port = Integer.parseInt((String)clientTable.getModel().getValueAt(0, 1), 10);
-            id = (String)clientTable.getModel().getValueAt(0, 2);
-            pwd = (String)clientTable.getModel().getValueAt(0, 3);
+          mainFrame.CreateSWFaultManager(addr+":"+port);
+          mainFrame.GetSWFaultManager().Launch(addr, port, id, pwd);
+          mainFrame.Hide();
+      }
+      else if(typeCombo.getSelectedIndex() == 6){
+          addr = (String)clientTable.getModel().getValueAt(0, 0);
+          port = Integer.parseInt((String)clientTable.getModel().getValueAt(0, 1), 10);
+          id = (String)clientTable.getModel().getValueAt(0, 2);
+          pwd = (String)clientTable.getModel().getValueAt(0, 3);
 
-            mainFrame.CreateRigelManager(addr+":"+port);
-            mainFrame.GetRigelManager().Launch(addr, port, id, pwd);
-            mainFrame.Hide();
-        }
-        //mainFrame.FocusLogPanel();
-         */
+          mainFrame.CreateRigelManager(addr+":"+port);
+          mainFrame.GetRigelManager().Launch(addr, port, id, pwd);
+          mainFrame.Hide();
+      }
+      //mainFrame.FocusLogPanel();
+       */
     }//GEN-LAST:event_launchButtonActionPerformed
     
     private void plusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plusButtonActionPerformed
-        // TODO add your handling code here:
-        int     cnt;
-        
-        cnt = clientTable.getRowCount() + 1;
-        if(cnt >=1  && cnt <= maxInjector)
-            UtilTable.SetTableCount(clientTable, cnt, new Object[]{"", "22", "", "", "NA"});
+      int cnt = clientTable.getRowCount() + 1;
+      if(cnt >=1 && cnt <= maxInjector) {
+        UtilTable.SetTableCount(clientTable, cnt, new Object[]{"", "22", "", "", "NA"});
+      }
     }//GEN-LAST:event_plusButtonActionPerformed
 
     private void minusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minusButtonActionPerformed
-        // TODO add your handling code here:
-        int     cnt;
-
-        cnt = clientTable.getRowCount() - 1;
-        if(cnt >=1  && cnt <= maxInjector)
-            UtilTable.SetTableCount(clientTable, cnt, new Object[]{"", "22", "", "", "NA"});
+      int cnt = clientTable.getRowCount() - 1;
+      if(cnt >=1 && cnt <= maxInjector) {
+        UtilTable.SetTableCount(clientTable, cnt, new Object[]{"", "22", "", "", "NA"});
+      }
     }//GEN-LAST:event_minusButtonActionPerformed
-
-
-    protected String GetMask(int length)
-    {
-        String  result;
-        int     i, j, k;
-        int     mask = 0;
-
-        result = null;
-        j = 1;
-        for(i=0; i<j; i++){
-            do{
-                k = UtilRandom.Random(0, length*8-1);
-                k = 1 << k;
-            } while((k & mask) != 0);
-            mask |= k;
-        }
-        result = "0x" + (UtilString.Hex2String(mask));
-
-        return result;
-    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable clientTable;
