@@ -1,0 +1,48 @@
+> #### <i><u>CEDP</u></i> (<i>pronounced 'seedeep'</i>) means Computer Evaluator for Dependability and Performance ####
+
+> #### Overview ####
+> Building highly dependable critical social infrastructures becomes more challenging as intelligence and connectivity are more introduced to systems used to construct these infrastructures. For example, smart power grid uses from small- to large-scale computer devices (with general-purpose operating system and Internet connection) in order to monitor and control wide-area power grids in real-time. These uses of sophisticated operating systems and communication interfaces increase the system complexity that consequently make testing, validation, and verification more difficult.
+
+> This project is to build a standard dependability benchmarking framework that can be used to validate and evaluate computer hardware and software dependabilities. The heart of this framework is a fault injection tool that can emulate both [hardware fault](Fault.md) and software faults (i.e., bugs). By injecting a synthetic fault into a target system and measuring the consequent error and failure information, this tool can for example validiate the used fault tolerance technique in the target system. Repeating this experiment using different types of faults enables us the quantitative evaluation of system dependability and can also enable us to characterize the fault and error propagation behaviors of target systems where these fault/error propagation chacteristics can be effectively used for designing cost-efficient fault-tolerance techniques for example.
+
+> Our fault models are: (i) Hardware fault represents a transient fault in the processor, memory, and interconnect (e.g., due to soft error). This fault is emulated by changing a software visible state of target system (e.g., processor register or memory word). This models a fault in a low-layer of hardware (e.g., transistor-level) that has been propagated to a flipflop (e.g., register) exposed to software in next clock cycle(s). Once the fault is propagated to this flipflop, this propagated error state continuously propagates to other system states as the program executes following instructions. (ii) Software fault represents a common software bug. We use existing software defect classifications and emulate these common defacts in the source code of target program. The source code of target program is mutated with a software fault by using a source-to-source translator.
+
+> #### Relevance to Existing Works ####
+> Quantitative evaluation of computer system dependability (i.e., fault injection experiments) has a long history and mainly developed and used for mission-critical systems (e.g., aerospace shuttles). It has been also well stuided in academic community for example to understand the fundamental chacteristics of faults, errors, and failures in different types of systems.
+
+> This, however, remains as an open problem until now that is making an agreement on the specific measurement (or evaluation/benchmarking) methodology is difficult although this agreement is limited only to those least required for repeating experiments. This is due to the use of different benchmarking tool, for example, to customize the tool for the experiment objective of each research group. Some tried to apply their tool to different models of a same type of system and/or different types of systems. This was successful when the lead scientists or engineers were actively conducting researches in this direction. As younger generation of researchers (either from the same group or other groups) faces and comes up with different problems and different experimet objectives, these junior researchers start to build their own tools if source code of existing tool that can fullfill their objectives is not available. As a result, these researchers put a large amount of efforts to implement what their seniors have done before, and those seniors put another large effort to validate those experiments using tools built by their junior scientists.
+
+> Repeatability of experiments is a basis of all sciences because this can validate measured experimental data. For this, we need a standard fault injection tool released under an open source license and also need agreements on the experimental methodologies and configurations. These agreements shall include fault model, target system hardware configuration guideline, standard workloads, and so on. The outcome of these collaborative engineering efforts and aggreements would be huge. Researchers in our community at least will be able to directly compare experimental data presented in one work to data presented in other works.
+
+> #### Success Stories ####
+> CEDP is an open, extensible framework designed with an intension to make everyone easy to implement customized dependability benchmarking features. The use of this standard benchmarking tool CEDP means an automatic acquistion of trust for the measurement (or evaluation) data from other researchers who have been exposed to CEDP. This statement is true when the experiment is conducted by using an extended CEDP framework as far as the source code of the extension plug-in is opened and shared. This is because if the used configuration files are shared, researchers from other groups can repeat the same experiment and validate the published results.
+
+> CEDP not only supports different fault models (both hardware and software) but also different hardware/software platforms. These supported hardware architectures include CPU (x86 by Intel/AMD) and GPU (NVIDIA), and supported software where a synthetic fault is injected while these software are running include Linux kernel/module/application for the hardware fault model and programs written in C or CUDA C++ for the software fault model.
+
+> CEDP has been successfully used for many state-of-art fault injection and performance profiling experiments. These experiments include:
+
+> - K.S. Yim et al., “Quantitative Analysis of Long Latency Failure in System Software,” In Proceedings of the IEEE Pacific Rim International Symposium on Dependable Computing, pp. 23-30, 2009.
+
+> - K.S. Yim et al., “Measurement-based Analysis of Fault and Error Sensitivities of Dynamic Memory,” In Proceedings of the IEEE International Conference on Dependable Systems and Networks, pp. 431-436, 2010.
+
+> These two experiments challenged difficult measurement problems in the evaluation and validation of computer system dependability. The first experiment explored in time dimension (i.e., long latency failures), and the second experiment explored in space dimension (i.e., faults in dynamic memory space). Specfically, measuring long latency failures was challenging because for example if the monitoring time is 2 hours and 10,000 samples are collected, this experiment would take ~2 years in the worst-case. This was possible in the first experiment because the fault injector was extended to support a novel fault injection strategy. This divide-and-conquer fault injection strategy shows ~5x speed up of the experiment time, on average, by increasing the fault activation ratio. Moreover, analyzing the faults and errors in dynamic memory space was also difficult because dynamic memory is allocated at runtime. It is thus difficult to know what type of data was stored in the location of error after system failure. To address this problem, a profiling component of this tool is extended so that it can track these dynamically allocated memory objects. The used tool also shows its effective at analyzing measurement data These two experiments. For example, the analyses conducted after these two experiments provide valuable insights for building cost-effective dependable computing system, e.g., the recoverability-driven selective protection principle that suggests us to focus the error detection mechanisms to system states that are unrecoverable if experience a fault or an error. This principle can lead a design closer to global optimal because it considers both error detection and recovery in the design process.
+
+> #### System configuration ####
+> The CEDP framework consists of two types of computer nodes like many other fault injection frameworks: control and injector nodes. The control node plays an interface role between experimentalist and injector node(s). All injection and raw data collection operations are conducted in the injector node(s).
+
+> In the development of CEDP, mainly three types of programming language are used. The control server running on the control node is written as a Java application. The hardware fault injector running on injector node(s) is written in C as an operating system kernel module. Some python scripts are written and used to automate part of fault injection and data collection processes.
+
+> #### Use Cases ####
+> - Fault Injector for GPU<br>
+<blockquote>- Error Detector Generator for GPU<br>
+- Profiler Generator for GPU<br></blockquote>
+
+<blockquote>- HW Fault Injector for CPU<br>
+- SW Fault Injector for CPU<br>
+- Performance Profiler for CPU<br></blockquote>
+
+<blockquote>- Automatic testing of CEDP itself</blockquote>
+
+<blockquote><h4>Notes</h4>
+- CEDP is an integrated toolkit built by using many existing open-source components with some modifications. The copyrights for these used components follow the original authors' copyright specifications. A list of used components is maintained in <a href='Link.md'>here</a>.<br>
+- CEDP is an open-source project where everyone is welcome to join for benefits that inlcude but not limited to get latest updates by emails, discuss designs and project directions, and contribute/lead the development of a state-of-art dependability benchmarking tool.
